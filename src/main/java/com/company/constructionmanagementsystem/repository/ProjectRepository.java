@@ -12,5 +12,7 @@ import java.util.List;
 public interface ProjectRepository extends JpaRepository<Project, Integer>{
   
     List<Project> findByDeadline(LocalDate deadline);
+    List<Project> findByStatus(String status);
+
 
 }
