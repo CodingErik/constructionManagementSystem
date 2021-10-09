@@ -11,6 +11,12 @@ public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
 
-    public List<>
+    public List<EmployeeViewModel> getAllEmployee() {
+        return employeeRepository.findAll();
+    }
+
+    public EmployeeViewModel createEmployee(EmployeeViewModel employeeViewModel) {
+
+    }
 
 }
