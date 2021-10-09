@@ -25,7 +25,7 @@ public class ProjectController {
         return repo.save(project);
     }
 
-    @RequestMapping(value = "/records", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/projects", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public List<Project> getAllProjects(@RequestParam(required = false) boolean isPlumbing, @RequestParam(required = false) boolean isElectric) {
 
