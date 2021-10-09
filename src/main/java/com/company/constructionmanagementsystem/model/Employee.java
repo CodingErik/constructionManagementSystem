@@ -23,7 +23,7 @@ public class Employee implements Serializable {
     private String name;
     private LocalDate dateOfBirth; // Date of birth
     private BigDecimal salary;
-    private int yearsOfExperience; // Years of experience
+    private Integer yearsOfExperience; // Years of experience
     private String email;
     private String phoneNumber;
     @NotEmpty(message = "The employee must have an username")
