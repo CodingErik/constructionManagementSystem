@@ -1,12 +1,20 @@
 package com.company.constructionmanagementsystem.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Employee {
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "employee")
+public class Employee implements Serializable {
     private Integer id;
     private Integer projectId;
     @NotEmpty(message = "The employee must have a title")
