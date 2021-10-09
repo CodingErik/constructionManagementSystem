@@ -1,43 +1,26 @@
-package com.company.constructionmanagementsystem.model;
+package com.company.constructionmanagementsystem.viewmodel;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.context.annotation.Primary;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.*;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Objects;
 
-@Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "project")
-public class Project implements Serializable {
+public class ProjectViewModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @NotEmpty(message = "Your must have a name for your project")
+    private int id;
     private String name;
-    private LocalDate deadline;
-    private LocalDate startDate;
+    private String deadline;
+    private String startDate;
     private String roomType;
-    private boolean isPlumbing = false;
-    private boolean isElectric = false;
+    private boolean isPlumbing;
+    private boolean isElectric;
     private BigDecimal materialBudget;
     private BigDecimal laborBudget;
     private BigDecimal totalBudget;
     private String status;
 
-    public Project() {
+    public ProjectViewModel() {
     }
 
-    public Project(Integer id, String name, LocalDate deadline, LocalDate startDate, String roomType, boolean isPlumbing, boolean isElectric, BigDecimal materialBudget, BigDecimal laborBudget, BigDecimal totalBudget, String status) {
+    public ProjectViewModel(int id, String name, String deadline, String startDate, String roomType, boolean isPlumbing, boolean isElectric, BigDecimal materialBudget, BigDecimal laborBudget, BigDecimal totalBudget, String status) {
         this.id = id;
         this.name = name;
         this.deadline = deadline;
@@ -51,11 +34,11 @@ public class Project implements Serializable {
         this.status = status;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -67,19 +50,19 @@ public class Project implements Serializable {
         this.name = name;
     }
 
-    public LocalDate getDeadline() {
+    public String getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(LocalDate deadline) {
+    public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
@@ -143,8 +126,8 @@ public class Project implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Project project = (Project) o;
-        return isPlumbing == project.isPlumbing && isElectric == project.isElectric && Objects.equals(id, project.id) && Objects.equals(name, project.name) && Objects.equals(deadline, project.deadline) && Objects.equals(startDate, project.startDate) && Objects.equals(roomType, project.roomType) && Objects.equals(materialBudget, project.materialBudget) && Objects.equals(laborBudget, project.laborBudget) && Objects.equals(totalBudget, project.totalBudget) && Objects.equals(status, project.status);
+        ProjectViewModel that = (ProjectViewModel) o;
+        return id == that.id && isPlumbing == that.isPlumbing && isElectric == that.isElectric && Objects.equals(name, that.name) && Objects.equals(deadline, that.deadline) && Objects.equals(startDate, that.startDate) && Objects.equals(roomType, that.roomType) && Objects.equals(materialBudget, that.materialBudget) && Objects.equals(laborBudget, that.laborBudget) && Objects.equals(totalBudget, that.totalBudget) && Objects.equals(status, that.status);
     }
 
     @Override
@@ -152,14 +135,13 @@ public class Project implements Serializable {
         return Objects.hash(id, name, deadline, startDate, roomType, isPlumbing, isElectric, materialBudget, laborBudget, totalBudget, status);
     }
 
-
     @Override
     public String toString() {
-        return "Project{" +
+        return "ProjectViewModel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", deadline=" + deadline +
-                ", startDate=" + startDate +
+                ", deadline='" + deadline + '\'' +
+                ", startDate='" + startDate + '\'' +
                 ", roomType='" + roomType + '\'' +
                 ", isPlumbing=" + isPlumbing +
                 ", isElectric=" + isElectric +

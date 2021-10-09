@@ -33,6 +33,9 @@ public class Employee implements Serializable {
     private String password;
     private LocalDate userSince;
 
+    public Employee() {
+    }
+
     public Employee(Integer id, Integer projectId, String title, String name, LocalDate dateOfBirth, BigDecimal salary, Integer yearsOfExperience, String email, String phoneNumber, String username, String password, LocalDate userSince) {
         this.id = id;
         this.projectId = projectId;
@@ -46,9 +49,6 @@ public class Employee implements Serializable {
         this.username = username;
         this.password = password;
         this.userSince = userSince;
-    }
-
-    public Employee() {
     }
 
     public Integer getId() {
