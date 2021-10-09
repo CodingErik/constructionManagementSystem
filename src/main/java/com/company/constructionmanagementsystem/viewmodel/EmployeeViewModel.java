@@ -1,8 +1,11 @@
 package com.company.constructionmanagementsystem.viewmodel;
 
+import com.company.constructionmanagementsystem.model.Project;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class EmployeeViewModel {

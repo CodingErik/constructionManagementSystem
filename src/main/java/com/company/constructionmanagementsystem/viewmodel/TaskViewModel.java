@@ -1,6 +1,7 @@
 package com.company.constructionmanagementsystem.viewmodel;
 
 import com.company.constructionmanagementsystem.model.Employee;
+import com.company.constructionmanagementsystem.model.Project;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,13 +16,13 @@ public class TaskViewModel {
     private LocalDate deadline;
     private String description;
     private String status;
-    private List<Projcet> projectList = new ArrayList<>();
+    private List<Project> projectList = new ArrayList<>();
     private List<Employee> employeeList = new ArrayList<>();
 
     public TaskViewModel() {
     }
 
-    public TaskViewModel(int id, String name, LocalDate startState, LocalDate deadline, String description, String status, List<Projcet> projectList, List<Employee> employeeList) {
+    public TaskViewModel(int id, String name, LocalDate startState, LocalDate deadline, String description, String status, List<Project> projectList, List<Employee> employeeList) {
         this.id = id;
         this.name = name;
         this.startState = startState;
@@ -80,11 +81,11 @@ public class TaskViewModel {
         this.status = status;
     }
 
-    public List<Projcet> getProjectList() {
+    public List<Project> getProjectList() {
         return projectList;
     }
 
-    public void setProjectList(List<Projcet> projectList) {
+    public void setProjectList(List<Project> projectList) {
         this.projectList = projectList;
     }
 
