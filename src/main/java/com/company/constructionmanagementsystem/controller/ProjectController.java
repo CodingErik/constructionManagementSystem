@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ public class ProjectController {
 
     @PostMapping("/api/project/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Project addCustomer(@RequestBody Project project) {
+    public Project addProject(@RequestBody Project project) {
         return repo.save(project);
     }
 
@@ -58,9 +59,13 @@ public class ProjectController {
         }
     }
 
-
+    // /api/project/{deadline}
     @GetMapping("/api/project/{deadline}")
-    public List<Project> findByDeadline(LocalDate deadline){
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<Project> findByDeadline(@PathVariable LocalDate deadline){
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+//        System.out.println(formatter.format(deadline));
+
         List<Project> project = repo.findByDeadline(deadline);
         return project;
     }
