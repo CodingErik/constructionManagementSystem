@@ -8,15 +8,5 @@ import java.util.List;
 @Service
 public class EmployeeService {
 
-    @Autowired
-    EmployeeRepository employeeRepository;
-
-    public List<EmployeeViewModel> getAllEmployee() {
-        return employeeRepository.findAll();
-    }
-
-    public EmployeeViewModel createEmployee(EmployeeViewModel employeeViewModel) {
-
-    }
 
 }

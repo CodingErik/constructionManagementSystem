@@ -1,61 +1,34 @@
-package com.company.constructionmanagementsystem.model;
+package com.company.constructionmanagementsystem.viewmodel;
 
-
-import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Objects;
 
-public class Employee {
-    private Integer id;
-    private Integer projectId;
-    @NotEmpty(message = "The employee must have a title")
+public class EmployeeViewModel {
+
+    private int id;
     private String title;
-    @NotEmpty(message = "The employee must have a name")
     private String name;
-    private LocalDate dob; // Date of birth
+    private LocalDate dob;
     private BigDecimal salary;
-    private Integer yoe; // Years of experience
+    private int yoe;
     private String email;
     private String phoneNumber;
-    @NotEmpty(message = "The employee must have an username")
     private String username;
-    @NotEmpty(message = "The employee must have a password")
     private String password;
     private LocalDate userSince;
+    private List<Project> projectList = new ArrayList<>();
 
-    public Employee() {
+    public EmployeeViewModel() {
     }
 
-    public Employee(Integer id, Integer projectId, String title, String name, LocalDate dob, BigDecimal salary, int yoe, String email, String phoneNumber, String username, String password, LocalDate userSince) {
-        this.id = id;
-        this.projectId = projectId;
-        this.title = title;
-        this.name = name;
-        this.dob = dob;
-        this.salary = salary;
-        this.yoe = yoe;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.username = username;
-        this.password = password;
-        this.userSince = userSince;
-    }
-
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public Integer getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
     }
 
     public String getTitle() {
@@ -138,24 +111,31 @@ public class Employee {
         this.userSince = userSince;
     }
 
+    public List<Project> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return yoe == employee.yoe && Objects.equals(id, employee.id) && Objects.equals(projectId, employee.projectId) && Objects.equals(title, employee.title) && Objects.equals(name, employee.name) && Objects.equals(dob, employee.dob) && Objects.equals(salary, employee.salary) && Objects.equals(email, employee.email) && Objects.equals(phoneNumber, employee.phoneNumber) && Objects.equals(username, employee.username) && Objects.equals(password, employee.password) && Objects.equals(userSince, employee.userSince);
+        EmployeeViewModel that = (EmployeeViewModel) o;
+        return id == that.id && yoe == that.yoe && Objects.equals(title, that.title) && Objects.equals(name, that.name) && Objects.equals(dob, that.dob) && Objects.equals(salary, that.salary) && Objects.equals(email, that.email) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(userSince, that.userSince);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectId, title, name, dob, salary, yoe, email, phoneNumber, username, password, userSince);
+        return Objects.hash(id, title, name, dob, salary, yoe, email, phoneNumber, username, password, userSince);
     }
 
     @Override
     public String toString() {
-        return "Employee{" +
+        return "EmployeeViewModel{" +
                 "id=" + id +
-                ", projectId=" + projectId +
                 ", title='" + title + '\'' +
                 ", name='" + name + '\'' +
                 ", dob=" + dob +
@@ -166,6 +146,7 @@ public class Employee {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", userSince=" + userSince +
+                ", projectList=" + projectList +
                 '}';
     }
 }
