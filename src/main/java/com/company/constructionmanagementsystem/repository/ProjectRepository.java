@@ -13,5 +13,4 @@ public interface ProjectRepository extends JpaRepository<Project, Integer>{
 
     List<Project> findByDeadline(LocalDate deadline);
 
-
 }

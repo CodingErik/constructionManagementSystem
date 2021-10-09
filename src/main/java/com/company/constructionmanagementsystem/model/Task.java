@@ -1,5 +1,6 @@
 package com.company.constructionmanagementsystem.model;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -12,7 +13,6 @@ import java.util.Objects;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "task")
 public class Task {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -25,6 +25,9 @@ public class Task {
     private LocalDate deadline;
     private String description;
     private String status;
+
+    public Task() {
+    }
 
     public Integer getId() {
         return id;
