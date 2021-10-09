@@ -12,7 +12,7 @@ public class EmployeeViewModel {
     private String name;
     private LocalDate dob;
     private BigDecimal salary;
-    private int yoe;
+    private int yearsOfExperience;
     private String email;
     private String phoneNumber;
     private String username;
@@ -63,12 +63,12 @@ public class EmployeeViewModel {
         this.salary = salary;
     }
 
-    public int getYoe() {
-        return yoe;
+    public int getYearsOfExperience() {
+        return yearsOfExperience;
     }
 
-    public void setYoe(int yoe) {
-        this.yoe = yoe;
+    public void setYearsOfExperience(int yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
     }
 
     public String getEmail() {
@@ -124,12 +124,12 @@ public class EmployeeViewModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmployeeViewModel that = (EmployeeViewModel) o;
-        return id == that.id && yoe == that.yoe && Objects.equals(title, that.title) && Objects.equals(name, that.name) && Objects.equals(dob, that.dob) && Objects.equals(salary, that.salary) && Objects.equals(email, that.email) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(userSince, that.userSince);
+        return id == that.id && yearsOfExperience == that.yearsOfExperience && Objects.equals(title, that.title) && Objects.equals(name, that.name) && Objects.equals(dob, that.dob) && Objects.equals(salary, that.salary) && Objects.equals(email, that.email) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(userSince, that.userSince);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, name, dob, salary, yoe, email, phoneNumber, username, password, userSince);
+        return Objects.hash(id, title, name, dob, salary, yearsOfExperience, email, phoneNumber, username, password, userSince);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class EmployeeViewModel {
                 ", name='" + name + '\'' +
                 ", dob=" + dob +
                 ", salary=" + salary +
-                ", yoe=" + yoe +
+                ", yearsOfExperience=" + yearsOfExperience +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", username='" + username + '\'' +
