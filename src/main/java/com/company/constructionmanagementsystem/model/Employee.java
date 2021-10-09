@@ -33,11 +33,11 @@ public class Employee implements Serializable {
     private String password;
     private LocalDate userSince;
 
+
+    public Employee(Integer id, Integer projectId, String title, String name, LocalDate dateOfBirth, BigDecimal salary, Integer yearsOfExperience, String email, String phoneNumber, String username, String password, LocalDate userSince) {
+
     public Employee() {
     }
-
-    public Employee(Integer id, Integer projectId, String title, String name, LocalDate dob, BigDecimal salary, int yoe, String email, String phoneNumber, String username, String password, LocalDate userSince) {
-
         this.id = id;
         this.projectId = projectId;
         this.title = title;
@@ -104,7 +104,7 @@ public class Employee implements Serializable {
         return yearsOfExperience;
     }
 
-    public void setYearsOfExperience(int yearsOfExperience) {
+    public void setYearsOfExperience(Integer yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
     }
 
