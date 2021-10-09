@@ -1,6 +1,5 @@
 package com.company.constructionmanagementsystem.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
