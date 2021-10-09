@@ -1,11 +1,19 @@
 package com.company.constructionmanagementsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "task")
 public class Task {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @NotNull(message = "You must supply a project Id")
     private Integer projectId;
@@ -16,6 +24,9 @@ public class Task {
     private LocalDate deadline;
     private String description;
     private String status;
+
+    public Task() {
+    }
 
     public Integer getId() {
         return id;
