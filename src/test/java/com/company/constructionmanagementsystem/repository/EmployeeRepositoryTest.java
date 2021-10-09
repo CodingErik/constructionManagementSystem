@@ -56,21 +56,26 @@ public class EmployeeRepositoryTest {
         employee.setUsername("johnusername");
         employee.setPassword("123456");
         employee.setUserSince(since);
+        // add
         employee = employeeRepository.save(employee);
 
+        assertEquals(1, employeeRepository.findAll().size());
+
+        // find
         Employee employee1 = employeeRepository.findById(employee.getId()).get();
 
         employee1.setSalary(employee1.getSalary().round(mathContext));
 
         assertEquals(employee1, employee);
 
-        employeeRepository.deleteAll();
+        // delete
+        employeeRepository.deleteById(employee.getId());
 
         assertEquals(0, employeeRepository.findAll().size());
     }
 
     @Test
-    public void findAllEmployee() {
+    public void findAllEmployees() {
         LocalDate birth1 = LocalDate.of(1999,9 ,9);
         LocalDate since1 = LocalDate.now();
         MathContext mathContext = new MathContext(4);

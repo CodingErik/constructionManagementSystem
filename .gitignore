@@ -33,5 +33,5 @@ build/
 .vscode/
 
 ### Application Properties ###
-.properties
+local.properties
 
