@@ -1,21 +1,30 @@
 package com.company.constructionmanagementsystem.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Employee {
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "employee")
+public class Employee implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Integer projectId;
     @NotEmpty(message = "The employee must have a title")
     private String title;
     @NotEmpty(message = "The employee must have a name")
     private String name;
-    private LocalDate dob; // Date of birth
+    private LocalDate dateOfBirth; // Date of birth
     private BigDecimal salary;
-    private int yoe; // Years of experience
+    private Integer yearsOfExperience; // Years of experience
     private String email;
     private String phoneNumber;
     @NotEmpty(message = "The employee must have an username")
@@ -24,14 +33,18 @@ public class Employee {
     private String password;
     private LocalDate userSince;
 
+    public Employee() {
+    }
+
     public Employee(Integer id, Integer projectId, String title, String name, LocalDate dob, BigDecimal salary, int yoe, String email, String phoneNumber, String username, String password, LocalDate userSince) {
+
         this.id = id;
         this.projectId = projectId;
         this.title = title;
         this.name = name;
-        this.dob = dob;
+        this.dateOfBirth = dateOfBirth;
         this.salary = salary;
-        this.yoe = yoe;
+        this.yearsOfExperience = yearsOfExperience;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.username = username;
@@ -71,12 +84,12 @@ public class Employee {
         this.name = name;
     }
 
-    public LocalDate getDob() {
-        return dob;
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public BigDecimal getSalary() {
@@ -87,12 +100,12 @@ public class Employee {
         this.salary = salary;
     }
 
-    public int getYoe() {
-        return yoe;
+    public int getYearsOfExperience() {
+        return yearsOfExperience;
     }
 
-    public void setYoe(int yoe) {
-        this.yoe = yoe;
+    public void setYearsOfExperience(int yearsOfExperience) {
+        this.yearsOfExperience = yearsOfExperience;
     }
 
     public String getEmail() {
@@ -140,12 +153,12 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return yoe == employee.yoe && Objects.equals(id, employee.id) && Objects.equals(projectId, employee.projectId) && Objects.equals(title, employee.title) && Objects.equals(name, employee.name) && Objects.equals(dob, employee.dob) && Objects.equals(salary, employee.salary) && Objects.equals(email, employee.email) && Objects.equals(phoneNumber, employee.phoneNumber) && Objects.equals(username, employee.username) && Objects.equals(password, employee.password) && Objects.equals(userSince, employee.userSince);
+        return yearsOfExperience == employee.yearsOfExperience && Objects.equals(id, employee.id) && Objects.equals(projectId, employee.projectId) && Objects.equals(title, employee.title) && Objects.equals(name, employee.name) && Objects.equals(dateOfBirth, employee.dateOfBirth) && Objects.equals(salary, employee.salary) && Objects.equals(email, employee.email) && Objects.equals(phoneNumber, employee.phoneNumber) && Objects.equals(username, employee.username) && Objects.equals(password, employee.password) && Objects.equals(userSince, employee.userSince);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectId, title, name, dob, salary, yoe, email, phoneNumber, username, password, userSince);
+        return Objects.hash(id, projectId, title, name, dateOfBirth, salary, yearsOfExperience, email, phoneNumber, username, password, userSince);
     }
 
     @Override
@@ -155,9 +168,9 @@ public class Employee {
                 ", projectId=" + projectId +
                 ", title='" + title + '\'' +
                 ", name='" + name + '\'' +
-                ", dob=" + dob +
+                ", dateOfBirth=" + dateOfBirth +
                 ", salary=" + salary +
-                ", yoe=" + yoe +
+                ", yearsOfExperience=" + yearsOfExperience +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", username='" + username + '\'' +
