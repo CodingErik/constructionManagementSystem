@@ -1,5 +1,6 @@
 package com.company.constructionmanagementsystem.model;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
