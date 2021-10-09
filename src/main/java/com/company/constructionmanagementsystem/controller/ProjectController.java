@@ -25,6 +25,8 @@ public class ProjectController {
         return repo.save(project);
     }
 
+    /** request for filtering fits this category more */
+    // /api/project?isPlumbing=isElectric= refactor
     @RequestMapping(value = "/api/projects", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public List<Project> getAllProjects(@RequestParam(required = false) boolean isPlumbing, @RequestParam(required = false) boolean isElectric) {
@@ -47,10 +49,10 @@ public class ProjectController {
     }
 
 
-    // /api/project?id=1
-    @GetMapping("/api/project")
+    // /api/project?id=1 refactor
+    @GetMapping("/api/project/id/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Project getProjectsById(@RequestParam Integer id) {
+    public Project getProjectsById(@PathVariable Integer id) {
         Optional<Project> returnVal = repo.findById(id);
         if (returnVal.isPresent()) {
             return returnVal.get();
@@ -59,8 +61,8 @@ public class ProjectController {
         }
     }
 
-    // /api/project/{deadline}
-    @GetMapping("/api/project/{deadline}")
+    // /api/project/deadline/{deadline}
+    @GetMapping("/api/project/deadline/{deadline}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Project> findByDeadline(@PathVariable LocalDate deadline){
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
@@ -69,5 +71,19 @@ public class ProjectController {
         List<Project> project = repo.findByDeadline(deadline);
         return project;
     }
+
+    // /api/project/status/{deadline}
+    @GetMapping("/api/project/status/{status}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<Project> findByStatus(@PathVariable String status){
+
+        /** maybe figure out 3 different statuses
+         *  maybe somekind of switch statement
+         * */
+
+        List<Project> project = repo.findByStatus(status);
+        return project;
+    }
+
 
 }

@@ -20,7 +20,7 @@ public class Task {
     private Integer employeeId;
     @NotEmpty(message = "You must supply a name")
     private String name;
-    private LocalDate startState;
+    private LocalDate startDate;
     private LocalDate deadline;
     private String description;
     private String status;
@@ -60,12 +60,12 @@ public class Task {
         this.name = name;
     }
 
-    public LocalDate getStartState() {
-        return startState;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setStartState(LocalDate startState) {
-        this.startState = startState;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public LocalDate getDeadline() {
@@ -97,12 +97,12 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(projectId, task.projectId) && Objects.equals(employeeId, task.employeeId) && Objects.equals(name, task.name) && Objects.equals(startState, task.startState) && Objects.equals(deadline, task.deadline) && Objects.equals(description, task.description) && Objects.equals(status, task.status);
+        return Objects.equals(id, task.id) && Objects.equals(projectId, task.projectId) && Objects.equals(employeeId, task.employeeId) && Objects.equals(name, task.name) && Objects.equals(startDate, task.startDate) && Objects.equals(deadline, task.deadline) && Objects.equals(description, task.description) && Objects.equals(status, task.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, projectId, employeeId, name, startState, deadline, description, status);
+        return Objects.hash(id, projectId, employeeId, name, startDate, deadline, description, status);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class Task {
                 ", projectId=" + projectId +
                 ", employeeId=" + employeeId +
                 ", name='" + name + '\'' +
-                ", startState=" + startState +
+                ", startState=" + startDate +
                 ", deadline=" + deadline +
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
