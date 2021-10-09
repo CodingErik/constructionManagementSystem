@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -23,11 +24,11 @@ public class Project implements Serializable {
     private Integer id;
     @NotEmpty(message = "Your must have a name for your project")
     private String name;
-    private String deadline;
-    private String startDate;
+    private LocalDate deadline;
+    private LocalDate startDate;
     private String roomType;
-    private boolean isPlumbing;
-    private boolean isElectric;
+    private boolean isPlumbing = false;
+    private boolean isElectric = false;
     private BigDecimal materialBudget;
     private BigDecimal laborBudget;
     private BigDecimal totalBudget;
@@ -36,7 +37,7 @@ public class Project implements Serializable {
     public Project() {
     }
 
-    public Project(Integer id, String name, String deadline, String startDate, String roomType, boolean isPlumbing, boolean isElectric, BigDecimal materialBudget, BigDecimal laborBudget, BigDecimal totalBudget, String status) {
+    public Project(Integer id, String name, LocalDate deadline, LocalDate startDate, String roomType, boolean isPlumbing, boolean isElectric, BigDecimal materialBudget, BigDecimal laborBudget, BigDecimal totalBudget, String status) {
         this.id = id;
         this.name = name;
         this.deadline = deadline;
@@ -66,19 +67,19 @@ public class Project implements Serializable {
         this.name = name;
     }
 
-    public String getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(String deadline) {
+    public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
@@ -151,13 +152,14 @@ public class Project implements Serializable {
         return Objects.hash(id, name, deadline, startDate, roomType, isPlumbing, isElectric, materialBudget, laborBudget, totalBudget, status);
     }
 
+
     @Override
     public String toString() {
         return "Project{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", deadline='" + deadline + '\'' +
-                ", startDate='" + startDate + '\'' +
+                ", deadline=" + deadline +
+                ", startDate=" + startDate +
                 ", roomType='" + roomType + '\'' +
                 ", isPlumbing=" + isPlumbing +
                 ", isElectric=" + isElectric +

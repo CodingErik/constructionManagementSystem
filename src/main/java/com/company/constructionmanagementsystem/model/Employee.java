@@ -38,7 +38,6 @@ public class Employee implements Serializable {
 
     public Employee(Integer id, Integer projectId, String title, String name, LocalDate dateOfBirth, BigDecimal salary, Integer yearsOfExperience, String email, String phoneNumber, String username, String password, LocalDate userSince) {
 
-
         this.id = id;
         this.projectId = projectId;
         this.title = title;
