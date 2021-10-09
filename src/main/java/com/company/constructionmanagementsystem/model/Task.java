@@ -1,12 +1,9 @@
 package com.company.constructionmanagementsystem.model;
 
-<<<<<<< HEAD
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-=======
-import javax.persistence.Entity;
->>>>>>> 008f9556a53d3999983eab5db8c165c71bb08536
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;

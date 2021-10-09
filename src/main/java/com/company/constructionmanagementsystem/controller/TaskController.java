@@ -1,7 +1,7 @@
 package com.company.constructionmanagementsystem.controller;
 
 import com.company.constructionmanagementsystem.model.Task;
-import com.company.constructionmanagementsystem.repository.TasksRepository;
+import com.company.constructionmanagementsystem.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import java.util.Optional;
 @RestController
 public class TaskController {
     @Autowired
-    TasksRepository taskRepository;
+    TaskRepository taskRepository;
 
     @PostMapping("/api/tasks")
     @ResponseStatus(HttpStatus.CREATED)
@@ -31,8 +31,6 @@ public class TaskController {
             return null;
         }
     }
-
-
 
     //  getting tasks by employee Id
     // /api/tasks/employee?id=1
