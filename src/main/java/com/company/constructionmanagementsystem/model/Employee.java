@@ -33,11 +33,7 @@ public class Employee implements Serializable {
     private String password;
     private LocalDate userSince;
 
-
     public Employee(Integer id, Integer projectId, String title, String name, LocalDate dateOfBirth, BigDecimal salary, Integer yearsOfExperience, String email, String phoneNumber, String username, String password, LocalDate userSince) {
-
-    public Employee() {
-    }
         this.id = id;
         this.projectId = projectId;
         this.title = title;
@@ -50,6 +46,9 @@ public class Employee implements Serializable {
         this.username = username;
         this.password = password;
         this.userSince = userSince;
+    }
+
+    public Employee() {
     }
 
     public Integer getId() {
