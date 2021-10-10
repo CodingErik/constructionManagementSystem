@@ -27,7 +27,7 @@ public class ProjectController {
 
     /** request for filtering fits this category more */
     // /api/project?isPlumbing=isElectric= refactor
-    @RequestMapping(value = "/api/projects", method = RequestMethod.GET)
+    @GetMapping("/api/projects")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Project> getAllProjects(@RequestParam(required = false) boolean isPlumbing, @RequestParam(required = false) boolean isElectric) {
 
@@ -53,12 +53,13 @@ public class ProjectController {
     @GetMapping("/api/project/id/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Project getProjectsById(@PathVariable Integer id) {
-        Optional<Project> returnVal = repo.findById(id);
-        if (returnVal.isPresent()) {
-            return returnVal.get();
-        } else {
-            return null;
-        }
+        Project project = repo.getById(id);
+//        if (returnVal.isPresent()) {
+//            return returnVal.get();
+//        } else {
+//            return null;
+//        }
+        return project;
     }
 
     // /api/project/deadline/{deadline}
