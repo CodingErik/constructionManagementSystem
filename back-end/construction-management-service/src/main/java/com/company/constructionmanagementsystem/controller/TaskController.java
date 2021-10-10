@@ -102,7 +102,7 @@ public class TaskController {
     }
 
     // GET ALL TASKS FOR DEVELOPMENT PURPOSES
-    @GetMapping("/api/tasks/developmentAll")
+    @GetMapping("/api/tasks/all")
     @ResponseStatus(HttpStatus.OK)
     public List<Task> getAllTasksDevelopmentPurposes() {
         List<Task> returnVal = taskRepository.findAll();
