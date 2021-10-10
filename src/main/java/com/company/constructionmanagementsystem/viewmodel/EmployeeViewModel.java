@@ -1,6 +1,7 @@
 package com.company.constructionmanagementsystem.viewmodel;
 
 import com.company.constructionmanagementsystem.model.Project;
+import com.company.constructionmanagementsystem.model.Task;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,9 +22,26 @@ public class EmployeeViewModel {
     private String username;
     private String password;
     private LocalDate userSince;
-    private List<Project> projectList = new ArrayList<>();
+    private Project project;
+    private List<Task> taskList = new ArrayList<>();
 
     public EmployeeViewModel() {
+    }
+
+    public EmployeeViewModel(int id, String title, String name, LocalDate dob, BigDecimal salary, int yearsOfExperience, String email, String phoneNumber, String username, String password, LocalDate userSince, Project project, List<Task> taskList) {
+        this.id = id;
+        this.title = title;
+        this.name = name;
+        this.dob = dob;
+        this.salary = salary;
+        this.yearsOfExperience = yearsOfExperience;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+        this.password = password;
+        this.userSince = userSince;
+        this.project = project;
+        this.taskList = taskList;
     }
 
     public int getId() {
@@ -114,12 +132,20 @@ public class EmployeeViewModel {
         this.userSince = userSince;
     }
 
-    public List<Project> getProjectList() {
-        return projectList;
+    public Project getProject() {
+        return project;
     }
 
-    public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
     }
 
     @Override
@@ -127,12 +153,12 @@ public class EmployeeViewModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmployeeViewModel that = (EmployeeViewModel) o;
-        return id == that.id && yearsOfExperience == that.yearsOfExperience && Objects.equals(title, that.title) && Objects.equals(name, that.name) && Objects.equals(dob, that.dob) && Objects.equals(salary, that.salary) && Objects.equals(email, that.email) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(userSince, that.userSince);
+        return id == that.id && yearsOfExperience == that.yearsOfExperience && Objects.equals(title, that.title) && Objects.equals(name, that.name) && Objects.equals(dob, that.dob) && Objects.equals(salary, that.salary) && Objects.equals(email, that.email) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(userSince, that.userSince) && Objects.equals(project, that.project);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, name, dob, salary, yearsOfExperience, email, phoneNumber, username, password, userSince);
+        return Objects.hash(id, title, name, dob, salary, yearsOfExperience, email, phoneNumber, username, password, userSince, project);
     }
 
     @Override
@@ -149,7 +175,8 @@ public class EmployeeViewModel {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", userSince=" + userSince +
-                ", projectList=" + projectList +
+                ", project=" + project +
+                ", taskList=" + taskList +
                 '}';
     }
 }
