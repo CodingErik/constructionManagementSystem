@@ -28,6 +28,17 @@ public class Task {
     public Task() {
     }
 
+    public Task(Integer id, Integer projectId, Integer employeeId, String name, LocalDate startDate, LocalDate deadline, String description, String status) {
+        this.id = id;
+        this.projectId = projectId;
+        this.employeeId = employeeId;
+        this.name = name;
+        this.startDate = startDate;
+        this.deadline = deadline;
+        this.description = description;
+        this.status = status;
+    }
+
     public Integer getId() {
         return id;
     }
