@@ -1,6 +1,10 @@
 package com.company.constructionmanagementsystem.viewmodel;
 
+import com.company.constructionmanagementsystem.model.Task;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class ProjectViewModel {
@@ -16,11 +20,12 @@ public class ProjectViewModel {
     private BigDecimal laborBudget;
     private BigDecimal totalBudget;
     private String status;
+    private List<Task> taskList = new ArrayList<>();
 
     public ProjectViewModel() {
     }
 
-    public ProjectViewModel(int id, String name, String deadline, String startDate, String roomType, boolean isPlumbing, boolean isElectric, BigDecimal materialBudget, BigDecimal laborBudget, BigDecimal totalBudget, String status) {
+    public ProjectViewModel(int id, String name, String deadline, String startDate, String roomType, boolean isPlumbing, boolean isElectric, BigDecimal materialBudget, BigDecimal laborBudget, BigDecimal totalBudget, String status, List<Task> taskList) {
         this.id = id;
         this.name = name;
         this.deadline = deadline;
@@ -32,6 +37,7 @@ public class ProjectViewModel {
         this.laborBudget = laborBudget;
         this.totalBudget = totalBudget;
         this.status = status;
+        this.taskList = taskList;
     }
 
     public int getId() {
@@ -122,6 +128,14 @@ public class ProjectViewModel {
         this.status = status;
     }
 
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -149,6 +163,7 @@ public class ProjectViewModel {
                 ", laborBudget=" + laborBudget +
                 ", totalBudget=" + totalBudget +
                 ", status='" + status + '\'' +
+                ", taskList=" + taskList +
                 '}';
     }
 }

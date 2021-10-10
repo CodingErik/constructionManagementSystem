@@ -138,7 +138,7 @@ public class TaskRepositoryTest {
         task = taskRepository.save(task);
 
         // findByProjectId
-        List<Task> byProjectId = taskRepository.findByProjectId(1);
+        List<Task> byProjectId = taskRepository.findAllTasksByProjectId(1);
 
         assertEquals(1, byProjectId.size());
         assertEquals(task, byProjectId.get(0));
@@ -163,7 +163,7 @@ public class TaskRepositoryTest {
         task = taskRepository.save(task);
 
         // findByEmployeeId
-        List<Task> byEmployeeId = taskRepository.findByEmployeeId(1);
+        List<Task> byEmployeeId = taskRepository.findAllTasksByEmployeeId(1);
 
         assertEquals(1, byEmployeeId.size());
         assertEquals(task, byEmployeeId.get(0));
@@ -188,7 +188,7 @@ public class TaskRepositoryTest {
         task = taskRepository.save(task);
 
         // findByProjectIdAndEmployeeId
-        List<Task> byProjectIdAndEmployee = taskRepository.findByProjectIdAndEmployeeId(1,1);
+        List<Task> byProjectIdAndEmployee = taskRepository.findAllTasksByProjectIdAndEmployeeId(1,1);
 
         assertEquals(1, byProjectIdAndEmployee.size());
         assertEquals(task, byProjectIdAndEmployee.get(0));
