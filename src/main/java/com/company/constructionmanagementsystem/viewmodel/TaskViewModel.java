@@ -2,6 +2,7 @@ package com.company.constructionmanagementsystem.viewmodel;
 
 import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.model.Project;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.Objects;
 
 public class TaskViewModel {
 
-    private int id;
+    private Integer id;
     private Project project;
     private Employee employee;
     private String name;
@@ -22,7 +23,7 @@ public class TaskViewModel {
     public TaskViewModel() {
     }
 
-    public TaskViewModel(int id, Project project, Employee employee, String name, LocalDate startDate, LocalDate deadline, String description, String status) {
+    public TaskViewModel(Integer id, Project project, Employee employee, String name, LocalDate startDate, LocalDate deadline, String description, String status) {
         this.id = id;
         this.project = project;
         this.employee = employee;
@@ -33,11 +34,11 @@ public class TaskViewModel {
         this.status = status;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

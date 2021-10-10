@@ -2,6 +2,8 @@ package com.company.constructionmanagementsystem.controller;
 
 import com.company.constructionmanagementsystem.model.Task;
 import com.company.constructionmanagementsystem.repository.TaskRepository;
+import com.company.constructionmanagementsystem.service.TaskServiceLayer;
+import com.company.constructionmanagementsystem.viewmodel.TaskViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,8 @@ import java.util.Optional;
 public class TaskController {
     @Autowired
     TaskRepository taskRepository;
+    @Autowired
+    TaskServiceLayer taskServiceLayer;
 
     @PostMapping("/api/tasks")
     @ResponseStatus(HttpStatus.CREATED)
@@ -25,23 +29,39 @@ public class TaskController {
     }
 
     // /api/task?id=1
+//    @GetMapping("/api/tasks")
+//    @ResponseStatus(HttpStatus.OK)
+//    public Task getTaskById(@RequestParam Integer taskId) {
+//        Optional<Task> returnVal = taskRepository.findById(taskId);
+//        if (returnVal.isPresent()) {
+//            return returnVal.get();
+//        } else {
+//            return null;
+//        }
+//    }
+
+//    @GetMapping("/api/tasks")
+//    @ResponseStatus(HttpStatus.OK)
+//    public TaskViewModel getTaskById(@RequestParam Integer taskId) {
+//        TaskViewModel returnVal = taskServiceLayer.findTaskById(taskId);
+//        System.out.println(taskId);
+//        return returnVal;
+//    }
+
     @GetMapping("/api/tasks")
     @ResponseStatus(HttpStatus.OK)
-    public Task getTaskById(@RequestParam Integer taskId) {
-        Optional<Task> returnVal = taskRepository.findById(taskId);
-        if (returnVal.isPresent()) {
-            return returnVal.get();
-        } else {
-            return null;
-        }
+    public TaskViewModel getTaskById(@RequestParam Integer taskId) {
+        TaskViewModel returnVal = taskServiceLayer.findTaskById(taskId);
+        return returnVal;
     }
 
     //  getting tasks by employee Id
     // /api/tasks/employee?id=1
     @GetMapping("/api/tasks/employee")
     @ResponseStatus(HttpStatus.OK)
-    public List<Task> getAllTasksByEmployeeId(@RequestParam Integer employeeId) {
-        List<Task> returnVal = taskRepository.findAllTasksByEmployeeId(employeeId);
+    public List<TaskViewModel> getAllTasksByEmployeeId(@RequestParam Integer employeeId) {
+//        List<Task> returnVal = taskRepository.findAllTasksByEmployeeId(employeeId);
+        List<TaskViewModel> returnVal = taskServiceLayer.findAllTasksByEmployeeId(employeeId);
         return returnVal;
     }
 
