@@ -17,15 +17,19 @@ public class TaskController {
     @PostMapping("/api/tasks")
     @ResponseStatus(HttpStatus.CREATED)
     public Task addTask(@RequestBody Task task) {
+//        String projectName = task.getName().replaceAll(" ", "_");
+//        task.setName(projectName);
+//        String status = task.getStatus().replaceAll(" ", "_");
+//        task.setStatus(status);
         return taskRepository.save(task);
     }
 
     // /api/task?id=1
     @GetMapping("/api/tasks")
     @ResponseStatus(HttpStatus.OK)
-    public Task getTaskById(@RequestParam Integer id) {
-        Optional<Task> returnVal = taskRepository.findById(id);
-        if(returnVal.isPresent()) {
+    public Task getTaskById(@RequestParam Integer taskId) {
+        Optional<Task> returnVal = taskRepository.findById(taskId);
+        if (returnVal.isPresent()) {
             return returnVal.get();
         } else {
             return null;
@@ -36,9 +40,8 @@ public class TaskController {
     // /api/tasks/employee?id=1
     @GetMapping("/api/tasks/employee")
     @ResponseStatus(HttpStatus.OK)
-    public List<Task> getTasksByEmployeeId(@RequestParam Integer id)
-    {
-        List<Task> returnVal = taskRepository.findByEmployeeId(id);
+    public List<Task> getAllTasksByEmployeeId(@RequestParam Integer employeeId) {
+        List<Task> returnVal = taskRepository.findAllTasksByEmployeeId(employeeId);
         return returnVal;
     }
 
@@ -46,9 +49,8 @@ public class TaskController {
     // /api/tasks/project?id=1
     @GetMapping("/api/tasks/project")
     @ResponseStatus(HttpStatus.OK)
-    public List<Task> getTasksByProjectId(@RequestParam Integer id)
-    {
-        List<Task> returnVal = taskRepository.findByProjectId(id);
+    public List<Task> getAllTasksByProjectId(@RequestParam Integer projectId) {
+        List<Task> returnVal = taskRepository.findAllTasksByProjectId(projectId);
         return returnVal;
     }
 
@@ -56,13 +58,26 @@ public class TaskController {
     //  /api/tasks/project?id=1/employee?id=1
     @GetMapping("/api/tasks/project/employee")
     @ResponseStatus(HttpStatus.OK)
-    public List<Task> getTasksByProjectIdAndEmployeeId(@RequestParam Integer projectId, @RequestParam Integer employeeId)
-    {
-        List<Task> returnVal = taskRepository.findByProjectIdAndEmployeeId(projectId, employeeId);
+    public List<Task> getAllTasksByProjectIdAndEmployeeId(@RequestParam Integer projectId, @RequestParam Integer employeeId) {
+        List<Task> returnVal = taskRepository.findAllTasksByProjectIdAndEmployeeId(projectId, employeeId);
         return returnVal;
     }
 
+    //  getting tasks by project Id and status
+    //  /api/tasks/project?id=1/status?state=in_progress
+    @GetMapping("/api/tasks/project/status")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Task> getAllTasksByProjectIdAndStatus(@RequestParam Integer projectId, @RequestParam String state) {
+        List<Task> returnVal = taskRepository.findAllTasksByProjectIdAndStatus(projectId, state);
+        return returnVal;
+    }
 
+    @GetMapping("/api/tasks/project/name")
+    @ResponseStatus(HttpStatus.OK)
+    public Task getTaskByProjectIdAndName(@RequestParam Integer projectId, @RequestParam String name) {
+        Task returnVal = taskRepository.findTasksByProjectIdAndName(projectId, name);
+        return returnVal;
+    }
 
 
 }
