@@ -13,6 +13,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer>{
   
     List<Project> findByDeadline(LocalDate deadline);
     List<Project> findByStatus(String status);
+    List<Project> findByRoomType(String roomType);
 
 
 }

@@ -53,6 +53,7 @@ public class ProjectControllerTest {
         //set up input
         project1Input.setElectric(true);
         project1Input.setName("project 1");
+        project1Input.setStatus("inProgress");
         project1Input.setRoomType("kitchen");
         project1Input.setLaborBudget(new BigDecimal("10000.000"));
         project1Input.setMaterialBudget(new BigDecimal("20000.000"));
@@ -65,6 +66,7 @@ public class ProjectControllerTest {
         project1Output.setId(1);
         project1Output.setElectric(true);
         project1Output.setName("project 1");
+        project1Input.setStatus("inProgress");
         project1Output.setRoomType("kitchen");
         project1Output.setLaborBudget(new BigDecimal("10000.000"));
         project1Output.setMaterialBudget(new BigDecimal("20000.000"));
@@ -105,24 +107,42 @@ public class ProjectControllerTest {
 
     }
 
-//    @Test
-//    public void shouldReturnProjectByDeadline() throws Exception {
-//
-//
-//        List<Project> projectsList = new ArrayList<>();
-//        projectsList.add(project1Output);
-//
-//        String jsonOutput = mapper.writeValueAsString(projectsList);
-//        String deadline = mapper.writeValueAsString(LocalDate.of(2021, 10, 22));
-//
-//        given(repo.findByDeadline(LocalDate.of(2021, 10, 22))).willReturn(projectsList);
-//
-//
-//        mockMvc.perform(get("/api/project/deadline/" + deadline))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(content().json(jsonOutput));
-//
-//
-//    }
+    @Test
+    public void shouldReturnProjectsByStatus() throws Exception {
+
+        List<Project> projectsList = new ArrayList<>();
+
+        projectsList.add(project1Output);
+
+        String jsonOutput = mapper.writeValueAsString(projectsList);
+
+        given(repo.findByStatus("inProgress")).willReturn(projectsList);
+
+        mockMvc.perform(get("/api/project/status/inProgress"))
+                .andExpect(content().json(jsonOutput))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void shouldReturnProjectsByRoomType() throws Exception {
+//        findByRoomType
+
+        List<Project> projectsList = new ArrayList<>();
+
+        projectsList.add(project1Output);
+
+        String jsonOutput = mapper.writeValueAsString(projectsList);
+
+        given(repo.findByRoomType("kitchen")).willReturn(projectsList);
+
+        mockMvc.perform(get("/api/project/roomType/kitchen"))
+                .andExpect(content().json(jsonOutput))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldReturnProjectByName() {
+
+    }
 }

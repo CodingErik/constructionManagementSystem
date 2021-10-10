@@ -66,7 +66,6 @@ public class ProjectController {
     @GetMapping("/api/project/deadline/{deadline}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Project> findByDeadline(@PathVariable LocalDate deadline){
-
         List<Project> project = repo.findByDeadline(deadline);
         return project;
     }
@@ -76,13 +75,15 @@ public class ProjectController {
     @ResponseStatus(value = HttpStatus.OK)
     public List<Project> findByStatus(@PathVariable String status){
 
-        /** maybe figure out 3 different statuses
-         *  maybe somekind of switch statement
-         * */
-
         List<Project> project = repo.findByStatus(status);
         return project;
     }
 
+
+    @GetMapping("/api/project/roomType/{roomType}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<Project> findProjectsByRoomType(@PathVariable String roomType){
+        return repo.findByRoomType(roomType);
+    }
 
 }

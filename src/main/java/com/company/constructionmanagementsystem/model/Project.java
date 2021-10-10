@@ -35,7 +35,7 @@ public class Project implements Serializable {
     private BigDecimal materialBudget;
     private BigDecimal laborBudget;
     private BigDecimal totalBudget;
-    private String status;
+    private String status = "inProgress";
 
     public Project() {
     }
