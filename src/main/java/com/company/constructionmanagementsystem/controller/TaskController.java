@@ -72,6 +72,8 @@ public class TaskController {
         return returnVal;
     }
 
+    // getting tasks by projectId and name
+    // /api/tasks/project/name?projectId=1&name=Buying%20Lumber
     @GetMapping("/api/tasks/project/name")
     @ResponseStatus(HttpStatus.OK)
     public Task getTaskByProjectIdAndName(@RequestParam Integer projectId, @RequestParam String name) {
@@ -79,5 +81,11 @@ public class TaskController {
         return returnVal;
     }
 
-
+    // GET ALL TASKS FOR DEVELOPMENT PURPOSES
+    @GetMapping("/api/tasks/developmentAll")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Task> getAllTasksDevelopmentPurposes() {
+        List<Task> returnVal = taskRepository.findAll();
+        return returnVal;
+    }
 }

@@ -78,8 +78,6 @@ public class TaskControllerTest {
         inProgressTasksProject1 = new ArrayList<>(Arrays.asList(
                 outputTask1, outputTask2, outputTask4
         ));
-
-
     }
 
     @Test
@@ -133,7 +131,6 @@ public class TaskControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(outputJsonTaskProject1AndStatus));
-
     }
 
     @Test
@@ -145,7 +142,6 @@ public class TaskControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(outputJsonTask4));
-
     }
 
 }
