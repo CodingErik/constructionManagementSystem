@@ -1,5 +1,6 @@
 package com.company.constructionmanagementsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.context.annotation.Primary;
 
@@ -24,7 +25,9 @@ public class Project implements Serializable {
     private Integer id;
     @NotEmpty(message = "Your must have a name for your project")
     private String name;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate deadline;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate startDate;
     private String roomType;
     private boolean isPlumbing = false;
