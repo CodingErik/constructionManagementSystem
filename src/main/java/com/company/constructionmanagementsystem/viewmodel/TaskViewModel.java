@@ -11,26 +11,26 @@ import java.util.Objects;
 public class TaskViewModel {
 
     private int id;
+    private Project project;
+    private Employee employee;
     private String name;
-    private LocalDate startState;
+    private LocalDate startDate;
     private LocalDate deadline;
     private String description;
     private String status;
-    private List<Project> projectList = new ArrayList<>();
-    private List<Employee> employeeList = new ArrayList<>();
 
     public TaskViewModel() {
     }
 
-    public TaskViewModel(int id, String name, LocalDate startState, LocalDate deadline, String description, String status, List<Project> projectList, List<Employee> employeeList) {
+    public TaskViewModel(int id, Project project, Employee employee, String name, LocalDate startDate, LocalDate deadline, String description, String status) {
         this.id = id;
+        this.project = project;
+        this.employee = employee;
         this.name = name;
-        this.startState = startState;
+        this.startDate = startDate;
         this.deadline = deadline;
         this.description = description;
         this.status = status;
-        this.projectList = projectList;
-        this.employeeList = employeeList;
     }
 
     public int getId() {
@@ -41,6 +41,22 @@ public class TaskViewModel {
         this.id = id;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     public String getName() {
         return name;
     }
@@ -49,12 +65,12 @@ public class TaskViewModel {
         this.name = name;
     }
 
-    public LocalDate getStartState() {
-        return startState;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setStartState(LocalDate startState) {
-        this.startState = startState;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public LocalDate getDeadline() {
@@ -81,46 +97,30 @@ public class TaskViewModel {
         this.status = status;
     }
 
-    public List<Project> getProjectList() {
-        return projectList;
-    }
-
-    public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
-    }
-
-    public List<Employee> getEmployeeList() {
-        return employeeList;
-    }
-
-    public void setEmployeeList(List<Employee> employeeList) {
-        this.employeeList = employeeList;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TaskViewModel that = (TaskViewModel) o;
-        return id == that.id && Objects.equals(name, that.name) && Objects.equals(startState, that.startState) && Objects.equals(deadline, that.deadline) && Objects.equals(description, that.description) && Objects.equals(status, that.status);
+        return id == that.id && Objects.equals(project, that.project) && Objects.equals(employee, that.employee) && Objects.equals(name, that.name) && Objects.equals(startDate, that.startDate) && Objects.equals(deadline, that.deadline) && Objects.equals(description, that.description) && Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, startState, deadline, description, status);
+        return Objects.hash(id, project, employee, name, startDate, deadline, description, status);
     }
 
     @Override
     public String toString() {
         return "TaskViewModel{" +
                 "id=" + id +
+                ", project=" + project +
+                ", employee=" + employee +
                 ", name='" + name + '\'' +
-                ", startState=" + startState +
+                ", startDate=" + startDate +
                 ", deadline=" + deadline +
                 ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
-                ", projectList=" + projectList +
-                ", employeeList=" + employeeList +
                 '}';
     }
 }
