@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -39,6 +40,7 @@ public class ProjectRepositoryTest {
 
     @Test
     public void addFindDeleteProject() {
+        taskRepository.deleteAll();
 
         MathContext mathContext = new MathContext(4);
 
@@ -77,6 +79,7 @@ public class ProjectRepositoryTest {
 
     @Test
     public void findAllProjects() {
+        taskRepository.deleteAll();
 
         MathContext mathContext = new MathContext(4);
         LocalDate deadline = LocalDate.now();
@@ -114,6 +117,8 @@ public class ProjectRepositoryTest {
 
     @Test
     public void saveAndFlushProject() {
+        taskRepository.deleteAll();
+
         MathContext mathContext = new MathContext(4);
 
         Project project = new Project();
@@ -143,5 +148,74 @@ public class ProjectRepositoryTest {
         project1.setTotalBudget(project1.getTotalBudget().round(mathContext));
 
         assertEquals(project1, project);
+    }
+
+    @Test
+    public void findProjectsByDeadline() {
+        taskRepository.deleteAll();
+
+        MathContext mathContext = new MathContext(4);
+
+        Project project = new Project();
+        LocalDate deadline = LocalDate.now();
+        LocalDate startDate = LocalDate.now();
+
+        project.setName("Project One");
+        project.setDeadline(deadline);
+        project.setStartDate(startDate);
+        project.setRoomType("Kitchen");
+        project.setPlumbing(true);
+        project.setMaterialBudget(new BigDecimal(2000.00).round(mathContext));
+        project.setLaborBudget(new BigDecimal(1000.00).round(mathContext));
+        project.setTotalBudget(new BigDecimal(3000.00).round(mathContext));
+        project.setStatus("Finished");
+        project = projectRepository.save(project);
+
+        // findByDeadline
+        List<Project> byDeadline = projectRepository.findByDeadline(project.getDeadline());
+
+        assertEquals(1, byDeadline.size());
+
+        Project project1 = byDeadline.get(0);
+        project1.setMaterialBudget(project1.getMaterialBudget().round(mathContext));
+        project1.setLaborBudget(project1.getLaborBudget().round(mathContext));
+        project1.setTotalBudget(project1.getTotalBudget().round(mathContext));
+
+        assertEquals(project, project1);
+
+    }
+
+    @Test
+    public void findProjectsByStatus() {
+        taskRepository.deleteAll();
+
+        MathContext mathContext = new MathContext(4);
+
+        Project project = new Project();
+        LocalDate deadline = LocalDate.now();
+        LocalDate startDate = LocalDate.now();
+
+        project.setName("Project One");
+        project.setDeadline(deadline);
+        project.setStartDate(startDate);
+        project.setRoomType("Kitchen");
+        project.setPlumbing(true);
+        project.setMaterialBudget(new BigDecimal(2000.00).round(mathContext));
+        project.setLaborBudget(new BigDecimal(1000.00).round(mathContext));
+        project.setTotalBudget(new BigDecimal(3000.00).round(mathContext));
+        project.setStatus("Finished");
+        project = projectRepository.save(project);
+
+        // findByStatus
+        List<Project> byStatus = projectRepository.findByStatus("Finished");
+
+        assertEquals(1, byStatus.size());
+
+        Project project1 = byStatus.get(0);
+        project1.setMaterialBudget(project1.getMaterialBudget().round(mathContext));
+        project1.setLaborBudget(project1.getLaborBudget().round(mathContext));
+        project1.setTotalBudget(project1.getTotalBudget().round(mathContext));
+
+        assertEquals(project, project1);
     }
 }
