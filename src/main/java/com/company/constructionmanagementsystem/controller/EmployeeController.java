@@ -1,5 +1,6 @@
 package com.company.constructionmanagementsystem.controller;
 
+import com.company.constructionmanagementsystem.exceptions.NotFoundException;
 import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +31,12 @@ public class EmployeeController {
     @GetMapping("/api/employees/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Optional<Employee> getEmployeeById(@PathVariable Integer id) throws Exception{
-        Optional<Employee> foundEmplpoyee = repository.findById(id);
+        Optional<Employee> foundEmployee = repository.findById(id);
 
-        if(foundEmplpoyee.isPresent()){
-            return foundEmplpoyee;
+        if(foundEmployee.isPresent()){
+            return foundEmployee;
         } else {
-            throw new FileNotFoundException("No Employee with id " + id);
+            throw new NotFoundException("No Employee with id " + id);
         }
     }
 
@@ -47,7 +48,7 @@ public class EmployeeController {
         if(foundEmployee.isPresent()){
             return foundEmployee;
         } else {
-            throw new FileNotFoundException("No employee found with email " + email);
+            throw new NotFoundException("No employee found with email " + email);
         }
 
     }
@@ -61,20 +62,20 @@ public class EmployeeController {
         if(foundEmployee.isPresent()){
             return foundEmployee;
         } else {
-            throw new FileNotFoundException("No employee found with name " + name);
+            throw new NotFoundException("No employee found with name " + name);
         }
 
     }
 
     @GetMapping("/api/employees/findByUsername/{username}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Optional<Employee> getEmployeeByUsername(@PathVariable String username) throws Exception{
+    public Optional<Employee> getEmployeeByUsername(@PathVariable @Valid String username) throws Exception{
         Optional<Employee> foundEmployee = repository.findByUsername(username);
 
         if(foundEmployee.isPresent()){
             return foundEmployee;
         } else {
-            throw new FileNotFoundException("No employee found with username " + username);
+            throw new NotFoundException("Noe employee found with username "+username);
         }
     }
 
@@ -97,6 +98,7 @@ public class EmployeeController {
     @PostMapping("/api/employees")
     @ResponseStatus(value = HttpStatus.CREATED)
     public Employee addNewEmployee(@RequestBody @Valid Employee employee){
+
         if(employee.getPassword() == null){
             employee.setPassword("defaultPass");
         } else {
