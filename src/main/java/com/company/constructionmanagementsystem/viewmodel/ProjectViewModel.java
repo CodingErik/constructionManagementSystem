@@ -1,8 +1,10 @@
 package com.company.constructionmanagementsystem.viewmodel;
 
+import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.model.Task;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,8 +13,8 @@ public class ProjectViewModel {
 
     private int id;
     private String name;
-    private String deadline;
-    private String startDate;
+    private LocalDate deadline;
+    private LocalDate startDate;
     private String roomType;
     private boolean isPlumbing;
     private boolean isElectric;
@@ -21,11 +23,12 @@ public class ProjectViewModel {
     private BigDecimal totalBudget;
     private String status;
     private List<Task> taskList = new ArrayList<>();
+    private List<Employee> employeeList = new ArrayList<>();
 
     public ProjectViewModel() {
     }
 
-    public ProjectViewModel(int id, String name, String deadline, String startDate, String roomType, boolean isPlumbing, boolean isElectric, BigDecimal materialBudget, BigDecimal laborBudget, BigDecimal totalBudget, String status, List<Task> taskList) {
+    public ProjectViewModel(int id, String name, LocalDate deadline, LocalDate startDate, String roomType, boolean isPlumbing, boolean isElectric, BigDecimal materialBudget, BigDecimal laborBudget, BigDecimal totalBudget, String status, List<Task> taskList, List<Employee> employeeList) {
         this.id = id;
         this.name = name;
         this.deadline = deadline;
@@ -38,6 +41,7 @@ public class ProjectViewModel {
         this.totalBudget = totalBudget;
         this.status = status;
         this.taskList = taskList;
+        this.employeeList = employeeList;
     }
 
     public int getId() {
@@ -56,19 +60,19 @@ public class ProjectViewModel {
         this.name = name;
     }
 
-    public String getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(String deadline) {
+    public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
@@ -136,6 +140,14 @@ public class ProjectViewModel {
         this.taskList = taskList;
     }
 
+    public List<Employee> getEmployeeList() {
+        return employeeList;
+    }
+
+    public void setEmployeeList(List<Employee> employeeList) {
+        this.employeeList = employeeList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -154,8 +166,8 @@ public class ProjectViewModel {
         return "ProjectViewModel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", deadline='" + deadline + '\'' +
-                ", startDate='" + startDate + '\'' +
+                ", deadline=" + deadline +
+                ", startDate=" + startDate +
                 ", roomType='" + roomType + '\'' +
                 ", isPlumbing=" + isPlumbing +
                 ", isElectric=" + isElectric +
@@ -164,6 +176,7 @@ public class ProjectViewModel {
                 ", totalBudget=" + totalBudget +
                 ", status='" + status + '\'' +
                 ", taskList=" + taskList +
+                ", employeeList=" + employeeList +
                 '}';
     }
 }
