@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -38,6 +39,8 @@ public class TaskRepositoryTest {
 
     @Test
     public void addFindDeleteTask() {
+        taskRepository.deleteAll();
+
         LocalDate startDate = LocalDate.now();
         LocalDate deadline = LocalDate.now();
 
@@ -66,6 +69,8 @@ public class TaskRepositoryTest {
 
     @Test
     public void findAllTasks() {
+        taskRepository.deleteAll();
+
         LocalDate startDate = LocalDate.now();
         LocalDate deadline = LocalDate.now();
 
@@ -93,6 +98,8 @@ public class TaskRepositoryTest {
 
     @Test
     public void saveAndFlushTask() {
+        taskRepository.deleteAll();
+
         LocalDate startDate = LocalDate.now();
         LocalDate deadline = LocalDate.now();
 
@@ -111,5 +118,80 @@ public class TaskRepositoryTest {
         Task task1 = taskRepository.findById(task.getId()).get();
 
         assertEquals(task1, task);
+    }
+
+    @Test
+    public void findTasksByProjectId() {
+        taskRepository.deleteAll();
+
+        LocalDate startDate = LocalDate.now();
+        LocalDate deadline = LocalDate.now();
+
+        Task task = new Task();
+        task.setProjectId(1);
+        task.setEmployeeId(1);
+        task.setName("Task One");
+        task.setStartDate(startDate);
+        task.setDeadline(deadline);
+        task.setDescription("This is a task.");
+        task.setStatus("In progress");
+        task = taskRepository.save(task);
+
+        // findByProjectId
+        List<Task> byProjectId = taskRepository.findByProjectId(1);
+
+        assertEquals(1, byProjectId.size());
+        assertEquals(task, byProjectId.get(0));
+
+    }
+
+    @Test
+    public void findTasksByEmployeeId() {
+        taskRepository.deleteAll();
+
+        LocalDate startDate = LocalDate.now();
+        LocalDate deadline = LocalDate.now();
+
+        Task task = new Task();
+        task.setProjectId(1);
+        task.setEmployeeId(1);
+        task.setName("Task One");
+        task.setStartDate(startDate);
+        task.setDeadline(deadline);
+        task.setDescription("This is a task.");
+        task.setStatus("In progress");
+        task = taskRepository.save(task);
+
+        // findByEmployeeId
+        List<Task> byEmployeeId = taskRepository.findByEmployeeId(1);
+
+        assertEquals(1, byEmployeeId.size());
+        assertEquals(task, byEmployeeId.get(0));
+
+    }
+
+    @Test
+    public void findTaskByProjectIdAndEmployeeId() {
+        taskRepository.deleteAll();
+
+        LocalDate startDate = LocalDate.now();
+        LocalDate deadline = LocalDate.now();
+
+        Task task = new Task();
+        task.setProjectId(1);
+        task.setEmployeeId(1);
+        task.setName("Task One");
+        task.setStartDate(startDate);
+        task.setDeadline(deadline);
+        task.setDescription("This is a task.");
+        task.setStatus("In progress");
+        task = taskRepository.save(task);
+
+        // findByProjectIdAndEmployeeId
+        List<Task> byProjectIdAndEmployee = taskRepository.findByProjectIdAndEmployeeId(1,1);
+
+        assertEquals(1, byProjectIdAndEmployee.size());
+        assertEquals(task, byProjectIdAndEmployee.get(0));
+
     }
 }
