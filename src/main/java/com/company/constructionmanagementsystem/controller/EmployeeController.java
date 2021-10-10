@@ -3,21 +3,24 @@ package com.company.constructionmanagementsystem.controller;
 import com.company.constructionmanagementsystem.exceptions.NotFoundException;
 import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.repository.EmployeeRepository;
+import com.company.constructionmanagementsystem.service.EmployeeServiceLayer;
+import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class EmployeeController {
 
     @Autowired
     EmployeeRepository repository;
+
+    @Autowired
+    EmployeeServiceLayer employeeServiceLayer;
 
     @GetMapping("/api/employees")
     @ResponseStatus(value = HttpStatus.OK)
@@ -30,67 +33,49 @@ public class EmployeeController {
 
     @GetMapping("/api/employees/{id}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Optional<Employee> getEmployeeById(@PathVariable Integer id) throws Exception{
-        Optional<Employee> foundEmployee = repository.findById(id);
+    public EmployeeViewModel getEmployeeById(@PathVariable Integer id) throws Exception{
+        EmployeeViewModel returnEmployee = employeeServiceLayer.findEmployeeById(id);
 
-        if(foundEmployee.isPresent()){
-            return foundEmployee;
-        } else {
-            throw new NotFoundException("No Employee with id " + id);
-        }
+        return returnEmployee;
     }
 
     @GetMapping("/api/employees/findByEmail/{email}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Optional<Employee> getEmployeeByEmail(@PathVariable String email) throws Exception{
-        Optional<Employee> foundEmployee = repository.findByEmail(email);
+    public EmployeeViewModel getEmployeeByEmail(@PathVariable String email) throws Exception{
+        EmployeeViewModel returnEmployee = employeeServiceLayer.findEmployeeByEmail(email);
 
-        if(foundEmployee.isPresent()){
-            return foundEmployee;
-        } else {
-            throw new NotFoundException("No employee found with email " + email);
-        }
+        return returnEmployee;
 
     }
 
     @GetMapping("/api/employees/findByName/{name}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Optional<Employee> getEmployeeByName(@PathVariable String name) throws Exception{
+    public EmployeeViewModel getEmployeeByName(@PathVariable String name) throws Exception{
+        EmployeeViewModel returnEmployee = employeeServiceLayer.findEmployeeByName(name);
 
-        Optional<Employee> foundEmployee = repository.findByName(name);
-
-        if(foundEmployee.isPresent()){
-            return foundEmployee;
-        } else {
-            throw new NotFoundException("No employee found with name " + name);
-        }
-
+        return returnEmployee;
     }
 
     @GetMapping("/api/employees/findByUsername/{username}")
     @ResponseStatus(value = HttpStatus.OK)
-    public Optional<Employee> getEmployeeByUsername(@PathVariable @Valid String username) throws Exception{
-        Optional<Employee> foundEmployee = repository.findByUsername(username);
+    public EmployeeViewModel getEmployeeByUsername(@PathVariable @Valid String username) throws Exception{
+        EmployeeViewModel returnEmployee = employeeServiceLayer.findEmployeeByUsername(username);
 
-        if(foundEmployee.isPresent()){
-            return foundEmployee;
-        } else {
-            throw new NotFoundException("Noe employee found with username "+username);
-        }
+        return returnEmployee;
     }
 
     @GetMapping("/api/employees/findByTitle/{title}")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<Employee> getEmployeesByTitle(@PathVariable String title) throws Exception{
-        List<Employee> employeeList = repository.findByTitle(title);
+    public List<EmployeeViewModel> getEmployeesByTitle(@PathVariable String title) throws Exception{
+        List<EmployeeViewModel> employeeList = employeeServiceLayer.findEmployeesByTitle(title);
 
         return employeeList;
     }
 
     @GetMapping("/api/employees/findByProjectId/{projectId}")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<Employee> getEmployeesByProjectId(@PathVariable Integer projectId) throws Exception{
-        List<Employee> employeeList = repository.findByProjectId(projectId);
+    public List<EmployeeViewModel> getEmployeesByProjectId(@PathVariable Integer projectId) throws Exception{
+        List<EmployeeViewModel> employeeList = employeeServiceLayer.findEmployeesByProjectId(projectId);
 
         return employeeList;
     }
