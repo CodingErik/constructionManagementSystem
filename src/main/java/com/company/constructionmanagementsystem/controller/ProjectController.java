@@ -65,8 +65,6 @@ public class ProjectController {
     @GetMapping("/api/project/deadline/{deadline}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<Project> findByDeadline(@PathVariable LocalDate deadline){
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-//        System.out.println(formatter.format(deadline));
 
         List<Project> project = repo.findByDeadline(deadline);
         return project;
