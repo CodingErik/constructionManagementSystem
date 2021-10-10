@@ -3,6 +3,8 @@ package com.company.constructionmanagementsystem.controller;
 import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.repository.EmployeeRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,12 +48,18 @@ public class EmployeeControllerTest {
 
     @Before
     public void setUp() throws Exception {
+
+        mapper.registerModule(new JavaTimeModule());
+        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+
         // Set up Employee1
         employee1 = new Employee();
         employee1.setId(1);
         employee1.setProjectId(1);
         employee1.setTitle("Architect");
         employee1.setName("Amal Janabayev");
+        LocalDate dateOfBirth1 = LocalDate.of(1997,1,24);
+        employee1.setDateOfBirth(dateOfBirth1);
         employee1.setSalary(new BigDecimal("40.000"));
         employee1.setYearsOfExperience(3);
         employee1.setEmail("amalj2426@gmail.com");
@@ -66,6 +74,8 @@ public class EmployeeControllerTest {
         employee2.setProjectId(1);
         employee2.setTitle("Worker");
         employee2.setName("Hannah Burson");
+        LocalDate dateOfBirth2 = LocalDate.of(1992,4,10);
+        employee2.setDateOfBirth(dateOfBirth2);
         employee2.setSalary(new BigDecimal("30.000"));
         employee2.setYearsOfExperience(1);
         employee2.setEmail("hannab@yahoo.com");
@@ -80,6 +90,8 @@ public class EmployeeControllerTest {
         employee3.setProjectId(1);
         employee3.setTitle("Worker");
         employee3.setName("John Smith");
+        LocalDate dateOfBirth3 = LocalDate.of(1983,12,14);
+        employee3.setDateOfBirth(dateOfBirth3);
         employee3.setSalary(new BigDecimal("27.000"));
         employee3.setYearsOfExperience(2);
         employee3.setEmail("john@gmail.com");
@@ -94,6 +106,8 @@ public class EmployeeControllerTest {
         employee4.setProjectId(2);
         employee4.setTitle("Architect");
         employee4.setName("Maria Botez");
+        LocalDate dateOfBirth4 = LocalDate.of(1999,8,2);
+        employee4.setDateOfBirth(dateOfBirth4);
         employee4.setSalary(new BigDecimal("50.000"));
         employee4.setYearsOfExperience(6);
         employee4.setEmail("maria@yahoo.com");
@@ -107,6 +121,8 @@ public class EmployeeControllerTest {
         employee5.setProjectId(2);
         employee5.setTitle("Worker");
         employee5.setName("Jacob Galson");
+        LocalDate dateOfBirth5 = LocalDate.of(1976,5,28);
+        employee5.setDateOfBirth(dateOfBirth5);
         employee5.setSalary(new BigDecimal("30.000"));
         employee5.setYearsOfExperience(3);
         employee5.setEmail("jacob@yahoo.com");
@@ -122,6 +138,8 @@ public class EmployeeControllerTest {
 //        inputEmployee.setPassword("password");
         inputEmployee.setTitle("Architect");
         inputEmployee.setName("Amal Janabayev");
+        LocalDate dateOfBirth = LocalDate.of(1989,3,22);
+        inputEmployee.setDateOfBirth(dateOfBirth);
         inputEmployee.setSalary(new BigDecimal("40.000"));
         inputEmployee.setYearsOfExperience(3);
         inputEmployee.setEmail("amalj2426@gmail.com");
@@ -363,6 +381,8 @@ public class EmployeeControllerTest {
         outputEmployee.setPassword("defaultPass");
         outputEmployee.setTitle("Architect");
         outputEmployee.setName("Amal Janabayev");
+        LocalDate dateOfBirth = LocalDate.of(1989,3,22);
+        outputEmployee.setDateOfBirth(dateOfBirth);
         outputEmployee.setSalary(new BigDecimal("40.000"));
         outputEmployee.setYearsOfExperience(3);
         outputEmployee.setEmail("amalj2426@gmail.com");
