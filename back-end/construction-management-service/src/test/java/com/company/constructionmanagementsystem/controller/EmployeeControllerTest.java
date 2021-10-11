@@ -250,56 +250,56 @@ public class EmployeeControllerTest {
                 .andExpect(content().json(jsonOutput5));
     }
 
-    @Test
-    public void shouldReturnCorrectEmployeeWhenSearchedByName() throws Exception{
-        repository.deleteAll();
-
-        Optional<Employee> optEmployee1 = Optional.of(employee1);
-        given(repository.findByName(employee1.getName())).willReturn(optEmployee1);
-        String jsonOutput1 = mapper.writeValueAsString(employee1);
-
-        mockMvc.perform(get("/api/employees/findByName/"+employee1.getName()))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json(jsonOutput1));
-
-        Optional<Employee> optEmployee2 = Optional.of(employee2);
-        given(repository.findByName(employee2.getName())).willReturn(optEmployee2);
-        String jsonOutput2 = mapper.writeValueAsString(employee2);
-
-        mockMvc.perform(get("/api/employees/findByName/"+employee2.getName()))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json(jsonOutput2));
-
-        Optional<Employee> optEmployee3 = Optional.of(employee3);
-        given(repository.findByName(employee3.getName())).willReturn(optEmployee3);
-        String jsonOutput3 = mapper.writeValueAsString(employee3);
-
-        mockMvc.perform(get("/api/employees/findByName/"+employee3.getName()))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json(jsonOutput3));
-
-        Optional<Employee> optEmployee4 = Optional.of(employee4);
-        given(repository.findByName(employee4.getName())).willReturn(optEmployee4);
-        String jsonOutput4 = mapper.writeValueAsString(employee4);
-
-        mockMvc.perform(get("/api/employees/findByName/"+employee4.getName()))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json(jsonOutput4));
-
-        Optional<Employee> optEmployee5 = Optional.of(employee5);
-        given(repository.findByName(employee5.getName())).willReturn(optEmployee5);
-        String jsonOutput5 = mapper.writeValueAsString(employee5);
-
-        mockMvc.perform(get("/api/employees/findByName/"+employee5.getName()))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().json(jsonOutput5));
-
-    }
+//    @Test
+//    public void shouldReturnCorrectEmployeeWhenSearchedByName() throws Exception{
+//        repository.deleteAll();
+//
+//        Optional<Employee> optEmployee1 = Optional.of(employee1);
+//        given(repository.findByName(employee1.getName())).willReturn(optEmployee1);
+//        String jsonOutput1 = mapper.writeValueAsString(employee1);
+//
+//        mockMvc.perform(get("/api/employees/findByName/"+employee1.getName()))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(content().json(jsonOutput1));
+//
+//        Optional<Employee> optEmployee2 = Optional.of(employee2);
+//        given(repository.findByName(employee2.getName())).willReturn(optEmployee2);
+//        String jsonOutput2 = mapper.writeValueAsString(employee2);
+//
+//        mockMvc.perform(get("/api/employees/findByName/"+employee2.getName()))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(content().json(jsonOutput2));
+//
+//        Optional<Employee> optEmployee3 = Optional.of(employee3);
+//        given(repository.findByName(employee3.getName())).willReturn(optEmployee3);
+//        String jsonOutput3 = mapper.writeValueAsString(employee3);
+//
+//        mockMvc.perform(get("/api/employees/findByName/"+employee3.getName()))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(content().json(jsonOutput3));
+//
+//        Optional<Employee> optEmployee4 = Optional.of(employee4);
+//        given(repository.findByName(employee4.getName())).willReturn(optEmployee4);
+//        String jsonOutput4 = mapper.writeValueAsString(employee4);
+//
+//        mockMvc.perform(get("/api/employees/findByName/"+employee4.getName()))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(content().json(jsonOutput4));
+//
+//        Optional<Employee> optEmployee5 = Optional.of(employee5);
+//        given(repository.findByName(employee5.getName())).willReturn(optEmployee5);
+//        String jsonOutput5 = mapper.writeValueAsString(employee5);
+//
+//        mockMvc.perform(get("/api/employees/findByName/"+employee5.getName()))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(content().json(jsonOutput5));
+//
+//    }
 
     @Test
     public void shouldReturnCorrectEmployeesWhenSearchedByTitle() throws Exception{

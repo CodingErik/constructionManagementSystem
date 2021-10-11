@@ -270,7 +270,7 @@ public class EmployeeRepositoryTest {
         employee = employeeRepository.save(employee);
 
         // findByName
-        Employee byName = employeeRepository.findByName("John Doe").get();
+        Employee byName = employeeRepository.findByName("John Doe").get(0);
         byName.setSalary(byName.getSalary().round(mathContext));
 
         assertEquals(byName, employee);
