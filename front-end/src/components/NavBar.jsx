@@ -26,14 +26,9 @@ export default function NavBar() {
                 Home
               </Link>
             </li>
-<<<<<<< HEAD
-            <li className='nav-item'>
-              <Link className='nav-link' to='/MyProfile'>
-=======
             <li className="nav-item">
                 {/* hard code to remove */}
-              <a className="nav-link" href="/MyProfile/1">  
->>>>>>> 2976c815181f518acfbccd4b08ecedaeeb8fdb69
+              <Link className="nav-link" to="/MyProfile/1">  
                 MyProfile
               </Link>
             </li>
