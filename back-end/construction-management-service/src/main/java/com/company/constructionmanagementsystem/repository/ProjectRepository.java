@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Integer>{
@@ -14,6 +15,6 @@ public interface ProjectRepository extends JpaRepository<Project, Integer>{
     List<Project> findByDeadline(LocalDate deadline);
     List<Project> findByStatus(String status);
     List<Project> findByRoomType(String roomType);
-
-
+    List<Project> findByName(String name);
+    List<Project> findByRoomTypeAndName(String roomType, String name);
 }

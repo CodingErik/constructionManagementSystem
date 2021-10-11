@@ -85,11 +85,49 @@ public class ProjectServiceLayer {
             ProjectViewModel pvm = buildProjectViewModel(project);
 
             pvmList.add(pvm);
-
         }
 
         return pvmList;
 
+    }
+
+    public List<ProjectViewModel> findByRoomType(String roomType){
+        List<Project> projectList = projectRepository.findByRoomType(roomType);
+
+        List<ProjectViewModel> pvmList = new ArrayList<>();
+
+        for(Project project : projectList){
+            ProjectViewModel pvm = buildProjectViewModel(project);
+
+            pvmList.add(pvm);
+        }
+        return pvmList;
+    }
+
+    public List<ProjectViewModel> findByName(String name){
+        List<Project> projectList = projectRepository.findByName(name);
+
+        List<ProjectViewModel> pvmList = new ArrayList<>();
+
+        for(Project project : projectList){
+            ProjectViewModel pvm = buildProjectViewModel(project);
+
+            pvmList.add(pvm);
+        }
+        return pvmList;
+    }
+
+    public List<ProjectViewModel> findByRoomTypeAndName(String roomType, String name){
+        List<Project> projectList = projectRepository.findByRoomTypeAndName(roomType,name);
+
+        List<ProjectViewModel> pvmList = new ArrayList<>();
+
+        for(Project project : projectList){
+            ProjectViewModel pvm = buildProjectViewModel(project);
+
+            pvmList.add(pvm);
+        }
+        return pvmList;
     }
 
     public ProjectViewModel buildProjectViewModel(Project inputProject) {
