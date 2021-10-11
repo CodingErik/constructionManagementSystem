@@ -4,14 +4,10 @@ export default function ProjectsTable(props){
 
     const [projects, setProjects] = useState([]);
     const [statusFilter, setStatusFilter] = useState("all");
-    const [projectName, setProjectName] = useState();
-    const [roomType, setRoomType] = useState();
 
     useEffect(() => {
         setProjects(props.projects);
         setStatusFilter(props.statusFilter);
-        setProjectName(props.projectName);
-        setRoomType(props.roomType);
     },[props])
 
 
@@ -33,7 +29,7 @@ export default function ProjectsTable(props){
             </tr>
         </thead>
         <tbody>
-                {statusFilter == "all" && projects.map(project => {
+                {statusFilter === "all" && projects.map(project => {
                     return (
                         <tr key={project.id}>
                             <th scope="row">{project.id}</th>
@@ -51,9 +47,9 @@ export default function ProjectsTable(props){
                     )
                 })}
 
-                {statusFilter == "in_progress" && projects.map(project => {
+                {statusFilter === "in_progress" && projects.map(project => {
                     return (
-                        project.status == "in_progress" &&
+                        project.status === "in_progress" &&
                         <tr key={project.id}>
                             <th scope="row">{project.id}</th>
                             <td>{project.name}</td>
@@ -70,9 +66,9 @@ export default function ProjectsTable(props){
                     )
                 })}
 
-                {statusFilter == "completed" && projects.map(project => {
+                {statusFilter === "completed" && projects.map(project => {
                     return (
-                        project.status == "completed" &&
+                        project.status === "completed" &&
                         <tr key={project.id}>
                             <th scope="row">{project.id}</th>
                             <td>{project.name}</td>
