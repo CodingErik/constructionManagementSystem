@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@CrossOrigin
 @RestController
 @CrossOrigin
 public class ProjectController {
