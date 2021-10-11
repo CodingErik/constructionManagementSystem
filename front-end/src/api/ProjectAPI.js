@@ -1,9 +1,6 @@
 import axios from "axios";
 const baseUrl = `http://localhost:8080/api/projects`;
 const API = {
-    getAllProjects: () => {
-        return axios.get(`${baseUrl}`)
-    },
     getProjectsByRoomType: (roomType) => {
         return axios.get(`${baseUrl}/roomType/${roomType}`)
     },
@@ -18,6 +15,9 @@ const API = {
     },
     putProject: (updatedProject) => {
         return axios.put(`${baseUrl}`, updatedProject)
+    },
+    getAllProjects: (roomType, name, isPlumbing, isElectric) => {
+        return axios.get(`${baseUrl}`, {params:{roomType:roomType,name:name}});
     }
 };
 

@@ -1,5 +1,6 @@
 package com.company.constructionmanagementsystem.service;
 
+import com.company.constructionmanagementsystem.exceptions.NotFoundException;
 import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.model.Project;
 import com.company.constructionmanagementsystem.model.Task;
@@ -36,18 +37,23 @@ public class EmployeeServiceLayer {
     }
 
     public EmployeeViewModel findEmployeeByEmail(String email){
+
+        if (!employeeRepository.findByEmail(email).isPresent()) throw new NotFoundException("Email Not Found.");
+
         Employee employee = employeeRepository.findByEmail(email).get();
 
         return buildEmployeeViewModel(employee);
     }
 
     public EmployeeViewModel findEmployeeByName(String name){
-        Employee employee = employeeRepository.findByName(name).get();
+        Employee employee = employeeRepository.findByName(name).get(0);
 
         return buildEmployeeViewModel(employee);
     }
 
     public EmployeeViewModel findEmployeeByUsername(String username){
+
+        if (!employeeRepository.findByUsername(username).isPresent()) throw new NotFoundException("Username Not Found.");
         Employee employee = employeeRepository.findByUsername(username).get();
 
         return buildEmployeeViewModel(employee);
@@ -78,11 +84,17 @@ public class EmployeeServiceLayer {
     }
 
     private EmployeeViewModel buildEmployeeViewModel(Employee employee){
-        Project project = projectRepository.findById(employee.getProjectId()).get();
+
         List<Task> taskList = taskRepository.findAllTasksByEmployeeId(employee.getId());
 
         EmployeeViewModel evm = new EmployeeViewModel();
-        evm.setProject(project);
+
+        if (!projectRepository.findById(employee.getProjectId()).isPresent()) {
+            evm.setProject(null);
+        } else {
+            evm.setProject(projectRepository.findById(employee.getProjectId()).get());
+        }
+
         evm.setTaskList(taskList);
         evm.setId(employee.getId());
         evm.setEmail(employee.getEmail());
