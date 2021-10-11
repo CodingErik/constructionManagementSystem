@@ -51,16 +51,10 @@ export default function Projects() {
 
     },[roomType,projectName])
 
-    function setFilters(event){
+    function setFilters(event) {
         event.preventDefault();
-        // if(projectNameRef.current.value !== null){
-            // console.log(projectNameRef.current.value);
-            setProjectName(projectNameRef.current.value);   
-        // }
-
-        // if(roomTypeRef.current.value !== null){
-            setRoomType(roomTypeRef.current.value);
-        // }
+        setProjectName(projectNameRef.current.value);
+        setRoomType(roomTypeRef.current.value);
     }
 
     function resetFilters(event){
