@@ -10,51 +10,60 @@ export default function Projects() {
     const [statusFilter, setStatusFilter] = useState("all");
     const [roomType, setRoomType] = useState();
     const [projectName, setProjectName] = useState();
+    const [isPlumbing, setIsPlumbing] = useState();
+    const [isElectric, setIsElectric] = useState();
 
     const projectNameRef = useRef();
     const roomTypeRef = useRef();
 
     useEffect(() => {
-        if(roomType && projectName){
-            API.getProjectsByRoomTypeAndName(roomType,projectName)
-                .then(res => {
-                    setProjects(res.data);
-                })
-                .catch(error => {
-                    console.error(error);
-                })
-        } else if(projectName){
-            API.getProjectsByProjectName(projectName)
-                .then(res => {
-                    setProjects(res.data);
-                })
-                .catch(error => {
-                    console.error(error);
-                })
-        } else if (roomType) {
-            API.getProjectsByRoomType(roomType)
-                .then(res => {
-                    setProjects(res.data);
-                })
-                .catch(error => {
-                    console.error(error);
-                })
-        } else {
-            API.getAllProjects()
-                .then(res => {
-                    setProjects(res.data);
-                })
-                .catch(error => {
-                    console.error(error);
-                })
-        }
+        API.getAllProjects(roomType ? roomType : null, projectName ? projectName : null)
+            .then(res => {
+                if(isElectric === false && isPlumbing === false){
+                    let results = [];
 
-    },[roomType,projectName])
+                    res.data.forEach(project => {
+                        if(project.plumbing === false && project.electric === false){
+                            results.push(project);
+                        }
+                    })
+
+                    setProjects(results);
+                } else if(isElectric === false){
+                    let results = [];
+
+                    res.data.forEach(project => {
+                        if(project.electric === false){
+                            results.push(project);
+                        }
+                    }) 
+                    
+                    setProjects(results);
+                } else if(isPlumbing === false){
+                    let results = [];
+
+                    res.data.forEach(project => {
+                        if(project.plumbing === false){
+                            results.push(project);
+                        }
+                    })  
+                    
+                    setProjects(results);
+                } else {
+                    setProjects(res.data);
+                }
+
+                
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }, [roomType, projectName, isPlumbing, isElectric]);
 
     function setFilters(event) {
         event.preventDefault();
-        setProjectName(projectNameRef.current.value);
-        setRoomType(roomTypeRef.current.value);
+        projectNameRef.current.value !== null && setProjectName(projectNameRef.current.value);
+        roomTypeRef.current.value !== null && setRoomType(roomTypeRef.current.value);
     }
 
     function resetFilters(event){
@@ -67,7 +76,6 @@ export default function Projects() {
 
     return (
         <div>
-
             <div className="statusFilter">
                 <p style={{paddingTop:"13px"}}>Status : </p>
                 <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
@@ -92,18 +100,18 @@ export default function Projects() {
                 <div className="plumbingFilter filter">
                     <p>Plumbing</p>
                     <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" className="btn-check" name="btnradio" id="btnradioPlumbingYes" autoComplete="off" defaultChecked="" />
+                        <input type="radio" onClick={() => setIsPlumbing(true)} className="btn-check" name="btnradio" id="btnradioPlumbingYes" autoComplete="off" defaultChecked="" />
                         <label className="btn btn-outline-secondary" htmlFor="btnradioPlumbingYes">Yes</label>
-                        <input type="radio" className="btn-check" name="btnradio" id="btnradioPlumbingNo" autoComplete="off" defaultChecked="" />
+                        <input type="radio" onClick={() => setIsPlumbing(false)} className="btn-check" name="btnradio" id="btnradioPlumbingNo" autoComplete="off" defaultChecked="" />
                         <label className="btn btn-outline-secondary" htmlFor="btnradioPlumbingNo">No</label>
                     </div>
                 </div>
                 <div className="electricityFilter filter">
                     <p>Electricity</p>
                     <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" className="btn-check" name="btnradio" id="btnradioElectricityYes" autoComplete="off" defaultChecked="" />
+                        <input type="radio" onClick={() => setIsElectric(true)} className="btn-check" name="btnradio" id="btnradioElectricityYes" autoComplete="off" defaultChecked="" />
                         <label className="btn btn-outline-secondary" htmlFor="btnradioElectricityYes">Yes</label>
-                        <input type="radio" className="btn-check" name="btnradio" id="btnradioElectricityNo" autoComplete="off" defaultChecked="" />
+                        <input type="radio" onClick={() => setIsElectric(false)} className="btn-check" name="btnradio" id="btnradioElectricityNo" autoComplete="off" defaultChecked="" />
                         <label className="btn btn-outline-secondary" htmlFor="btnradioElectricityNo">No</label>
                     </div>
                 </div>
