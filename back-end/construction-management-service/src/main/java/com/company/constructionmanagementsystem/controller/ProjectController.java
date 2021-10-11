@@ -38,24 +38,10 @@ public class ProjectController {
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectViewModel> getAllProjects(
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) String roomType,
-            @RequestParam(required = false) boolean isPlumbing,
-            @RequestParam(required = false) boolean isElectric
+            @RequestParam(required = false) String roomType
             ) {
 
         List<ProjectViewModel> returnList = projectServiceLayer.findAllProjects();
-
-        if (!isPlumbing) {
-            returnList = projectServiceLayer.findByIsPlumbing(false);
-        }
-
-        if (isElectric) {
-            returnList = projectServiceLayer.findByIsElectric(isElectric);
-        }
-
-        if (isPlumbing && isElectric){
-            returnList = projectServiceLayer.findByIsPlumbingAndIsElectric(isPlumbing, isElectric);
-        }
 
         if (name != null) {
             returnList = projectServiceLayer.findByName(name);
@@ -67,42 +53,6 @@ public class ProjectController {
 
         if (name != null && roomType != null){
             returnList = projectServiceLayer.findByRoomTypeAndName(roomType, name);
-        }
-
-        if (name != null && isPlumbing){
-            returnList = projectServiceLayer.findByNameAndIsPlumbing(name, isPlumbing);
-        }
-
-        if (name != null && isElectric){
-            returnList = projectServiceLayer.findByNameAndIsElectric(name, isElectric);
-        }
-
-        if (roomType != null && isPlumbing){
-            returnList = projectServiceLayer.findByRoomTypeAndIsPlumbing(roomType, isPlumbing);
-        }
-
-        if (roomType != null && isElectric){
-            returnList = projectServiceLayer.findByRoomTypeAndIsElectric(roomType, isElectric);
-        }
-
-        if (roomType != null && isPlumbing && isElectric){
-            returnList = projectServiceLayer.findByRoomTypeAndIsPlumbingAndIsElectric(roomType, isPlumbing, isElectric);
-        }
-
-        if (name != null && isPlumbing && isElectric){
-            returnList = projectServiceLayer.findByNameAndIsPlumbingAndIsElectric(name, isPlumbing, isElectric);
-        }
-
-        if(roomType != null && name != null && isPlumbing){
-            returnList = projectServiceLayer.findByRoomTypeAndNameAndIsPlumbing(roomType, name, isPlumbing);
-        }
-
-        if(roomType != null && name != null && isElectric){
-            returnList = projectServiceLayer.findByRoomTypeAndNameAndIsElectric(roomType, name, isElectric);
-        }
-
-        if (name != null && roomType != null && isPlumbing && isElectric){
-            returnList = projectServiceLayer.findByNameAndRoomTypeAndIsPlumbingAndIsElectric(name, roomType, isPlumbing, isElectric);
         }
 
         return returnList;

@@ -16,8 +16,8 @@ const API = {
     putProject: (updatedProject) => {
         return axios.put(`${baseUrl}`, updatedProject)
     },
-    getAllProjects: (roomType, name, isPlumbing, isElectric) => {
-        return axios.get(`${baseUrl}`, {params:{roomType:roomType,name:name}});
+    getAllProjects: (roomType, name) => {
+        return axios.get(`${baseUrl}`);
     }
 };
 
