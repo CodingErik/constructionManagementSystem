@@ -1,0 +1,73 @@
+.table{
+    margin-left:2.5%;
+    width:90% !important;
+}
+
+.statusFilter{
+    display:flex; 
+    justify-content: space-evenly;
+    width:32%;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.statusFilter>button{
+    margin-left:3%;
+    margin-right:3%;
+}
+
+.statusFilterButton{
+    background-color: transparent;
+    border:none;
+    border-radius: 10rem;
+    outline:none;
+    height:32px;
+}
+
+.filterButton{
+    background-color: transparent;
+    border:1px solid transparent;
+    border-radius: 10rem;
+    outline:none;
+    margin-top:3.3%;
+    margin-left:10%;
+    color:blue;
+    font-weight:800;
+    width:15%;
+}
+
+.filterButton:hover{
+    background-color: blue;
+    color:white;
+    border:1px solid transparent;
+}
+
+.otherFilters{
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width:84.5%;
+    margin-bottom:30px;
+}
+
+.filter{
+    margin-left:1%;
+    margin-right:1%;   
+}
+
+.filter>p{
+    display:flex;
+    margin-bottom:1px !important;
+}
+
+.projectStatus{
+    font-weight: 800;
+}
+
+.in_progress{
+    color:rgb(255,215,0);
+}
+
+.completed{
+    color:green;
+}
