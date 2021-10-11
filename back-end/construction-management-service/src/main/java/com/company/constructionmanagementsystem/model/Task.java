@@ -15,11 +15,11 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @NotEmpty(message = "You must supply a name")
+    private String name;
     @NotNull(message = "You must supply a project Id")
     private Integer projectId;
     private Integer employeeId;
-    @NotEmpty(message = "You must supply a name")
-    private String name;
     private LocalDate startDate;
     private LocalDate deadline;
     private String description;
