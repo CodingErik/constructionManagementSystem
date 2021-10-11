@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
+@CrossOrigin
 public class ProjectController {
 
     @Autowired
