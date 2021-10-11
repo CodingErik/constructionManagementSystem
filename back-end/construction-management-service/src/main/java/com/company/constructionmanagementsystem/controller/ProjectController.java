@@ -108,6 +108,22 @@ public class ProjectController {
         return returnList;
     }
 
+    @PutMapping("/api/projects")
+    @ResponseStatus(value=HttpStatus.NO_CONTENT)
+    public void putProject(@RequestBody Project project) throws Exception{
+        repo.save(project);
+    }
+
+
+
+    // **************************************************************************************
+    // **************************************************************************************
+    // **************************************************************************************
+    // **************************************************************************************
+    // **************************************************************************************
+    // **************************************************************************************
+    // **************************************************************************************
+
     @GetMapping("/api/projects/id/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public ProjectViewModel getProjectsById(@PathVariable Integer id) {
@@ -157,11 +173,7 @@ public class ProjectController {
         return returnProjectList;
     }
 
-    @PutMapping("/api/projects")
-    @ResponseStatus(value=HttpStatus.NO_CONTENT)
-    public void putProject(@RequestBody Project project) throws Exception{
-        repo.save(project);
-    }
+
 
 
 //    @GetMapping("/api/projects/isPlumbing/{isPlumbing}")
