@@ -1,5 +1,6 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
   return (
@@ -46,9 +47,9 @@ export default function Login() {
                   </button>
                 </div>
 
-                <a class='d-block text-center mt-2 small' href='/register'>
+                <Link class='d-block text-center mt-2 small' to='/register'>
                   Don't have an account? Register
-                </a>
+                </Link>
 
                 <hr class='my-4' />
               </form>
