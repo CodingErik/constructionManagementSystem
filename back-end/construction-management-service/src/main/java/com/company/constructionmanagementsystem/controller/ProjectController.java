@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@CrossOrigin
 @RestController
 @CrossOrigin
 public class ProjectController {
@@ -36,49 +36,78 @@ public class ProjectController {
     // /api/project?isPlumbing=isElectric= refactor
     @GetMapping("/api/projects")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<ProjectViewModel> getAllProjects(@RequestParam(required = false) boolean isPlumbing, @RequestParam(required = false) boolean isElectric) {
+    public List<ProjectViewModel> getAllProjects(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String roomType,
+            @RequestParam(required = false) boolean isPlumbing,
+            @RequestParam(required = false) boolean isElectric
+            ) {
 
         List<ProjectViewModel> returnList = projectServiceLayer.findAllProjects();
 
-        if (isPlumbing) {
-            returnList = returnList.stream()
-                    .filter(project -> project.isPlumbing())
-                    .collect(Collectors.toList());
+        if (!isPlumbing) {
+            returnList = projectServiceLayer.findByIsPlumbing(false);
         }
 
         if (isElectric) {
-            returnList = returnList.stream()
-                    .filter(project -> project.isElectric())
-                    .collect(Collectors.toList());
+            returnList = projectServiceLayer.findByIsElectric(isElectric);
+        }
+
+        if (isPlumbing && isElectric){
+            returnList = projectServiceLayer.findByIsPlumbingAndIsElectric(isPlumbing, isElectric);
+        }
+
+        if (name != null) {
+            returnList = projectServiceLayer.findByName(name);
+        }
+
+        if (roomType != null){
+            returnList = projectServiceLayer.findByRoomType(roomType);
+        }
+
+        if (name != null && roomType != null){
+            returnList = projectServiceLayer.findByRoomTypeAndName(roomType, name);
+        }
+
+        if (name != null && isPlumbing){
+            returnList = projectServiceLayer.findByNameAndIsPlumbing(name, isPlumbing);
+        }
+
+        if (name != null && isElectric){
+            returnList = projectServiceLayer.findByNameAndIsElectric(name, isElectric);
+        }
+
+        if (roomType != null && isPlumbing){
+            returnList = projectServiceLayer.findByRoomTypeAndIsPlumbing(roomType, isPlumbing);
+        }
+
+        if (roomType != null && isElectric){
+            returnList = projectServiceLayer.findByRoomTypeAndIsElectric(roomType, isElectric);
+        }
+
+        if (roomType != null && isPlumbing && isElectric){
+            returnList = projectServiceLayer.findByRoomTypeAndIsPlumbingAndIsElectric(roomType, isPlumbing, isElectric);
+        }
+
+        if (name != null && isPlumbing && isElectric){
+            returnList = projectServiceLayer.findByNameAndIsPlumbingAndIsElectric(name, isPlumbing, isElectric);
+        }
+
+        if(roomType != null && name != null && isPlumbing){
+            returnList = projectServiceLayer.findByRoomTypeAndNameAndIsPlumbing(roomType, name, isPlumbing);
+        }
+
+        if(roomType != null && name != null && isElectric){
+            returnList = projectServiceLayer.findByRoomTypeAndNameAndIsElectric(roomType, name, isElectric);
+        }
+
+        if (name != null && roomType != null && isPlumbing && isElectric){
+            returnList = projectServiceLayer.findByNameAndRoomTypeAndIsPlumbingAndIsElectric(name, roomType, isPlumbing, isElectric);
         }
 
         return returnList;
     }
-    /** before change*/
-//    /** request for filtering fits this category more */
-//    // /api/project?isPlumbing=isElectric= refactor
-//    @RequestMapping(value = "/api/projects", method = RequestMethod.GET)
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public List<Project> getAllProjects(@RequestParam(required = false) boolean isPlumbing, @RequestParam(required = false) boolean isElectric) {
-//
-//        List<Project> returnList = repo.findAll();
-//
-//        if (isPlumbing) {
-//            returnList = returnList.stream()
-//                    .filter(project -> project.isPlumbing())
-//                    .collect(Collectors.toList());
-//        }
-//
-//        if (isElectric) {
-//            returnList = returnList.stream()
-//                    .filter(project -> project.isElectric())
-//                    .collect(Collectors.toList());
-//        }
-//
-//        return returnList;
-//    }
 
-    /** after change */
     @GetMapping("/api/projects/id/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public ProjectViewModel getProjectsById(@PathVariable Integer id) {
@@ -88,42 +117,12 @@ public class ProjectController {
         return pvm;
     }
 
-    // /api/project?id=1 refactor
-    /**
-    * before change
-    * */
-//    @GetMapping("/api/project/id/{id}")
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public Project getProjectsById(@PathVariable Integer id) {
-//        Optional<Project> returnVal = repo.findById(id);
-//        if (returnVal.isPresent()) {
-//            return returnVal.get();
-//        } else {
-//            return null;
-//        }
-//    }
-
-    /** after change */
     @GetMapping("/api/projects/deadline/{deadline}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-//        System.out.println(formatter.format(deadline));
         return projectServiceLayer.findByDeadline(deadline);
     }
-    /** before change*/
-    // /api/project/deadline/{deadline}
-//    @GetMapping("/api/project/deadline/{deadline}")
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public List<Project> findByDeadline(@PathVariable LocalDate deadline){
-////        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
-////        System.out.println(formatter.format(deadline));
-//
-//        List<Project> project = repo.findByDeadline(deadline);
-//        return project;
-//    }
-    /** after change */
-    // /api/project/status/{status}
+
     @GetMapping("/api/projects/status/{status}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectViewModel> findByStatus(@PathVariable String status){
@@ -134,22 +133,6 @@ public class ProjectController {
         return projectServiceLayer.findByStatus(status);
     }
 
-    /** before change*/
-//    // /api/project/status/{deadline}
-//    @GetMapping("/api/project/status/{status}")
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public List<Project> findByStatus(@PathVariable String status){
-//
-//        /** maybe figure out 3 different statuses
-//         *  maybe somekind of switch statement
-//         * */
-//
-//        List<Project> project = repo.findByStatus(status);
-//        return project;
-//    }
-
-    //  getting projects by project room type
-    //  /api/project
     @GetMapping("/api/projects/roomType/{roomType}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectViewModel> findProjectsByRoomType(@PathVariable String roomType) throws Exception {
@@ -170,6 +153,30 @@ public class ProjectController {
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectViewModel> findProjectByRoomTypeAndName(@PathVariable String roomType, @PathVariable String name) throws Exception {
         List<ProjectViewModel> returnProjectList = projectServiceLayer.findByRoomTypeAndName(roomType,name);
+
+        return returnProjectList;
+    }
+
+    @GetMapping("/api/projects/isPlumbing/{isPlumbing}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<ProjectViewModel> findProjectsByIsPlumbing(@PathVariable Boolean isPlumbing) throws Exception {
+        List<ProjectViewModel> returnProjectList = projectServiceLayer.findByIsPlumbing(isPlumbing);
+
+        return returnProjectList;
+    }
+
+    @GetMapping("/api/projects/isElectric/{isElectric}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<ProjectViewModel> findProjectsByIsElectric(@PathVariable Boolean isElectric) throws Exception {
+        List<ProjectViewModel> returnProjectList = projectServiceLayer.findByIsElectric(isElectric);
+
+        return returnProjectList;
+    }
+
+    @GetMapping("/api/projects/isPlumbing/{isPlumbing}/isElectric/{isElectric}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<ProjectViewModel> findProjectsByIsPlumbingAndIsElectric(@PathVariable Boolean isPlumbing, @PathVariable Boolean isElectric){
+        List<ProjectViewModel> returnProjectList = projectServiceLayer.findByIsPlumbingAndIsElectric(isPlumbing,isElectric);
 
         return returnProjectList;
     }
