@@ -19,7 +19,7 @@ function App() {
             <Route exact path={['/', '/home']} component={Home} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={RegisterPage} />
-            <Route exact path='/MyProfile' component={MyProfile} />
+            <Route exact path='/MyProfile/:employeeID' component={MyProfile} />
             <Route exact path='/Projects' component={Projects} />
             <Route exact path='/Tasks' component={Tasks} />
             <Route component={NoMatch} />

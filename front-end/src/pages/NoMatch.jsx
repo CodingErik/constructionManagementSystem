@@ -1,5 +1,5 @@
 import React from "react";
-import '../NoMatchStyle.css'; 
+import '../assets/NoMatchStyle.css'; 
 
 export default function NoMatch() {
   return (
