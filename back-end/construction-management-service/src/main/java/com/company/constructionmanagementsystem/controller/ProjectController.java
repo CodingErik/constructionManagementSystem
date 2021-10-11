@@ -26,7 +26,7 @@ public class ProjectController {
     @Autowired
     ProjectServiceLayer projectServiceLayer;
 
-    @PostMapping("/api/project/")
+    @PostMapping("/api/projects")
     @ResponseStatus(HttpStatus.CREATED)
     public Project addProject(@RequestBody Project project) {
         return repo.save(project);
@@ -79,7 +79,7 @@ public class ProjectController {
 //    }
 
     /** after change */
-    @GetMapping("/api/project/id/{id}")
+    @GetMapping("/api/projects/id/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public ProjectViewModel getProjectsById(@PathVariable Integer id) {
 
@@ -104,7 +104,7 @@ public class ProjectController {
 //    }
 
     /** after change */
-    @GetMapping("/api/project/deadline/{deadline}")
+    @GetMapping("/api/projects/deadline/{deadline}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
@@ -124,7 +124,7 @@ public class ProjectController {
 //    }
     /** after change */
     // /api/project/status/{status}
-    @GetMapping("/api/project/status/{status}")
+    @GetMapping("/api/projects/status/{status}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectViewModel> findByStatus(@PathVariable String status){
         /** maybe figure out 3 different statuses
@@ -148,11 +148,30 @@ public class ProjectController {
 //        return project;
 //    }
 
-
-    @GetMapping("/api/project/roomType/{roomType}")
+    //  getting projects by project room type
+    //  /api/project
+    @GetMapping("/api/projects/roomType/{roomType}")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<Project> findProjectsByRoomType(@PathVariable String roomType){
-        return repo.findByRoomType(roomType);
+    public List<ProjectViewModel> findProjectsByRoomType(@PathVariable String roomType) throws Exception {
+        List<ProjectViewModel> returnProjectList = projectServiceLayer.findByRoomType(roomType);
+
+        return returnProjectList;
+    }
+
+    @GetMapping("/api/projects/name/{name}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<ProjectViewModel> findProjectByName(@PathVariable String name) throws Exception {
+        List<ProjectViewModel> returnProjectList = projectServiceLayer.findByName(name);
+
+        return returnProjectList;
+    }
+
+    @GetMapping("/api/projects/roomType/{roomType}/name/{name}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<ProjectViewModel> findProjectByRoomTypeAndName(@PathVariable String roomType, @PathVariable String name) throws Exception {
+        List<ProjectViewModel> returnProjectList = projectServiceLayer.findByRoomTypeAndName(roomType,name);
+
+        return returnProjectList;
     }
 
 }
