@@ -12,6 +12,12 @@ const API = {
     },
     getProjectsByRoomTypeAndName: (roomType,name) => {
         return axios.get(`${baseUrl}/roomType/${roomType}/name/${name}`)
+    },
+    getProjectById: (projectId) => {
+        return axios.get(`${baseUrl}/id/${projectId}`)
+    },
+    putProject: (updatedProject) => {
+        return axios.put(`${baseUrl}`, updatedProject)
     }
 };
 

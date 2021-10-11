@@ -173,4 +173,9 @@ public class ProjectController {
         return returnProjectList;
     }
 
+    @PutMapping("/api/projects")
+    @ResponseStatus(value=HttpStatus.NO_CONTENT)
+    public void putProject(@RequestBody Project project) throws Exception{
+        repo.save(project);
+    }
 }
