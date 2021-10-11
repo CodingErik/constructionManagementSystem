@@ -9,50 +9,63 @@ export default function Projects() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [roomType, setRoomType] = useState();
   const [projectName, setProjectName] = useState();
+  const [isPlumbing, setIsPlumbing] = useState();
+  const [isElectric, setIsElectric] = useState();
 
   const projectNameRef = useRef();
   const roomTypeRef = useRef();
 
   useEffect(() => {
-    if (roomType && projectName) {
-      API.getProjectsByRoomTypeAndName(roomType, projectName)
-        .then((res) => {
+    API.getAllProjects(
+      roomType ? roomType : null,
+      projectName ? projectName : null
+    )
+      .then((res) => {
+        if (isElectric === false && isPlumbing === false) {
+          let results = [];
+
+          res.data.forEach((project) => {
+            if (project.plumbing === false && project.electric === false) {
+              results.push(project);
+            }
+          });
+
+          setProjects(results);
+        } else if (isElectric === false) {
+          let results = [];
+
+          res.data.forEach((project) => {
+            if (project.electric === false) {
+              results.push(project);
+            }
+          });
+
+          setProjects(results);
+        } else if (isPlumbing === false) {
+          let results = [];
+
+          res.data.forEach((project) => {
+            if (project.plumbing === false) {
+              results.push(project);
+            }
+          });
+
+          setProjects(results);
+        } else {
           setProjects(res.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else if (projectName) {
-      API.getProjectsByProjectName(projectName)
-        .then((res) => {
-          setProjects(res.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else if (roomType) {
-      API.getProjectsByRoomType(roomType)
-        .then((res) => {
-          setProjects(res.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      API.getAllProjects()
-        .then((res) => {
-          setProjects(res.data);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, [roomType, projectName]);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [roomType, projectName, isPlumbing, isElectric]);
 
   function setFilters(event) {
     event.preventDefault();
-    setProjectName(projectNameRef.current.value);
-    setRoomType(roomTypeRef.current.value);
+    projectNameRef.current.value !== null &&
+      setProjectName(projectNameRef.current.value);
+    roomTypeRef.current.value !== null &&
+      setRoomType(roomTypeRef.current.value);
   }
 
   function resetFilters(event) {
@@ -135,6 +148,7 @@ export default function Projects() {
           >
             <input
               type='radio'
+              onClick={() => setIsPlumbing(true)}
               className='btn-check'
               name='btnradio'
               id='btnradioPlumbingYes'
@@ -149,6 +163,7 @@ export default function Projects() {
             </label>
             <input
               type='radio'
+              onClick={() => setIsPlumbing(false)}
               className='btn-check'
               name='btnradio'
               id='btnradioPlumbingNo'
@@ -172,6 +187,7 @@ export default function Projects() {
           >
             <input
               type='radio'
+              onClick={() => setIsElectric(true)}
               className='btn-check'
               name='btnradio'
               id='btnradioElectricityYes'
@@ -186,6 +202,7 @@ export default function Projects() {
             </label>
             <input
               type='radio'
+              onClick={() => setIsElectric(false)}
               className='btn-check'
               name='btnradio'
               id='btnradioElectricityNo'

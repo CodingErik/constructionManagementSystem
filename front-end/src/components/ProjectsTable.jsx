@@ -36,11 +36,11 @@ export default function ProjectsTable(props) {
                 <td>{project.deadline}</td>
                 <td>{project.startDate}</td>
                 <td>{project.roomType}</td>
-                <td>{project.isPlubming}</td>
-                <td>{project.isElectric}</td>
-                <td>${project.materialBudget?.toLocaleString()}</td>
-                <td>${project.laborBudget?.toLocaleString()}</td>
-                <td>${project.totalBudget?.toLocaleString()}</td>
+                <td>{project.plumbing.toString()}</td>
+                <td>{project.electric.toString()}</td>
+                <td>${project.materialBudget.toLocaleString()}</td>
+                <td>${project.laborBudget.toLocaleString()}</td>
+                <td>${project.totalBudget.toLocaleString()}</td>
                 <td className={`${project.status} projectStatus`}>
                   {project.status}
                 </td>
@@ -58,11 +58,11 @@ export default function ProjectsTable(props) {
                   <td>{project.deadline}</td>
                   <td>{project.startDate}</td>
                   <td>{project.roomType}</td>
-                  <td>{project.isPlubming}</td>
-                  <td>{project.isElectric}</td>
-                  <td>${project.materialBudget?.toLocaleString()}</td>
-                  <td>${project.laborBudget?.toLocaleString()}</td>
-                  <td>${project.totalBudget?.toLocaleString()}</td>
+                  <td>{project.plumbing.toString()}</td>
+                  <td>{project.electric.toString()}</td>
+                  <td>${project.materialBudget.toLocaleString()}</td>
+                  <td>${project.laborBudget.toLocaleString()}</td>
+                  <td>${project.totalBudget.toLocaleString()}</td>
                   <td className={`${project.status} projectStatus`}>
                     {project.status}
                   </td>
@@ -81,11 +81,11 @@ export default function ProjectsTable(props) {
                   <td>{project.deadline}</td>
                   <td>{project.startDate}</td>
                   <td>{project.roomType}</td>
-                  <td>{project.isPlubming}</td>
-                  <td>{project.isElectric}</td>
-                  <td>${project.materialBudget?.toLocaleString()}</td>
-                  <td>${project.laborBudget?.toLocaleString()}</td>
-                  <td>${project.totalBudget?.toLocaleString()}</td>
+                  <td>{project.plumbing.toString()}</td>
+                  <td>{project.electric.toString()}</td>
+                  <td>${project.materialBudget.toLocaleString()}</td>
+                  <td>${project.laborBudget.toLocaleString()}</td>
+                  <td>${project.totalBudget.toLocaleString()}</td>
                   <td className={`${project.status} projectStatus`}>
                     {project.status}
                   </td>

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function OnGoingProjectsDisplay({ projectList, handleProjectColumnHeaderClick }) {
     return (
         <div>
@@ -5,11 +7,11 @@ function OnGoingProjectsDisplay({ projectList, handleProjectColumnHeaderClick })
             <table className="table table-hover">
                 <thead>
                     <tr>
-                        <th scope="col" onClick={()=> handleProjectColumnHeaderClick("ProjectId")}>Project Id</th>
-                        <th scope="col" onClick={()=> handleProjectColumnHeaderClick("Name")}>Name</th>
-                        <th scope="col" onClick={()=> handleProjectColumnHeaderClick("Status")}>Status</th>
-                        <th scope="col" onClick={()=> handleProjectColumnHeaderClick("StartDate")}>Start Date</th>
-                        <th scope="col" onClick={()=> handleProjectColumnHeaderClick("Deadline")}>Deadline</th>
+                        <th scope="col" onClick={() => handleProjectColumnHeaderClick("ProjectId")}>Project Id</th>
+                        <th scope="col" onClick={() => handleProjectColumnHeaderClick("Name")}>Name</th>
+                        <th scope="col" onClick={() => handleProjectColumnHeaderClick("Status")}>Status</th>
+                        <th scope="col" onClick={() => handleProjectColumnHeaderClick("StartDate")}>Start Date</th>
+                        <th scope="col" onClick={() => handleProjectColumnHeaderClick("Deadline")}>Deadline</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -20,7 +22,11 @@ function OnGoingProjectsDisplay({ projectList, handleProjectColumnHeaderClick })
                             <td>{project.status}</td>
                             <td>{project.startDate}</td>
                             <td>{project.deadline}</td>
-                            <td><button type="button" className="btn btn-warning">View</button></td>
+                            <td>
+                                <Link to={{pathname: `/SingleProjectPage/${project.id}`}} >
+                                    <button type="button" className="btn btn-warning">View</button>
+                                </Link>
+                            </td>
                         </tr>
                     ))}
 
