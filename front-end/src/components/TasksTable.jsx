@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import '../pages/Tasks.css';
 
 export default function TasksTable(props) {
   const [tasks, setTasks] = useState([]);
