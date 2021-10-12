@@ -30,6 +30,8 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+<!--        Microservice-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
@@ -38,6 +40,8 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+<!--Microservice-->
+
 
         <dependency>
             <groupId>mysql</groupId>
@@ -108,6 +112,8 @@
             <version>5.5.2</version>
         </dependency>
     </dependencies>
+
+<!--    MICROSERVICE-->
     <dependencyManagement>
         <dependencies>
             <dependency>

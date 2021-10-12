@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,6 +19,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     LoginDetailsService loginDetailsService;
+    private final JwtConverter converter;
+
+    public SecurityConfig(JwtConverter converter) {
+        this.converter = converter;
+    }
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -31,19 +37,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/authenticate").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/employees/login").permitAll()
-                .antMatchers(HttpMethod.POST,"/api/employees/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/employees/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/employees/register").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/refresh_token").authenticated()
                 .antMatchers("/api/employees").authenticated()
                 .antMatchers("/api/projects").authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/home")
-                .and()
-                .logout()
-                .logoutUrl("/logout");
+                .addFilter(new JwtRequestFilter(authenticationManager(), converter))
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//                .and()
+//                .formLogin()
+//                .loginPage("/login")
+//                .defaultSuccessUrl("/home")
+//                .and()
+//                .logout()
+//                .logoutUrl("/logout");
 
     }
 

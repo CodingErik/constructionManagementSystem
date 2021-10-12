@@ -61,6 +61,9 @@ const API = {
       return error.response.data;
     }
   },
+  loginWithJwt : (userInfo) => {
+    return axios.post(`${baseUrl}/authenticate`, userInfo)
+  }
 };
 
 export default API;
