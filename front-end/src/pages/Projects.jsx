@@ -7,8 +7,8 @@ import './Projects.css';
 export default function Projects() {
   const [projects, setProjects] = useState([]);
   const [statusFilter, setStatusFilter] = useState('all');
-  const [roomType, setRoomType] = useState();
-  const [projectName, setProjectName] = useState();
+  const [roomType, setRoomType] = useState("");
+  const [name, setName] = useState("");
   const [isPlumbing, setIsPlumbing] = useState();
   const [isElectric, setIsElectric] = useState();
 
@@ -17,10 +17,11 @@ export default function Projects() {
 
   useEffect(() => {
     API.getAllProjects(
-      roomType ? roomType : null,
-      projectName ? projectName : null
+      roomType.length > 0 ? roomType : null,
+      name.length > 0 ? name : null
     )
-      .then((res) => {
+      .then(res => {
+        console.log(res.data)
         if (isElectric === false && isPlumbing === false) {
           let results = [];
 
@@ -58,33 +59,34 @@ export default function Projects() {
       .catch((error) => {
         console.error(error);
       });
-  }, [roomType, projectName, isPlumbing, isElectric]);
+  }, [roomType, name, isPlumbing, isElectric]);
 
   function setFilters(event) {
     event.preventDefault();
-    projectNameRef.current.value !== null &&
-      setProjectName(projectNameRef.current.value);
-    roomTypeRef.current.value !== null &&
-      setRoomType(roomTypeRef.current.value);
+
+    projectNameRef.current.value !== null && setName(projectNameRef.current.value);
+    roomTypeRef.current.value !== null && setRoomType(roomTypeRef.current.value);
   }
 
   function resetFilters(event) {
     event.preventDefault();
-    roomTypeRef.current.value = null;
-    projectNameRef.current.value = null;
+
+    roomTypeRef.current.value = "";
     setRoomType(roomTypeRef.current.value);
-    setProjectName(projectNameRef.current.value);
+
+    projectNameRef.current.value = "";
+    setName(projectNameRef.current.value);
   }
 
   return (
     <div>
       <div className='statusFilter'>
-        <p style={{ paddingTop: '13px' }}>Status : </p>
         <div
           className='btn-group'
           role='group'
           aria-label='Basic radio toggle button group'
         >
+          <p style={{ paddingTop: '13px', marginRight:"20px" }} className="textField">Status : </p>
           <input
             onClick={() => setStatusFilter('all')}
             type='radio'
@@ -94,7 +96,7 @@ export default function Projects() {
             autoComplete='off'
             defaultChecked=''
           />
-          <label className='btn btn-outline-primary' htmlFor='allStatusFilter'>
+          <label className='btn btn-outline-primary btn-sm' htmlFor='allStatusFilter'>
             All
           </label>
           <input
@@ -107,7 +109,7 @@ export default function Projects() {
             defaultChecked=''
           />
           <label
-            className='btn btn-outline-primary'
+            className='btn btn-outline-primary btn-sm'
             htmlFor='inProgressStatusFilter'
           >
             In Progress
@@ -122,25 +124,14 @@ export default function Projects() {
             defaultChecked=''
           />
           <label
-            className='btn btn-outline-primary'
+            className='btn btn-outline-primary btn-sm'
             htmlFor='completedStatusFilter'
           >
             Completed
           </label>
         </div>
-      </div>
-
-      <div className='otherFilters'>
-        <div className='nameFilter filter'>
-          <p>Project Name</p>
-          <input ref={projectNameRef} />
-        </div>
-        <div className='roomFilter filter'>
-          <p>Room Type</p>
-          <input ref={roomTypeRef} />
-        </div>
         <div className='plumbingFilter filter'>
-          <p>Plumbing</p>
+          <p className="textField">Plumbing</p>
           <div
             className='btn-group'
             role='group'
@@ -156,7 +147,7 @@ export default function Projects() {
               defaultChecked=''
             />
             <label
-              className='btn btn-outline-secondary'
+              className='btn btn-outline-secondary btn-sm'
               htmlFor='btnradioPlumbingYes'
             >
               Yes
@@ -171,7 +162,7 @@ export default function Projects() {
               defaultChecked=''
             />
             <label
-              className='btn btn-outline-secondary'
+              className='btn btn-outline-secondary btn-sm'
               htmlFor='btnradioPlumbingNo'
             >
               No
@@ -179,7 +170,7 @@ export default function Projects() {
           </div>
         </div>
         <div className='electricityFilter filter'>
-          <p>Electricity</p>
+          <p className="textField">Electricity</p>
           <div
             className='btn-group'
             role='group'
@@ -195,7 +186,7 @@ export default function Projects() {
               defaultChecked=''
             />
             <label
-              className='btn btn-outline-secondary'
+              className='btn btn-outline-secondary btn-sm' 
               htmlFor='btnradioElectricityYes'
             >
               Yes
@@ -210,12 +201,23 @@ export default function Projects() {
               defaultChecked=''
             />
             <label
-              className='btn btn-outline-secondary'
+              className='btn btn-outline-secondary btn-sm'
               htmlFor='btnradioElectricityNo'
             >
               No
             </label>
           </div>
+        </div>
+      </div>
+
+      <div className='otherFilters'>
+        <div className='nameFilter filter'>
+          <p className="textField">Project Name</p>
+          <input ref={projectNameRef} className="textInput" />
+        </div>
+        <div className='roomFilter filter'>
+          <p className="textField">Room Type</p>
+          <input ref={roomTypeRef} className="textInput"  />
         </div>
         <button className='filterButton' onClick={(event) => setFilters(event)}>
           Filter

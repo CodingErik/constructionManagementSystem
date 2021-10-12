@@ -3,6 +3,7 @@ import TasksTable from '../components/TasksTable';
 import taskAPI from '../api/TaskAPI';
 import projectAPI from '../api/ProjectAPI';
 import employeeAPI from '../api/EmployeeAPI';
+import './Tasks.css';
 
 export default function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -13,6 +14,7 @@ export default function Tasks() {
 
   const projectNameRef = useRef();
   const employeeNameRef = useRef();
+  const taskNameRef = useRef();
 
   useEffect(() => {
     taskAPI.getAllTasks(projectId ? projectId : null, employeeId ? employeeId : null, name ? name : null)
@@ -25,7 +27,9 @@ export default function Tasks() {
   function setFilters(event) {
     event.preventDefault();
 
-    employeeAPI.getAllEmployees()
+    taskNameRef.current.value !== null && setName(taskNameRef.current.value)
+
+    employeeNameRef.current.value !== null && employeeAPI.getAllEmployees()
       .then(res => {
         res.data.forEach(employee => {
           if(employee.name === employeeNameRef.current.value){
@@ -35,30 +39,39 @@ export default function Tasks() {
       })
       .catch(error => console.error(error));
 
-    projectAPI.getAllProjects(null, projectNameRef.current.value)
+    projectNameRef.current.value !== null && projectAPI.getAllProjects(null, projectNameRef.current.value)
       .then(res => {
-        setProjectId(res.data[0].id);
+        res.data.forEach(project => {
+          if(project.name === projectNameRef.current.value){
+            setProjectId(project.id);
+          }
+        })
       })
       .catch(error => console.error(error));
   }
 
   function resetFilters(event) {
     event.preventDefault();
+
     projectNameRef.current.value = null;
-    setProjectId(null);
+    setProjectId(projectNameRef.current.value);
+
     employeeNameRef.current.value = null;
-    setEmployeeId(null);
+    setEmployeeId(employeeNameRef.current.valuell);
+
+    taskNameRef.current.value = null;
+    setName(taskNameRef.current.value)
   }
 
   return (
     <div>
-      <div className='statusFilter'>
-        <p style={{ paddingTop: '13px' }}>Status : </p>
+      <div className='statusFilterTasks'>
         <div
           className='btn-group'
           role='group'
           aria-label='Basic radio toggle button group'
         >
+          <p style={{ paddingTop: '13px', marginRight:"20px" }} className="textField">Status : </p>
           <input
             onClick={() => setStatusFilter('all')}
             type='radio'
@@ -68,7 +81,7 @@ export default function Tasks() {
             autoComplete='off'
             defaultChecked=''
           />
-          <label className='btn btn-outline-primary' htmlFor='allStatusFilter'>
+          <label className='btn btn-outline-primary btn-sm' htmlFor='allStatusFilter'>
             All
           </label>
           <input
@@ -81,7 +94,7 @@ export default function Tasks() {
             defaultChecked=''
           />
           <label
-            className='btn btn-outline-primary'
+            className='btn btn-outline-primary btn-sm'
             htmlFor='inProgressStatusFilter'
           >
             In Progress
@@ -96,7 +109,7 @@ export default function Tasks() {
             defaultChecked=''
           />
           <label
-            className='btn btn-outline-primary'
+            className='btn btn-outline-primary btn-sm'
             htmlFor='completedStatusFilter'
           >
             Completed
@@ -104,21 +117,24 @@ export default function Tasks() {
         </div>
       </div>
 
-      <div className='otherFilters'>
+      <div className='otherFiltersTasks'>
+        <div className='employeeNameFilter filter'>
+          <p className="textField">Task : </p>
+          <input ref={taskNameRef} className="textInput" placeholder="Name" />
+        </div>
         <div className='projectNameFilter filter'>
-          <p>Project Name</p>
-          <input ref={projectNameRef} />
+          <p className="textField">Project : </p>
+          <input ref={projectNameRef} className="textInput" placeholder="Name" />
         </div>
         <div className='employeeNameFilter filter'>
-          <p>Employee Name</p>
-          <input ref={employeeNameRef} />
+          <p className="textField">Employee : </p>
+          <input ref={employeeNameRef} className="textInput" placeholder="Name" />
         </div>
-
-        <button className='filterButton' onClick={(event) => setFilters(event)}>
+        <button className='filterButtonTasks' onClick={(event) => setFilters(event)}>
           Filter
         </button>
         <button
-          className='filterButton'
+          className='filterButtonTasks'
           onClick={(event) => resetFilters(event)}
         >
           Reset
