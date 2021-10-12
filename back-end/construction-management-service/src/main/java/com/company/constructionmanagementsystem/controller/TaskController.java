@@ -25,6 +25,12 @@ public class TaskController {
         return taskRepository.save(task);
     }
 
+    @GetMapping("/api/tasks/id")
+    @ResponseStatus(HttpStatus.OK)
+    public TaskViewModel getTaskById(@RequestParam Integer taskId) {
+        return taskServiceLayer.findTaskById(taskId);
+    }
+
 
     @GetMapping("/api/tasks")
     @ResponseStatus(HttpStatus.OK)
@@ -36,45 +42,42 @@ public class TaskController {
 
         List<TaskViewModel> returnList = taskServiceLayer.findAllTasks();
 
-        if(name != null){
+        if (name != null) {
             returnList = taskServiceLayer.findTasksByName(name);
         }
 
-        if(projectId != null){
+        if (projectId != null) {
             returnList = taskServiceLayer.findAllTasksByProjectId(projectId);
         }
 
-        if(employeeId != null){
+        if (employeeId != null) {
             returnList = taskServiceLayer.findAllTasksByEmployeeId(employeeId);
         }
 
-        if(projectId != null && employeeId != null){
+        if (projectId != null && employeeId != null) {
             returnList = taskServiceLayer.findAllTasksByProjectIdAndEmployeeId(projectId, employeeId);
         }
 
-        if(projectId != null && name != null){
-            returnList = taskServiceLayer.findAllTasksByProjectIdAndName(projectId,name);
+        if (projectId != null && name != null) {
+            returnList = taskServiceLayer.findAllTasksByProjectIdAndName(projectId, name);
         }
 
-        if(employeeId != null && name != null){
+        if (employeeId != null && name != null) {
             returnList = taskServiceLayer.findAllTasksByEmployeeIdAndName(employeeId, name);
         }
 
-        if(projectId != null && employeeId != null && name != null){
-            returnList = taskServiceLayer.findAllTasksByProjectIdAndEmployeeIdAndName(projectId,employeeId,name);
+        if (projectId != null && employeeId != null && name != null) {
+            returnList = taskServiceLayer.findAllTasksByProjectIdAndEmployeeIdAndName(projectId, employeeId, name);
         }
 
         return returnList;
     }
 
-
-
-
-
-
-
-
-
+    @PutMapping("/api/tasks")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateTask(@RequestBody Task task) {
+        taskRepository.save(task);
+    }
 
 
 //

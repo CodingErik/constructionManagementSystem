@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 
 function EmployeeListTableForProject({ projectId }) {
     const [allEmployeesInProject, setAllEmployeesInProject] = useState([]);
-    const [allEmployeesNotInProject, setAllEmployeesNotIntProject] = useState([]);
+    const [allEmployeesNotInProject, setAllEmployeesNotInProject] = useState([]);
 
     useEffect(() => {
         EmployeeAPI.getAllEmployees().then((response) => {
             setAllEmployeesInProject([...response.data].filter(employee => employee.projectId == projectId));
-            setAllEmployeesNotIntProject([...response.data].filter(employee => employee.projectId != projectId));
+            setAllEmployeesNotInProject([...response.data].filter(employee => employee.projectId != projectId));
         });
     }, []);
 
@@ -19,7 +19,7 @@ function EmployeeListTableForProject({ projectId }) {
             projectId: projectId,
         };
         EmployeeAPI.putEmployee(updatedEmployee);
-        setAllEmployeesNotIntProject((prevState) => [...prevState].filter(emp => emp.id != employee.id));
+        setAllEmployeesNotInProject((prevState) => [...prevState].filter(emp => emp.id != employee.id));
         setAllEmployeesInProject([...allEmployeesInProject, updatedEmployee]);
 
     };
@@ -54,7 +54,7 @@ function EmployeeListTableForProject({ projectId }) {
             </table>
             <AddModal title="Architect" modalId="addArchitectModal" allEmployeesNotInProject={allEmployeesNotInProject} projectId={projectId} handleAddEmployeeToProject={handleAddEmployeeToProject} />
 
-            <h3>Employee</h3>
+            <h3>Employees</h3>
             <table className="table table-hover">
                 <thead>
                     <tr>
