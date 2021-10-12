@@ -11,24 +11,24 @@ export default function ProjectsTable(props){
     },[props])
 
 
-    return(
+    return (
         <table className="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Name</th>
-                <th scope="col">Deadline</th>
-                <th scope="col">Start</th>
-                <th scope="col">Room</th>
-                <th scope="col">Plumbing</th>
-                <th scope="col">Electric</th>
-                <th scope="col">Material</th>
-                <th scope="col">Labor</th>
-                <th scope="col">Total</th>
-                <th scope="col">Status</th>
-            </tr>
-        </thead>
-        <tbody>
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Deadline</th>
+                    <th scope="col">Start</th>
+                    <th scope="col">Room</th>
+                    <th scope="col">Plumbing</th>
+                    <th scope="col">Electric</th>
+                    <th scope="col">Material</th>
+                    <th scope="col">Labor</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
                 {statusFilter === "all" && projects.map(project => {
                     return (
                         <tr key={project.id}>
@@ -84,8 +84,8 @@ export default function ProjectsTable(props){
                         </tr>
                     )
                 })}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
     )
 
 }
