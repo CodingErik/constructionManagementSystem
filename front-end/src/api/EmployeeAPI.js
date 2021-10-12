@@ -6,6 +6,12 @@ const API = {
     },
     getEmployeeById: (id) => {
         return axios.get(`${baseUrl}/${id} `)
+    },
+    getEmployeeByProjectId: (projectId) => {
+        return axios.get(`${baseUrl}/findByProjectId/${projectId}`)
+    },
+    putEmployee: (updatedEmployee) => {
+        return axios.put(`${baseUrl}`, updatedEmployee);
     }
 };
 
