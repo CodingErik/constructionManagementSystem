@@ -27,13 +27,93 @@ public class TaskServiceLayer {
         this.projectRepository = projectRepository;
     }
 
+    public List<TaskViewModel> findAllTasks(){
+        List<Task> taskList = taskRepository.findAll();
+        List<TaskViewModel> tvmList = new ArrayList<>();
+        for(Task task : taskList){
+            TaskViewModel tvm = buildTaskViewModel(task);
+            tvmList.add(tvm);
+        }
+        return tvmList;
+    }
+
     public TaskViewModel findTaskById(Integer id) {
         Task task = taskRepository.getById(id);
         return buildTaskViewModel(task);
     }
 
+    // ******************************************************
+    // ******************************************************
+    // ******************************************************
+    // ******************************************************
+    // ******************************************************
+
+    public List<TaskViewModel> findTasksByName(String name){
+        List<Task> taskList = taskRepository.findAllTasksByName(name);
+        List<TaskViewModel> returnTaskViewModelList = new ArrayList<>();
+        taskList.stream()
+                .forEach(task -> {
+                    returnTaskViewModelList.add(buildTaskViewModel(task));
+                });
+        return returnTaskViewModelList;
+    }
+
+    public List<TaskViewModel> findAllTasksByProjectId(Integer projectId){
+        List<Task> taskList = taskRepository.findAllTasksByProjectId(projectId);
+        List<TaskViewModel> returnTaskViewModelList = new ArrayList<>();
+        taskList.stream()
+                .forEach(task -> {
+                    returnTaskViewModelList.add(buildTaskViewModel(task));
+                });
+        return returnTaskViewModelList;
+    }
+
+
     public List<TaskViewModel> findAllTasksByEmployeeId(Integer employeeId) {
         List<Task> taskList = taskRepository.findAllTasksByEmployeeId(employeeId);
+        List<TaskViewModel> returnTaskViewModelList = new ArrayList<>();
+        taskList.stream()
+                .forEach(task -> {
+                    returnTaskViewModelList.add(buildTaskViewModel(task));
+                });
+        return returnTaskViewModelList;
+    }
+
+    public List<TaskViewModel> findAllTasksByProjectIdAndEmployeeId(Integer projectId, Integer employeeId){
+        List<Task> taskList = taskRepository.findAllTasksByProjectIdAndEmployeeId(projectId, employeeId);
+        List<TaskViewModel> returnTaskViewModelList = new ArrayList<>();
+        taskList.stream()
+                .forEach(task -> {
+                    returnTaskViewModelList.add(buildTaskViewModel(task));
+                });
+        return returnTaskViewModelList;
+    }
+
+
+    public List<TaskViewModel> findAllTasksByEmployeeIdAndName(Integer employeeId, String name){
+        List<Task> taskList = taskRepository.findAllTasksByEmployeeIdAndName(employeeId, name);
+        List<TaskViewModel> returnTaskViewModelList = new ArrayList<>();
+        taskList.stream()
+                .forEach(task -> {
+                    returnTaskViewModelList.add(buildTaskViewModel(task));
+                });
+        return returnTaskViewModelList;
+    }
+
+    public List<TaskViewModel> findAllTasksByProjectIdAndName(Integer projectId, String name){
+        List<Task> taskList = taskRepository.findAllTasksByProjectIdAndName(projectId, name);
+        List<TaskViewModel> returnTaskViewModelList = new ArrayList<>();
+        taskList.stream()
+                .forEach(task -> {
+                    returnTaskViewModelList.add(buildTaskViewModel(task));
+                });
+        return returnTaskViewModelList;
+    }
+
+
+
+    public List<TaskViewModel> findAllTasksByProjectIdAndEmployeeIdAndName(Integer projectId,Integer employeeId, String name){
+        List<Task> taskList = taskRepository.findAllTasksByProjectIdAndEmployeeIdAndName(projectId,employeeId,name);
         List<TaskViewModel> returnTaskViewModelList = new ArrayList<>();
         taskList.stream()
                 .forEach(task -> {

@@ -1,6 +1,9 @@
 import axios from "axios";
 const baseUrl = `http://localhost:8080/api/projects`;
-const API = {
+const projectAPI = {
+    getAllProjects: (roomType, name) => {
+        return axios.get(`${baseUrl}`, {params:{roomType:roomType, name:name}});
+    },
     getProjectsByRoomType: (roomType) => {
         return axios.get(`${baseUrl}/roomType/${roomType}`)
     },
@@ -21,4 +24,4 @@ const API = {
     }
 };
 
-export default API;
+export default projectAPI;
