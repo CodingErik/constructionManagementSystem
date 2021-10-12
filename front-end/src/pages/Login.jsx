@@ -17,7 +17,10 @@ export default function Login() {
     e.preventDefault();
 
     const res = await LoginAPI.login(username, password);
-    const token = 'loginapi token';
+    const token = await LoginAPI.loginWithJwt({
+      username: username,
+      password: password,
+    });
 
     if (res.status === 200) {
       setMessage(null);
@@ -26,7 +29,7 @@ export default function Login() {
         type: 'LOGIN',
         payload: {
           user: res.data,
-          token: token,
+          token: token.data.jwt_token,
         },
       });
 
@@ -36,6 +39,14 @@ export default function Login() {
     } else {
       setMessage(res.errorMsg);
     }
+  };
+
+  const handleSubmitWithJwt = (event) => {
+    event.preventDefault();
+    const loginObject = { username: username, password: password };
+    LoginAPI.loginWithJwt(loginObject).then((response) => {
+      console.log(response);
+    });
   };
 
   return (
@@ -48,6 +59,7 @@ export default function Login() {
               <h5 class='card-title text-center mb-5 fw-light fs-5'>Login</h5>
 
               <form onSubmit={submitHandler}>
+                {/* <form onSubmit={handleSubmitWithJwt}> */}
                 {message && <Message variant='danger'>{message}</Message>}
                 <div class='form-floating mb-3'>
                   <input
