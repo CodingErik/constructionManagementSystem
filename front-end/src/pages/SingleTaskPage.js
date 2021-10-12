@@ -7,7 +7,7 @@ import TaskForm from "../components/singleTask/TaskForm";
 function SingleTaskPage() {
     const { taskId } = useParams();
     const [task, setTask] = useState({});
-    const [hasAuthority, setHasAuthority] = useState(false);
+    const [hasAuthority, setHasAuthority] = useState(true);
     const [projectList, setProjectList] = useState([]);
     const [employeeInThisProjectList, setEmployeeInThisProjectList] = useState([]);
 
@@ -21,9 +21,6 @@ function SingleTaskPage() {
         ProjectAPI.getAllProjects().then((response) => {
             setProjectList(response.data);
         });
-        // EmployeeAPI.getAllEmployees().then((response) => {
-        //     setEmployeeInThisProjectList([...response.data].filter(employee => employee.projectId == task.project.id));
-        // })
     }, []);
 
 

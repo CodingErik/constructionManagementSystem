@@ -14,7 +14,7 @@ public class EmployeeViewModel {
     private int id;
     private String title;
     private String name;
-    private LocalDate dob;
+    private LocalDate dateOfBirth;
     private BigDecimal salary;
     private int yearsOfExperience;
     private String email;
@@ -28,11 +28,11 @@ public class EmployeeViewModel {
     public EmployeeViewModel() {
     }
 
-    public EmployeeViewModel(int id, String title, String name, LocalDate dob, BigDecimal salary, int yearsOfExperience, String email, String phoneNumber, String username, String password, LocalDate userSince, Project project, List<Task> taskList) {
+    public EmployeeViewModel(int id, String title, String name, LocalDate dateOfBirth, BigDecimal salary, int yearsOfExperience, String email, String phoneNumber, String username, String password, LocalDate userSince, Project project, List<Task> taskList) {
         this.id = id;
         this.title = title;
         this.name = name;
-        this.dob = dob;
+        this.dateOfBirth = dateOfBirth;
         this.salary = salary;
         this.yearsOfExperience = yearsOfExperience;
         this.email = email;
@@ -68,12 +68,12 @@ public class EmployeeViewModel {
         this.name = name;
     }
 
-    public LocalDate getDob() {
-        return dob;
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public BigDecimal getSalary() {
@@ -153,12 +153,12 @@ public class EmployeeViewModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmployeeViewModel that = (EmployeeViewModel) o;
-        return id == that.id && yearsOfExperience == that.yearsOfExperience && Objects.equals(title, that.title) && Objects.equals(name, that.name) && Objects.equals(dob, that.dob) && Objects.equals(salary, that.salary) && Objects.equals(email, that.email) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(userSince, that.userSince) && Objects.equals(project, that.project);
+        return id == that.id && yearsOfExperience == that.yearsOfExperience && Objects.equals(title, that.title) && Objects.equals(name, that.name) && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(salary, that.salary) && Objects.equals(email, that.email) && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(username, that.username) && Objects.equals(password, that.password) && Objects.equals(userSince, that.userSince) && Objects.equals(project, that.project);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, name, dob, salary, yearsOfExperience, email, phoneNumber, username, password, userSince, project);
+        return Objects.hash(id, title, name, dateOfBirth, salary, yearsOfExperience, email, phoneNumber, username, password, userSince, project);
     }
 
     @Override
@@ -167,7 +167,7 @@ public class EmployeeViewModel {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", name='" + name + '\'' +
-                ", dob=" + dob +
+                ", dateOfBirth=" + dateOfBirth +
                 ", salary=" + salary +
                 ", yearsOfExperience=" + yearsOfExperience +
                 ", email='" + email + '\'' +

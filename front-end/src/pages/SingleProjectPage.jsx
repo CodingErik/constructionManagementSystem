@@ -15,11 +15,6 @@ function SingleProjectPage({ }) {
     });
   }, []);
 
-
-  
-
-
-
   return (
     <div>
       <ProjectForm hasAuthority={hasAuthority} project={project}/>
