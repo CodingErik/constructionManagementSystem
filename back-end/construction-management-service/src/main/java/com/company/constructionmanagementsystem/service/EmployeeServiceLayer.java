@@ -101,7 +101,7 @@ public class EmployeeServiceLayer {
         evm.setName(employee.getName());
         evm.setSalary(employee.getSalary());
         evm.setTitle(employee.getTitle());
-        evm.setDob(employee.getDateOfBirth());
+        evm.setDateOfBirth(employee.getDateOfBirth());
         evm.setPassword(employee.getPassword());
         evm.setPhoneNumber(employee.getPhoneNumber());
         evm.setUsername(employee.getUsername());

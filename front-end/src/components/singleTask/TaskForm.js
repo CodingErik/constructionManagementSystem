@@ -33,16 +33,16 @@ function TaskForm({ task, hasAuthority, projectList, employeeInThisProjectList }
         };
 
         // FIX THIS INDEX. CANNOT USE EMPLOYEEINTHISPROJECTLIST BUT INSTEAD USE EMPLOYEE LIST OR FIND EMPLOYEE BY EMPLOYEESTATE WHICH IS EQUIVALNT TO ID
-        const updatedEmployeeInformation = {
-            ...employeeInThisProjectList[employeeState - 1],
-            id: employeeState,
-            projectId: projectState,
-        }
 
-        console.log(updatedEmployeeInformation)
 
-        TaskAPI.putTask(updatedTaskInformation)
-        EmployeeAPI.putEmployee(updatedEmployeeInformation);
+        EmployeeAPI.getEmployeeById(employeeState).then(response => {
+            const updatedEmployeeInformation = {
+                ...response.data,
+                projectId: projectState,
+            }
+            EmployeeAPI.putEmployee(updatedEmployeeInformation);
+        })
+        TaskAPI.putTask(updatedTaskInformation);
     };
 
     return (

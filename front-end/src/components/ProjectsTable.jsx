@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import {Link} from "react-router-dom";
 
 export default function ProjectsTable(props){
 
@@ -43,6 +44,11 @@ export default function ProjectsTable(props){
                             <td>${project.laborBudget.toLocaleString()}</td>
                             <td>${project.totalBudget.toLocaleString()}</td>
                             <td className={`${project.status} projectStatus`}>{project.status}</td>
+                            <td>
+                                <Link to={{pathname: `/SingleProjectPage/${project.id}`}} >
+                                    <button type="button" className="btn btn-warning">View</button>
+                                </Link>
+                            </td>
                         </tr>
                     )
                 })}
@@ -62,6 +68,11 @@ export default function ProjectsTable(props){
                             <td>${project.laborBudget.toLocaleString()}</td>
                             <td>${project.totalBudget.toLocaleString()}</td>
                             <td className={`${project.status} projectStatus`}>{project.status}</td>
+                            <td>
+                                <Link to={{pathname: `/SingleProjectPage/${project.id}`}} >
+                                    <button type="button" className="btn btn-warning">View</button>
+                                </Link>
+                            </td>
                         </tr>
                     )
                 })}
@@ -81,6 +92,11 @@ export default function ProjectsTable(props){
                             <td>${project.laborBudget.toLocaleString()}</td>
                             <td>${project.totalBudget.toLocaleString()}</td>
                             <td className={`${project.status} projectStatus`}>{project.status}</td>
+                            <td>
+                                <Link to={{pathname: `/SingleProjectPage/${project.id}`}} >
+                                    <button type="button" className="btn btn-warning">View</button>
+                                </Link>
+                            </td>
                         </tr>
                     )
                 })}
