@@ -1,9 +1,76 @@
 package com.example.model;
 
-import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.RestController;
+import java.math.BigDecimal;
+import java.util.Objects;
 
-@RestController
-@RefreshScope
-public class Machine {
+public class Machinery {
+
+    private int crane;
+    private int forklift;
+    private int ladder;
+    private int drill;
+
+    public Machinery(){}
+
+    public Machinery(int crane, int forklift, int ladder, int drill) {
+        this.crane = crane;
+        this.forklift = forklift;
+        this.ladder = ladder;
+        this.drill = drill;
+    }
+
+    public int getCrane() {
+        return crane;
+    }
+
+    public void setCrane(int crane) {
+        this.crane = crane;
+    }
+
+    public int getForklift() {
+        return forklift;
+    }
+
+    public void setForklift(int forklift) {
+        this.forklift = forklift;
+    }
+
+    public int getLadder() {
+        return ladder;
+    }
+
+    public void setLadder(int ladder) {
+        this.ladder = ladder;
+    }
+
+    public int getDrill() {
+        return drill;
+    }
+
+    public void setDrill(int drill) {
+        this.drill = drill;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Machinery machinery = (Machinery) o;
+        return crane == machinery.crane && forklift == machinery.forklift && ladder == machinery.ladder && drill == machinery.drill;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(crane, forklift, ladder, drill);
+    }
+
+    @Override
+    public String toString() {
+        return "Machinery{" +
+                "crane=" + crane +
+                ", forklift=" + forklift +
+                ", ladder=" + ladder +
+                ", drill=" + drill +
+                '}';
+    }
 }
