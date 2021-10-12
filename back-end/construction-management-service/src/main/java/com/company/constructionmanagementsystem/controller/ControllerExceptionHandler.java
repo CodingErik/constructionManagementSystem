@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,5 +65,24 @@ public class ControllerExceptionHandler {
         return responseEntity;
     }
 
+    @ExceptionHandler(value = SQLIntegrityConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<CustomErrorResponse> SQLIntegrityConstraintViolationException(SQLIntegrityConstraintViolationException e) {
+        CustomErrorResponse error = new CustomErrorResponse(HttpStatus.CONFLICT.toString(), e.getMessage());
+        error.setStatus((HttpStatus.CONFLICT.value()));
+        error.setTimestamp(LocalDateTime.now());
+        ResponseEntity<CustomErrorResponse> responseEntity = new ResponseEntity<>(error, HttpStatus.CONFLICT);
+        return responseEntity;
+    }
+
+    @ExceptionHandler(value = NullPointerException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<CustomErrorResponse> SQLIntegrityConstraintViolationException(NullPointerException e) {
+        CustomErrorResponse error = new CustomErrorResponse(HttpStatus.NOT_FOUND.toString(), e.getMessage());
+        error.setStatus((HttpStatus.NOT_FOUND.value()));
+        error.setTimestamp(LocalDateTime.now());
+        ResponseEntity<CustomErrorResponse> responseEntity = new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return responseEntity;
+    }
 
 }

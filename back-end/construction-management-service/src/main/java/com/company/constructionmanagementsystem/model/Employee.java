@@ -18,20 +18,22 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private Integer projectId;
-    @NotEmpty(message = "The employee must have a title")
-    private String title;
     @NotEmpty(message = "The employee must have a name")
     private String name;
-    private LocalDate dateOfBirth; // Date of birth
-    private BigDecimal salary;
-    private Integer yearsOfExperience; // Years of experience
+    @NotEmpty(message = "The employee must have a title")
+    @Column(unique = true)
     private String email;
-    private String phoneNumber;
     @NotEmpty(message = "The employee must have an username")
+    @Column(unique = true)
     private String username;
     @NotEmpty(message = "The employee must have a password")
     private String password;
+    private String title;
+    private String phoneNumber;
+    private BigDecimal salary;
+    private LocalDate dateOfBirth; // Date of birth
     private LocalDate userSince;
+    private Integer yearsOfExperience; // Years of experience
 
     public Employee() {
     }
