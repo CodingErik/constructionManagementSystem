@@ -20,12 +20,12 @@ public class Employee implements Serializable {
     private Integer projectId;
     @NotEmpty(message = "The employee must have a name")
     private String name;
-    @NotEmpty(message = "The employee must have a title")
-    @Column(unique = true)
-    private String email;
     @NotEmpty(message = "The employee must have an username")
     @Column(unique = true)
     private String username;
+    @NotEmpty(message = "The employee must have a title")
+    @Column(unique = true)
+    private String email;
     @NotEmpty(message = "The employee must have a password")
     private String password;
     private String title;
