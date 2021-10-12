@@ -130,4 +130,10 @@ public class EmployeeController {
         return employee;
     }
 
+    @PutMapping("/api/employees")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateEmployee(@RequestBody Employee employee) throws Exception {
+        repository.save(employee);
+    }
+
 }

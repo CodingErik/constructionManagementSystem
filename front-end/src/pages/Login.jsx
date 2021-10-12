@@ -1,8 +1,30 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { LoginAPI } from '../api';
+import Message from '../components/Message';
 
 export default function Login() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState(null);
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    const res = await LoginAPI.login(username, password);
+
+    console.log(res);
+
+    if (res.status === 200) {
+      setMessage(null);
+
+      alert('login');
+    } else {
+      setMessage(res.errorMsg);
+    }
+  };
+
   return (
     <div class='container'>
       <div class='row'>
@@ -11,19 +33,21 @@ export default function Login() {
             <div class='card-img-left d-none d-md-flex'></div>
             <div class='card-body p-4 p-sm-5'>
               <h5 class='card-title text-center mb-5 fw-light fs-5'>Login</h5>
-              <form>
+
+              <form onSubmit={submitHandler}>
+                {message && <Message variant='danger'>{message}</Message>}
                 <div class='form-floating mb-3'>
                   <input
                     type='text'
                     class='form-control'
                     id='floatingInputUsername'
                     placeholder='myusername'
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                     autofocus
                   />
-                  <label for='floatingInputUsername'>
-                    Username / Email address
-                  </label>
+                  <label for='floatingInputUsername'>Username</label>
                 </div>
 
                 <hr />
@@ -34,6 +58,9 @@ export default function Login() {
                     class='form-control'
                     id='floatingPassword'
                     placeholder='Password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                   <label for='floatingPassword'>Password</label>
                 </div>

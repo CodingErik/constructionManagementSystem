@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RestController
 @CrossOrigin
+@RestController
 public class ProjectController {
 
     @Autowired
@@ -63,8 +63,6 @@ public class ProjectController {
     public void putProject(@RequestBody Project project) throws Exception{
         repo.save(project);
     }
-
-
 
     // **************************************************************************************
     // **************************************************************************************
