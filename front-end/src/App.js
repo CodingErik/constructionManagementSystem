@@ -16,7 +16,7 @@ function App() {
     <div className='App'>
       <Router>
         <div>
-          <Route path={["/MyProfile", "/Projects", "/Tasks", "/SingleProjectPage", "/SingleTaskPage", "/home"]}>
+          <Route path={["/","/MyProfile", "/Projects", "/Tasks", "/SingleProjectPage", "/SingleTaskPage", "/home"]}>
             <NavBar />
           </Route>
 
