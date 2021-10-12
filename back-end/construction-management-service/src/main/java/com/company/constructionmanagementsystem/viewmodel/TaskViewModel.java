@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public class TaskViewModel {
 
-    private Integer id;
+    private int id;
     private Project project;
     private Employee employee;
     private String name;

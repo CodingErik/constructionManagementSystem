@@ -9,6 +9,7 @@ import Projects from './pages/Projects';
 import Tasks from './pages/Tasks';
 import NoMatch from './pages/NoMatch';
 import SingleProjectPage from "./pages/SingleProjectPage"; 
+import SingleTaskPage from './pages/SingleTaskPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route exact path='/Projects' component={Projects} />
             <Route exact path='/Tasks' component={Tasks} />
             <Route exact path='/SingleProjectPage/:projectId' component={SingleProjectPage} />
+            <Route exact path='/SingleTaskPage/:taskId' component={SingleTaskPage} />
             <Route component={NoMatch} />
           </Switch>
         </div>
