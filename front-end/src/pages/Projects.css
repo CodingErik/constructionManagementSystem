@@ -1,12 +1,14 @@
 .table{
-    margin-left:2.5%;
-    width:90% !important;
+    display:block;
+    margin-left:7%;
+    margin-right:auto;
+    width:100% !important;
 }
 
 .statusFilter{
     display:flex; 
     justify-content: space-evenly;
-    width:35%;
+    width:82%;
     margin-top:20px;
     margin-bottom:20px;
 }
@@ -25,15 +27,18 @@
 }
 
 .filterButton{
+    display:flex;
+    justify-content: center;
+    align-items: center;
     background-color: transparent;
     border:1px solid transparent;
     border-radius: 10rem;
     outline:none;
-    margin-top:2.2%;
-    margin-left:2%;
+    margin-left:3.5%;
+    margin-right:3.5%;
     color:blue;
     font-weight:800;
-    width:10%;
+    width:5%;
 }
 
 .filterButton:hover{
@@ -51,12 +56,15 @@
 }
 
 .filter{
-    margin-left:0.2%;
-    margin-right:0.2%;   
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:20%;
 }
 
 .filter>p{
     display:flex;
+    margin-right:20px;
     margin-bottom:1px !important;
 }
 
@@ -70,4 +78,14 @@
 
 .completed{
     color:green;
+}
+
+.textInput{
+    width:50%;
+    height:30px;
+}
+
+.textField{
+    font-size: 15px;
+    font-weight:800;
 }
