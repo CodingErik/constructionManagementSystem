@@ -1,7 +1,41 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { LoginAPI } from '../api';
+import Message from '../components/Message';
 
 function RegisterPage() {
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState(null);
+
+  const history = useHistory();
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage('Passswords do not match');
+    } else if (password.length < 6) {
+      setMessage("Password length can't be shorter than 6");
+    } else {
+      setMessage(null);
+
+      const res = await LoginAPI.register(name, username, email, password);
+
+      if (res.status === 201) {
+        setMessage('Account created');
+
+        alert('Account created');
+
+        history.push('/login');
+      } else {
+        setMessage(res.errorMsg);
+      }
+    }
+  };
+
   return (
     <div>
       <div class='container'>
@@ -13,7 +47,22 @@ function RegisterPage() {
                 <h5 class='card-title text-center mb-5 fw-light fs-5'>
                   Register
                 </h5>
-                <form>
+                <form onSubmit={submitHandler}>
+                  {message && <Message variant='danger'>{message}</Message>}
+                  <div class='form-floating mb-3'>
+                    <input
+                      type='text'
+                      class='form-control'
+                      id='floatingInputName'
+                      placeholder='myName'
+                      required
+                      autofocus
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    <label for='floatingInputName'>Employee Name</label>
+                  </div>
+
                   <div class='form-floating mb-3'>
                     <input
                       type='text'
@@ -21,7 +70,8 @@ function RegisterPage() {
                       id='floatingInputUsername'
                       placeholder='myusername'
                       required
-                      autofocus
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                     <label for='floatingInputUsername'>Username</label>
                   </div>
@@ -32,6 +82,9 @@ function RegisterPage() {
                       class='form-control'
                       id='floatingInputEmail'
                       placeholder='name@example.com'
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                     <label for='floatingInputEmail'>Email address</label>
                   </div>
@@ -44,6 +97,9 @@ function RegisterPage() {
                       class='form-control'
                       id='floatingPassword'
                       placeholder='Password'
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                     <label for='floatingPassword'>Password</label>
                   </div>
@@ -54,6 +110,9 @@ function RegisterPage() {
                       class='form-control'
                       id='floatingPasswordConfirm'
                       placeholder='Confirm Password'
+                      required
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                     <label for='floatingPasswordConfirm'>
                       Confirm Password
