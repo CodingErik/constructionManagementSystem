@@ -136,7 +136,7 @@ public class TaskControllerTest {
     @Test
     public void shouldReturnAllTasksWhenGetByProjectIdAndName () throws Exception {
         String outputJsonTask4 = mapper.writeValueAsString(outputTask4);
-        doReturn(outputTask4).when(taskRepository).findTasksByProjectIdAndName(4, "Install_Kitchen_Cabinets");
+        doReturn(outputTask4).when(taskRepository).findAllTasksByProjectIdAndName(4, "Install_Kitchen_Cabinets");
 
         mockMvc.perform(get("/api/tasks/project/name?projectId=4&name=Install_Kitchen_Cabinets"))
                 .andDo(print())

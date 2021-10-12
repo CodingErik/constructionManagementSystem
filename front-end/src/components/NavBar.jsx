@@ -28,7 +28,7 @@ export default function NavBar() {
             </li>
             <li className="nav-item">
                 {/* hard code to remove */}
-              <Link className="nav-link" href="/MyProfile/1">  
+              <Link className="nav-link" to="/MyProfile/1">  
                 MyProfile
               </Link>
             </li>
