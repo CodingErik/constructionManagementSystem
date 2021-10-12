@@ -8,7 +8,7 @@ import MyProfile from './pages/MyProfile';
 import Projects from './pages/Projects';
 import Tasks from './pages/Tasks';
 import NoMatch from './pages/NoMatch';
-import SingleProjectPage from "./pages/SingleProjectPage"; 
+import SingleProjectPage from "./pages/SingleProjectPage";
 import SingleTaskPage from './pages/SingleTaskPage';
 
 function App() {
@@ -16,7 +16,10 @@ function App() {
     <div className='App'>
       <Router>
         <div>
-          <NavBar />
+          <Route path={["/MyProfile", "/Projects", "/Tasks", "/SingleProjectPage", "/SingleTaskPage", "/home"]}>
+            <NavBar />
+          </Route>
+
           <Switch>
             <Route exact path={['/', '/home']} component={Home} />
             <Route exact path='/login' component={Login} />
