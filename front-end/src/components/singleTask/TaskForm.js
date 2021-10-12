@@ -31,6 +31,8 @@ function TaskForm({ task, hasAuthority, projectList, employeeInThisProjectList }
             employeeId: employeeState,
             description: descriptionRef.current.value
         };
+
+        // FIX THIS INDEX. CANNOT USE EMPLOYEEINTHISPROJECTLIST BUT INSTEAD USE EMPLOYEE LIST OR FIND EMPLOYEE BY EMPLOYEESTATE WHICH IS EQUIVALNT TO ID
         const updatedEmployeeInformation = {
             ...employeeInThisProjectList[employeeState - 1],
             id: employeeState,
