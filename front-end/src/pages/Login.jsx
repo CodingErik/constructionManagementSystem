@@ -17,6 +17,7 @@ export default function Login() {
     e.preventDefault();
 
     const res = await LoginAPI.login(username, password);
+    const token = 'loginapi token';
 
     if (res.status === 200) {
       setMessage(null);
@@ -25,7 +26,7 @@ export default function Login() {
         type: 'LOGIN',
         payload: {
           user: res.data,
-          token: '',
+          token: token,
         },
       });
 
