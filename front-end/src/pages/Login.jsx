@@ -1,25 +1,37 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { LoginAPI } from '../api';
 import Message from '../components/Message';
+import { AuthContext } from '../App';
 
 export default function Login() {
+  const { dispatch } = React.useContext(AuthContext);
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
+  const history = useHistory();
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
     const res = await LoginAPI.login(username, password);
 
-    console.log(res);
-
     if (res.status === 200) {
       setMessage(null);
 
+      dispatch({
+        type: 'LOGIN',
+        payload: {
+          user: res.data,
+          token: '',
+        },
+      });
+
       alert('login');
+
+      history.push('/');
     } else {
       setMessage(res.errorMsg);
     }
