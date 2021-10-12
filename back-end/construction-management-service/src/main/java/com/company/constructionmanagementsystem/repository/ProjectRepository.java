@@ -11,12 +11,15 @@ import java.util.Optional;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Integer>{
+
+    List<Project> findByName(String name);
+
     List<Project> findByDeadline(LocalDate deadline);
     List<Project> findByStartDate(LocalDate startDate);
     List<Project> findByStatus(String status);
 
     List<Project> findByRoomType(String roomType);
-    List<Project> findByName(String name);
+
     List<Project> findByRoomTypeAndName(String roomType, String name);
     List<Project> findByRoomTypeAndNameAndIsPlumbing(String roomType, String name, Boolean isPlumbing);
     List<Project> findByRoomTypeAndNameAndIsElectric(String roomType, String name, Boolean isElectric);
