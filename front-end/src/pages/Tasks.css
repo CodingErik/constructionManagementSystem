@@ -1,0 +1,37 @@
+.statusFilterTasks{
+    display:flex; 
+    justify-content: space-evenly;
+    width:33%;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.otherFiltersTasks{
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width:100%;
+    margin-bottom:30px;
+}
+
+.filterButtonTasks{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border:1px solid transparent;
+    border-radius: 10rem;
+    outline:none;
+    margin-left:1%;
+    margin-right:1%;
+    padding:auto;
+    color:blue;
+    font-weight:800;
+    width:5%;
+}
+
+.filterButtonTasks:hover{
+    background-color: blue;
+    color:white;
+    border:1px solid transparent;
+}
