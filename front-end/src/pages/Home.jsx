@@ -96,9 +96,7 @@ function Home() {
 
   useEffect(() => {
     ProjectAPI.getAllProjects().then((response) => {
-      console.log(response.data);
       setProjectList([...response.data]);
-
       response.data.forEach((project) => {
         if (project.status === "in_progress") {
           setStatusCount((prevState) => ({
@@ -119,9 +117,9 @@ function Home() {
       });
     });
     EmployeeAPI.getAllEmployees().then((response) => {
-        setEmployeeList(response.data);
-        console.log(response.data)
-    })
+      setEmployeeList(response.data);
+      console.log(response.data);
+    });
   }, []);
 
   return (
@@ -138,7 +136,7 @@ function Home() {
             <ProjectPieChart statusCount={statusCount}></ProjectPieChart>
           </div>
           <div className="row">
-            <EmployeeListTable employeeList={employeeList}/>
+            <EmployeeListTable employeeList={employeeList} />
           </div>
         </div>
       </div>

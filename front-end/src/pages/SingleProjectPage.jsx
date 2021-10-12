@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import { ProjectAPI } from "../api/index";
+import { ProjectAPI, EmployeeAPI } from "../api/index";
 import EmployeeListTableForProject from "../components/singleProject/EmployeeListTableForProject";
 
-function SingleProjectPage({ projectid }) {
+function SingleProjectPage({ }) {
   const { projectId } = useParams();
   const [project, setProject] = useState({});
   const [hasAuthority, setHasAuthority] = useState(true);
@@ -21,15 +21,13 @@ function SingleProjectPage({ projectid }) {
 
   useEffect(() => {
     ProjectAPI.getProjectById(projectId).then((response) => {
-      console.log(response.data);
       setProject(response.data);
     });
   }, []);
 
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // console.log(event.target);
-    // console.log(nameRef)
     const updatedProjectInformation = {
       id: project.id,
       name: nameRef.current.value,
@@ -42,11 +40,11 @@ function SingleProjectPage({ projectid }) {
       totalBudget: totalBudgetRef.current.value,
       plumbing: isPlumbingRef.current.checked,
       electric: isElectricRef.current.checked,
-
-};
-    console.log(updatedProjectInformation);
+    };
     ProjectAPI.putProject(updatedProjectInformation);
   };
+
+
 
   return (
     <div>
@@ -216,8 +214,10 @@ function SingleProjectPage({ projectid }) {
           Apply Changes
         </button>
       </form>
+
+
       <EmployeeListTableForProject
-        employeeList={project.employeeList}
+        projectId={projectId}
       ></EmployeeListTableForProject>
     </div>
   );
