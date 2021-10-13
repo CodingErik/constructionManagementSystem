@@ -2,14 +2,16 @@ import { useState, useEffect } from "react";
 import { TaskAPI, ProjectAPI, EmployeeAPI } from "../api";
 import { useParams } from "react-router-dom";
 import TaskForm from "../components/singleTask/TaskForm";
+import decode from "jwt-decode";
 
 
 function SingleTaskPage() {
     const { taskId } = useParams();
     const [task, setTask] = useState({});
-    const [hasAuthority, setHasAuthority] = useState(true);
+    const [hasAuthority, setHasAuthority] = useState(false);
     const [projectList, setProjectList] = useState([]);
     const [employeeInThisProjectList, setEmployeeInThisProjectList] = useState([]);
+    const token = decode(JSON.parse(localStorage.getItem("token")));
 
     useEffect(() => {
         TaskAPI.getTaskById(taskId).then((response) => {
@@ -21,6 +23,7 @@ function SingleTaskPage() {
         ProjectAPI.getAllProjects().then((response) => {
             setProjectList(response.data);
         });
+        setHasAuthority(token.authorities === "Architect" ? true: false)
     }, []);
 
 

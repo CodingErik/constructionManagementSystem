@@ -1,6 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useState } from "react";
+import { Link, useHistory, Redirect } from "react-router-dom";
 import { LoginAPI } from "../api";
 import Message from "../components/Message";
 import { AuthContext } from "../App";
@@ -21,26 +21,29 @@ export default function Login() {
       username: username,
       password: password,
     });
-    console.log(token);
     if (res.status === 200) {
       setMessage(null);
 
       dispatch({
         type: "LOGIN",
         payload: {
-          user: res.data,
+          // user: res.data,
           token: token.data.jwt_token,
         },
       });
 
       alert("login");
 
-      history.push("/");
+      history.push("/Home");
     } else {
       setMessage(res.errorMsg);
     }
+
   };
 
+  if(localStorage.getItem("token")) {
+    return <Redirect to="/Home" />;
+  }
   return (
     <div class="container">
       <div class="row">

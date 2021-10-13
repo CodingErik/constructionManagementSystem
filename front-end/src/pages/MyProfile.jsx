@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import API from "../api/EmployeeAPI";
-import ProjectsTable from "../components/ProjectsTable";
 import OnGoingProjectsDisplay from "../components/home/OnGoingProjectsDisplay";
-import { useParams } from "react-router";
 import TaskListDisplay from "../components/TaskListDisplay";
+import decode from "jwt-decode";
+import {Redirect} from "react-router-dom";
 
 let columnBooleans = {
   projectId: false,
@@ -26,13 +26,11 @@ export default function MyProfile() {
   const [userInfo, setUserInfo] = useState({});
   const [userProjects, setUserProject] = useState([]);
   const [userTasks, setUserTask] = useState([]);
-  const { employeeID } = useParams();
-  //   const [statusFilter, setStatusFilter] = useState("all");
+  const username = localStorage.getItem("token")? decode(JSON.parse(localStorage.getItem("token"))).sub : null;
 
   useEffect(() => {
-    API.getEmployeeById(employeeID)
+    API.getEmployeeByUsername(username)
       .then(({ data }) => {
-        console.log(data);
         setUserInfo(data);
         setUserProject(() => [data.project]);
         setUserTask(() => [data.taskList]);
@@ -40,7 +38,12 @@ export default function MyProfile() {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [username]);
+
+
+  if(!localStorage.getItem("token")) {
+    return <Redirect to="/login" />;
+  }
 
   const handleProjectColumnHeaderClick = (target) => {
     const sort_by = (field, reverse, primer) => {
@@ -116,6 +119,8 @@ export default function MyProfile() {
     }
   };
 
+
+
   const handleTaskColumnHeaderClick = (target) => {
     const sort_by = (field, reverse, primer) => {
       const key = primer
@@ -158,52 +163,62 @@ export default function MyProfile() {
         break;
       case "Status":
         taskColumnBooleans.Status
-        ? (taskColumnBooleans.Status = false)
-        : (taskColumnBooleans.Status = true);
+          ? (taskColumnBooleans.Status = false)
+          : (taskColumnBooleans.Status = true);
 
-      setUserTask(
-        [...userTasks].sort(
-          sort_by("Status", taskColumnBooleans.Status, (a) => a.toUpperCase())
-        )
-      );
+        setUserTask(
+          [...userTasks].sort(
+            sort_by("Status", taskColumnBooleans.Status, (a) => a.toUpperCase())
+          )
+        );
         break;
       case "StartDate":
         taskColumnBooleans.StartDate
-        ? (taskColumnBooleans.StartDate = false)
-        : (taskColumnBooleans.StartDate = true);
+          ? (taskColumnBooleans.StartDate = false)
+          : (taskColumnBooleans.StartDate = true);
 
-      setUserTask(
-        [...userTasks].sort(
-          sort_by("StartDate", taskColumnBooleans.StartDate, (a) => a.toUpperCase())
-        )
-      );
+        setUserTask(
+          [...userTasks].sort(
+            sort_by("StartDate", taskColumnBooleans.StartDate, (a) =>
+              a.toUpperCase()
+            )
+          )
+        );
         break;
       case "Deadline":
         taskColumnBooleans.Deadline
-        ? (taskColumnBooleans.Deadline = false)
-        : (taskColumnBooleans.Deadline = true);
+          ? (taskColumnBooleans.Deadline = false)
+          : (taskColumnBooleans.Deadline = true);
 
-      setUserTask(
-        [...userTasks].sort(
-          sort_by("Deadline", taskColumnBooleans.Deadline, (a) => a.toUpperCase())
-        )
-      );
+        setUserTask(
+          [...userTasks].sort(
+            sort_by("Deadline", taskColumnBooleans.Deadline, (a) =>
+              a.toUpperCase()
+            )
+          )
+        );
         break;
       case "description":
         taskColumnBooleans.description
-        ? (taskColumnBooleans.description = false)
-        : (taskColumnBooleans.description = true);
+          ? (taskColumnBooleans.description = false)
+          : (taskColumnBooleans.description = true);
 
-      setUserTask(
-        [...userTasks].sort(
-          sort_by("description", taskColumnBooleans.description, (a) => a.toUpperCase())
-        )
-      );
+        setUserTask(
+          [...userTasks].sort(
+            sort_by("description", taskColumnBooleans.description, (a) =>
+              a.toUpperCase()
+            )
+          )
+        );
         break;
       default:
         break;
     }
   };
+
+  if(!localStorage.getItem("token")) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <div>
@@ -212,7 +227,7 @@ export default function MyProfile() {
           <div className="col col-4-lg">
             <img
               src="https://via.placeholder.com/350"
-            //   add image for the user aws implementation 
+              //   add image for the user aws implementation
               className="rounded-circle"
               alt="profile image"
             ></img>
@@ -224,48 +239,52 @@ export default function MyProfile() {
               </div>
               <div className="col-5"></div>
               <div className="col-3">
-                <button  style={{display:'inline'}}type="button" className="btn btn-warning">
+                <button
+                  style={{ display: "inline" }}
+                  type="button"
+                  className="btn btn-warning"
+                >
                   Edit Info
                 </button>
               </div>
             </div>
             <div className="row">
-              <div class="col-12">
-                <ul class="list-group text-black">
-                  <div class="list-group-item bg-transparent text-start ">
-                    <span class="employee-email">Id: {userInfo.id}</span>
+              <div className="col-12">
+                <ul className="list-group text-black">
+                  <div className="list-group-item bg-transparent text-start ">
+                    <span className="employee-email">Id: {userInfo.id}</span>
                   </div>
-                  <div class="list-group-item bg-transparent text-start ">
-                    <span class="employee-email">Title: {userInfo.title}</span>
+                  <div className="list-group-item bg-transparent text-start ">
+                    <span className="employee-email">Title: {userInfo.title}</span>
                   </div>
-                  <div class="list-group-item bg-transparent text-start ">
-                    <span class="employee-email">Name: {userInfo.name}</span>
+                  <div className="list-group-item bg-transparent text-start ">
+                    <span className="employee-email">Name: {userInfo.name}</span>
                   </div>
-                  <div class="list-group-item bg-transparent text-start ">
-                    <span class="employee-email">Dob: {userInfo.dob}</span>
+                  <div className="list-group-item bg-transparent text-start ">
+                    <span className="employee-email">Dob: {userInfo.dob}</span>
                   </div>
-                  <div class="list-group-item bg-transparent text-start ">
+                  <div className="list-group-item bg-transparent text-start ">
                     <p id="employee-name">Salary: {userInfo.salary}</p>
                   </div>
-                  <div class="list-group-item bg-transparent text-start ">
+                  <div className="list-group-item bg-transparent text-start ">
                     <p id="employee-role">
                       Experience: {userInfo.yearsOfExperience}
                     </p>
                   </div>
-                  <div class="list-group-item bg-transparent text-start ">
+                  <div className="list-group-item bg-transparent text-start ">
                     <p id="employee-department">Email: {userInfo.email}</p>
                   </div>
-                  <div class="list-group-item bg-transparent text-start ">
+                  <div className="list-group-item bg-transparent text-start ">
                     <p id="employee-department">
                       Phone: {userInfo.phoneNumber}
                     </p>
                   </div>
-                  <div class="list-group-item bg-transparent text-start ">
+                  <div className="list-group-item bg-transparent text-start ">
                     <p id="employee-department">
                       Username: {userInfo.username}
                     </p>
                   </div>
-                  <div class="list-group-item bg-transparent text-start ">
+                  <div className="list-group-item bg-transparent text-start ">
                     <p id="employee-department">
                       User Since: {userInfo.userSince}
                     </p>

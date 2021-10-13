@@ -2,7 +2,7 @@ import AddModal from "./AddModal";
 import { EmployeeAPI } from "../../api";
 import { useState, useEffect } from "react";
 
-function EmployeeListTableForProject({ projectId }) {
+function EmployeeListTableForProject({ projectId, hasAuthority }) {
     const [allEmployeesInProject, setAllEmployeesInProject] = useState([]);
     const [allEmployeesNotInProject, setAllEmployeesNotInProject] = useState([]);
 
@@ -46,13 +46,13 @@ function EmployeeListTableForProject({ projectId }) {
                         </tr>
                     ))}
                     <tr>
-                        <td colspan="4" class="table">
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#addArchitectModal">Add Architect</button>
+                        <td colSpan="4" className="table">
+                            <button type="button" disabled={!hasAuthority} className="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#addArchitectModal">Add Architect</button>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <AddModal title="Architect" modalId="addArchitectModal" allEmployeesNotInProject={allEmployeesNotInProject} projectId={projectId} handleAddEmployeeToProject={handleAddEmployeeToProject} />
+            <AddModal hasAuthority={hasAuthority} title="Architect" modalId="addArchitectModal" allEmployeesNotInProject={allEmployeesNotInProject} projectId={projectId} handleAddEmployeeToProject={handleAddEmployeeToProject} />
 
             <h3>Employees</h3>
             <table className="table table-hover">
@@ -74,8 +74,8 @@ function EmployeeListTableForProject({ projectId }) {
                         </tr>
                     ))}
                     <tr>
-                        <td colspan="4" class="table">
-                            <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add Employee</button>
+                        <td colSpan="4" className="table">
+                            <button type="button" disabled={!hasAuthority} className="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add Employee</button>
                         </td>
                     </tr>
                 </tbody>

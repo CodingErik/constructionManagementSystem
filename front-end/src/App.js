@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, createContext, useReducer } from 'react';
 import NavBar from './components/NavBar';
 import {
   BrowserRouter as Router,
   Route,
-  Switch,
-  useHistory,
+  Switch
 } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
@@ -18,13 +17,16 @@ import SingleProjectPage from './pages/SingleProjectPage';
 import SingleTaskPage from './pages/SingleTaskPage';
 import { reducer, initialState } from './reducer/userInfoReducer';
 
-export const AuthContext = React.createContext();
+
+export const AuthContext = createContext();
 
 function App() {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
-  const history = useHistory();
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(() => {}, [state]);
+  useEffect(() => {
+    console.log(state.token);
+  }, [state]);
+
 
   return (
     <AuthContext.Provider
@@ -44,19 +46,18 @@ function App() {
                 '/SingleProjectPage',
                 '/SingleTaskPage',
                 '/home',
-                '/',
               ]}
             >
               <NavBar />
             </Route>
 
             <Switch>
-              <Route exact path={['/', '/home']} component={Home} />
+              <Route exact path='/home' component={Home} />
               <Route exact path='/register' component={RegisterPage} />
-              <Route exact path='/login' component={Login} />
+              <Route exact path={['/', '/login']} component={Login} />
               <Route
                 exact
-                path='/MyProfile/:employeeID'
+                path='/MyProfile'
                 component={MyProfile}
               />
               <Route exact path='/Projects' component={Projects} />

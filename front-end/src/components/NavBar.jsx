@@ -1,13 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory , NavLink} from "react-router-dom";
 import { AuthContext } from "../App";
 
 export default function NavBar() {
   const { dispatch } = React.useContext(AuthContext);
+  const history = useHistory();
+
   const handleLogout = () => {
     dispatch({
       type: "LOGOUT",
     });
+    // history.push("/login");
   };
 
   return (
@@ -36,7 +39,7 @@ export default function NavBar() {
             </li>
             <li className="nav-item">
               {/* hard code to remove */}
-              <Link className="nav-link" to="/MyProfile/1">
+              <Link className="nav-link" to="/MyProfile">
                 MyProfile
               </Link>
             </li>
@@ -51,9 +54,9 @@ export default function NavBar() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                <button onClick={handleLogout}>Logout</button>
-              </Link>
+              <NavLink onClick={handleLogout} to="/login" className="nav-link">
+                Logout
+              </NavLink>
             </li>
           </ul>
         </div>
