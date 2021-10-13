@@ -3,11 +3,8 @@ import { useState, useEffect } from 'react';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { LoginAPI } from '../api';
 import Message from '../components/Message';
-// import { AuthContext } from '../App';
 
 export default function Login() {
-  // const { dispatch } = React.useContext(AuthContext);
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
@@ -40,7 +37,6 @@ export default function Login() {
             <div class='card-body p-4 p-sm-5'>
               <h5 class='card-title text-center mb-5 fw-light fs-5'>Login</h5>
 
-              {/* <form onSubmit={submitHandler}> */}
               <form onSubmit={submitHandler}>
                 {message && <Message variant='danger'>{message}</Message>}
                 <div class='form-floating mb-3'>
