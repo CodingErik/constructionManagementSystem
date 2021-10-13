@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -15,7 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class EmployeeRepositoryTest {
     @Autowired
@@ -38,6 +39,7 @@ public class EmployeeRepositoryTest {
         taskRepository.deleteAll();
     }
 
+    //
     @Test
     public void addFindDeleteEmployee() {
         employeeRepository.deleteAll();
@@ -76,49 +78,6 @@ public class EmployeeRepositoryTest {
     }
 
     @Test
-    public void findAllEmployees() {
-        employeeRepository.deleteAll();
-
-        LocalDate birth1 = LocalDate.of(1999,9 ,9);
-        LocalDate since1 = LocalDate.now();
-        MathContext mathContext = new MathContext(4);
-
-        Employee employee1 = new Employee();
-        employee1.setTitle("Worker");
-        employee1.setName("John Doe");
-        employee1.setDateOfBirth(birth1);
-        employee1.setSalary(new BigDecimal(123.23).round(mathContext));
-        employee1.setYearsOfExperience(5);
-        employee1.setEmail("abc@email.com");
-        employee1.setPhoneNumber("1234567890");
-        employee1.setUsername("johnusername");
-        employee1.setPassword("123456");
-        employee1.setUserSince(since1);
-        employee1 = employeeRepository.save(employee1);
-
-        LocalDate birth2 = LocalDate.of(1990,1 ,1);
-        LocalDate since2 = LocalDate.now();
-
-        Employee employee2 = new Employee();
-        employee2.setTitle("Manager");
-        employee2.setName("Joe Hee");
-        employee2.setDateOfBirth(birth2);
-        employee2.setSalary(new BigDecimal(123.23).round(mathContext));
-        employee2.setYearsOfExperience(5);
-        employee2.setEmail("abc@email.com");
-        employee2.setPhoneNumber("0987654321");
-        employee2.setUsername("joeusername");
-        employee2.setPassword("654321");
-        employee2.setUserSince(since2);
-        employeeRepository.save(employee2);
-
-        List<Employee> employeeList = employeeRepository.findAll();
-
-        assertEquals(2, employeeList.size());
-
-    }
-
-    @Test
     public void saveAndFlushEmployee() {
         employeeRepository.deleteAll();
 
@@ -151,6 +110,49 @@ public class EmployeeRepositoryTest {
 
 
         assertEquals(employee1, employee);
+
+    }
+
+    @Test
+    public void findAllEmployees() {
+        employeeRepository.deleteAll();
+
+        LocalDate birth1 = LocalDate.of(1999,9 ,9);
+        LocalDate since1 = LocalDate.now();
+        MathContext mathContext = new MathContext(4);
+
+        Employee employee1 = new Employee();
+        employee1.setTitle("Worker");
+        employee1.setName("John Doe");
+        employee1.setDateOfBirth(birth1);
+        employee1.setSalary(new BigDecimal(123.23).round(mathContext));
+        employee1.setYearsOfExperience(5);
+        employee1.setEmail("abcd@email.com");
+        employee1.setPhoneNumber("1234567890");
+        employee1.setUsername("johnusername");
+        employee1.setPassword("123456");
+        employee1.setUserSince(since1);
+        employee1 = employeeRepository.save(employee1);
+
+        LocalDate birth2 = LocalDate.of(1990,1 ,1);
+        LocalDate since2 = LocalDate.now();
+
+        Employee employee2 = new Employee();
+        employee2.setTitle("Manager");
+        employee2.setName("Joe Hee");
+        employee2.setDateOfBirth(birth2);
+        employee2.setSalary(new BigDecimal(123.23).round(mathContext));
+        employee2.setYearsOfExperience(5);
+        employee2.setEmail("abc@email.com");
+        employee2.setPhoneNumber("0987654321");
+        employee2.setUsername("joeusername");
+        employee2.setPassword("654321");
+        employee2.setUserSince(since2);
+        employeeRepository.save(employee2);
+
+        List<Employee> employeeList = employeeRepository.findAll();
+
+        assertEquals(2, employeeList.size());
 
     }
 
