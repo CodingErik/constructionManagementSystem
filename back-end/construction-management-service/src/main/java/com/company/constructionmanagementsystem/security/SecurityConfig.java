@@ -39,7 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/authenticate").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/employees/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/employees/register").permitAll()
-
                 .antMatchers(HttpMethod.POST, "/refresh_token").authenticated()
                 .antMatchers("/api/employees").authenticated()
                 .antMatchers("/api/projects").authenticated()
@@ -63,6 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(loginDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder);
+
+
     }
 
     @Override

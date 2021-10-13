@@ -31,7 +31,8 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-<!--&lt;!&ndash;        Microservice&ndash;&gt;-->
+
+<!--        Microservice-->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-config</artifactId>-->
@@ -40,7 +41,7 @@
 <!--            <groupId>org.springframework.cloud</groupId>-->
 <!--            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>-->
 <!--        </dependency>-->
-<!--&lt;!&ndash;Microservice&ndash;&gt;-->
+<!--Microservice-->
 
 
         <dependency>
@@ -113,7 +114,8 @@
         </dependency>
     </dependencies>
 
-<!--&lt;!&ndash;    MICROSERVICE&ndash;&gt;-->
+
+<!--    MICROSERVICE-->
 <!--    <dependencyManagement>-->
 <!--        <dependencies>-->
 <!--            <dependency>-->

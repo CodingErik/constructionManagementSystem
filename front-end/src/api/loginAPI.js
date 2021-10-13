@@ -3,6 +3,7 @@ import axios from 'axios';
 const baseUrl = `http://localhost:8080`;
 
 const API = {
+  // @login
   login: async (username, password) => {
     try {
       const config = {
@@ -11,7 +12,7 @@ const API = {
         },
       };
 
-      const request = await axios.post(
+      const response = await axios.post(
         `${baseUrl}/api/employees/login`,
         {
           username: username,
@@ -20,17 +21,20 @@ const API = {
         config
       );
 
-      const response = {
-        data: request.data,
-        status: request.status,
-      };
+      if (response.status === 200) {
+        await localStorage.setItem(
+          'token',
+          JSON.stringify(response.data.jwt_token)
+        );
+      }
 
       return response;
     } catch (error) {
       return error.response.data;
     }
   },
-  register: async (name, username, email, password) => {
+  // @register
+  register: async (name, title, username, email, password) => {
     try {
       const config = {
         headers: {
@@ -42,6 +46,7 @@ const API = {
         `${baseUrl}/api/employees/register`,
         {
           name: name,
+          title: title,
           username: username,
           email: email,
           password: password,
@@ -50,21 +55,14 @@ const API = {
       );
 
       const response = {
-        data: request.data,
         status: request.status,
       };
 
       return response;
     } catch (error) {
-      console.log(error.response.data);
-
       return error.response.data;
     }
   },
-  loginWithJwt : (userInfo) => {
-    return axios.post(`${baseUrl}/authenticate`, userInfo)
-  }
 };
 
 export default API;
-// /api/employees/register
