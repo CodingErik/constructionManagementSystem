@@ -30,7 +30,7 @@ const API = {
       return error.response.data;
     }
   },
-  register: async (name, username, email, password) => {
+  register: async (name, title, username, email, password) => {
     try {
       const config = {
         headers: {
@@ -42,6 +42,7 @@ const API = {
         `${baseUrl}/api/employees/register`,
         {
           name: name,
+          title: title,
           username: username,
           email: email,
           password: password,
@@ -50,20 +51,18 @@ const API = {
       );
 
       const response = {
-        data: request.data,
+        // data: request.data,
         status: request.status,
       };
 
       return response;
     } catch (error) {
-      console.log(error.response.data);
-
       return error.response.data;
     }
   },
-  loginWithJwt : (userInfo) => {
-    return axios.post(`${baseUrl}/authenticate`, userInfo)
-  }
+  loginWithJwt: (userInfo) => {
+    return axios.post(`${baseUrl}/authenticate`, userInfo);
+  },
 };
 
 export default API;

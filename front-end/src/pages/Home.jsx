@@ -4,7 +4,6 @@ import OnGoingProjectsDisplay from '../components/home/OnGoingProjectsDisplay';
 import ProjectPieChart from '../components/home/ProjectPieChart';
 import EmployeeListTable from '../components/home/EmployeeListTable';
 import { ProjectAPI, EmployeeAPI } from '../api/index';
-import { AuthContext } from '../App';
 
 let columnBooleans = {
   projectId: false,
@@ -12,6 +11,20 @@ let columnBooleans = {
   status: false,
   startDate: false,
   deadline: false,
+};
+
+const checkToken = async () => {
+  let token = (await localStorage.getItem('token'))
+    ? JSON.parse(localStorage.getItem('token'))
+    : null;
+
+  console.log(token);
+
+  if (!token) {
+    return false;
+  }
+
+  return true;
 };
 
 function Home() {
@@ -99,6 +112,10 @@ function Home() {
   };
 
   useEffect(() => {
+    checkToken().then((res) => {
+      if (!res) history.push('/login');
+    });
+
     ProjectAPI.getAllProjects().then((response) => {
       setProjectList([...response.data]);
       response.data.forEach((project) => {

@@ -109,6 +109,7 @@ public class EmployeeController {
         employee.setUsername(employee.getUsername().toLowerCase(Locale.ROOT));
         employee.setProjectId(0);
         employee.setName(employee.getName().toLowerCase(Locale.ROOT));
+        employee.setTitle(employee.getTitle().toLowerCase(Locale.ROOT));
         employee.setEmail(employee.getEmail().toLowerCase(Locale.ROOT));
         employee.setUserSince(LocalDate.now());
         employee.setYearsOfExperience(0);

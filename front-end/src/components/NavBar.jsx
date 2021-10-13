@@ -1,7 +1,52 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react/cjs/react.development';
+import { AuthContext } from '../App';
+
+const checkToken = async () => {
+  let token = (await localStorage.getItem('token'))
+    ? JSON.parse(localStorage.getItem('token'))
+    : null;
+
+  if (!token) {
+    return false;
+  }
+
+  return true;
+};
 
 export default function NavBar() {
+  const [isLogin, setIslogin] = useState(false);
+
+  const { dispatch } = React.useContext(AuthContext);
+  const handleLogout = () => {
+    dispatch({
+      type: 'LOGOUT',
+    });
+  };
+
+  useEffect(() => {
+    checkToken().then((res) => {
+      if (res) {
+        setIslogin(true);
+      } else {
+        setIslogin(false);
+      }
+    });
+  });
+
+  if (!isLogin) {
+    return (
+      <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+        <div className='container-fluid'>
+          <Link className='navbar-brand' to='/'>
+            CMS
+          </Link>
+        </div>
+      </nav>
+    );
+  }
+
   return (
     <nav className='navbar navbar-expand-lg navbar-light bg-light'>
       <div className='container-fluid'>
@@ -40,6 +85,11 @@ export default function NavBar() {
             <li className='nav-item'>
               <Link className='nav-link' to='/Tasks'>
                 Tasks
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link className='nav-link' to='/login'>
+                <button onClick={handleLogout}>Logout</button>
               </Link>
             </li>
           </ul>
