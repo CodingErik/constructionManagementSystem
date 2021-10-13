@@ -3,9 +3,11 @@ import TasksTable from '../components/TasksTable';
 import taskAPI from '../api/TaskAPI';
 import projectAPI from '../api/ProjectAPI';
 import employeeAPI from '../api/EmployeeAPI';
-import './Tasks.css';
+import "./Tasks.css"
+import redirectIfTokenNull from "../components/RedirectHelper";
 
 export default function Tasks() {
+  redirectIfTokenNull();
   const [tasks, setTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState('all');
   const [projectId, setProjectId] = useState();

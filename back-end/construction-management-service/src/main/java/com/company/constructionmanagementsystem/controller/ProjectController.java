@@ -81,7 +81,7 @@ public class ProjectController {
 //        return projectServiceLayer.findByDeadline(deadline);
 //    }
 
-    @GetMapping("/api/projects/deadline/{deadline}")
+    @GetMapping("/api/projects/startDate/{startDate}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectViewModel> findByStartDate(@PathVariable LocalDate startDate){
         return projectServiceLayer.findByStartDate(startDate);
