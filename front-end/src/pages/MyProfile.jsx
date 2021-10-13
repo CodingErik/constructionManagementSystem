@@ -5,14 +5,6 @@ import BriefTasksDisplay from "../components/home/BriefTasksDisplay";
 import decode from "jwt-decode";
 import redirectIfTokenNull from "../components/RedirectHelper";
 
-let taskColumnBooleans = {
-  TaskId: false,
-  Task: false,
-  Status: false,
-  StartDate: false,
-  Deadline: false,
-  description: false,
-};
 
 export default function MyProfile() {
   redirectIfTokenNull();
@@ -28,108 +20,15 @@ export default function MyProfile() {
     API.getEmployeeByUsername(username)
       .then(({ data }) => {
         setUserInfo(data);
-        setUserProject(() => [data.project]);
-        setUserTask(() => [data.taskList]);
+        setUserProject([{...data.project}]);
+        setUserTask([...data.taskList]);
       })
       .catch((error) => {
         console.error(error);
       });
   }, [username]);
 
-   const handleTaskColumnHeaderClick = (target) => {
-    const sort_by = (field, reverse, primer) => {
-      const key = primer
-        ? function (x) {
-            return primer(x[field]);
-          }
-        : function (x) {
-            return x[field];
-          };
-      reverse = !reverse ? 1 : -1;
-
-      return function (a, b) {
-        return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
-      };
-    };
-    console.log(target);
-    switch (target) {
-      case "TaskId":
-        taskColumnBooleans.TaskId
-          ? (taskColumnBooleans.TaskId = false)
-          : (taskColumnBooleans.TaskId = true);
-
-        setUserTask(
-          [...userTasks].sort(
-            sort_by("id", taskColumnBooleans.TaskId, parseInt)
-          )
-        );
-
-        break;
-      case "Task":
-        taskColumnBooleans.Task
-          ? (taskColumnBooleans.Task = false)
-          : (taskColumnBooleans.Task = true);
-
-        setUserTask(
-          [...userTasks].sort(
-            sort_by("Task", taskColumnBooleans.Task, (a) => a.toUpperCase())
-          )
-        );
-        break;
-      case "Status":
-        taskColumnBooleans.Status
-          ? (taskColumnBooleans.Status = false)
-          : (taskColumnBooleans.Status = true);
-
-        setUserTask(
-          [...userTasks].sort(
-            sort_by("Status", taskColumnBooleans.Status, (a) => a.toUpperCase())
-          )
-        );
-        break;
-      case "StartDate":
-        taskColumnBooleans.StartDate
-          ? (taskColumnBooleans.StartDate = false)
-          : (taskColumnBooleans.StartDate = true);
-
-        setUserTask(
-          [...userTasks].sort(
-            sort_by("StartDate", taskColumnBooleans.StartDate, (a) =>
-              a.toUpperCase()
-            )
-          )
-        );
-        break;
-      case "Deadline":
-        taskColumnBooleans.Deadline
-          ? (taskColumnBooleans.Deadline = false)
-          : (taskColumnBooleans.Deadline = true);
-
-        setUserTask(
-          [...userTasks].sort(
-            sort_by("Deadline", taskColumnBooleans.Deadline, (a) =>
-              a.toUpperCase()
-            )
-          )
-        );
-        break;
-      case "description":
-        taskColumnBooleans.description
-          ? (taskColumnBooleans.description = false)
-          : (taskColumnBooleans.description = true);
-
-        setUserTask(
-          [...userTasks].sort(
-            sort_by("description", taskColumnBooleans.description, (a) =>
-              a.toUpperCase()
-            )
-          )
-        );
-        break;
-      default:
-        break;
-    }
-  };
+   
 
   return (
     <div>
@@ -222,8 +121,7 @@ export default function MyProfile() {
           <div className=" col ">
             {userTasks.length ? (
               <BriefTasksDisplay
-                taskList={userTasks}
-                handleTaskColumnHeaderClick={handleTaskColumnHeaderClick}
+                originalTaskList={userTasks}
               ></BriefTasksDisplay>
             ) : (
               <h2>No Available tasks... </h2>
