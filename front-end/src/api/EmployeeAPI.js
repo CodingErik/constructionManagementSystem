@@ -21,6 +21,9 @@ const employeeAPI = {
   putEmployee: (updatedEmployee) => {
     return axios.put(`${baseUrl}`, updatedEmployee);
   },
+  getEmployeeByTitle: (title) => {
+    return axios.get(`${baseUrl}/findByTitle/${title}`);
+  },
 };
 
 export default employeeAPI;

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { LoginAPI } from '../api';
+import { LoginAPI, EmployeeAPI } from '../api';
 import Message from '../components/Message';
 
 function RegisterPage() {
@@ -11,8 +11,17 @@ function RegisterPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);
+  const [hasAdmin, setHasAdmin] = useState(true);
 
   const history = useHistory();
+
+  useEffect(() => {
+    EmployeeAPI.getEmployeeByTitle('admin').then((res) => {
+      if (res.data.length) {
+        setHasAdmin(false);
+      }
+    });
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -78,6 +87,7 @@ function RegisterPage() {
                     >
                       <option>Architect</option>
                       <option>Employee</option>
+                      {hasAdmin && <option>Admin</option>}
                     </select>
                     <label for='floatingInputTitle'>Employee Title</label>
                   </div>
