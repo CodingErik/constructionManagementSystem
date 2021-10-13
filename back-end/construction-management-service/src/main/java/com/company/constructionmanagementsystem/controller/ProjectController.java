@@ -1,16 +1,18 @@
 package com.company.constructionmanagementsystem.controller;
 
 
-import com.company.constructionmanagementsystem.model.Material;
+import com.company.constructionmanagementsystem.model.Machine;
 import com.company.constructionmanagementsystem.model.Project;
 import com.company.constructionmanagementsystem.repository.ProjectRepository;
 import com.company.constructionmanagementsystem.service.ProjectServiceLayer;
+import com.company.constructionmanagementsystem.util.feign.MachineWarehouseClient;
+import com.company.constructionmanagementsystem.model.Material;
+
 import com.company.constructionmanagementsystem.util.feign.MaterialWarehouseClient;
 import com.company.constructionmanagementsystem.viewmodel.ProjectViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -28,10 +30,29 @@ public class ProjectController {
     ProjectServiceLayer projectServiceLayer;
 
     @Autowired
+    private final MachineWarehouseClient machineWarehouseClient;
+
+    @Autowired
     private final MaterialWarehouseClient materialWarehouseClient;
 
-    public ProjectController(MaterialWarehouseClient materialWarehouseClient) {
+    public ProjectController(MachineWarehouseClient machineWarehouseClient, MaterialWarehouseClient materialWarehouseClient) {
+        this.machineWarehouseClient = machineWarehouseClient;
         this.materialWarehouseClient = materialWarehouseClient;
+    }
+
+    @GetMapping("/machineryInventory")
+    public Machine helloCloud(){
+        return machineWarehouseClient.getMachineryInventory();
+    }
+
+    @PutMapping("/rentMachinery")
+    public void rentMachinery(@RequestBody Machine machinery) throws Exception {
+         machineWarehouseClient.rentMachinery(machinery);
+    }
+
+    @PutMapping("/returnMachinery")
+    public void returnMachinery(@RequestBody Machine machinery) {
+         machineWarehouseClient.returnMachinery(machinery);
     }
 
     @GetMapping("/api/material")
@@ -49,6 +70,7 @@ public class ProjectController {
     public String updateMaterialRefill(){
         return materialWarehouseClient.updateMaterialRefill();
     }
+
 
     @PostMapping("/api/projects")
     @ResponseStatus(HttpStatus.CREATED)
