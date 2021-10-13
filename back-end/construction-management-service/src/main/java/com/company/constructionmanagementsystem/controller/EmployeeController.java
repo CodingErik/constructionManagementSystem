@@ -3,11 +3,9 @@ package com.company.constructionmanagementsystem.controller;
 import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.repository.EmployeeRepository;
 import com.company.constructionmanagementsystem.service.EmployeeServiceLayer;
-import com.company.constructionmanagementsystem.util.LoginBody;
 import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,7 +18,7 @@ import java.util.Locale;
 
 @CrossOrigin
 @RestController
-@RefreshScope
+//@RefreshScope
 public class EmployeeController {
 
     @Autowired
@@ -110,6 +108,7 @@ public class EmployeeController {
         employee.setUsername(employee.getUsername().toLowerCase(Locale.ROOT));
         employee.setProjectId(0);
         employee.setName(employee.getName().toLowerCase(Locale.ROOT));
+        employee.setTitle(employee.getTitle().toLowerCase(Locale.ROOT));
         employee.setEmail(employee.getEmail().toLowerCase(Locale.ROOT));
         employee.setUserSince(LocalDate.now());
         employee.setYearsOfExperience(0);
@@ -119,25 +118,6 @@ public class EmployeeController {
         return employee;
     }
 
-    /**
-     * login endpoint
-     */
-    @PostMapping("/api/employees/login")
-    @ResponseStatus(value = HttpStatus.OK)
-    public Employee login(@RequestBody LoginBody login) throws Exception {
-
-        if (!repository.findByUsername(login.getUsername().toLowerCase(Locale.ROOT)).isPresent()) {
-            throw new IllegalArgumentException("Username not found.");
-        }
-        Employee employee = repository.findByUsername(login.getUsername().toLowerCase(Locale.ROOT)).get();
-
-        BCryptPasswordEncoder bce = new BCryptPasswordEncoder();
-        if (!bce.matches(login.getPassword(), employee.getPassword())) {
-            throw new IllegalArgumentException("Password not match");
-        }
-
-        return employee;
-    }
 
     @PutMapping("/api/employees")
     @ResponseStatus(HttpStatus.NO_CONTENT)

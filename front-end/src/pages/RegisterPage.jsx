@@ -5,6 +5,7 @@ import Message from '../components/Message';
 
 function RegisterPage() {
   const [name, setName] = useState('');
+  const [title, setTitle] = useState('Employee');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,7 +23,13 @@ function RegisterPage() {
     } else {
       setMessage(null);
 
-      const res = await LoginAPI.register(name, username, email, password);
+      const res = await LoginAPI.register(
+        name,
+        title,
+        username,
+        email,
+        password
+      );
 
       if (res.status === 201) {
         setMessage('Account created');
@@ -61,6 +68,18 @@ function RegisterPage() {
                       onChange={(e) => setName(e.target.value)}
                     />
                     <label for='floatingInputName'>Employee Name</label>
+                  </div>
+                  <div class='form-floating mb-3'>
+                    <select
+                      onChange={(e) => setTitle(e.target.value)}
+                      value={title}
+                      className='form-select'
+                      id='exampleSelect1'
+                    >
+                      <option>Architect</option>
+                      <option>Employee</option>
+                    </select>
+                    <label for='floatingInputTitle'>Employee Title</label>
                   </div>
 
                   <div class='form-floating mb-3'>

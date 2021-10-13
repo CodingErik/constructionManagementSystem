@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 
-export default function TaskListDisplay({ taskList, handleTaskColumnHeaderClick }) {
+export default function BriefTasksDisplay({ taskList, handleTaskColumnHeaderClick }) {
 
     return (
         <div>

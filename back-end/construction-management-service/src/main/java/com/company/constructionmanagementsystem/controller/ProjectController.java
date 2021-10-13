@@ -6,9 +6,12 @@ import com.company.constructionmanagementsystem.model.Project;
 import com.company.constructionmanagementsystem.repository.ProjectRepository;
 import com.company.constructionmanagementsystem.service.ProjectServiceLayer;
 import com.company.constructionmanagementsystem.util.feign.MachineWarehouseClient;
+import com.company.constructionmanagementsystem.model.Material;
+
 import com.company.constructionmanagementsystem.util.feign.MaterialWarehouseClient;
 import com.company.constructionmanagementsystem.viewmodel.ProjectViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@RefreshScope
 public class ProjectController {
 
     @Autowired
@@ -51,6 +55,21 @@ public class ProjectController {
          machineWarehouseClient.returnMachinery(machinery);
     }
 
+    @GetMapping("/api/material")
+    public Material getWarehouseInventory(){
+        return materialWarehouseClient.getWarehouseInventory();
+    }
+
+    @PutMapping("/api/material")
+    public void updateMaterialAfterRetrieve(@RequestBody Material material) throws Exception{
+        materialWarehouseClient.updateMaterialAfterRetrieve(material);
+    }
+
+
+    @PutMapping("/api/material/refill")
+    public String updateMaterialRefill(){
+        return materialWarehouseClient.updateMaterialRefill();
+    }
 
 
     @PostMapping("/api/projects")
@@ -101,11 +120,11 @@ public class ProjectController {
         return pvm;
     }
 
-    @GetMapping("/api/projects/deadline/{deadline}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
-        return projectServiceLayer.findByDeadline(deadline);
-    }
+//    @GetMapping("/api/projects/deadline/{deadline}")
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
+//        return projectServiceLayer.findByDeadline(deadline);
+//    }
 
     @GetMapping("/api/projects/startDate/{startDate}")
     @ResponseStatus(value = HttpStatus.OK)

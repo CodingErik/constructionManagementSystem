@@ -1,12 +1,13 @@
-import React, { useEffect, useState, useRef } from 'react';
-import ProjectsTable from '../components/ProjectsTable';
-
-import API from '../api/ProjectAPI';
-import './Projects.css';
+import React, { useEffect, useState, useRef } from "react";
+import ProjectsTable from "../components/ProjectsTable";
+import redirectIfTokenNull from "../components/RedirectHelper";
+import API from "../api/ProjectAPI";
+import "../assets/Projects.css";
 
 export default function Projects() {
+  redirectIfTokenNull();
   const [projects, setProjects] = useState([]);
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState("all");
   const [roomType, setRoomType] = useState("");
   const [name, setName] = useState("");
   const [isPlumbing, setIsPlumbing] = useState();
@@ -20,8 +21,8 @@ export default function Projects() {
       roomType.length > 0 ? roomType : null,
       name.length > 0 ? name : null
     )
-      .then(res => {
-        console.log(res.data)
+      .then((res) => {
+        console.log(res.data);
         if (isElectric === false && isPlumbing === false) {
           let results = [];
 
@@ -63,9 +64,10 @@ export default function Projects() {
 
   function setFilters(event) {
     event.preventDefault();
-
-    projectNameRef.current.value !== null && setName(projectNameRef.current.value);
-    roomTypeRef.current.value !== null && setRoomType(roomTypeRef.current.value);
+    projectNameRef.current.value !== null &&
+      setName(projectNameRef.current.value);
+    roomTypeRef.current.value !== null &&
+      setRoomType(roomTypeRef.current.value);
   }
 
   function resetFilters(event) {
@@ -80,129 +82,137 @@ export default function Projects() {
 
   return (
     <div>
-      <div className='statusFilter'>
+      <div className="statusFilter">
         <div
-          className='btn-group'
-          role='group'
-          aria-label='Basic radio toggle button group'
+          className="btn-group"
+          role="group"
+          aria-label="Basic radio toggle button group"
         >
-          <p style={{ paddingTop: '13px', marginRight:"20px" }} className="textField">Status : </p>
+          <p
+            style={{ paddingTop: "13px", marginRight: "20px" }}
+            className="textField"
+          >
+            Status :{" "}
+          </p>
           <input
-            onClick={() => setStatusFilter('all')}
-            type='radio'
-            className='btn-check'
-            name='btnradio'
-            id='allStatusFilter'
-            autoComplete='off'
-            defaultChecked=''
+            onClick={() => setStatusFilter("all")}
+            type="radio"
+            className="btn-check"
+            name="btnradio"
+            id="allStatusFilter"
+            autoComplete="off"
+            defaultChecked=""
           />
-          <label className='btn btn-outline-primary btn-sm' htmlFor='allStatusFilter'>
+          <label
+            className="btn btn-outline-primary btn-sm"
+            htmlFor="allStatusFilter"
+          >
             All
           </label>
           <input
-            onClick={() => setStatusFilter('in_progress')}
-            type='radio'
-            className='btn-check'
-            name='btnradio'
-            id='inProgressStatusFilter'
-            autoComplete='off'
-            defaultChecked=''
+            onClick={() => setStatusFilter("in_progress")}
+            type="radio"
+            className="btn-check"
+            name="btnradio"
+            id="inProgressStatusFilter"
+            autoComplete="off"
+            defaultChecked=""
           />
           <label
-            className='btn btn-outline-primary btn-sm'
-            htmlFor='inProgressStatusFilter'
+            className="btn btn-outline-primary btn-sm"
+            htmlFor="inProgressStatusFilter"
           >
             In Progress
           </label>
           <input
-            onClick={() => setStatusFilter('completed')}
-            type='radio'
-            className='btn-check'
-            name='btnradio'
-            id='completedStatusFilter'
-            autoComplete='off'
-            defaultChecked=''
+            onClick={() => setStatusFilter("completed")}
+            type="radio"
+            className="btn-check"
+            name="btnradio"
+            id="completedStatusFilter"
+            autoComplete="off"
+            defaultChecked=""
           />
           <label
-            className='btn btn-outline-primary btn-sm'
-            htmlFor='completedStatusFilter'
+            className="btn btn-outline-primary btn-sm"
+            htmlFor="completedStatusFilter"
           >
             Completed
           </label>
         </div>
-        <div className='plumbingFilter filter'>
+        <div className="plumbingFilter filter">
           <p className="textField">Plumbing</p>
           <div
-            className='btn-group'
-            role='group'
-            aria-label='Basic radio toggle button group'
+            className="btn-group"
+            role="group"
+            aria-label="Basic radio toggle button group"
           >
             <input
-              type='radio'
+              type="radio"
               onClick={() => setIsPlumbing(true)}
-              className='btn-check'
-              name='btnradio'
-              id='btnradioPlumbingYes'
-              autoComplete='off'
-              defaultChecked=''
+              className="btn-check"
+              name="btnradio"
+              id="btnradioPlumbingYes"
+              autoComplete="off"
+              defaultChecked=""
             />
             <label
-              className='btn btn-outline-secondary btn-sm'
-              htmlFor='btnradioPlumbingYes'
+              className="btn btn-outline-secondary btn-sm"
+              htmlFor="btnradioPlumbingYes"
             >
               Yes
             </label>
             <input
-              type='radio'
+              type="radio"
               onClick={() => setIsPlumbing(false)}
-              className='btn-check'
-              name='btnradio'
-              id='btnradioPlumbingNo'
-              autoComplete='off'
-              defaultChecked=''
+              className="btn-check"
+              name="btnradio"
+              id="btnradioPlumbingNo"
+              autoComplete="off"
+              defaultChecked=""
             />
             <label
-              className='btn btn-outline-secondary btn-sm'
-              htmlFor='btnradioPlumbingNo'
+              className="btn btn-outline-secondary btn-sm"
+              htmlFor="btnradioPlumbingNo"
             >
               No
             </label>
           </div>
         </div>
-        <div className='electricityFilter filter'>
+        <div className="electricityFilter filter">
           <p className="textField">Electricity</p>
           <div
-            className='btn-group'
-            role='group'
-            aria-label='Basic radio toggle button group'
+            className="btn-group"
+            role="group"
+            aria-label="Basic radio toggle button group"
           >
             <input
-              type='radio'
+              type="radio"
               onClick={() => setIsElectric(true)}
-              className='btn-check'
-              name='btnradio'
-              id='btnradioElectricityYes'
-              autoComplete='off'
-              defaultChecked=''
+              className="btn-check"
+              name="btnradio"
+              id="btnradioElectricityYes"
+              autoComplete="off"
+              defaultChecked=""
             />
             <label
-              className='btn btn-outline-secondary btn-sm' 
-              htmlFor='btnradioElectricityYes'
+              className="btn btn-outline-secondary btn-sm"
+              htmlFor="btnradioElectricityYes"
             >
               Yes
             </label>
             <input
-              type='radio'
+              type="radio"
               onClick={() => setIsElectric(false)}
-              className='btn-check'
-              name='btnradio'
-              id='btnradioElectricityNo'
-              autoComplete='off'
-              defaultChecked=''
+              className="btn-check"
+              name="btnradio"
+              id="btnradioElectricityNo"
+              autoComplete="off"
+              defaultChecked=""
             />
             <label
-              className='btn btn-outline-secondary btn-sm'
-              htmlFor='btnradioElectricityNo'
+              className="btn btn-outline-secondary btn-sm"
+              htmlFor="btnradioElectricityNo"
             >
               No
             </label>
@@ -210,20 +220,20 @@ export default function Projects() {
         </div>
       </div>
 
-      <div className='otherFilters'>
-        <div className='nameFilter filter'>
+      <div className="otherFilters">
+        <div className="nameFilter filter">
           <p className="textField">Project Name</p>
           <input ref={projectNameRef} className="textInput" />
         </div>
-        <div className='roomFilter filter'>
+        <div className="roomFilter filter">
           <p className="textField">Room Type</p>
-          <input ref={roomTypeRef} className="textInput"  />
+          <input ref={roomTypeRef} className="textInput" />
         </div>
-        <button className='filterButton' onClick={(event) => setFilters(event)}>
+        <button className="filterButton" onClick={(event) => setFilters(event)}>
           Filter
         </button>
         <button
-          className='filterButton'
+          className="filterButton"
           onClick={(event) => resetFilters(event)}
         >
           Reset

@@ -2,7 +2,7 @@ package com.company.constructionmanagementsystem.viewmodel;
 
 import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.model.Machine;
-import com.company.constructionmanagementsystem.model.ProjectMaterials;
+import com.company.constructionmanagementsystem.model.Material;
 import com.company.constructionmanagementsystem.model.Task;
 
 import java.math.BigDecimal;
@@ -24,7 +24,7 @@ public class ProjectViewModel {
     private BigDecimal laborBudget;
     private BigDecimal totalBudget;
     private String status;
-    private ProjectMaterials materials;
+    private Material material;
     private Machine machine;
     private List<Task> taskList = new ArrayList<>();
     private List<Employee> employeeList = new ArrayList<>();
@@ -32,7 +32,7 @@ public class ProjectViewModel {
     public ProjectViewModel() {
     }
 
-    public ProjectViewModel(int id, String name, LocalDate deadline, LocalDate startDate, String roomType, boolean isPlumbing, boolean isElectric, BigDecimal materialBudget, BigDecimal laborBudget, BigDecimal totalBudget, String status, ProjectMaterials materials, Machine machine, List<Task> taskList, List<Employee> employeeList) {
+    public ProjectViewModel(int id, String name, LocalDate deadline, LocalDate startDate, String roomType, boolean isPlumbing, boolean isElectric, BigDecimal materialBudget, BigDecimal laborBudget, BigDecimal totalBudget, String status, Material material, Machine machine, List<Task> taskList, List<Employee> employeeList) {
         this.id = id;
         this.name = name;
         this.deadline = deadline;
@@ -44,7 +44,7 @@ public class ProjectViewModel {
         this.laborBudget = laborBudget;
         this.totalBudget = totalBudget;
         this.status = status;
-        this.materials = materials;
+        this.material = material;
         this.machine = machine;
         this.taskList = taskList;
         this.employeeList = employeeList;
@@ -138,12 +138,12 @@ public class ProjectViewModel {
         this.status = status;
     }
 
-    public ProjectMaterials getMaterials() {
-        return materials;
+    public Material getMaterial() {
+        return material;
     }
 
-    public void setMaterials(ProjectMaterials materials) {
-        this.materials = materials;
+    public void setMaterial(Material material) {
+        this.material = material;
     }
 
     public Machine getMachine() {
@@ -175,12 +175,12 @@ public class ProjectViewModel {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProjectViewModel that = (ProjectViewModel) o;
-        return id == that.id && isPlumbing == that.isPlumbing && isElectric == that.isElectric && Objects.equals(name, that.name) && Objects.equals(deadline, that.deadline) && Objects.equals(startDate, that.startDate) && Objects.equals(roomType, that.roomType) && Objects.equals(materialBudget, that.materialBudget) && Objects.equals(laborBudget, that.laborBudget) && Objects.equals(totalBudget, that.totalBudget) && Objects.equals(status, that.status) && Objects.equals(materials, that.materials) && Objects.equals(machine, that.machine);
+        return id == that.id && isPlumbing == that.isPlumbing && isElectric == that.isElectric && Objects.equals(name, that.name) && Objects.equals(deadline, that.deadline) && Objects.equals(startDate, that.startDate) && Objects.equals(roomType, that.roomType) && Objects.equals(materialBudget, that.materialBudget) && Objects.equals(laborBudget, that.laborBudget) && Objects.equals(totalBudget, that.totalBudget) && Objects.equals(status, that.status) && Objects.equals(material, that.material) && Objects.equals(machine, that.machine);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, deadline, startDate, roomType, isPlumbing, isElectric, materialBudget, laborBudget, totalBudget, status, materials, machine);
+        return Objects.hash(id, name, deadline, startDate, roomType, isPlumbing, isElectric, materialBudget, laborBudget, totalBudget, status, material, machine);
     }
 
     @Override
@@ -197,7 +197,7 @@ public class ProjectViewModel {
                 ", laborBudget=" + laborBudget +
                 ", totalBudget=" + totalBudget +
                 ", status='" + status + '\'' +
-                ", materials=" + materials +
+                ", material=" + material +
                 ", machine=" + machine +
                 ", taskList=" + taskList +
                 ", employeeList=" + employeeList +
