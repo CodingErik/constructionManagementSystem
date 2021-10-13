@@ -7,6 +7,7 @@ import com.company.constructionmanagementsystem.service.ProjectServiceLayer;
 import com.company.constructionmanagementsystem.viewmodel.ProjectViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
