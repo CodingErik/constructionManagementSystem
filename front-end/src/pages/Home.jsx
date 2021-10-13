@@ -1,10 +1,8 @@
-import React, { useReducer, useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
-import OnGoingProjectsDisplay from '../components/home/OnGoingProjectsDisplay';
-import ProjectPieChart from '../components/home/ProjectPieChart';
-import EmployeeListTable from '../components/home/EmployeeListTable';
-import { ProjectAPI, EmployeeAPI } from '../api/index';
-import { AuthContext } from '../App';
+import React, { useEffect, useState } from "react";
+import OnGoingProjectsDisplay from "../components/home/OnGoingProjectsDisplay";
+import ProjectPieChart from "../components/home/ProjectPieChart";
+import EmployeeListTable from "../components/home/EmployeeListTable";
+import { ProjectAPI, EmployeeAPI } from "../api/index";
 
 let columnBooleans = {
   projectId: false,
@@ -14,8 +12,8 @@ let columnBooleans = {
   deadline: false,
 };
 
+
 function Home() {
-  const history = useHistory();
 
   const [projectList, setProjectList] = useState([]);
   const [statusCount, setStatusCount] = useState({
@@ -42,7 +40,7 @@ function Home() {
       };
     };
 
-    if (target === 'Name') {
+    if (target === "Name") {
       if (columnBooleans.name) {
         columnBooleans.name = false;
       } else {
@@ -50,19 +48,19 @@ function Home() {
       }
       setProjectList(
         [...projectList].sort(
-          sort_by('name', columnBooleans.name, (a) => a.toUpperCase())
+          sort_by("name", columnBooleans.name, (a) => a.toUpperCase())
         )
       );
-    } else if (target === 'ProjectId') {
+    } else if (target === "ProjectId") {
       if (columnBooleans.projectId) {
         columnBooleans.projectId = false;
       } else {
         columnBooleans.projectId = true;
       }
       setProjectList(
-        [...projectList].sort(sort_by('id', columnBooleans.projectId, parseInt))
+        [...projectList].sort(sort_by("id", columnBooleans.projectId, parseInt))
       );
-    } else if (target === 'Status') {
+    } else if (target === "Status") {
       if (columnBooleans.status) {
         columnBooleans.status = false;
       } else {
@@ -70,10 +68,10 @@ function Home() {
       }
       setProjectList(
         [...projectList].sort(
-          sort_by('status', columnBooleans.status, (a) => a.toUpperCase())
+          sort_by("status", columnBooleans.status, (a) => a.toUpperCase())
         )
       );
-    } else if (target === 'StartDate') {
+    } else if (target === "StartDate") {
       if (columnBooleans.startDate) {
         columnBooleans.startDate = false;
       } else {
@@ -81,10 +79,10 @@ function Home() {
       }
       setProjectList(
         [...projectList].sort(
-          sort_by('startDate', columnBooleans.startDate, (a) => a.toUpperCase())
+          sort_by("startDate", columnBooleans.startDate, (a) => a.toUpperCase())
         )
       );
-    } else if (target === 'Deadline') {
+    } else if (target === "Deadline") {
       if (columnBooleans.deadline) {
         columnBooleans.deadline = false;
       } else {
@@ -92,7 +90,7 @@ function Home() {
       }
       setProjectList(
         [...projectList].sort(
-          sort_by('deadline', columnBooleans.deadline, (a) => a.toUpperCase())
+          sort_by("deadline", columnBooleans.deadline, (a) => a.toUpperCase())
         )
       );
     }
@@ -102,17 +100,17 @@ function Home() {
     ProjectAPI.getAllProjects().then((response) => {
       setProjectList([...response.data]);
       response.data.forEach((project) => {
-        if (project.status === 'in_progress') {
+        if (project.status === "in_progress") {
           setStatusCount((prevState) => ({
             ...prevState,
             inProgress: prevState.inProgress++,
           }));
-        } else if (project.status === 'completed') {
+        } else if (project.status === "completed") {
           setStatusCount((prevState) => ({
             ...prevState,
             completed: prevState.completed++,
           }));
-        } else if (project.status === 'cancelled') {
+        } else if (project.status === "cancelled") {
           setStatusCount((prevState) => ({
             ...prevState,
             cancelled: prevState.cancelled++,
@@ -127,19 +125,19 @@ function Home() {
   }, []);
 
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col col-lg-7'>
+    <div className="container">
+      <div className="row">
+        <div className="col col-lg-7">
           <OnGoingProjectsDisplay
             projectList={projectList}
             handleProjectColumnHeaderClick={handleProjectColumnHeaderClick}
           ></OnGoingProjectsDisplay>
         </div>
-        <div className='col col-lg-5'>
-          <div className='row'>
+        <div className="col col-lg-5">
+          <div className="row">
             <ProjectPieChart statusCount={statusCount}></ProjectPieChart>
           </div>
-          <div className='row'>
+          <div className="row">
             <EmployeeListTable employeeList={employeeList} />
           </div>
         </div>
