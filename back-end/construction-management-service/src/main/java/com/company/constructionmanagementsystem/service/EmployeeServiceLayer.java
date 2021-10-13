@@ -86,7 +86,6 @@ public class EmployeeServiceLayer {
     private EmployeeViewModel buildEmployeeViewModel(Employee employee){
 
         List<Task> taskList = taskRepository.findAllTasksByEmployeeId(employee.getId());
-
         EmployeeViewModel evm = new EmployeeViewModel();
 
         if (!projectRepository.findById(employee.getProjectId()).isPresent()) {
