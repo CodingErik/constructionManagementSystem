@@ -1,84 +1,101 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { LoginAPI } from '../api';
-import Message from '../components/Message';
+import React from "react";
+import { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { LoginAPI } from "../api";
+import Message from "../components/Message";
+import { AuthContext } from "../App";
 
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const { dispatch } = React.useContext(AuthContext);
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
+  const history = useHistory();
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
     const res = await LoginAPI.login(username, password);
-
-    console.log(res);
-
+    const token = await LoginAPI.loginWithJwt({
+      username: username,
+      password: password,
+    });
+    console.log(token);
     if (res.status === 200) {
       setMessage(null);
 
-      alert('login');
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          user: res.data,
+          token: token.data.jwt_token,
+        },
+      });
+
+      alert("login");
+
+      history.push("/");
     } else {
       setMessage(res.errorMsg);
     }
   };
 
   return (
-    <div class='container'>
-      <div class='row'>
-        <div class='col-lg-10 col-xl-9 mx-auto'>
-          <div class='card flex-row my-5 border-0 shadow rounded-3 overflow-hidden'>
-            <div class='card-img-left d-none d-md-flex'></div>
-            <div class='card-body p-4 p-sm-5'>
-              <h5 class='card-title text-center mb-5 fw-light fs-5'>Login</h5>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-xl-9 mx-auto">
+          <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+            <div class="card-img-left d-none d-md-flex"></div>
+            <div class="card-body p-4 p-sm-5">
+              <h5 class="card-title text-center mb-5 fw-light fs-5">Login</h5>
 
+              {/* <form onSubmit={submitHandler}> */}
               <form onSubmit={submitHandler}>
-                {message && <Message variant='danger'>{message}</Message>}
-                <div class='form-floating mb-3'>
+                {message && <Message variant="danger">{message}</Message>}
+                <div class="form-floating mb-3">
                   <input
-                    type='text'
-                    class='form-control'
-                    id='floatingInputUsername'
-                    placeholder='myusername'
+                    type="text"
+                    class="form-control"
+                    id="floatingInputUsername"
+                    placeholder="myusername"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
                     autofocus
                   />
-                  <label for='floatingInputUsername'>Username</label>
+                  <label for="floatingInputUsername">Username</label>
                 </div>
 
                 <hr />
 
-                <div class='form-floating mb-3'>
+                <div class="form-floating mb-3">
                   <input
-                    type='password'
-                    class='form-control'
-                    id='floatingPassword'
-                    placeholder='Password'
+                    type="password"
+                    class="form-control"
+                    id="floatingPassword"
+                    placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                  <label for='floatingPassword'>Password</label>
+                  <label for="floatingPassword">Password</label>
                 </div>
 
-                <div class='d-grid mb-2'>
+                <div class="d-grid mb-2">
                   <button
-                    class='btn btn-lg btn-primary btn-login fw-bold text-uppercase'
-                    type='submit'
+                    class="btn btn-lg btn-primary btn-login fw-bold text-uppercase"
+                    type="submit"
                   >
                     Login
                   </button>
                 </div>
 
-                <Link class='d-block text-center mt-2 small' to='/register'>
+                <Link class="d-block text-center mt-2 small" to="/register">
                   Don't have an account? Register
                 </Link>
 
-                <hr class='my-4' />
+                <hr class="my-4" />
               </form>
             </div>
           </div>
