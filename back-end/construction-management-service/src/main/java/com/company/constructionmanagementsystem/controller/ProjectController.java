@@ -40,52 +40,38 @@ public class ProjectController {
         this.materialWarehouseClient = materialWarehouseClient;
     }
 
-    @GetMapping("/machineryInventory")
-    public Machine helloCloud(){
-        return machineWarehouseClient.getMachineryInventory();
-    }
-
-    @PutMapping("/rentMachinery")
-    public void rentMachinery(@RequestBody Machine machinery) throws Exception {
-         machineWarehouseClient.rentMachinery(machinery);
-    }
-
-    @PutMapping("/returnMachinery")
-    public void returnMachinery(@RequestBody Machine machinery) {
-         machineWarehouseClient.returnMachinery(machinery);
-    }
-
-    @GetMapping("/api/material")
-    public Material getWarehouseInventory(){
-        return materialWarehouseClient.getWarehouseInventory();
-    }
-
-    @PutMapping("/api/material")
-    public void updateMaterialAfterRetrieve(@RequestBody Material material) throws Exception{
-        materialWarehouseClient.updateMaterialAfterRetrieve(material);
-    }
-
-
-    @PutMapping("/api/material/refill")
-    public String updateMaterialRefill(){
-        return materialWarehouseClient.updateMaterialRefill();
-    }
-
 
     @PostMapping("/api/projects")
     @ResponseStatus(HttpStatus.CREATED)
-    public Project addProject(@RequestBody Project project) {
+    public Project addProject(@RequestBody Project project ) {
+        /**     CREATE
+         * use feign with projectViewModel material object */
+        /** materialWarehouseClient.updateMaterialAfterRetrieve(projectViewModel.material);
+         * machineWarehouseClient.returnMachinery(machinery);
+         * */
+
         return repo.save(project);
     }
 
-    /** request for filtering fits this category more */
+
+    /**     DELETE
+     *  when project is deleted, then returns all the machinery to microservice
+     *
+     *  ProjectRepository.deleteById();
+     *  machineWarehouseClient.returnMachinery(machinery);
+     * */
+
+
+    /**
+     * request for filtering fits this category more
+     */
     // /api/project?isPlumbing=isElectric= refactor
     @GetMapping("/api/projects")
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectViewModel> getAllProjects(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String roomType
-            ) {
+    ) {
 
         List<ProjectViewModel> returnList = projectServiceLayer.findAllProjects();
 
@@ -93,11 +79,11 @@ public class ProjectController {
             returnList = projectServiceLayer.findByName(name);
         }
 
-        if (roomType != null){
+        if (roomType != null) {
             returnList = projectServiceLayer.findByRoomType(roomType);
         }
 
-        if (name != null && roomType != null){
+        if (name != null && roomType != null) {
             returnList = projectServiceLayer.findByRoomTypeAndName(roomType, name);
         }
 
@@ -105,8 +91,8 @@ public class ProjectController {
     }
 
     @PutMapping("/api/projects")
-    @ResponseStatus(value=HttpStatus.NO_CONTENT)
-    public void putProject(@RequestBody Project project) throws Exception{
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void putProject(@RequestBody Project project) throws Exception {
         repo.save(project);
     }
 
@@ -128,13 +114,13 @@ public class ProjectController {
 
     @GetMapping("/api/projects/startDate/{startDate}")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<ProjectViewModel> findByStartDate(@PathVariable LocalDate startDate){
+    public List<ProjectViewModel> findByStartDate(@PathVariable LocalDate startDate) {
         return projectServiceLayer.findByStartDate(startDate);
     }
 
     @GetMapping("/api/projects/status/{status}")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<ProjectViewModel> findByStatus(@PathVariable String status){
+    public List<ProjectViewModel> findByStatus(@PathVariable String status) {
         /** maybe figure out 3 different statuses
          *  maybe somekind of switch statement
          * */
@@ -161,7 +147,7 @@ public class ProjectController {
     @GetMapping("/api/projects/roomType/{roomType}/name/{name}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectViewModel> findProjectByRoomTypeAndName(@PathVariable String roomType, @PathVariable String name) throws Exception {
-        List<ProjectViewModel> returnProjectList = projectServiceLayer.findByRoomTypeAndName(roomType,name);
+        List<ProjectViewModel> returnProjectList = projectServiceLayer.findByRoomTypeAndName(roomType, name);
 
         return returnProjectList;
     }

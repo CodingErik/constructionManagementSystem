@@ -112,15 +112,13 @@
             <artifactId>spring-security-config</artifactId>
             <version>5.5.2</version>
         </dependency>
-        <!--feign-->
 
-<!--                Feign Dependency-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
             <version>1.4.7.RELEASE</version>
         </dependency>
-<!--                Feign Dependency-->
+
 
     </dependencies>
 

@@ -1,11 +1,19 @@
 package com.company.constructionmanagementsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.util.Objects;
 
-
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "machine")
 public class Machine {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    private Integer projectId;
     private int crane;
     private int forklift;
     private int ladder;
@@ -13,11 +21,30 @@ public class Machine {
 
     public Machine(){}
 
-    public Machine(int crane, int forklift, int ladder, int drill) {
+    public Machine(Integer id, Integer projectId, int crane, int forklift, int ladder, int drill) {
+        this.id = id;
+        this.projectId = projectId;
         this.crane = crane;
         this.forklift = forklift;
         this.ladder = ladder;
         this.drill = drill;
+    }
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 
     public int getCrane() {
@@ -57,18 +84,20 @@ public class Machine {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Machine machine = (Machine) o;
-        return crane == machine.crane && forklift == machine.forklift && ladder == machine.ladder && drill == machine.drill;
+        return crane == machine.crane && forklift == machine.forklift && ladder == machine.ladder && drill == machine.drill && Objects.equals(id, machine.id) && Objects.equals(projectId, machine.projectId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(crane, forklift, ladder, drill);
+        return Objects.hash(id, projectId, crane, forklift, ladder, drill);
     }
 
     @Override
     public String toString() {
-        return "Machinery{" +
-                "crane=" + crane +
+        return "Machine{" +
+                "id=" + id +
+                ", projectId=" + projectId +
+                ", crane=" + crane +
                 ", forklift=" + forklift +
                 ", ladder=" + ladder +
                 ", drill=" + drill +
