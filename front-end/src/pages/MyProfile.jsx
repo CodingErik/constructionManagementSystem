@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from "react";
-import API from "../api/EmployeeAPI";
-import BriefProjectsDisplay from "../components/home/BriefProjectsDisplay";
-import BriefTasksDisplay from "../components/home/BriefTasksDisplay";
-import decode from "jwt-decode";
-import redirectIfTokenNull from "../components/RedirectHelper";
-import DisplayBasicInformation from "../components/myProfile/DisplayBasicInformation";
+import React, { useEffect, useState, useContext } from 'react';
+import API from '../api/EmployeeAPI';
+import BriefProjectsDisplay from '../components/home/BriefProjectsDisplay';
+import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
+import decode from 'jwt-decode';
+import redirectIfTokenNull from '../components/RedirectHelper';
+import DisplayBasicInformation from '../components/myProfile/DisplayBasicInformation';
 
 export default function MyProfile() {
   redirectIfTokenNull();
@@ -29,10 +29,10 @@ export default function MyProfile() {
   }, [username]);
 
   return (
-    <div>
-      <div className="container-fluid mt-5">
-        <div className="row">
-          <div className="col col-4-lg">
+    <div className='container'>
+      <div className='container-fluid mt-5'>
+        <div className='row'>
+          <div className='col col-4-lg'>
             <img
               src="https://via.placeholder.com/350"
               //   add image for the user aws implementation
