@@ -2,8 +2,10 @@ package com.company.constructionmanagementsystem.service;
 
 import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.model.Project;
+import com.company.constructionmanagementsystem.model.ProjectMaterials;
 import com.company.constructionmanagementsystem.model.Task;
 import com.company.constructionmanagementsystem.repository.EmployeeRepository;
+import com.company.constructionmanagementsystem.repository.ProjectMaterialsRepository;
 import com.company.constructionmanagementsystem.repository.ProjectRepository;
 import com.company.constructionmanagementsystem.repository.TaskRepository;
 import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
@@ -24,12 +26,14 @@ public class ProjectServiceLayer {
     ProjectRepository projectRepository;
     EmployeeRepository employeeRepository;
     TaskRepository taskRepository;
+    ProjectMaterialsRepository projectMaterialsRepository;
 
     @Autowired
-    public ProjectServiceLayer(ProjectRepository projectRepository, EmployeeRepository employeeRepository, TaskRepository taskRepository) {
+    public ProjectServiceLayer(ProjectRepository projectRepository, EmployeeRepository employeeRepository, TaskRepository taskRepository, ProjectMaterialsRepository projectMaterialsRepository) {
         this.projectRepository = projectRepository;
         this.employeeRepository = employeeRepository;
         this.taskRepository = taskRepository;
+        this.projectMaterialsRepository = projectMaterialsRepository;
     }
 
     public ProjectViewModel findById(int id) {
@@ -104,7 +108,6 @@ public class ProjectServiceLayer {
         }
 
         return pvmList;
-
     }
 
     public List<ProjectViewModel> findByRoomType(String roomType){
@@ -148,12 +151,17 @@ public class ProjectServiceLayer {
 
     public ProjectViewModel buildProjectViewModel(Project inputProject) {
 
-
         List<Task> taskList = taskRepository.findAllTasksByProjectId(inputProject.getId());
 
         List<Employee> employeeList = employeeRepository.findByProjectId(inputProject.getId());
 
         ProjectViewModel pvm = new ProjectViewModel();
+
+        if(!projectMaterialsRepository.findByProjectId(inputProject.getId()).isPresent()){
+            pvm.setMaterials(null);
+        } else {
+            pvm.setMaterials(projectMaterialsRepository.findByProjectId(inputProject.getId()).get());
+        }
 
         pvm.setId(inputProject.getId());
         pvm.setName(inputProject.getName());
