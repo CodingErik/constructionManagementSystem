@@ -58,11 +58,15 @@ function Home() {
               originalProjectLists={projectList}
             ></BriefProjectsDisplay>
           </div>
-          <div className='row'></div>
+          <div className='row'>
+            <BriefTasksDisplay
+              originalTaskList={taskList} projectIsNotANumber={true}>
+            </BriefTasksDisplay>
+          </div>
         </div>
         <div className='col col-lg-5'>
           <div className='row'>
-            <ProjectPieChart statusCount={statusCount}></ProjectPieChart>
+            <ProjectPieChart statusCount={statusCount} ></ProjectPieChart>
           </div>
           <div className='row'>
             <EmployeeListTable employeeList={employeeList} />

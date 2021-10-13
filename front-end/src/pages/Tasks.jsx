@@ -3,8 +3,8 @@ import TasksTable from '../components/TasksTable';
 import taskAPI from '../api/TaskAPI';
 import projectAPI from '../api/ProjectAPI';
 import employeeAPI from '../api/EmployeeAPI';
-import "./Tasks.css"
-import redirectIfTokenNull from "../components/RedirectHelper";
+import './Tasks.css';
+import redirectIfTokenNull from '../components/RedirectHelper';
 
 export default function Tasks() {
   redirectIfTokenNull();
@@ -19,37 +19,46 @@ export default function Tasks() {
   const taskNameRef = useRef();
 
   useEffect(() => {
-    taskAPI.getAllTasks(projectId ? projectId : null, employeeId ? employeeId : null, name ? name : null)
-      .then(res => {
+    taskAPI
+      .getAllTasks(
+        projectId ? projectId : null,
+        employeeId ? employeeId : null,
+        name ? name : null
+      )
+      .then((res) => {
         setTasks(res.data);
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
   }, [projectId, employeeId, name]);
 
   function setFilters(event) {
     event.preventDefault();
 
-    taskNameRef.current.value !== null && setName(taskNameRef.current.value)
+    taskNameRef.current.value !== null && setName(taskNameRef.current.value);
 
-    employeeNameRef.current.value !== null && employeeAPI.getAllEmployees()
-      .then(res => {
-        res.data.forEach(employee => {
-          if(employee.name === employeeNameRef.current.value){
-            setEmployeeId(employee.id);
-          }
+    employeeNameRef.current.value !== null &&
+      employeeAPI
+        .getAllEmployees()
+        .then((res) => {
+          res.data.forEach((employee) => {
+            if (employee.name === employeeNameRef.current.value) {
+              setEmployeeId(employee.id);
+            }
+          });
         })
-      })
-      .catch(error => console.error(error));
+        .catch((error) => console.error(error));
 
-    projectNameRef.current.value !== null && projectAPI.getAllProjects(null, projectNameRef.current.value)
-      .then(res => {
-        res.data.forEach(project => {
-          if(project.name === projectNameRef.current.value){
-            setProjectId(project.id);
-          }
+    projectNameRef.current.value !== null &&
+      projectAPI
+        .getAllProjects(null, projectNameRef.current.value)
+        .then((res) => {
+          res.data.forEach((project) => {
+            if (project.name === projectNameRef.current.value) {
+              setProjectId(project.id);
+            }
+          });
         })
-      })
-      .catch(error => console.error(error));
+        .catch((error) => console.error(error));
   }
 
   function resetFilters(event) {
@@ -62,18 +71,23 @@ export default function Tasks() {
     setEmployeeId(employeeNameRef.current.valuell);
 
     taskNameRef.current.value = null;
-    setName(taskNameRef.current.value)
+    setName(taskNameRef.current.value);
   }
 
   return (
-    <div>
+    <div className='container'>
       <div className='statusFilterTasks'>
         <div
           className='btn-group'
           role='group'
           aria-label='Basic radio toggle button group'
         >
-          <p style={{ paddingTop: '13px', marginRight:"20px" }} className="textField">Status : </p>
+          <p
+            style={{ paddingTop: '13px', marginRight: '20px' }}
+            className='textField'
+          >
+            Status :{' '}
+          </p>
           <input
             onClick={() => setStatusFilter('all')}
             type='radio'
@@ -83,7 +97,10 @@ export default function Tasks() {
             autoComplete='off'
             defaultChecked=''
           />
-          <label className='btn btn-outline-primary btn-sm' htmlFor='allStatusFilter'>
+          <label
+            className='btn btn-outline-primary btn-sm'
+            htmlFor='allStatusFilter'
+          >
             All
           </label>
           <input
@@ -121,18 +138,29 @@ export default function Tasks() {
 
       <div className='otherFiltersTasks'>
         <div className='employeeNameFilter filter'>
-          <p className="textField">Task : </p>
-          <input ref={taskNameRef} className="textInput" placeholder="Name" />
+          <p className='textField'>Task : </p>
+          <input ref={taskNameRef} className='textInput' placeholder='Name' />
         </div>
         <div className='projectNameFilter filter'>
-          <p className="textField">Project : </p>
-          <input ref={projectNameRef} className="textInput" placeholder="Name" />
+          <p className='textField'>Project : </p>
+          <input
+            ref={projectNameRef}
+            className='textInput'
+            placeholder='Name'
+          />
         </div>
         <div className='employeeNameFilter filter'>
-          <p className="textField">Employee : </p>
-          <input ref={employeeNameRef} className="textInput" placeholder="Name" />
+          <p className='textField'>Employee : </p>
+          <input
+            ref={employeeNameRef}
+            className='textInput'
+            placeholder='Name'
+          />
         </div>
-        <button className='filterButtonTasks' onClick={(event) => setFilters(event)}>
+        <button
+          className='filterButtonTasks'
+          onClick={(event) => setFilters(event)}
+        >
           Filter
         </button>
         <button
@@ -143,7 +171,7 @@ export default function Tasks() {
         </button>
       </div>
 
-      <TasksTable tasks={tasks} statusFilter={statusFilter}/>
+      <TasksTable tasks={tasks} statusFilter={statusFilter} />
     </div>
   );
 }
