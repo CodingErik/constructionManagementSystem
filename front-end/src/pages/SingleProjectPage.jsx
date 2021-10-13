@@ -4,8 +4,10 @@ import { ProjectAPI, EmployeeAPI } from "../api/index";
 import EmployeeListTableForProject from "../components/singleProject/EmployeeListTableForProject";
 import ProjectForm from "../components/singleProject/ProjectForm";
 import decode from "jwt-decode";
+import redirectIfTokenNull from "../components/RedirectHelper";
 
 function SingleProjectPage({}) {
+  redirectIfTokenNull();
   const { projectId } = useParams();
   const [project, setProject] = useState({});
   const [hasAuthority, setHasAuthority] = useState(false);

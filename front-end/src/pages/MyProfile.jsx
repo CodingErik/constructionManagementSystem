@@ -1,17 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import API from "../api/EmployeeAPI";
-import OnGoingProjectsDisplay from "../components/home/OnGoingProjectsDisplay";
-import TaskListDisplay from "../components/TaskListDisplay";
+import BriefProjectsDisplay from "../components/home/BriefProjectsDisplay";
+import BriefTasksDisplay from "../components/home/BriefTasksDisplay";
 import decode from "jwt-decode";
-import {Redirect} from "react-router-dom";
-
-let columnBooleans = {
-  projectId: false,
-  name: false,
-  status: false,
-  startDate: false,
-  deadline: false,
-};
+import redirectIfTokenNull from "../components/RedirectHelper";
 
 let taskColumnBooleans = {
   TaskId: false,
@@ -23,10 +15,14 @@ let taskColumnBooleans = {
 };
 
 export default function MyProfile() {
+  redirectIfTokenNull();
+
   const [userInfo, setUserInfo] = useState({});
   const [userProjects, setUserProject] = useState([]);
   const [userTasks, setUserTask] = useState([]);
-  const username = localStorage.getItem("token")? decode(JSON.parse(localStorage.getItem("token"))).sub : null;
+  const username = localStorage.getItem("token")
+    ? decode(JSON.parse(localStorage.getItem("token"))).sub
+    : null;
 
   useEffect(() => {
     API.getEmployeeByUsername(username)
@@ -40,88 +36,7 @@ export default function MyProfile() {
       });
   }, [username]);
 
-
-  if(!localStorage.getItem("token")) {
-    return <Redirect to="/login" />;
-  }
-
-  const handleProjectColumnHeaderClick = (target) => {
-    const sort_by = (field, reverse, primer) => {
-      const key = primer
-        ? function (x) {
-            return primer(x[field]);
-          }
-        : function (x) {
-            return x[field];
-          };
-      reverse = !reverse ? 1 : -1;
-
-      return function (a, b) {
-        return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
-      };
-    };
-
-    if (target === "Name") {
-      if (columnBooleans.name) {
-        columnBooleans.name = false;
-      } else {
-        columnBooleans.name = true;
-      }
-      setUserProject(
-        [...userProjects].sort(
-          sort_by("name", columnBooleans.name, (a) => a.toUpperCase())
-        )
-      );
-    } else if (target === "ProjectId") {
-      if (columnBooleans.projectId) {
-        columnBooleans.projectId = false;
-      } else {
-        columnBooleans.projectId = true;
-      }
-      setUserProject(
-        [...userProjects].sort(
-          sort_by("id", columnBooleans.projectId, parseInt)
-        )
-      );
-    } else if (target === "Status") {
-      if (columnBooleans.status) {
-        columnBooleans.status = false;
-      } else {
-        columnBooleans.status = true;
-      }
-      setUserProject(
-        [...userProjects].sort(
-          sort_by("status", columnBooleans.status, (a) => a.toUpperCase())
-        )
-      );
-    } else if (target === "StartDate") {
-      if (columnBooleans.startDate) {
-        columnBooleans.startDate = false;
-      } else {
-        columnBooleans.startDate = true;
-      }
-      setUserProject(
-        [...userProjects].sort(
-          sort_by("startDate", columnBooleans.startDate, (a) => a.toUpperCase())
-        )
-      );
-    } else if (target === "Deadline") {
-      if (columnBooleans.deadline) {
-        columnBooleans.deadline = false;
-      } else {
-        columnBooleans.deadline = true;
-      }
-      setUserProject(
-        [...userProjects].sort(
-          sort_by("deadline", columnBooleans.deadline, (a) => a.toUpperCase())
-        )
-      );
-    }
-  };
-
-
-
-  const handleTaskColumnHeaderClick = (target) => {
+   const handleTaskColumnHeaderClick = (target) => {
     const sort_by = (field, reverse, primer) => {
       const key = primer
         ? function (x) {
@@ -216,10 +131,6 @@ export default function MyProfile() {
     }
   };
 
-  if(!localStorage.getItem("token")) {
-    return <Redirect to="/login" />;
-  }
-
   return (
     <div>
       <div className="container-fluid mt-5">
@@ -255,10 +166,14 @@ export default function MyProfile() {
                     <span className="employee-email">Id: {userInfo.id}</span>
                   </div>
                   <div className="list-group-item bg-transparent text-start ">
-                    <span className="employee-email">Title: {userInfo.title}</span>
+                    <span className="employee-email">
+                      Title: {userInfo.title}
+                    </span>
                   </div>
                   <div className="list-group-item bg-transparent text-start ">
-                    <span className="employee-email">Name: {userInfo.name}</span>
+                    <span className="employee-email">
+                      Name: {userInfo.name}
+                    </span>
                   </div>
                   <div className="list-group-item bg-transparent text-start ">
                     <span className="employee-email">Dob: {userInfo.dob}</span>
@@ -297,20 +212,19 @@ export default function MyProfile() {
         <div className="row mt-5">
           <div className="col ">
             {userProjects.length ? (
-              <OnGoingProjectsDisplay
-                projectList={userProjects}
-                handleProjectColumnHeaderClick={handleProjectColumnHeaderClick}
-              ></OnGoingProjectsDisplay>
+              <BriefProjectsDisplay
+                originalProjectLists={userProjects}
+              ></BriefProjectsDisplay>
             ) : (
               <h2>No Available projects... </h2>
             )}
           </div>
           <div className=" col ">
             {userTasks.length ? (
-              <TaskListDisplay
+              <BriefTasksDisplay
                 taskList={userTasks}
                 handleTaskColumnHeaderClick={handleTaskColumnHeaderClick}
-              ></TaskListDisplay>
+              ></BriefTasksDisplay>
             ) : (
               <h2>No Available tasks... </h2>
             )}
