@@ -48,7 +48,7 @@ function TaskForm({ task, hasAuthority, projectList, employeeInThisProjectList }
                 <fieldset>
                     <div className="form-group">
                         <label
-                            for="taskTitle"
+                            htmlFor="taskTitle"
                             className="form-label mt-4 ms-4 d-flex align-items-start"
                         >
                             Task Id #{task.id}
@@ -63,7 +63,7 @@ function TaskForm({ task, hasAuthority, projectList, employeeInThisProjectList }
                     </div>
                     <div className="form-group">
                         <label
-                            for="status"
+                            htmlFor="status"
                             className="form-label mt-4 ms-4 d-flex align-items-start"
                         >
                             Status
@@ -82,27 +82,27 @@ function TaskForm({ task, hasAuthority, projectList, employeeInThisProjectList }
                     </div>
                     <div className="form-group">
                         <div className="form-group row">
-                            <label for="startDate" class="col-sm-2 col-form-label">
+                            <label htmlFor="startDate" className="col-sm-2 col-form-label">
                                 Start Date
                             </label>
-                            <div class="col-sm-4">
+                            <div className="col-sm-4">
                                 <input
                                     type="date"
                                     readOnly={!hasAuthority}
-                                    class="form-control-plaintext"
+                                    className="form-control-plaintext"
                                     id="startDate"
                                     defaultValue={task.startDate}
                                     ref={startDateRef}
                                 />
                             </div>
-                            <label for="deadline" class="col-sm-2 col-form-label">
+                            <label htmlFor="deadline" className="col-sm-2 col-form-label">
                                 Deadline
                             </label>
-                            <div class="col-sm-4">
+                            <div className="col-sm-4">
                                 <input
                                     type="date"
                                     readOnly={!hasAuthority}
-                                    class="form-control-plaintext"
+                                    className="form-control-plaintext"
                                     id="deadline"
                                     defaultValue={task.deadline}
                                     ref={deadlineRef}
@@ -112,7 +112,7 @@ function TaskForm({ task, hasAuthority, projectList, employeeInThisProjectList }
                     </div>
                     <div className="form-group">
                         <label
-                            for="project"
+                            htmlFor="project"
                             className="form-label mt-4 ms-4 d-flex align-items-start"
                         >
                             Project Containing This Task
@@ -125,13 +125,13 @@ function TaskForm({ task, hasAuthority, projectList, employeeInThisProjectList }
                             onChange={(event) => setProjectState(event.target.value)}
                         >
                             {projectList.map(project => (
-                                <option value={project.id}>{project.id}. {project.name}</option>
+                                <option value={project.id} key={project.id}>{project.id}. {project.name}</option>
                             ))}
                         </select>
                     </div>
                     <div className="form-group">
                         <label
-                            for="employee"
+                            htmlFor="employee"
                             className="form-label mt-4 ms-4 d-flex align-items-start"
                         >
                             Designate Employee For This Task
@@ -144,18 +144,18 @@ function TaskForm({ task, hasAuthority, projectList, employeeInThisProjectList }
                             onChange={(event) => setEmployeeState(event.target.value)}
                         >
                             {employeeInThisProjectList.map(employee => (
-                                <option value={employee.id}>{employee.id}. {employee.name}</option>
+                                <option value={employee.id} key={employee.id}>{employee.id}. {employee.name}</option>
                             ))}
                         </select>
                     </div>
                     <div className="form-group">
                         <label
-                            for="description"
+                            htmlFor="description"
                             className="form-label mt-4 ms-4 d-flex align-items-start"
                         >
                             Description
                         </label>
-                        <textarea disabled={!hasAuthority} class="form-control ms-4" id="description" rows="8" ref={descriptionRef}></textarea>
+                        <textarea disabled={!hasAuthority} className="form-control ms-4" id="description" rows="8" ref={descriptionRef}></textarea>
                     </div>
 
                 </fieldset>

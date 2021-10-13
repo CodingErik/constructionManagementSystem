@@ -65,13 +65,6 @@ public class ProjectController {
         repo.save(project);
     }
 
-    // **************************************************************************************
-    // **************************************************************************************
-    // **************************************************************************************
-    // **************************************************************************************
-    // **************************************************************************************
-    // **************************************************************************************
-    // **************************************************************************************
 
     @GetMapping("/api/projects/id/{id}")
     @ResponseStatus(value = HttpStatus.OK)
@@ -82,10 +75,16 @@ public class ProjectController {
         return pvm;
     }
 
+//    @GetMapping("/api/projects/deadline/{deadline}")
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
+//        return projectServiceLayer.findByDeadline(deadline);
+//    }
+
     @GetMapping("/api/projects/deadline/{deadline}")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
-        return projectServiceLayer.findByDeadline(deadline);
+    public List<ProjectViewModel> findByStartDate(@PathVariable LocalDate startDate){
+        return projectServiceLayer.findByStartDate(startDate);
     }
 
     @GetMapping("/api/projects/status/{status}")
@@ -121,32 +120,5 @@ public class ProjectController {
 
         return returnProjectList;
     }
-
-
-
-
-//    @GetMapping("/api/projects/isPlumbing/{isPlumbing}")
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public List<ProjectViewModel> findProjectsByIsPlumbing(@PathVariable Boolean isPlumbing) throws Exception {
-//        List<ProjectViewModel> returnProjectList = projectServiceLayer.findByIsPlumbing(isPlumbing);
-//
-//        return returnProjectList;
-//    }
-//
-//    @GetMapping("/api/projects/isElectric/{isElectric}")
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public List<ProjectViewModel> findProjectsByIsElectric(@PathVariable Boolean isElectric) throws Exception {
-//        List<ProjectViewModel> returnProjectList = projectServiceLayer.findByIsElectric(isElectric);
-//
-//        return returnProjectList;
-//    }
-//
-//    @GetMapping("/api/projects/isPlumbing/{isPlumbing}/isElectric/{isElectric}")
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public List<ProjectViewModel> findProjectsByIsPlumbingAndIsElectric(@PathVariable Boolean isPlumbing, @PathVariable Boolean isElectric){
-//        List<ProjectViewModel> returnProjectList = projectServiceLayer.findByIsPlumbingAndIsElectric(isPlumbing,isElectric);
-//
-//        return returnProjectList;
-//    }
 
 }

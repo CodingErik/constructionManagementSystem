@@ -43,7 +43,7 @@ function ProjectForm({ project, hasAuthority }) {
                 <fieldset>
                     <div className="form-group">
                         <label
-                            for="projectTitle"
+                            htmlFor="projectTitle"
                             className="form-label mt-4 ms-4 d-flex align-items-start"
                         >
                             Project Id #{project.id}
@@ -58,13 +58,13 @@ function ProjectForm({ project, hasAuthority }) {
                     </div>
                     <div className="form-group">
                         <label
-                            for="status"
+                            htmlFor="status"
                             className="form-label mt-4 ms-4 d-flex align-items-start"
                         >
                             Status
                         </label>
                         <select
-                            class="form-select ms-4"
+                            className="form-select ms-4"
                             id="status"
                             disabled={!hasAuthority}
                             value={projectState}
@@ -76,28 +76,28 @@ function ProjectForm({ project, hasAuthority }) {
                         </select>
                     </div>
                     <div className="form-group">
-                        <div class="form-group row">
-                            <label for="startDate" class="col-sm-2 col-form-label">
+                        <div className="form-group row">
+                            <label htmlFor="startDate" className="col-sm-2 col-form-label">
                                 Start Date
                             </label>
-                            <div class="col-sm-4">
+                            <div className="col-sm-4">
                                 <input
                                     type="date"
                                     readOnly={!hasAuthority}
-                                    class="form-control-plaintext"
+                                    className="form-control-plaintext"
                                     id="startDate"
                                     defaultValue={project.startDate}
                                     ref={startDateRef}
                                 />
                             </div>
-                            <label for="deadline" class="col-sm-2 col-form-label">
+                            <label htmlFor="deadline" className="col-sm-2 col-form-label">
                                 Deadline
                             </label>
-                            <div class="col-sm-4">
+                            <div className="col-sm-4">
                                 <input
                                     type="date"
                                     readOnly={!hasAuthority}
-                                    class="form-control-plaintext"
+                                    className="form-control-plaintext"
                                     id="deadline"
                                     defaultValue={project.deadline}
                                     ref={deadlineRef}
@@ -107,7 +107,7 @@ function ProjectForm({ project, hasAuthority }) {
                     </div>
                     <div className="form-group">
                         <label
-                            for="roomType"
+                            htmlFor="roomType"
                             className="form-label mt-4 ms-4 d-flex align-items-start"
                         >
                             Room Type
@@ -121,52 +121,52 @@ function ProjectForm({ project, hasAuthority }) {
                         />
                     </div>
                     <div className="form-group" id="budgetsFormGroup">
-                        <div class="form-group row">
-                            <label for="laborBudget" class="col-lg-1 col-form-label">
+                        <div className="form-group row">
+                            <label htmlFor="laborBudget" className="col-lg-1 col-form-label">
                                 Labor Budget
                             </label>
                             <div className="col-lg-3" style={{ display: "inline" }}>
-                                <span class="input-group-text" style={{ display: "inline" }}>
+                                <span className="input-group-text" style={{ display: "inline" }}>
                                     $
                                 </span>
                                 <input
                                     type="number"
                                     readOnly={!hasAuthority}
-                                    class="form-control-plaintext"
+                                    className="form-control-plaintext"
                                     style={{ display: "inline", width: "20%" }}
                                     id="laborBudget"
                                     defaultValue={project.laborBudget}
                                     ref={laborBudgetRef}
                                 />
                             </div>
-                            <label for="laborBudget" class="col-lg-1 col-form-label">
+                            <label htmlFor="laborBudget" className="col-lg-1 col-form-label">
                                 Material Budget
                             </label>
                             <div className="col-lg-3" style={{ display: "inline" }}>
-                                <span class="input-group-text" style={{ display: "inline" }}>
+                                <span className="input-group-text" style={{ display: "inline" }}>
                                     $
                                 </span>
                                 <input
                                     type="number"
                                     readOnly={!hasAuthority}
-                                    class="form-control-plaintext"
+                                    className="form-control-plaintext"
                                     style={{ display: "inline", width: "20%" }}
                                     id="materialBudget"
                                     defaultValue={project.materialBudget}
                                     ref={materialBudgetRef}
                                 />
                             </div>
-                            <label for="laborBudget" class="col-lg-1 col-form-label">
+                            <label htmlFor="laborBudget" className="col-lg-1 col-form-label">
                                 Total Budget
                             </label>
                             <div className="col-lg-3" style={{ display: "inline" }}>
-                                <span class="input-group-text" style={{ display: "inline" }}>
+                                <span className="input-group-text" style={{ display: "inline" }}>
                                     $
                                 </span>
                                 <input
                                     type="number"
                                     readOnly={!hasAuthority}
-                                    class="form-control-plaintext"
+                                    className="form-control-plaintext"
                                     style={{ display: "inline", width: "20%" }}
                                     id="totalBudget"
                                     defaultValue={project.totalBudget}
@@ -175,8 +175,8 @@ function ProjectForm({ project, hasAuthority }) {
                             </div>
                         </div>
                     </div>
-                    <div class="form-check form-switch text-start">
-                        <label class="form-check-label " for="isPlumbing">
+                    <div className="form-check form-switch text-start">
+                        <label className="form-check-label " htmlFor="isPlumbing">
                             Has Plumbing
                         </label>
                         <input
@@ -188,8 +188,8 @@ function ProjectForm({ project, hasAuthority }) {
                             disabled={!hasAuthority}
                         />
                     </div>
-                    <div class="form-check form-switch text-start">
-                        <label className="form-check-label " for="isElectric">
+                    <div className="form-check form-switch text-start">
+                        <label className="form-check-label " htmlFor="isElectric">
                             Has Electric
                         </label>
                         <input

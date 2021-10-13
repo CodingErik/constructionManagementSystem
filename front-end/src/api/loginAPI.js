@@ -11,7 +11,7 @@ const API = {
         },
       };
 
-      const request = await axios.post(
+      const response = await axios.post(
         `${baseUrl}/api/employees/login`,
         {
           username: username,
@@ -20,10 +20,12 @@ const API = {
         config
       );
 
-      const response = {
-        data: request.data,
-        status: request.status,
-      };
+      if (response.status === 200) {
+        await localStorage.setItem(
+          'token',
+          JSON.stringify(response.data.jwt_token)
+        );
+      }
 
       return response;
     } catch (error) {
@@ -60,9 +62,9 @@ const API = {
       return error.response.data;
     }
   },
-  loginWithJwt: (userInfo) => {
-    return axios.post(`${baseUrl}/authenticate`, userInfo);
-  },
+  // loginWithJwt: (userInfo) => {
+  //   return axios.post(`${baseUrl}/authenticate`, userInfo);
+  // },
 };
 
 export default API;

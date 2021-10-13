@@ -2,8 +2,10 @@ package com.company.constructionmanagementsystem.service;
 
 import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.model.Project;
+import com.company.constructionmanagementsystem.model.ProjectMaterials;
 import com.company.constructionmanagementsystem.model.Task;
 import com.company.constructionmanagementsystem.repository.EmployeeRepository;
+import com.company.constructionmanagementsystem.repository.ProjectMaterialsRepository;
 import com.company.constructionmanagementsystem.repository.ProjectRepository;
 import com.company.constructionmanagementsystem.repository.TaskRepository;
 import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
@@ -24,12 +26,14 @@ public class ProjectServiceLayer {
     ProjectRepository projectRepository;
     EmployeeRepository employeeRepository;
     TaskRepository taskRepository;
+    ProjectMaterialsRepository projectMaterialsRepository;
 
     @Autowired
-    public ProjectServiceLayer(ProjectRepository projectRepository, EmployeeRepository employeeRepository, TaskRepository taskRepository) {
+    public ProjectServiceLayer(ProjectRepository projectRepository, EmployeeRepository employeeRepository, TaskRepository taskRepository, ProjectMaterialsRepository projectMaterialsRepository) {
         this.projectRepository = projectRepository;
         this.employeeRepository = employeeRepository;
         this.taskRepository = taskRepository;
+        this.projectMaterialsRepository = projectMaterialsRepository;
     }
 
     public ProjectViewModel findById(int id) {
@@ -104,7 +108,6 @@ public class ProjectServiceLayer {
         }
 
         return pvmList;
-
     }
 
     public List<ProjectViewModel> findByRoomType(String roomType){
@@ -146,171 +149,19 @@ public class ProjectServiceLayer {
         return pvmList;
     }
 
-    public List<ProjectViewModel> findByIsPlumbing(Boolean isPlumbing){
-        List<Project> projectList = projectRepository.findByIsPlumbing(isPlumbing);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project : projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
-    public List<ProjectViewModel> findByIsElectric(Boolean isElectric){
-        List<Project> projectList = projectRepository.findByIsElectric(isElectric);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project : projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
-
-    public List<ProjectViewModel> findByIsPlumbingAndIsElectric(Boolean isPlumbing, Boolean isElectric){
-        List<Project> projectList = projectRepository.findByIsPlumbingAndIsElectric(isPlumbing, isElectric);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project: projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
-    public List<ProjectViewModel> findByRoomTypeAndIsPlumbing(String roomType, Boolean isPlumbing){
-        List<Project> projectList = projectRepository.findByRoomTypeAndIsPlumbing(roomType, isPlumbing);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project: projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
-    public List<ProjectViewModel> findByRoomTypeAndIsElectric(String roomType, Boolean isElectric){
-        List<Project> projectList = projectRepository.findByRoomTypeAndIsElectric(roomType, isElectric);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project: projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
-    public List<ProjectViewModel> findByNameAndIsPlumbing(String name, Boolean isPlumbing){
-        List<Project> projectList = projectRepository.findByNameAndIsPlumbing(name, isPlumbing);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project: projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
-    public List<ProjectViewModel> findByNameAndIsElectric(String name, Boolean isElectric){
-        List<Project> projectList = projectRepository.findByNameAndIsElectric(name, isElectric);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project: projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
-    public List<ProjectViewModel> findByRoomTypeAndIsPlumbingAndIsElectric(String roomType, Boolean isPlumbing, Boolean isElectric){
-        List<Project> projectList = projectRepository.findByRoomTypeAndIsPlumbingAndIsElectric(roomType, isPlumbing, isElectric);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project: projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
-    public List<ProjectViewModel> findByNameAndIsPlumbingAndIsElectric(String name, Boolean isPlumbing, Boolean isElectric){
-        List<Project> projectList = projectRepository.findByNameAndIsPlumbingAndIsElectric(name, isPlumbing, isElectric);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project: projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
-    public List<ProjectViewModel> findByRoomTypeAndNameAndIsPlumbing(String roomType, String name, Boolean isPlumbing){
-        List<Project> projectList = projectRepository.findByRoomTypeAndNameAndIsPlumbing(roomType, name, isPlumbing);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project: projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
-    public List<ProjectViewModel> findByRoomTypeAndNameAndIsElectric(String roomType, String name, Boolean isElectric){
-        List<Project> projectList = projectRepository.findByRoomTypeAndNameAndIsElectric(roomType, name, isElectric);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project: projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
-    public List<ProjectViewModel> findByNameAndRoomTypeAndIsPlumbingAndIsElectric(String name, String roomType, Boolean isPlumbing, Boolean isElectric){
-        List<Project> projectList = projectRepository.findByNameAndRoomTypeAndIsPlumbingAndIsElectric(name, roomType, isPlumbing, isElectric);
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for(Project project: projectList){
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-        return pvmList;
-    }
-
     public ProjectViewModel buildProjectViewModel(Project inputProject) {
-
 
         List<Task> taskList = taskRepository.findAllTasksByProjectId(inputProject.getId());
 
         List<Employee> employeeList = employeeRepository.findByProjectId(inputProject.getId());
 
         ProjectViewModel pvm = new ProjectViewModel();
+
+        if(!projectMaterialsRepository.findByProjectId(inputProject.getId()).isPresent()){
+            pvm.setMaterials(null);
+        } else {
+            pvm.setMaterials(projectMaterialsRepository.findByProjectId(inputProject.getId()).get());
+        }
 
         pvm.setId(inputProject.getId());
         pvm.setName(inputProject.getName());

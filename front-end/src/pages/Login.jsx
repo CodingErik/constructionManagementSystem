@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 import { LoginAPI } from '../api';
 import Message from '../components/Message';
-import { AuthContext } from '../App';
+// import { AuthContext } from '../App';
 
 export default function Login() {
-  const { dispatch } = React.useContext(AuthContext);
+  // const { dispatch } = React.useContext(AuthContext);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -17,29 +17,32 @@ export default function Login() {
     e.preventDefault();
 
     const res = await LoginAPI.login(username, password);
-
     if (res.status === 200) {
       setMessage(null);
 
-      const token = await LoginAPI.loginWithJwt({
-        username: username,
-        password: password,
-      });
-      dispatch({
-        type: 'LOGIN',
-        payload: {
-          token: token.data.jwt_token,
-        },
-      });
+      // const token = await LoginAPI.loginWithJwt({
+      //   username: username,
+      //   password: password,
+      // });
+      // dispatch({
+      //   type: 'LOGIN',
+      //   payload: {
+      //     // user: res.data,
+      //     token: token.data.jwt_token,
+      //   },
+      // });
 
       alert('login');
 
-      history.push('/');
+      history.push('/Home');
     } else {
       setMessage(res.errorMsg);
     }
   };
 
+  if (localStorage.getItem('token')) {
+    return <Redirect to='/Home' />;
+  }
   return (
     <div class='container'>
       <div class='row'>
