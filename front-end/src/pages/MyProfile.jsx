@@ -5,7 +5,6 @@ import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
 import decode from 'jwt-decode';
 import redirectIfTokenNull from '../components/RedirectHelper';
 
-
 export default function MyProfile() {
   redirectIfTokenNull();
 
@@ -20,7 +19,7 @@ export default function MyProfile() {
     API.getEmployeeByUsername(username)
       .then(({ data }) => {
         setUserInfo(data);
-        setUserProject([{...data.project}]);
+        setUserProject([{ ...data.project }]);
         setUserTask([...data.taskList]);
       })
       .catch((error) => {
@@ -28,9 +27,8 @@ export default function MyProfile() {
       });
   }, [username]);
 
-  
   return (
-    <div>
+    <div className='container'>
       <div className='container-fluid mt-5'>
         <div className='row'>
           <div className='col col-4-lg'>
@@ -74,14 +72,18 @@ export default function MyProfile() {
                     </span>
                   </div>
                   <div className='list-group-item bg-transparent text-start '>
-                    <span className='employee-email'>Dob: {userInfo?.dob}</span>
+                    <span className='employee-email'>
+                      Dob: {userInfo?.dob || 'No day of birth'}
+                    </span>
                   </div>
                   <div className='list-group-item bg-transparent text-start '>
-                    <p id='employee-name'>Salary: {userInfo?.salary}</p>
+                    <p id='employee-name'>
+                      Salary: {userInfo?.salary || 'No salary'}
+                    </p>
                   </div>
                   <div className='list-group-item bg-transparent text-start '>
                     <p id='employee-role'>
-                      Experience: {userInfo?.yearsOfExperience}
+                      Experience: {userInfo.yearsOfExperience} year
                     </p>
                   </div>
                   <div className='list-group-item bg-transparent text-start '>
@@ -89,7 +91,7 @@ export default function MyProfile() {
                   </div>
                   <div className='list-group-item bg-transparent text-start '>
                     <p id='employee-department'>
-                      Phone: {userInfo?.phoneNumber}
+                      Phone: {userInfo?.phoneNumber || 'No phoneNumber'}
                     </p>
                   </div>
                   <div className='list-group-item bg-transparent text-start '>
@@ -109,7 +111,7 @@ export default function MyProfile() {
         </div>
         <div className='row mt-5'>
           <div className='col '>
-            {userProjects.length ? (
+            {userProjects[0]?.id ? (
               <BriefProjectsDisplay
                 originalProjectLists={userProjects}
               ></BriefProjectsDisplay>
