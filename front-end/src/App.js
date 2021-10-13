@@ -12,8 +12,6 @@ import NoMatch from './pages/NoMatch';
 import SingleProjectPage from './pages/SingleProjectPage';
 import SingleTaskPage from './pages/SingleTaskPage';
 
-// export const AuthContext = createContext();
-
 function App() {
   return (
     <div className='App'>

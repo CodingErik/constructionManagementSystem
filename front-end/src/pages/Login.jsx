@@ -20,18 +20,6 @@ export default function Login() {
     if (res.status === 200) {
       setMessage(null);
 
-      // const token = await LoginAPI.loginWithJwt({
-      //   username: username,
-      //   password: password,
-      // });
-      // dispatch({
-      //   type: 'LOGIN',
-      //   payload: {
-      //     // user: res.data,
-      //     token: token.data.jwt_token,
-      //   },
-      // });
-
       alert('login');
 
       history.push('/Home');

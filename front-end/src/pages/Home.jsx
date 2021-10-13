@@ -18,10 +18,6 @@ function Home() {
   const [taskList, setTaskList] = useState([]);
 
   useEffect(() => {
-    checkToken().then((res) => {
-      if (!res) history.push('/login');
-    });
-
     ProjectAPI.getAllProjects().then((response) => {
       setProjectList([...response.data]);
       response.data.forEach((project) => {

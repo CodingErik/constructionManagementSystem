@@ -3,6 +3,7 @@ import axios from 'axios';
 const baseUrl = `http://localhost:8080`;
 
 const API = {
+  // @login
   login: async (username, password) => {
     try {
       const config = {
@@ -32,6 +33,7 @@ const API = {
       return error.response.data;
     }
   },
+  // @register
   register: async (name, title, username, email, password) => {
     try {
       const config = {
@@ -53,7 +55,6 @@ const API = {
       );
 
       const response = {
-        // data: request.data,
         status: request.status,
       };
 
@@ -62,10 +63,6 @@ const API = {
       return error.response.data;
     }
   },
-  // loginWithJwt: (userInfo) => {
-  //   return axios.post(`${baseUrl}/authenticate`, userInfo);
-  // },
 };
 
 export default API;
-// /api/employees/register
