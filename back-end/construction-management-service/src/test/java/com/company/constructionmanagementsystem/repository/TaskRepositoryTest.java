@@ -120,6 +120,31 @@ public class TaskRepositoryTest {
         assertEquals(task1, task);
     }
 
+
+    @Test
+    public void findTasksByName() {
+        taskRepository.deleteAll();
+
+        LocalDate startDate = LocalDate.now();
+        LocalDate deadline = LocalDate.now();
+
+        Task task = new Task();
+        task.setProjectId(1);
+        task.setEmployeeId(1);
+        task.setName("Task One");
+        task.setStartDate(startDate);
+        task.setDeadline(deadline);
+        task.setDescription("This is a task.");
+        task.setStatus("In progress");
+        task = taskRepository.save(task);
+
+        // findByProjectId
+        List<Task> byName = taskRepository.findAllTasksByName(task.getName());
+
+        assertEquals(1, byName.size());
+        assertEquals(task, byName.get(0));
+    }
+
     @Test
     public void findTasksByProjectId() {
         taskRepository.deleteAll();
