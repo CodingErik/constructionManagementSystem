@@ -1,9 +1,19 @@
 package com.company.constructionmanagementsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Table(name = "material")
 public class Material {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    private Integer projectId;
     private long steel;
     private long brick;
     private long lumber;
@@ -11,20 +21,29 @@ public class Material {
 
     public Material(){};
 
-    public Material(int id, long steel, long brick, long lumber, long cement) {
+    public Material(Integer id, Integer projectId, long steel, long brick, long lumber, long cement) {
         this.id = id;
+        this.projectId = projectId;
         this.steel = steel;
         this.brick = brick;
         this.lumber = lumber;
         this.cement = cement;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Integer projectId) {
+        this.projectId = projectId;
     }
 
     public long getSteel() {
@@ -64,18 +83,19 @@ public class Material {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Material material = (Material) o;
-        return id == material.id && steel == material.steel && brick == material.brick && lumber == material.lumber && cement == material.cement;
+        return steel == material.steel && brick == material.brick && lumber == material.lumber && cement == material.cement && Objects.equals(id, material.id) && Objects.equals(projectId, material.projectId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, steel, brick, lumber, cement);
+        return Objects.hash(id, projectId, steel, brick, lumber, cement);
     }
 
     @Override
     public String toString() {
         return "Material{" +
                 "id=" + id +
+                ", projectId=" + projectId +
                 ", steel=" + steel +
                 ", brick=" + brick +
                 ", lumber=" + lumber +
