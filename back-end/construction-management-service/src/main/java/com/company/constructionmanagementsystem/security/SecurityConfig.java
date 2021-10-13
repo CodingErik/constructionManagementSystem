@@ -1,6 +1,6 @@
 package com.company.constructionmanagementsystem.security;
 
-import com.company.constructionmanagementsystem.service.LoginDetailsService;
+import com.company.constructionmanagementsystem.util.LoginDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -39,10 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/authenticate").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/employees/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/employees/register").permitAll()
-
                 .antMatchers(HttpMethod.POST, "/refresh_token").authenticated()
                 .antMatchers("/api/employees").authenticated()
                 .antMatchers("/api/projects").authenticated()
+                .antMatchers("/api/").authenticated()
                 .and()
                 .addFilter(new JwtRequestFilter(authenticationManager(), converter))
                 .sessionManagement()
@@ -62,6 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(loginDetailsService)
                 .passwordEncoder(bCryptPasswordEncoder);
+
+
     }
 
     @Override

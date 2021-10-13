@@ -1,5 +1,6 @@
-package com.company.constructionmanagementsystem.service;
+package com.company.constructionmanagementsystem.util;
 
+import com.company.constructionmanagementsystem.service.EmployeeServiceLayer;
 import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,9 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class LoginDetailsService implements UserDetailsService {

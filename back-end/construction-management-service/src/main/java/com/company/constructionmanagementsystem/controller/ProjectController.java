@@ -10,6 +10,7 @@ import com.company.constructionmanagementsystem.viewmodel.ProjectViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -97,11 +98,11 @@ public class ProjectController {
         return pvm;
     }
 
-    @GetMapping("/api/projects/deadline/{deadline}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
-        return projectServiceLayer.findByDeadline(deadline);
-    }
+//    @GetMapping("/api/projects/deadline/{deadline}")
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
+//        return projectServiceLayer.findByDeadline(deadline);
+//    }
 
     @GetMapping("/api/projects/startDate/{startDate}")
     @ResponseStatus(value = HttpStatus.OK)
