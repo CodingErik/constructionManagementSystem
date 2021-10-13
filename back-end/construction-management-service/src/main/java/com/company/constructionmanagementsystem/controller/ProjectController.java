@@ -1,23 +1,23 @@
 package com.company.constructionmanagementsystem.controller;
 
 
+import com.company.constructionmanagementsystem.model.Material;
 import com.company.constructionmanagementsystem.model.Project;
 import com.company.constructionmanagementsystem.repository.ProjectRepository;
 import com.company.constructionmanagementsystem.service.ProjectServiceLayer;
+import com.company.constructionmanagementsystem.util.feign.MaterialWarehouseClient;
 import com.company.constructionmanagementsystem.viewmodel.ProjectViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
+@RefreshScope
 public class ProjectController {
 
     @Autowired
@@ -25,6 +25,29 @@ public class ProjectController {
 
     @Autowired
     ProjectServiceLayer projectServiceLayer;
+
+    @Autowired
+    private final MaterialWarehouseClient materialWarehouseClient;
+
+    public ProjectController(MaterialWarehouseClient materialWarehouseClient) {
+        this.materialWarehouseClient = materialWarehouseClient;
+    }
+
+    @GetMapping("/api/material")
+    public Material getWarehouseInventory(){
+        return materialWarehouseClient.getWarehouseInventory();
+    }
+
+    @PutMapping("/api/material")
+    public void updateMaterialAfterRetrieve(@RequestBody Material material) throws Exception{
+        materialWarehouseClient.updateMaterialAfterRetrieve(material);
+    }
+
+
+    @PutMapping("/api/material/refill")
+    public String updateMaterialRefill(){
+        return materialWarehouseClient.updateMaterialRefill();
+    }
 
     @PostMapping("/api/projects")
     @ResponseStatus(HttpStatus.CREATED)
@@ -80,7 +103,7 @@ public class ProjectController {
         return projectServiceLayer.findByDeadline(deadline);
     }
 
-    @GetMapping("/api/projects/deadline/{deadline}")
+    @GetMapping("/api/projects/startDate/{startDate}")
     @ResponseStatus(value = HttpStatus.OK)
     public List<ProjectViewModel> findByStartDate(@PathVariable LocalDate startDate){
         return projectServiceLayer.findByStartDate(startDate);
