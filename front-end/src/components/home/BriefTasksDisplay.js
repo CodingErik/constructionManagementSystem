@@ -6,12 +6,13 @@ let taskColumnBooleans = {
     taskId: false,
     name: false,
     status: false,
+    project: false,
     startDate: false,
     deadline: false,
     description: false,
 };
 
-export default function BriefTasksDisplay({ originalTaskList }) {
+export default function BriefTasksDisplay({ originalTaskList, projectIsNotANumber }) {
     const [taskList, setTaskList] = useState([]);
 
     useEffect(() => {
@@ -70,6 +71,17 @@ export default function BriefTasksDisplay({ originalTaskList }) {
                     )
                 );
                 break;
+            case "Project":
+                taskColumnBooleans.project
+                    ? (taskColumnBooleans.project = false)
+                    : (taskColumnBooleans.project = true);
+
+                setTaskList(
+                    [...taskList].sort(
+                        sort_by(projectIsNotANumber?"project": "projectId", taskColumnBooleans.project, projectIsNotANumber? (a) => a.name.toUpperCase(): parseInt)
+                    )
+                );
+                break;
             case "StartDate":
                 taskColumnBooleans.startDate
                     ? (taskColumnBooleans.startDate = false)
@@ -123,6 +135,7 @@ export default function BriefTasksDisplay({ originalTaskList }) {
                         <th scope="col" onClick={() => handleTaskColumnHeaderClick("TaskId")} >TaskId</th>
                         <th scope="col" onClick={() => handleTaskColumnHeaderClick("Name")} >Name</th>
                         <th scope="col" onClick={() => handleTaskColumnHeaderClick("Status")} >Status</th>
+                        <th scope="col" onClick={() => handleTaskColumnHeaderClick("Project")} >Project Containing</th>
                         <th scope="col" onClick={() => handleTaskColumnHeaderClick("StartDate")} >StartDate</th>
                         <th scope="col" onClick={() => handleTaskColumnHeaderClick("Deadline")} >Deadline</th>
                         <th scope="col" onClick={() => handleTaskColumnHeaderClick("Description")} >Description</th>
@@ -134,6 +147,7 @@ export default function BriefTasksDisplay({ originalTaskList }) {
                             <th scope="row">{task.id}</th>
                             <td>{task.name}</td>
                             <td>{task.status}</td>
+                            <td>{task.project? task.project.name : task.projectId}</td>
                             <td>{task.startDate}</td>
                             <td>{task.deadline}</td>
                             <td>{task.description}</td>

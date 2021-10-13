@@ -16,7 +16,7 @@ function ProjectPieChart({ statusCount }) {
     }
 
     return (
-        <div>
+        <div >
             <h3>Project Statuses Pie Chart</h3>
             <CanvasJSChart options={options} />
         </div>
