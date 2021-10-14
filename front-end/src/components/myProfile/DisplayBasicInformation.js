@@ -13,7 +13,7 @@ function DisplayBasicInformation({ userInfo }) {
                         style={{ display: "inline" }}
                         type="button"
                         className="btn btn-warning"
-                        data-bs-toggle="modal" 
+                        data-bs-toggle="modal"
                         data-bs-target="#editPersonalInformationModal"
                     >
                         Edit Info
@@ -23,51 +23,50 @@ function DisplayBasicInformation({ userInfo }) {
             </div>
             <div className="row">
                 <div className="col-12">
-                    <ul className="list-group text-black">
+                    <div className="list-group text-black">
                         <div className="list-group-item bg-transparent text-start ">
-                            <span id="employee-id">Id: {userInfo.id}</span>
+                            <div id="employee-id">Id: {userInfo.id}</div>
                         </div>
                         <div className="list-group-item bg-transparent text-start ">
-                            <span id="employee-name">
+                            <div id="employee-name">
                                 Name: {userInfo.name}
-                            </span>
+                            </div>
                         </div>
                         <div className="list-group-item bg-transparent text-start ">
-                            <p id="employee-username">
+                            <div id="employee-username">
                                 Username: {userInfo.username}
-                            </p>
+                            </div>
                         </div>
                         <div className="list-group-item bg-transparent text-start ">
-                            <span id="employee-title">Title: {userInfo.title}</span>
+                            <div id="employee-title">Title: {userInfo.title}</div>
                         </div>
                         <div className="list-group-item bg-transparent text-start ">
-                            <p id="employee-phoneNumber">
+                            <div id="employee-phoneNumber">
                                 Phone: {userInfo?.phoneNumber}
-                            </p>
+                            </div>
                         </div>
                         <div className="list-group-item bg-transparent text-start ">
-                            <p id="employee-email">Email: {userInfo.email}</p>
+                            <div id="employee-email">Email: {userInfo.email}</div>
                         </div>
                         <div className="list-group-item bg-transparent text-start ">
-                            <span id="employee-dateOfBirth">
+                            <div id="employee-dateOfBirth">
                                 Date Of Birth: {userInfo?.dateOfBirth}
-                            </span>
+                            </div>
                         </div>
                         <div className="list-group-item bg-transparent text-start ">
-                            <p id="employee-salary">Salary: {userInfo?.salary}</p>
+                            <div id="employee-salary">Salary: {userInfo?.salary}</div>
                         </div>
                         <div className="list-group-item bg-transparent text-start ">
-                            <p id="employee-yearsOfExperience">
+                            <div id="employee-yearsOfExperience">
                                 Experience: {userInfo?.yearsOfExperience}
-                            </p>
+                            </div>
                         </div>
-
                         <div className="list-group-item bg-transparent text-start ">
-                            <p id="employee-userSince">
+                            <div id="employee-userSince">
                                 User Since: {userInfo.userSince}
-                            </p>
+                            </div>
                         </div>
-                    </ul>
+                    </div>
                 </div>
             </div>
         </div>

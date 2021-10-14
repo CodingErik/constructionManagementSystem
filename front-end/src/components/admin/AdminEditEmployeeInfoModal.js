@@ -1,47 +1,35 @@
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import "./UserPersonalInformationFormModal.css";
-import { useRef } from "react";
-import { EmployeeAPI, LoginAPI } from "../../api";
+import { useEffect, useRef, useState } from "react";
+import { EmployeeAPI } from "../../api";
 
 
-function UserPersonalInformationModal({ userInfo, modalId }) {
-    const userNameRef = useRef(null);
-    const userEmailRef = useRef(null);
-    const userPhoneRef = useRef(null);
-    const userDateOfBirthRef = useRef(null);
-    const userYearsOfExperienceRef = useRef(null);
-    const passwordOriginalInput = useRef(null);
+function AdminEditEmployeeInfoModal({ employeeInfo, modalId, handleBasicInformationUpdateSubmit }) {
+    const employeeNameRef = useRef(null);
+    const [employeeTitle, setEmployeeTitle] = useState("");
+    const employeeEmailRef = useRef(null);
+    const employeePhoneRef = useRef(null);
+    const employeeDateOfBirthRef = useRef(null);
+    const employeeSalaryRef = useRef(null);
+    const employeeYearsOfExperienceRef = useRef(null);
     const passwordNewInput = useRef(null);
     const passwordConfirmationInput = useRef(null);
 
-    const handleBasicInformationUpdateSubmit = (event) => {
-        event.preventDefault();
-        const updatedInformation = {
-            ...userInfo,
-            name: userNameRef.current.value,
-            email: userEmailRef.current.value,
-            phoneNumber: userPhoneRef.current.value,
-            dateOfBirth: userDateOfBirthRef.current.value,
-            yearsOfExperience: userYearsOfExperienceRef.current.value,
-            projectId: userInfo.project ? userInfo.project.id : 0
-        };
-        EmployeeAPI.putEmployee(updatedInformation);
-    }
+    useEffect(() => {
+        setEmployeeTitle(employeeInfo.title)
+    }, [employeeInfo])
 
     const handlePasswordSubmit = async (event) => {
         event.preventDefault();
-        const passwordCheck = await LoginAPI.login(userInfo.username, passwordOriginalInput.current.value);
-        console.log(passwordCheck);
-        if (passwordCheck.status === 200 && passwordNewInput.current.value === passwordConfirmationInput.current.value) {
-            const userInformationWithUpdatedPassword = {
-                ...userInfo,
-                projectId: userInfo.project ? userInfo.project.id : 0,
+        if (passwordNewInput.current.value === passwordConfirmationInput.current.value) {
+            const employeeInformationWithUpdatedPassword = {
+                ...employeeInfo,
+                projectId: employeeInfo.project ? employeeInfo.project.id : 0,
                 password: passwordConfirmationInput.current.value
             }
-            EmployeeAPI.putEmployee(userInformationWithUpdatedPassword);
+            EmployeeAPI.putEmployee(employeeInformationWithUpdatedPassword);
             alert("Password Updated");
         } else {
-            alert("Original password is incorrect");
+            alert("Password Do Not Match");
         }
     }
 
@@ -62,51 +50,80 @@ function UserPersonalInformationModal({ userInfo, modalId }) {
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body">
-                        <form onSubmit={handleBasicInformationUpdateSubmit}>
+                        <form onSubmit={(event) => handleBasicInformationUpdateSubmit(event,
+                            {
+                                ...employeeInfo,
+                                name: employeeNameRef.current.value,
+                                title: employeeTitle,
+                                email: employeeEmailRef.current.value,
+                                phoneNumber: employeePhoneRef.current.value,
+                                dateOfBirth: employeeDateOfBirthRef.current.value,
+                                salary: employeeSalaryRef.current.value,
+                                yearsOfExperience: employeeYearsOfExperienceRef.current.value,
+                                projectId: employeeInfo.project ? employeeInfo.project.id : 0
+                            }
+                        )}>
                             <h5 className="ms-4 text-start">Basic Information</h5>
                             <fieldset>
                                 <div className="form-group">
                                     <label
-                                        htmlFor="user-name"
+                                        htmlFor="employee-name"
                                         className="form-label mt-4 ms-4 d-flex align-items-start"
                                     >
-                                        Employee Id #{userInfo.id}:
+                                        Employee Id #{employeeInfo.id}:
                                     </label>
                                     <input
-                                        className="form-control ms-4 inputInformation"
-                                        id="user-name"
-                                        defaultValue={userInfo.name}
-                                        ref={userNameRef}
+                                        className="form-control ms-4"
+                                        id="employee-name"
+                                        defaultValue={employeeInfo.name}
+                                        ref={employeeNameRef}
                                     />
                                 </div>
                                 <div className="form-group">
                                     <label
-                                        htmlFor="user-email"
+                                        htmlFor="employee-title"
+                                        className="form-label mt-4 ms-4 d-flex align-items-start"
+                                    >
+                                        Employee Title:
+                                    </label>
+                                    <select
+                                        className="form-select ms-4"
+                                        id="title"
+                                        value={employeeTitle}
+                                        onChange={(event) => setEmployeeTitle(event.target.value)}
+                                    >
+                                        <option value="architect" >Architect</option>
+                                        <option value="employee" >Employee</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label
+                                        htmlFor="employee-email"
                                         className="form-label mt-4 ms-4 d-flex align-items-start"
                                     >
                                         Email:
                                     </label>
                                     <input
-                                        className="form-control ms-4 inputInformation"
-                                        id="user-email"
-                                        defaultValue={userInfo.email}
-                                        ref={userEmailRef}
+                                        className="form-control ms-4"
+                                        id="employee-email"
+                                        defaultValue={employeeInfo.email}
+                                        ref={employeeEmailRef}
                                     />
                                 </div>
                                 <div className="form-group">
                                     <label
-                                        htmlFor="user-phone"
+                                        htmlFor="employee-phone"
                                         className="form-label mt-4 ms-4 d-flex align-items-start"
                                     >
                                         Phone:
                                     </label>
                                     <input
-                                        id='user-phone'
+                                        id='employee-phone'
                                         type='tel'
                                         pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                                        className="form-control ms-4 inputInformation"
-                                        defaultValue={userInfo.phoneNumber}
-                                        ref={userPhoneRef}></input>
+                                        className="form-control ms-4"
+                                        defaultValue={employeeInfo.phoneNumber}
+                                        ref={employeePhoneRef}></input>
                                     <small className="form-label ms-4 d-flex align-items-start">Format: 123-456-7890</small>
                                 </div>
                                 <div className="form-group row">
@@ -115,24 +132,45 @@ function UserPersonalInformationModal({ userInfo, modalId }) {
                                     </label>
                                     <input
                                         type="date"
-                                        className="form-control ms-4 inputInformation"
-                                        id="user-dateOfBirth"
-                                        defaultValue={userInfo.dateOfBirth}
-                                        ref={userDateOfBirthRef}
+                                        className="form-control ms-4"
+                                        id="employee-dateOfBirth"
+                                        defaultValue={employeeInfo.dateOfBirth}
+                                        ref={employeeDateOfBirthRef}
                                     />
                                 </div>
                                 <div className="form-group">
                                     <label
-                                        htmlFor="user-yearsOfExperience"
+                                        htmlFor="employee-salary"
+                                        className="form-label mt-4 ms-4 d-flex align-items-start"
+                                    >
+                                        Salary:
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text ms-4 " >
+                                            $
+                                        </span>
+                                        <input
+                                            type="number"
+                                            className="form-control ms-4"
+                                            id="employee-salary"
+                                            defaultValue={employeeInfo.salary}
+                                            ref={employeeSalaryRef}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label
+                                        htmlFor="employee-yearsOfExperience" s
                                         className="form-label mt-4 ms-4 d-flex align-items-start"
                                     >
                                         Years Of Experience:
                                     </label>
                                     <input
-                                        className="form-control ms-4 inputInformation"
-                                        id="user-yearsOfExperience"
-                                        defaultValue={userInfo.yearsOfExperience}
-                                        ref={userYearsOfExperienceRef}
+                                        type="number"
+                                        className="form-control ms-4"
+                                        id="employee-yearsOfExperience"
+                                        defaultValue={employeeInfo.yearsOfExperience}
+                                        ref={employeeYearsOfExperienceRef}
                                     />
                                 </div>
                             </fieldset>
@@ -146,19 +184,7 @@ function UserPersonalInformationModal({ userInfo, modalId }) {
                             <fieldset>
                                 <div className="form-group">
                                     <label
-                                        htmlFor="user-oldPassword"
-                                        className="form-label mt-4 ms-4 d-flex align-items-start"
-                                    >
-                                        Old Password
-                                    </label>
-                                    <div class="input-group mb-3">
-                                        <input ref={passwordOriginalInput} type="password" class="form-control ms-4" placeholder="**********" id="confirmPassword" />
-                                        <button class="btn" type="button" id="showPassword" onClick={() => togglePasswordShow(passwordOriginalInput)}>
-                                            <AiFillEye size={25} />
-                                        </button>
-                                    </div>
-                                    <label
-                                        htmlFor="user-password"
+                                        htmlFor="employee-password"
                                         className="form-label mt-4 ms-4 d-flex align-items-start"
                                     >
                                         New Password
@@ -168,7 +194,7 @@ function UserPersonalInformationModal({ userInfo, modalId }) {
                                         <button class="btn" type="button" id="showPassword" onClick={() => togglePasswordShow(passwordNewInput)}><AiFillEye size={25} /></button>
                                     </div>
                                     <label
-                                        htmlFor="user-password"
+                                        htmlFor="employee-password"
                                         className="form-label mt-4 ms-4 d-flex align-items-start"
                                     >
                                         Confirm New Password
@@ -190,4 +216,4 @@ function UserPersonalInformationModal({ userInfo, modalId }) {
     )
 }
 
-export default UserPersonalInformationModal;
+export default AdminEditEmployeeInfoModal;

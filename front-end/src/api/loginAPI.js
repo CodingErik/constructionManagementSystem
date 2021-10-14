@@ -54,7 +54,7 @@ const API = {
         },
         config
       );
-
+      console.log(request);
       const response = {
         status: request.status,
       };
