@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Machinery {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int crane;
     private int forklift;
@@ -22,6 +22,14 @@ public class Machinery {
     public Machinery(){}
 
     public Machinery(int crane, int forklift, int ladder, int drill) {
+        this.crane = crane;
+        this.forklift = forklift;
+        this.ladder = ladder;
+        this.drill = drill;
+    }
+
+    public Machinery(int id, int crane, int forklift, int ladder, int drill) {
+        this.id = id;
         this.crane = crane;
         this.forklift = forklift;
         this.ladder = ladder;

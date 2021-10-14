@@ -75,103 +75,111 @@ export default function Tasks() {
   }
 
   return (
-    <div className='container'>
-      <div className='statusFilterTasks'>
-        <div
-          className='btn-group'
-          role='group'
-          aria-label='Basic radio toggle button group'
-        >
-          <p
-            style={{ paddingTop: '13px', marginRight: '20px' }}
-            className='textField'
+    <div className='container mt-3'>
+      <div className='row'>
+        <div className='statusFilterTasks col'>
+          <div
+            className='btn-group'
+            role='group'
+            aria-label='Basic radio toggle button group'
           >
-            Status :{' '}
-          </p>
-          <input
-            onClick={() => setStatusFilter('all')}
-            type='radio'
-            className='btn-check'
-            name='btnradio'
-            id='allStatusFilter'
-            autoComplete='off'
-            defaultChecked=''
-          />
-          <label
-            className='btn btn-outline-primary btn-sm'
-            htmlFor='allStatusFilter'
-          >
-            All
-          </label>
-          <input
-            onClick={() => setStatusFilter('in_progress')}
-            type='radio'
-            className='btn-check'
-            name='btnradio'
-            id='inProgressStatusFilter'
-            autoComplete='off'
-            defaultChecked=''
-          />
-          <label
-            className='btn btn-outline-primary btn-sm'
-            htmlFor='inProgressStatusFilter'
-          >
-            In Progress
-          </label>
-          <input
-            onClick={() => setStatusFilter('completed')}
-            type='radio'
-            className='btn-check'
-            name='btnradio'
-            id='completedStatusFilter'
-            autoComplete='off'
-            defaultChecked=''
-          />
-          <label
-            className='btn btn-outline-primary btn-sm'
-            htmlFor='completedStatusFilter'
-          >
-            Completed
-          </label>
+            <p
+              style={{ paddingTop: '13px', marginRight: '20px' }}
+              className='textField'
+            >
+              Status :{' '}
+            </p>
+            <input
+              onClick={() => setStatusFilter('all')}
+              type='radio'
+              className='btn-check'
+              name='btnradio'
+              id='allStatusFilter'
+              autoComplete='off'
+              defaultChecked=''
+            />
+            <label
+              className='btn btn-outline-primary btn-sm'
+              htmlFor='allStatusFilter'
+            >
+              All
+            </label>
+            <input
+              onClick={() => setStatusFilter('in_progress')}
+              type='radio'
+              className='btn-check'
+              name='btnradio'
+              id='inProgressStatusFilter'
+              autoComplete='off'
+              defaultChecked=''
+            />
+            <label
+              className='btn btn-outline-primary btn-sm'
+              htmlFor='inProgressStatusFilter'
+            >
+              In Progress
+            </label>
+            <input
+              onClick={() => setStatusFilter('completed')}
+              type='radio'
+              className='btn-check'
+              name='btnradio'
+              id='completedStatusFilter'
+              autoComplete='off'
+              defaultChecked=''
+            />
+            <label
+              className='btn btn-outline-primary btn-sm'
+              htmlFor='completedStatusFilter'
+            >
+              Completed
+            </label>
+          </div>
         </div>
       </div>
 
-      <div className='otherFiltersTasks'>
-        <div className='employeeNameFilter filter'>
-          <p className='textField'>Task : </p>
-          <input ref={taskNameRef} className='textInput' placeholder='Name' />
+      <div className='row'>
+        <div className='otherFiltersTasks col'>
+          <div className='employeeNameFilter filter'>
+            <p className='textField'>Task : </p>
+            <input ref={taskNameRef} className='textInput' placeholder='Name' />
+          </div>
+          <div className='projectNameFilter filter'>
+            <p className='textField'>Project : </p>
+            <input
+              ref={projectNameRef}
+              className='textInput'
+              placeholder='Name'
+            />
+          </div>
+          <div className='employeeNameFilter filter'>
+            <p className='textField'>Employee : </p>
+            <input
+              ref={employeeNameRef}
+              className='textInput'
+              placeholder='Name'
+            />
+          </div>
+          <button
+            className='filterButtonTasks'
+            onClick={(event) => setFilters(event)}
+          >
+            Filter
+          </button>
+          <button
+            className='filterButtonTasks'
+            onClick={(event) => resetFilters(event)}
+          >
+            Reset
+          </button>
         </div>
-        <div className='projectNameFilter filter'>
-          <p className='textField'>Project : </p>
-          <input
-            ref={projectNameRef}
-            className='textInput'
-            placeholder='Name'
-          />
-        </div>
-        <div className='employeeNameFilter filter'>
-          <p className='textField'>Employee : </p>
-          <input
-            ref={employeeNameRef}
-            className='textInput'
-            placeholder='Name'
-          />
-        </div>
-        <button
-          className='filterButtonTasks'
-          onClick={(event) => setFilters(event)}
-        >
-          Filter
-        </button>
-        <button
-          className='filterButtonTasks'
-          onClick={(event) => resetFilters(event)}
-        >
-          Reset
-        </button>
       </div>
 
-      <TasksTable tasks={tasks} statusFilter={statusFilter} />
+      <div className='row'>
+        <div className='col'>
+          <TasksTable tasks={tasks} statusFilter={statusFilter} />
+        </div>
+      </div>
     </div>
   );
 }

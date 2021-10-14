@@ -12,7 +12,6 @@ import java.util.Objects;
 public class Material {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private long steel;
     private long brick;
@@ -23,6 +22,13 @@ public class Material {
 
     public Material(int id, long steel, long brick, long lumber, long cement) {
         this.id = id;
+        this.steel = steel;
+        this.brick = brick;
+        this.lumber = lumber;
+        this.cement = cement;
+    }
+
+    public Material(long steel, long brick, long lumber, long cement) {
         this.steel = steel;
         this.brick = brick;
         this.lumber = lumber;

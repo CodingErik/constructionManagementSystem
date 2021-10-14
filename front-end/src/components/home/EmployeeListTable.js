@@ -51,7 +51,7 @@ function EmployeeListTable({ employeeList }) {
                 </tbody>
             </table>
         </div>
-    )
+  );
 }
 
 export default EmployeeListTable;
