@@ -3,7 +3,9 @@ import BriefProjectsDisplay from '../components/home/BriefProjectsDisplay';
 import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
 import ProjectPieChart from '../components/home/ProjectPieChart';
 import EmployeeListTable from '../components/home/EmployeeListTable';
-import { ProjectAPI, EmployeeAPI, TaskAPI } from '../api/index';
+import Materials from "../components/materials/Materials";
+import Machinery from "../components/machinery/Machinery";
+import { ProjectAPI, EmployeeAPI, TaskAPI, MaterialAPI, MachineryAPI } from '../api/index';
 import redirectIfTokenNull from '../components/RedirectHelper';
 
 function Home() {
@@ -16,6 +18,8 @@ function Home() {
   });
   const [employeeList, setEmployeeList] = useState([]);
   const [taskList, setTaskList] = useState([]);
+  const [materials, setMaterials] = useState();
+  const [machinery, setMachinery] = useState();
 
   useEffect(() => {
     ProjectAPI.getAllProjects().then((response) => {
@@ -47,10 +51,19 @@ function Home() {
     TaskAPI.getAllTasks().then((response) => {
       setTaskList(response.data);
     });
+
+    MaterialAPI.getAllMaterialsInventory().then((response) => {
+      setMaterials(response.data);
+    })
+
+    MachineryAPI.getAllMachineryInventory().then((response) => {
+      setMachinery(response.data);
+    })
+
   }, []);
 
   return (
-    <div className='container'>
+    <div className='container-flex'>
       <div className='row'>
         <div className='col col-lg-7'>
           <div className='row'>
@@ -58,6 +71,20 @@ function Home() {
               originalProjectLists={projectList}
             ></BriefProjectsDisplay>
           </div>
+
+          <div className="row" style={{marginBottom:"4%"}}>
+
+            <div className="col">
+              <h3>Materials Inventory</h3>
+              <Materials materials={materials} />
+            </div>
+            <div className="col">
+              <h3>Machinery Inventory</h3>
+              <Machinery machinery={machinery} />
+            </div>
+
+          </div>
+
           <div className='row'>
             <BriefTasksDisplay
               originalTaskList={taskList} projectIsNotANumber={true}>

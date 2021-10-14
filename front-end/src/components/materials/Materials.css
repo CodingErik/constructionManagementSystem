@@ -1,0 +1,18 @@
+.materialsWrapper{
+    height:80%;
+    width:75%;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    padding-top:4%;
+    border:2px black solid;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.materialOrMachineryIcon{
+    margin-bottom:20%;
+}
+
+.textElementMaterials{
+    font-weight:600;
+    margin-bottom:2%;
+}
