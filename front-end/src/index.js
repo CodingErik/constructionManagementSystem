@@ -16,7 +16,6 @@ axios.interceptors.request.use((request) => {
   return request;
 });
 
-// interceptAPIAndAddHeader();
 ReactDOM.render(
   <React.StrictMode>
     <App />

@@ -10,29 +10,22 @@ function SingleTaskPage() {
   const { taskId } = useParams();
   const [task, setTask] = useState({});
   const [hasAuthority, setHasAuthority] = useState(false);
-  const [projectList, setProjectList] = useState([]);
-  const [employeeInThisProjectList, setEmployeeInThisProjectList] = useState(
-    []
-  );
   const token = decode(JSON.parse(localStorage.getItem('token')));
 
   useEffect(() => {
-    TaskAPI.getTaskById(taskId).then((response) => {
-      setTask(response.data);
-      EmployeeAPI.getAllEmployees().then((employeeResponse) => {
-        setEmployeeInThisProjectList(
-          [...employeeResponse.data].filter(
-            (employee) => employee.projectId == response.data.project.id
-          )
-        );
-      });
-    });
-    ProjectAPI.getAllProjects().then((response) => {
-      setProjectList(response.data);
-    });
-    setHasAuthority(
-      token.authorities.toLowerCase() === 'architect' ? true : false
-    );
+    async function fetchData() {
+      const taskInfo = await TaskAPI.getTaskById(taskId);
+      const userInfo = await EmployeeAPI.getEmployeeByUsername(token.sub);
+
+      setTask(taskInfo.data);
+
+      if ((token.authorities.toLowerCase() === 'architect' && userInfo.data.project?.id === taskInfo.data.project?.id) || token.authorities.toLowerCase() === 'admin') {
+        setHasAuthority(true);
+      } else {
+        setHasAuthority(false);
+      }
+    }
+    fetchData();
   }, []);
 
   return (
@@ -40,8 +33,6 @@ function SingleTaskPage() {
       <TaskForm
         task={task}
         hasAuthority={hasAuthority}
-        projectList={projectList}
-        employeeInThisProjectList={employeeInThisProjectList}
       ></TaskForm>
     </div>
   );

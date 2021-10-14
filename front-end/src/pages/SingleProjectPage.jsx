@@ -1,25 +1,38 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import { ProjectAPI, EmployeeAPI } from '../api/index';
-import EmployeeListTableForProject from '../components/singleProject/EmployeeListTableForProject';
-import ProjectForm from '../components/singleProject/ProjectForm';
-import decode from 'jwt-decode';
-import redirectIfTokenNull from '../components/RedirectHelper';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { ProjectAPI, EmployeeAPI } from "../api/index";
+import EmployeeListTableForProject from "../components/singleProject/EmployeeListTableForProject";
+import ProjectForm from "../components/singleProject/ProjectForm";
+import decode from "jwt-decode";
+import redirectIfTokenNull from "../components/RedirectHelper";
 
 function SingleProjectPage({}) {
   redirectIfTokenNull();
   const { projectId } = useParams();
   const [project, setProject] = useState({});
+  const [user, setUser] = useState({});
   const [hasAuthority, setHasAuthority] = useState(false);
-  const token = decode(JSON.parse(localStorage.getItem('token')));
+  const token = decode(JSON.parse(localStorage.getItem("token")));
+
   useEffect(() => {
-    ProjectAPI.getProjectById(projectId).then((response) => {
-      setProject(response.data);
-      setHasAuthority(
-        token.authorities.toLowerCase() === 'architect' ? true : false
-      );
-    });
+    async function fetchData() {
+      const projectInfo = await ProjectAPI.getProjectById(projectId);
+      const userInfo = await EmployeeAPI.getEmployeeByUsername(token.sub);
+      setUser(userInfo.data);
+      setProject(projectInfo.data);
+
+    }
+    fetchData();
   }, []);
+
+  useEffect(()=> {
+    if((user.project?.id === project.id && user.title === "architect") || user.title === "admin") {
+      setHasAuthority(true);
+    } else {
+      setHasAuthority(false);
+    }
+  },[user,project])
+
 
   return (
     <div>

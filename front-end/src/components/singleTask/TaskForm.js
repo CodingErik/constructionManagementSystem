@@ -1,11 +1,32 @@
 import { useEffect, useRef, useState } from "react";
-import { EmployeeAPI, TaskAPI } from "../../api";
+import { EmployeeAPI, TaskAPI, ProjectAPI } from "../../api";
 
-function TaskForm({ task, hasAuthority, projectList, employeeInThisProjectList }) {
-
+function TaskForm({ task, hasAuthority }) {
     const [taskState, setTaskState] = useState(task.status);
     const [projectState, setProjectState] = useState(task.project);
     const [employeeState, setEmployeeState] = useState(task.employee);
+    const [projectListState, setProjectListState] = useState([]);
+    const [availableEmployeesInProjectState, setAvailableEmployeesInProjectState] = useState([]);
+
+    //ONLY ADMIN CAN CHANGE THIS WHICH SHOULD REMOVE CURRENT USER WITH THIS TASK ASSIGNED. CONSIDER THIS AND IMPLICATIONS LATER
+    // const [changeProjectAuthority, setChangeProjectAuthority] = useState(false);
+
+    useEffect(() => {
+        async function fetchData() {
+            const projects = await ProjectAPI.getAllProjects();
+            setProjectListState(projects.data);
+        }
+        fetchData();
+    }, [])
+
+    useEffect(() => {
+        async function fetchData() {
+            const availableEmployees = await EmployeeAPI.getAllEmployeeByProjectId(projectState);
+            setAvailableEmployeesInProjectState([...availableEmployees.data].filter((employee) => employee.title === "employee"));
+        }
+        fetchData();
+        console.log(projectState);
+    }, [projectState])
 
     useEffect(() => {
         setTaskState(task.status);
@@ -120,11 +141,11 @@ function TaskForm({ task, hasAuthority, projectList, employeeInThisProjectList }
                         <select
                             className="form-select ms-4"
                             id="project"
-                            disabled={!hasAuthority}
+                            disabled={true}
                             value={projectState}
                             onChange={(event) => setProjectState(event.target.value)}
                         >
-                            {projectList.map(project => (
+                            {projectListState.map(project => (
                                 <option value={project.id} key={project.id}>{project.id}. {project.name}</option>
                             ))}
                         </select>
@@ -143,7 +164,7 @@ function TaskForm({ task, hasAuthority, projectList, employeeInThisProjectList }
                             value={employeeState}
                             onChange={(event) => setEmployeeState(event.target.value)}
                         >
-                            {employeeInThisProjectList.map(employee => (
+                            {availableEmployeesInProjectState.map(employee => (
                                 <option value={employee.id} key={employee.id}>{employee.id}. {employee.name}</option>
                             ))}
                         </select>

@@ -38,8 +38,8 @@ public class EmployeeController {
 
     @GetMapping("/api/employees")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<Employee> getAllEmployees() {
-        List<Employee> employeeList = repository.findAll();
+    public List<EmployeeViewModel> getAllEmployees() {
+        List<EmployeeViewModel> employeeList = employeeServiceLayer.findAllEmployees();
 
         return employeeList;
     }
