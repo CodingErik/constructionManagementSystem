@@ -5,8 +5,11 @@ import com.company.repository.MaterialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.NestedServletException;
 
+import javax.ws.rs.HttpMethod;
 import java.math.BigDecimal;
 
 @RestController
@@ -15,6 +18,7 @@ public class MaterialController {
 
     @Autowired
     MaterialRepository repo;
+
 
 
     @Value("${materialWarehouse}")
@@ -33,6 +37,7 @@ public class MaterialController {
      * current amount in warehouse stock
      */
     @GetMapping("/api/material")
+    @ResponseStatus(HttpStatus.OK)
     public Material getWarehouseInventory() {
         return repo.getById(1);
     }
@@ -41,6 +46,7 @@ public class MaterialController {
      * retrieve stock needed for project
      */
     @PutMapping("/api/material")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateMaterialAfterRetrieve(@RequestBody Material material) {
 
         Material inventory = repo.getById(1);
@@ -79,6 +85,7 @@ public class MaterialController {
 
 
     @PutMapping("/api/material/refill")
+    @ResponseStatus(HttpStatus.OK)
     public String updateMaterialRefill() {
 
         Material inventory = repo.getById(1);
