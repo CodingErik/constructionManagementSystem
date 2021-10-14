@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+//@CrossOrigin
 @RefreshScope
 public class MaterialController {
 
@@ -28,7 +28,7 @@ public class MaterialController {
      * update project specific inventory
      * update warehouse inventory
      * */
-    @PostMapping("/api/requestMaterials")
+    @PostMapping("/api/materials/request")
     public String requestMaterials(@RequestBody Material material) {
         /** adding stock to main service
          * calling the microservice to update the warehouse inventory
@@ -57,7 +57,7 @@ public class MaterialController {
     }
 
     /** get warehouse inventory*/
-    @GetMapping("/api/material")
+    @GetMapping("/api/materials")
     public Material getWarehouseInventory() {
         return materialWarehouseClient.getWarehouseInventory();
     }
