@@ -50,27 +50,38 @@ function Home() {
   }, []);
 
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col col-lg-7'>
+    <div
+      className='container mt-3'
+      style={{
+        overflowX: 'hidden',
+      }}
+    >
+      <div className='row mb-3 mt-3'>
+        <div className='col col-xl-6 ml-1 mr-1'>
+          <BriefProjectsDisplay
+            originalProjectLists={projectList}
+          ></BriefProjectsDisplay>
+        </div>
+        <div className='col col-xl-6 ml-1 mr-1'>
+          <ProjectPieChart statusCount={statusCount}></ProjectPieChart>
+        </div>
+      </div>
+
+
+      <div className='row mb-3 mt-3'>
+        <div className='col col-xl-6 ml-1 mr-1'>
           <div className='row'>
-            <BriefProjectsDisplay
-              originalProjectLists={projectList}
-            ></BriefProjectsDisplay>
+
           </div>
           <div className='row'>
             <BriefTasksDisplay
-              originalTaskList={taskList} projectIsNotANumber={true}>
-            </BriefTasksDisplay>
+            originalTaskList={taskList}
+            projectIsNotANumber={true}
+          ></BriefTasksDisplay>
           </div>
         </div>
-        <div className='col col-lg-5'>
-          <div className='row'>
-            <ProjectPieChart statusCount={statusCount} ></ProjectPieChart>
-          </div>
-          <div className='row'>
-            <EmployeeListTable employeeList={employeeList} />
-          </div>
+        <div className='col col-xl-6 ml-1 mr-1'>
+          <EmployeeListTable employeeList={employeeList} />
         </div>
       </div>
     </div>
