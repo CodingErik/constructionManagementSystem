@@ -1,4 +1,4 @@
-function AddModal({ allEmployeesNotInProject, projectId, handleAddEmployeeToProject, modalId, title }) {
+function AddModal({ allUnassignedEmployees, projectId, handleAddEmployeeToProject, modalId, title }) {
     return (
         <div className="modal fade" id={modalId} tabIndex="-1" aria-labelledby="addModal" aria-hidden="true">
             <div className="modal-dialog modal-lg">
@@ -19,7 +19,7 @@ function AddModal({ allEmployeesNotInProject, projectId, handleAddEmployeeToProj
                                 </tr>
                             </thead>
                             <tbody>
-                                {allEmployeesNotInProject.filter((employee) => employee.title === title && employee.projectId !== projectId).map((filteredEmployee) => (
+                                {allUnassignedEmployees.filter((employee) => employee.title === title && employee.projectId !== projectId).map((filteredEmployee) => (
                                     <tr className="table-light" key={filteredEmployee.id}>
                                         <th scope="row">{filteredEmployee.id}</th>
                                         <td>{filteredEmployee.name}</td>

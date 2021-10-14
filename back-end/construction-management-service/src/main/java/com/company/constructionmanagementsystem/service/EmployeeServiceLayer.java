@@ -71,6 +71,18 @@ public class EmployeeServiceLayer {
         return evmList;
     }
 
+    public List<EmployeeViewModel> findAllEmployees(){
+        List<Employee> employeeList = employeeRepository.findAll();
+
+        List<EmployeeViewModel> evmList = new ArrayList<>();
+
+        for(Employee employee : employeeList){
+            EmployeeViewModel evm = buildEmployeeViewModel(employee);
+            evmList.add(evm);
+        }
+        return evmList;
+    }
+
     public List<EmployeeViewModel> findEmployeesByProjectId(Integer projectId){
         List<Employee> employeeList = employeeRepository.findByProjectId(projectId);
 

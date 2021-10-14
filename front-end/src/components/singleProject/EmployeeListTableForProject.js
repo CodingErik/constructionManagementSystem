@@ -4,14 +4,15 @@ import { useState, useEffect } from "react";
 
 function EmployeeListTableForProject({ projectId, hasAuthority }) {
     const [allEmployeesInProject, setAllEmployeesInProject] = useState([]);
-    const [allEmployeesNotInProject, setAllEmployeesNotInProject] = useState([]);
+    const [allUnassignedEmployees, setAllUnassignedEmployees] = useState([]);
 
     useEffect(() => {
         EmployeeAPI.getAllEmployees().then((response) => {
-            setAllEmployeesInProject([...response.data].filter(employee => employee.projectId == projectId));
-            setAllEmployeesNotInProject([...response.data].filter(employee => employee.projectId != projectId));
+            setAllUnassignedEmployees([...response.data].filter(employee => parseInt(employee.projectId) === 0));
+            setAllEmployeesInProject([...response.data].filter(employee => parseInt(employee.projectId) === parseInt(projectId)));
         });
     }, []);
+
 
     const handleAddEmployeeToProject = (employee) => {
         const updatedEmployee = {
@@ -19,9 +20,8 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
             projectId: projectId,
         };
         EmployeeAPI.putEmployee(updatedEmployee);
-        setAllEmployeesNotInProject((prevState) => [...prevState].filter(emp => emp.id != employee.id));
+        setAllUnassignedEmployees((prevState) => [...prevState].filter(emp => emp.id != employee.id));
         setAllEmployeesInProject([...allEmployeesInProject, updatedEmployee]);
-
     };
 
     return (
@@ -37,7 +37,7 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {allEmployeesInProject?.filter(employee => employee.title === "Architect").map(filteredEmployee => (
+                    {allEmployeesInProject?.filter(employee => employee.title === "architect").map(filteredEmployee => (
                         <tr className="table-active" key={filteredEmployee.id}>
                             <th scope="row">{filteredEmployee.id}</th>
                             <td>{filteredEmployee.name}</td>
@@ -45,14 +45,8 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
                             <td>{filteredEmployee.phoneNumber}</td>
                         </tr>
                     ))}
-                    <tr>
-                        <td colSpan="4" className="table">
-                            <button type="button" disabled={!hasAuthority} className="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#addArchitectModal">Add Architect</button>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
-            <AddModal hasAuthority={hasAuthority} title="Architect" modalId="addArchitectModal" allEmployeesNotInProject={allEmployeesNotInProject} projectId={projectId} handleAddEmployeeToProject={handleAddEmployeeToProject} />
 
             <h3>Employees</h3>
             <table className="table table-hover">
@@ -65,7 +59,7 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {allEmployeesInProject?.filter(employee => employee.title === "Employee").map(filteredEmployee => (
+                    {allEmployeesInProject?.filter(employee => employee.title === "employee").map(filteredEmployee => (
                         <tr className="table-active" key={filteredEmployee.id}>
                             <th scope="row">{filteredEmployee.id}</th>
                             <td>{filteredEmployee.name}</td>
@@ -80,7 +74,7 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
                     </tr>
                 </tbody>
             </table>
-            <AddModal title="Employee" modalId="addEmployeeModal" allEmployeesNotInProject={allEmployeesNotInProject} projectId={projectId} handleAddEmployeeToProject={handleAddEmployeeToProject} />
+            <AddModal title="employee" modalId="addEmployeeModal" allUnassignedEmployees={allUnassignedEmployees} projectId={projectId} handleAddEmployeeToProject={handleAddEmployeeToProject} />
         </div>
     )
 }

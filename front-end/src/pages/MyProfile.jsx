@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import API from '../api/EmployeeAPI';
+import { EmployeeAPI } from '../api';
 import BriefProjectsDisplay from '../components/home/BriefProjectsDisplay';
 import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
 import decode from 'jwt-decode';
@@ -17,7 +17,7 @@ export default function MyProfile() {
     : null;
 
   useEffect(() => {
-    API.getEmployeeByUsername(username)
+    EmployeeAPI.getEmployeeByUsername(username)
       .then(({ data }) => {
         setUserInfo(data);
         setUserProject([{ ...data.project }]);
