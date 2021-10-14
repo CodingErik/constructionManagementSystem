@@ -41,13 +41,13 @@ public class MachineController {
 
 
     /** get the warehouse Inventory */
-    @GetMapping("/api/machineryInventory")
+    @GetMapping("/api/machine/inventory")
     public Machine getMachineWarehouseInventory() {
         return machineWarehouseClient.getMachineryInventory();
     }
 
     /** to rent out, and update the warehouse inventoty*/
-    @PostMapping("/api/requestMachinery")
+    @PostMapping("/api/machine/request")
     public String requestMachinery(@RequestBody Machine machine) {
         /** adding stock to main service
          * calling the microservice to update the warehouse inventory
@@ -65,7 +65,7 @@ public class MachineController {
     }
 
     /** to return machines to Machinery warehouse inventoty*/
-    @PostMapping("/api/returnMachinery")
+    @PostMapping("/api/machine/return")
     public String returnMachinery(@RequestBody Machine machine) {
 
         try {
