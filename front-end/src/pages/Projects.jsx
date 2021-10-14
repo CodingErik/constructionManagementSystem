@@ -81,7 +81,7 @@ export default function Projects() {
   }
 
   return (
-    <div className='container-fluid mt-3'>
+    <div className='container mt-3'>
       <div className='row'>
         <div className='statusFilter'>
           <div

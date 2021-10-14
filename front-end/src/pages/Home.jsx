@@ -69,7 +69,7 @@ function Home() {
 
   return (
     <div
-      className='container mt-3'
+      className='container mt-3 home'
       style={{
         overflowX: 'hidden',
       }}
@@ -87,20 +87,18 @@ function Home() {
 
       <div className='row mb-3 mt-3'>
         <div className='col col-xl-6 ml-1 mr-1'>
-          <div className='row'>
-            <div className='row' style={{ marginBottom: '4%' }}>
-              <div className='col'>
-                <h3>Materials Inventory</h3>
+          <div className='row mb-3'>
+            <div className='row mt-3' style={{ minHeight: '445px' }}>
+              <div className='col col-xl-6'>
                 <Materials materials={materials} />
               </div>
-              <div className='col'>
-                <h3>Machinery Inventory</h3>
+              <div className='col col-xl-6'>
                 <Machinery machinery={machinery} />
               </div>
             </div>
           </div>
 
-          <div className='row'>
+          <div className='row mt-5'>
             <BriefTasksDisplay
               originalTaskList={taskList}
               projectIsNotANumber={true}

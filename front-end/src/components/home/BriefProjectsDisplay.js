@@ -90,13 +90,12 @@ function BriefProjectsDisplay({ originalProjectLists }) {
 
   return (
     <div>
-      <h3>Projects Table</h3>
+      <h3>Projects</h3>
       <div
         className='table-responsive'
         style={{
           maxHeight: '400px',
           overflowY: 'scroll',
-          overflowX: 'hidden',
         }}
       >
         <table className='table table-hover'>

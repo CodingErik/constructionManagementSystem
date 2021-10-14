@@ -121,5 +121,16 @@ public class EmployeeServiceLayer {
 
         return evm;
     }
+
+    public void updateEmployeePassword(Integer id, String newPassword) {
+        if(!employeeRepository.findById(id).isPresent()) throw new IllegalArgumentException("Employee not found.");
+
+        Employee employee = employeeRepository.findById(id).get();
+
+
+        employee.setPassword(newPassword);
+
+        employeeRepository.saveAndFlush(employee);
+    }
 }
 
