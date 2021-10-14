@@ -5,6 +5,7 @@ import com.example.repositoty.MachineryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,6 +31,7 @@ public class MachineController {
      * get machinery inventory
      */
     @GetMapping("/api/machinery")
+    @ResponseStatus(HttpStatus.OK)
     public Machinery getMachineryInventory() {
         return repo.getById(1);
     }
@@ -38,6 +40,7 @@ public class MachineController {
      * retrieve stock needed for project
      */
     @PutMapping("/api/machinery")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateMaterialAfterRetrieve(@RequestBody Machinery machinery) {
 
 
@@ -81,6 +84,7 @@ public class MachineController {
      *
      * */
     @PutMapping("/api/machinery/return")
+    @ResponseStatus(HttpStatus.OK)
     public String updateReturnMachinery(@RequestBody Machinery machinery) {
 
         Machinery inventory = repo.getById(1);
@@ -119,27 +123,3 @@ public class MachineController {
 
 }
 
-
-
-//
-//
-//if (inventory.getCrane() - (machinery.getCrane()) < 0 || (inventory.getDrill() - machinery.getDrill()) < 0 ||
-//        (inventory.getForklift() - machinery.getForklift()) < 0 || (inventory.getLadder() - machinery.getLadder()) < 0) {
-//
-//
-//        /** refactor into object later*/
-//        if (inventory.getCrane() + (machinery.getCrane()) < 0) {
-//
-//        }
-//        if (inventory.getDrill() + (machinery.getDrill()) < 0) {
-//
-//        }
-//        if (inventory.getForklift() + (machinery.getForklift()) < 0) {
-//
-//        }
-//        if (inventory.getLadder() + (machinery.getLadder()) < 0) {
-//
-//        }
-//
-//
-//        }
