@@ -11,8 +11,14 @@ export default function NavBar() {
   };
 
   return (
-    <nav className='navbar navbar-expand-lg navbar-light bg-light'>
-      <div className='container-fluid'>
+    <nav
+      className='navbar navbar-expand-lg navbar-light bg-light'
+      style={{
+        width: '100vw',
+        marginLeft: '0xp',
+      }}
+    >
+      <div className='container'>
         <Link className='navbar-brand' to='/'>
           CMS
         </Link>

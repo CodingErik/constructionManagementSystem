@@ -12,6 +12,7 @@ export default function MyProfile() {
   const [userInfo, setUserInfo] = useState({});
   const [userProjects, setUserProject] = useState([]);
   const [userTasks, setUserTask] = useState([]);
+
   const username = localStorage.getItem('token')
     ? decode(JSON.parse(localStorage.getItem('token'))).sub
     : null;
@@ -32,9 +33,9 @@ export default function MyProfile() {
     <div className='container'>
       <div className='mt-5'>
         <div className='row'>
-          <div className='col col-4-lg'>
+          <div className='col col-lg-6'>
             <img
-              src='https://via.placeholder.com/350'
+              src='https://source.unsplash.com/random/550x550'
               //   add image for the user aws implementation
               className='rounded-circle'
               alt='profile image'
