@@ -1,6 +1,7 @@
 package com.company.constructionmanagementsystem.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -31,7 +32,9 @@ public class Employee implements Serializable {
     private String title;
     private String phoneNumber;
     private BigDecimal salary;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth; // Date of birth
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate userSince;
     private Integer yearsOfExperience; // Years of experience
 

@@ -98,19 +98,21 @@ public class EmployeeController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public Employee addNewEmployee(@RequestBody @Valid Employee employee) throws Exception {
 
-
         if (employee.getPassword() == null) {
             employee.setPassword("defaultPass");
         } else {
             employee.setPassword(BCrypt.hashpw(employee.getPassword(), BCrypt.gensalt()));
         }
 
+        if(employee.getProjectId() == null){
+            employee.setProjectId(0);
+        }
+
+
         employee.setUsername(employee.getUsername().toLowerCase(Locale.ROOT));
-        employee.setProjectId(0);
         employee.setName(employee.getName().toLowerCase(Locale.ROOT));
         employee.setTitle(employee.getTitle().toLowerCase(Locale.ROOT));
         employee.setEmail(employee.getEmail().toLowerCase(Locale.ROOT));
-        employee.setUserSince(LocalDate.now());
         employee.setYearsOfExperience(0);
 
         employee = repository.save(employee);
