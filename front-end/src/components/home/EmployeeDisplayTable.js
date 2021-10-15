@@ -103,35 +103,35 @@ function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
           overflow: 'scroll',
         }}
       >
-        <table className='table table-hover'>
+        <table className='table table-hover m-auto'>
           <thead>
             <tr>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleEmployeeColumnHeaderClick('employeeId')}
               >
                 Employee Id
               </th>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleEmployeeColumnHeaderClick('name')}
               >
                 Name
               </th>
               <th
-                scope='col'
+                className='col-3'
                 onClick={() => handleEmployeeColumnHeaderClick('project')}
               >
                 Project
               </th>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleEmployeeColumnHeaderClick('email')}
               >
                 Email
               </th>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleEmployeeColumnHeaderClick('phoneNumber')}
               >
                 Phone Number

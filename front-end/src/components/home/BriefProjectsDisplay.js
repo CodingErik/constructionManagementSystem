@@ -98,35 +98,35 @@ function BriefProjectsDisplay({ originalProjectLists }) {
           overflowY: 'scroll',
         }}
       >
-        <table className='table table-hover'>
+        <table className='table table-hover m-auto'>
           <thead>
             <tr>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleProjectColumnHeaderClick('ProjectId')}
               >
                 Project Id
               </th>
               <th
-                scope='col'
+                className='col-3'
                 onClick={() => handleProjectColumnHeaderClick('Name')}
               >
                 Name
               </th>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleProjectColumnHeaderClick('Status')}
               >
                 Status
               </th>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleProjectColumnHeaderClick('StartDate')}
               >
                 Start Date
               </th>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleProjectColumnHeaderClick('Deadline')}
               >
                 Deadline

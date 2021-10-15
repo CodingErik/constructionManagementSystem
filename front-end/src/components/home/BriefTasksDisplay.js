@@ -144,36 +144,36 @@ export default function BriefTasksDisplay({
           overflow: 'scroll',
         }}
       >
-        <table className='table table-hover'>
+        <table className='table table-hover m-auto'>
           <thead>
             <tr>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleTaskColumnHeaderClick('TaskId')}
               >
                 TaskId
               </th>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleTaskColumnHeaderClick('Name')}
               >
                 Name
               </th>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleTaskColumnHeaderClick('Status')}
               >
                 Status
               </th>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleTaskColumnHeaderClick('Project')}
               >
                 Project Containing
               </th>
 
               <th
-                scope='col'
+                className='col-2'
                 onClick={() => handleTaskColumnHeaderClick('Deadline')}
               >
                 Deadline

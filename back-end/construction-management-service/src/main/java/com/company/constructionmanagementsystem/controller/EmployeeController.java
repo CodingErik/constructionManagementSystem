@@ -30,7 +30,7 @@ public class EmployeeController {
     @Autowired
     EmployeeServiceLayer employeeServiceLayer;
 
-    @RequestMapping(value="/construction", method = RequestMethod.GET)
+    @RequestMapping(value = "/construction", method = RequestMethod.GET)
     public String helloCloud() {
 
         return "construction service working";
@@ -107,7 +107,7 @@ public class EmployeeController {
             employee.setPassword(BCrypt.hashpw(employee.getPassword(), BCrypt.gensalt()));
         }
 
-        if(employee.getProjectId() == null) {
+        if (employee.getProjectId() == null) {
             employee.setProjectId(0);
         }
 
@@ -131,13 +131,16 @@ public class EmployeeController {
 
     @DeleteMapping("/api/employees/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteEmployee(@PathVariable Integer id){
+    public void deleteEmployee(@PathVariable Integer id) {
         employeeServiceLayer.deleteEmployee(id);
+
+    }
 
     @PutMapping("/api/resetPassword")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void resetPassword(@RequestBody Map<String, String> inputJson) throws Exception {
         employeeServiceLayer.updateEmployeePassword(parseInt(inputJson.get("id")), inputJson.get("password"));
 
+    }
 
 }

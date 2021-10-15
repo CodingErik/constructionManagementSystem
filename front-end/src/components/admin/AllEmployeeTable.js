@@ -99,14 +99,14 @@ function AllEmployeeTable({ originalEmployeeList }) {
   };
 
   return (
-    <div className='container'>
+    <div className='container-fluid'>
       <h3>Employees Table</h3>
       <div className='table-responsive'>
-        <table className='table table-hover'>
+        <table className='table table-hover m-auto'>
           <thead>
             <tr>
               <th
-                scope='col'
+                className='col-1'
                 onClick={() =>
                   handleProjectColumnHeaderClick('id', 'employeeId', parseInt)
                 }
@@ -114,7 +114,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Employee Id
               </th>
               <th
-                scope='col'
+                className='col-1'
                 onClick={() =>
                   handleProjectColumnHeaderClick('name', 'employeeName', (a) =>
                     a.toUpperCase()
@@ -124,13 +124,13 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Name
               </th>
               <th
-                scope='col'
+                className='col-1'
                 onClick={() => handleProjectColumnHeaderClick('username')}
               >
                 Username
               </th>
               <th
-                scope='col'
+                className='col-1'
                 // onClick={() =>
                 //   handleProjectColumnHeaderLeadClick(
                 //     'project.id',
@@ -142,7 +142,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Project Id
               </th>
               <th
-                scope='col'
+                className='col-2'
                 // onClick={() =>
                 //   handleProjectColumnHeaderLeadClick('project.name')
                 // }
@@ -150,7 +150,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Project Name
               </th>
               <th
-                scope='col'
+                className='col-1'
                 onClick={() =>
                   handleProjectColumnHeaderClick(
                     'title',
@@ -162,7 +162,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Title
               </th>
               <th
-                scope='col'
+                className='col-1'
                 onClick={() =>
                   handleProjectColumnHeaderClick(
                     'email',
@@ -174,7 +174,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Email
               </th>
               <th
-                scope='col'
+                className='col-2'
                 // onClick={() =>
                 //   handleProjectColumnHeaderClick(
                 //     'phoneNumber',
@@ -186,7 +186,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Phone Number
               </th>
               <th
-                scope='col'
+                className='col-1'
                 onClick={() =>
                   handleProjectColumnHeaderClick(
                     'salary',
@@ -198,7 +198,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Salary
               </th>
               <th
-                scope='col'
+                className='col-1'
                 onClick={() =>
                   handleProjectColumnHeaderClick(
                     'dateOfBirth',
@@ -210,7 +210,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Date Of Birth
               </th>
               <th
-                scope='col'
+                className='col-1'
                 onClick={() =>
                   handleProjectColumnHeaderClick(
                     'yearsOfExperience',
@@ -222,7 +222,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Years Of Experience
               </th>
               <th
-                scope='col'
+                className='col-2'
                 onClick={() =>
                   handleProjectColumnHeaderClick(
                     'userSince',
@@ -247,9 +247,9 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 </td>
                 <td>{employee.title}</td>
                 <td>{employee.email}</td>
-                <td>{employee.phoneNumber}</td>
-                <td>{employee.salary}</td>
-                <td>{employee.dateOfBirth}</td>
+                <td>{employee.phoneNumber ? employee.phoneNumber : 'None'}</td>
+                <td>{employee.salary ? employee.salary : 'None'}</td>
+                <td>{employee.dateOfBirth ? employee.dateOfBirth : 'None'}</td>
                 <td>{employee.yearsOfExperience}</td>
                 <td>{employee.userSince}</td>
                 <td>

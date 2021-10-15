@@ -12,20 +12,20 @@ export default function ProjectsTable(props) {
 
   return (
     <div className='table-responsive'>
-      <table className='table table-hover'>
+      <table className='table table-hover m-auto'>
         <thead>
           <tr>
-            <th scope='col'>Id</th>
-            <th scope='col'>Name</th>
-            <th scope='col'>Deadline</th>
-            <th scope='col'>Start</th>
-            <th scope='col'>Room</th>
-            <th scope='col'>Plumbing</th>
-            <th scope='col'>Electric</th>
-            <th scope='col'>Material</th>
-            <th scope='col'>Labor</th>
-            <th scope='col'>Total</th>
-            <th scope='col'>Status</th>
+            <th className='col-1'>Id</th>
+            <th className='col-1'>Name</th>
+            <th className='col-1'>Deadline</th>
+            <th className='col-1'>Start</th>
+            <th className='col-1'>Room</th>
+            <th className='col-1'>Plumbing</th>
+            <th className='col-1'>Electric</th>
+            <th className='col-1'>Material</th>
+            <th className='col-1'>Labor</th>
+            <th className='col-1'>Total</th>
+            <th className='col-1'>Status</th>
           </tr>
         </thead>
         <tbody>
