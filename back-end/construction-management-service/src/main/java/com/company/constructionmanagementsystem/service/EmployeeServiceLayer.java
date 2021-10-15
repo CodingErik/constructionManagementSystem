@@ -125,18 +125,19 @@ public class EmployeeServiceLayer {
 
 
     @Transactional
-    public void deleteEmployee(Integer id){
+    public void deleteEmployee(Integer id) {
         Employee employee = employeeRepository.findById(id).get();
 
         // Find all relevant tasks and project
         List<Task> allRelevantTasks = taskRepository.findAllTasksByEmployeeId(id);
         Project relevantProject = projectRepository.findById(employee.getProjectId()).get();
 
-        for(Task task : allRelevantTasks){
+        for (Task task : allRelevantTasks) {
             taskRepository.deleteById(task.getId());
         }
 
         employeeRepository.deleteById(id);
+    }
 
     public void updateEmployeePassword(Integer id, String newPassword) {
         if(!employeeRepository.findById(id).isPresent()) throw new IllegalArgumentException("Employee not found.");
