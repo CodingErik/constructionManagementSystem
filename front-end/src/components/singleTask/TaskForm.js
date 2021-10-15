@@ -21,7 +21,6 @@ function TaskForm({ task, hasAuthority, isAddTaskForm }) {
     async function fetchData() {
       const projects = await ProjectAPI.getAllProjects();
       const taskInfo = await TaskAPI.getTaskById(taskId);
-      console.log(projects.data);
       setTaskState(taskInfo.data?.status);
       setProjectState(taskInfo.data.project?.id);
       setEmployeeState(taskInfo.data.employee?.id);
@@ -211,6 +210,7 @@ function TaskForm({ task, hasAuthority, isAddTaskForm }) {
             ></textarea>
           </div>
         </fieldset>
+        <button type="submit" className="btn btn-warning mt-3" disabled={!hasAuthority}>Update Task</button>
       </form>
     </div>
   );

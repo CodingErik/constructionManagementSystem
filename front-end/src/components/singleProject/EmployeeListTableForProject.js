@@ -16,9 +16,6 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
           (employee) => parseInt(employee.project?.id) === parseInt(projectId)
         )
       );
-      // console.log([...response.data].filter((employee) => {
-      //     return employee.project === null;
-      // }))
     });
   }, []);
 
@@ -29,7 +26,7 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
     };
     EmployeeAPI.putEmployee(updatedEmployee);
     setAllUnassignedEmployees((prevState) =>
-      [...prevState].filter((emp) => emp.id != employee.id)
+      [...prevState].filter((emp) => emp.id !== employee.id)
     );
     setAllEmployeesInProject([...allEmployeesInProject, updatedEmployee]);
   };

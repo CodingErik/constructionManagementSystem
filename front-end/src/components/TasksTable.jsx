@@ -1,44 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import '../pages/Tasks.css';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import "../pages/Tasks.css";
+import {BsFillTrashFill} from "react-icons/bs";
+import { TaskAPI } from "../api";
 
 export default function TasksTable(props) {
   const [tasks, setTasks] = useState([]);
-  const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState("all");
 
   useEffect(() => {
     setTasks(props.tasks);
     setStatusFilter(props.statusFilter);
   }, [props]);
 
+  const handleDeleteTaskById = (taskId) => {
+    TaskAPI.deleteTask(taskId);
+    setTasks([...tasks].filter(task => task.id !== taskId));
+  }
+
   return (
-    <div className='table-responsive mb-5'>
+    <div className="table-responsive mb-5">
       <table
-        className='table table-hover table-striped m-auto'
+        className="table table-hover table-striped m-auto"
         style={{
-          verticalAlign: 'baseline',
-          width: '100%',
+          verticalAlign: "baseline",
+          width: "100%",
         }}
       >
         <thead>
           <tr>
-            <th className='col-1'>Id</th>
-            <th className='col-2'>Name</th>
-            <th className='col-1'>Deadline</th>
-            <th className='col-1'>Start</th>
-            <th className='col-1'>Project id</th>
-            <th className='col-2'>Project Name</th>
-            <th className='col-1'>Employee id</th>
-            <th className='col-2'>Employee Name</th>
-            <th className='col-1'>Status</th>
+            <th className="col-1">Id</th>
+            <th className="col-2">Name</th>
+            <th className="col-1">Deadline</th>
+            <th className="col-1">Start</th>
+            <th className="col-1">Project id</th>
+            <th className="col-2">Project Name</th>
+            <th className="col-1">Employee id</th>
+            <th className="col-2">Employee Name</th>
+            <th className="col-1">Status</th>
           </tr>
         </thead>
         <tbody>
-          {statusFilter === 'all' &&
+          {statusFilter === "all" &&
             tasks.map((task) => {
               return (
                 <tr key={task.id}>
-                  <th scope='row'>{task.id}</th>
+                  <th scope="row">{task.id}</th>
                   <td>{task.name}</td>
                   <td>{task.deadline}</td>
                   <td>{task.startDate}</td>
@@ -49,21 +56,30 @@ export default function TasksTable(props) {
                   <td className={`${task.status} taskStatus`}>{task.status}</td>
                   <td>
                     <Link to={{ pathname: `/SingleTaskPage/${task.id}` }}>
-                      <button type='button' className='btn btn-warning'>
+                      <button type="button" className="btn btn-warning">
                         View
                       </button>
                     </Link>
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={() => handleDeleteTaskById(task.id)}
+                    >
+                      <BsFillTrashFill></BsFillTrashFill>
+                    </button>
                   </td>
                 </tr>
               );
             })}
 
-          {statusFilter === 'in_progress' &&
+          {statusFilter === "in_progress" &&
             tasks.map((task) => {
               return (
-                task.status === 'in_progress' && (
+                task.status === "in_progress" && (
                   <tr key={task.id}>
-                    <th scope='row'>{task.id}</th>
+                    <th scope="row">{task.id}</th>
                     <td>{task.name}</td>
                     <td>{task.deadline}</td>
                     <td>{task.startDate}</td>
@@ -76,7 +92,7 @@ export default function TasksTable(props) {
                     </td>
                     <td>
                       <Link to={{ pathname: `/SingleTaskPage/${task.id}` }}>
-                        <button type='button' className='btn btn-warning'>
+                        <button type="button" className="btn btn-warning">
                           View
                         </button>
                       </Link>
@@ -86,12 +102,12 @@ export default function TasksTable(props) {
               );
             })}
 
-          {statusFilter === 'completed' &&
+          {statusFilter === "completed" &&
             tasks.map((task) => {
               return (
-                task.status === 'completed' && (
+                task.status === "completed" && (
                   <tr key={task.id}>
-                    <th scope='row'>{task.id}</th>
+                    <th scope="row">{task.id}</th>
                     <td>{task.name}</td>
                     <td>{task.deadline}</td>
                     <td>{task.startDate}</td>
@@ -104,7 +120,7 @@ export default function TasksTable(props) {
                     </td>
                     <td>
                       <Link to={{ pathname: `/SingleTaskPage/${task.id}` }}>
-                        <button type='button' className='btn btn-warning'>
+                        <button type="button" className="btn btn-warning">
                           View
                         </button>
                       </Link>

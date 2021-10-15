@@ -1,12 +1,5 @@
 import { useState, useEffect } from 'react';
 import EmployeeDisplayTable from './EmployeeDisplayTable';
-let columnBooleans = {
-  employeeId: false,
-  name: false,
-  projectId: false,
-  email: false,
-  phoneNumber: false,
-};
 
 function EmployeeListTable({ employeeList }) {
   return (

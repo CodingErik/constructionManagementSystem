@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { BsFillTrashFill } from "react-icons/bs";
+import { EmployeeAPI } from '../../api';
 
 let columnBooleans = {
   employeeId: false,
@@ -39,11 +41,11 @@ function AllEmployeeTable({ originalEmployeeList }) {
         path.split('.').reduce((value, el) => value[el], obj);
       const key = primer
         ? function (x) {
-            return primer(getField(x, neededField));
-          }
+          return primer(getField(x, neededField));
+        }
         : function (x) {
-            return getField(x, neededVariable);
-          };
+          return getField(x, neededVariable);
+        };
       reverse = !reverse ? 1 : -1;
 
       return function (a, b) {
@@ -66,6 +68,11 @@ function AllEmployeeTable({ originalEmployeeList }) {
       )
     );
   };
+
+  const handleDeleteEmployeeById = (employeeId) => {
+    EmployeeAPI.deleteEmployeeById(employeeId);
+    setEmployeeList([...employeeList].filter(employee => employee.id !== employeeId));
+  }
 
   return (
     <div className='container-fluid'>
@@ -239,6 +246,15 @@ function AllEmployeeTable({ originalEmployeeList }) {
                       Edit
                     </button>
                   </Link>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={() => handleDeleteEmployeeById(employee.id)}
+                  >
+                    <BsFillTrashFill></BsFillTrashFill>
+                  </button>
                 </td>
               </tr>
             ))}
