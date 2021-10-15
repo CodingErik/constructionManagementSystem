@@ -9,19 +9,28 @@ let columnBooleans = {
 
 function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
   const [employeeList, setEmployeeList] = useState([]);
+  
   useEffect(() => {
-    setEmployeeList([...originalEmployeeList]);
+    setEmployeeList([...originalEmployeeList].map((employee) => {
+      if (employee.project === null) {
+        employee.project = { id: 0, name: "unassigned" };
+        return employee;
+      };
+      return employee
+    }));
   }, [originalEmployeeList]);
 
-  const handleEmployeeColumnHeaderClick = (target) => {
-    const sort_by = (field, reverse, primer) => {
+  const handleEmployeeColumnHeaderClick = (neededVariable, booleanVariable, methodTranslate) => {
+    const sort_by = (neededField, reverse, primer) => {
+      const getField = (obj, path) =>
+        path.split('.').reduce((value, el) => value[el], obj);
       const key = primer
         ? function (x) {
-            return primer(x[field]);
-          }
+          return primer(getField(x, neededField));
+        }
         : function (x) {
-            return x[field];
-          };
+          return getField(x, neededVariable);
+        };
       reverse = !reverse ? 1 : -1;
 
       return function (a, b) {
@@ -29,69 +38,23 @@ function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
       };
     };
 
-    if (target === 'name') {
-      if (columnBooleans.name) {
-        columnBooleans.name = false;
-      } else {
-        columnBooleans.name = true;
-      }
-      setEmployeeList(
-        [...employeeList].sort(
-          sort_by('name', columnBooleans.name, (a) => a.toUpperCase())
-        )
-      );
-    } else if (target === 'employeeId') {
-      if (columnBooleans.employeeId) {
-        columnBooleans.employeeId = false;
-      } else {
-        columnBooleans.employeeId = true;
-      }
-      setEmployeeList(
-        [...employeeList].sort(
-          sort_by('id', columnBooleans.employeeId, parseInt)
-        )
-      );
-    } else if (target === 'email') {
-      if (columnBooleans.email) {
-        columnBooleans.email = false;
-      } else {
-        columnBooleans.email = true;
-      }
-      setEmployeeList(
-        [...employeeList].sort(
-          sort_by('email', columnBooleans.email, (a) => a.toUpperCase())
-        )
-      );
-    } else if (target === 'phoneNumber') {
-      if (columnBooleans.phoneNumber) {
-        columnBooleans.phoneNumber = false;
-      } else {
-        columnBooleans.phoneNumber = true;
-      }
-
-      setEmployeeList(
-        [...employeeList]
-          .filter((e) => e.phoneNumber)
-          .sort((a, b) => {
-            return a.phoneNumber - b.phoneNumber;
-          })
-      );
-    } else if (target === 'project') {
-      if (columnBooleans.project) {
-        columnBooleans.project = false;
-      } else {
-        columnBooleans.project = true;
-      }
-
-      setEmployeeList(
-        [...employeeList]
-          .filter((e) => e.project?.name)
-          .sort((a, b) => {
-            return a.project.name - b.project.name;
-          })
-      );
+    if (columnBooleans[booleanVariable]) {
+      columnBooleans[booleanVariable] = false;
+    } else {
+      columnBooleans[booleanVariable] = true;
     }
+    setEmployeeList(
+      [...employeeList].sort(
+        sort_by(
+          neededVariable,
+          columnBooleans[booleanVariable],
+          methodTranslate
+        )
+      )
+    );
   };
+
+
   return (
     <div className='row mt-3'>
       <h3 className='mb-3'>{title}</h3>
@@ -108,31 +71,31 @@ function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
             <tr>
               <th
                 className='col-2'
-                onClick={() => handleEmployeeColumnHeaderClick('employeeId')}
+                onClick={() => handleEmployeeColumnHeaderClick('id', "employeeId", parseInt)}
               >
                 Employee Id
               </th>
               <th
                 className='col-2'
-                onClick={() => handleEmployeeColumnHeaderClick('name')}
+                onClick={() => handleEmployeeColumnHeaderClick('name', "name", (a) => a.toUpperCase())}
               >
                 Name
               </th>
               <th
                 className='col-3'
-                onClick={() => handleEmployeeColumnHeaderClick('project')}
+                onClick={() => handleEmployeeColumnHeaderClick('project.name', "project", (a) => a.toUpperCase())}
               >
                 Project
               </th>
               <th
                 className='col-2'
-                onClick={() => handleEmployeeColumnHeaderClick('email')}
+                onClick={() => handleEmployeeColumnHeaderClick('email', "email", (a) => a.toUpperCase())}
               >
                 Email
               </th>
               <th
                 className='col-2'
-                onClick={() => handleEmployeeColumnHeaderClick('phoneNumber')}
+                onClick={() => handleEmployeeColumnHeaderClick('phoneNumber', "phoneNumber", (a) => a.toUpperCase())}
               >
                 Phone Number
               </th>
@@ -142,7 +105,7 @@ function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
             {employeeList
               .filter(
                 (employee) =>
-                  employee?.title.toLowerCase() === filter.toLowerCase()
+                  employee.title?.toLowerCase() === filter.toLowerCase()
               )
               .map((filteredEmployee) => (
                 <tr className='table-active' key={filteredEmployee.id}>

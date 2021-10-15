@@ -10,6 +10,7 @@ import com.company.constructionmanagementsystem.util.feign.MaterialWarehouseClie
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RefreshScope
+//@RefreshScope
 public class MachineController {
 
     @Autowired
@@ -48,6 +49,7 @@ public class MachineController {
 
     /** to rent out, and update the warehouse inventoty*/
     @PostMapping("/api/machine/request")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String requestMachinery(@RequestBody Machine machine) {
         /** adding stock to main service
          * calling the microservice to update the warehouse inventory
@@ -66,10 +68,12 @@ public class MachineController {
 
     /** to return machines to Machinery warehouse inventoty*/
     @PostMapping("/api/machine/return")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public String returnMachinery(@RequestBody Machine machine) {
 
         try {
             machineWarehouseClient.returnMachinery(machine);
+            repo.deleteAll();
             return "thank you for using the machine microservice. ";
         } catch (FeignException e) {
             System.out.println(e.getMessage());

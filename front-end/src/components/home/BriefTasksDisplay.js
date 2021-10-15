@@ -59,7 +59,7 @@ export default function BriefTasksDisplay({ originalTaskList }) {
 
   return (
     <div className='container'>
-      <div className='row'>
+      <div className='row mb-2'>
         <h3>Task</h3>
       </div>
 

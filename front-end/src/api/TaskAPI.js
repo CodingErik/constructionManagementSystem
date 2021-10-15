@@ -17,6 +17,9 @@ const taskAPI = {
     addTask: (updatedTask) => {
         return axios.post(`${baseUrl}`, updatedTask);
     },
+    deleteTask:(taskId) => {
+        return axios.delete(`${baseUrl}/${taskId}`)
+    }
 
 };
 

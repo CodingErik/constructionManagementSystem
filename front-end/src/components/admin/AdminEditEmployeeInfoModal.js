@@ -14,7 +14,7 @@ function AdminEditEmployeeInfoModal({
   const employeeDateOfBirthRef = useRef(null);
   const employeeSalaryRef = useRef(null);
   const employeeYearsOfExperienceRef = useRef(null);
-  const passwordNewInput = useRef(null);
+  const passwordNewInput = useRef('');
   const passwordConfirmationInput = useRef(null);
 
   useEffect(() => {
@@ -24,15 +24,17 @@ function AdminEditEmployeeInfoModal({
   const handlePasswordSubmit = async (event) => {
     event.preventDefault();
     if (
+      passwordNewInput.current.value === '' ||
       passwordNewInput.current.value === passwordConfirmationInput.current.value
     ) {
-      const employeeInformationWithUpdatedPassword = {
-        ...employeeInfo,
-        projectId: employeeInfo.project ? employeeInfo.project.id : 0,
-        password: passwordConfirmationInput.current.value,
-      };
-      EmployeeAPI.putEmployee(employeeInformationWithUpdatedPassword);
-      alert('Password Updated');
+      EmployeeAPI.updatePassword(
+        employeeInfo.id,
+        passwordConfirmationInput.current.value
+      ).then((res) => {
+        if (res.status === 204) {
+          alert('Password Updated');
+        } else alert(res.data);
+      });
     } else {
       alert('Passwords Do Not Match');
     }
@@ -56,15 +58,12 @@ function AdminEditEmployeeInfoModal({
       phoneNumber: employeePhoneRef.current.value,
       dateOfBirth: employeeDateOfBirthRef.current.value,
       salary: employeeSalaryRef.current.value,
-      yearsOfExperience:
-        employeeYearsOfExperienceRef.current.value,
-      projectId: employeeInfo.project
-        ? employeeInfo.project.id
-        : 0,
+      yearsOfExperience: employeeYearsOfExperienceRef.current.value,
+      projectId: employeeInfo.project ? employeeInfo.project.id : 0,
     };
     console.log(updatedInfo);
     handleBasicInformationUpdateSubmit(updatedInfo);
-  }
+  };
 
   return (
     <div className='container'>
@@ -206,37 +205,66 @@ function AdminEditEmployeeInfoModal({
                     </div>
                   </div>
                 </fieldset>
-                <button className="btn btn-info mt-3" type="submit">
+                <button className='btn btn-info mt-3' type='submit'>
                   Update Personal Information
                 </button>
               </form>
-              <form style={{ marginTop: "50px" }} onSubmit={handlePasswordSubmit}>
-                <h5 className="ms-4 text-start">Password</h5>
+              <form
+                style={{ marginTop: '50px' }}
+                onSubmit={handlePasswordSubmit}
+              >
+                <h5 className='ms-4 text-start'>Password</h5>
                 <fieldset>
-                  <div className="form-group">
+                  <div className='form-group'>
                     <label
-                      htmlFor="employee-password"
-                      className="form-label mt-4 ms-4 d-flex align-items-start"
+                      htmlFor='employee-password'
+                      className='form-label mt-4 ms-4 d-flex align-items-start'
                     >
                       New Password
                     </label>
-                    <div className="input-group mb-3">
-                      <input ref={passwordNewInput} type="password" className="form-control ms-4" id="confirmPassword" />
-                      <button className="btn" type="button" id="showPassword" onClick={() => togglePasswordShow(passwordNewInput)}><AiFillEye size={25} /></button>
+                    <div className='input-group mb-3'>
+                      <input
+                        ref={passwordNewInput}
+                        type='password'
+                        className='form-control ms-4'
+                        id='confirmPassword'
+                      />
+                      <button
+                        className='btn'
+                        type='button'
+                        id='showPassword'
+                        onClick={() => togglePasswordShow(passwordNewInput)}
+                      >
+                        <AiFillEye size={25} />
+                      </button>
                     </div>
                     <label
-                      htmlFor="employee-password"
-                      className="form-label mt-4 ms-4 d-flex align-items-start"
+                      htmlFor='employee-password'
+                      className='form-label mt-4 ms-4 d-flex align-items-start'
                     >
                       Confirm New Password
                     </label>
-                    <div className="input-group mb-3">
-                      <input ref={passwordConfirmationInput} type="password" className="form-control ms-4" id="confirmPassword" />
-                      <button className="btn" type="button" id="showConfirmPassword" onClick={() => togglePasswordShow(passwordConfirmationInput)}><AiFillEye size={25} /></button>
+                    <div className='input-group mb-3'>
+                      <input
+                        ref={passwordConfirmationInput}
+                        type='password'
+                        className='form-control ms-4'
+                        id='confirmPassword'
+                      />
+                      <button
+                        className='btn'
+                        type='button'
+                        id='showConfirmPassword'
+                        onClick={() =>
+                          togglePasswordShow(passwordConfirmationInput)
+                        }
+                      >
+                        <AiFillEye size={25} />
+                      </button>
                     </div>
                   </div>
                 </fieldset>
-                <button className="btn btn-info mt-3" type="submit">
+                <button className='btn btn-info mt-3' type='submit'>
                   Update Password
                 </button>
               </form>

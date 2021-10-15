@@ -39,6 +39,16 @@ public class Task {
         this.status = status;
     }
 
+    public Task(String name, Integer projectId, Integer employeeId, LocalDate startDate, LocalDate deadline, String description, String status) {
+        this.name = name;
+        this.projectId = projectId;
+        this.employeeId = employeeId;
+        this.startDate = startDate;
+        this.deadline = deadline;
+        this.description = description;
+        this.status = status;
+    }
+
     public Integer getId() {
         return id;
     }

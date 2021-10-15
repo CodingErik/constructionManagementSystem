@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import ProjectsTable from "../components/ProjectsTable";
-import redirectIfTokenNull from "../components/RedirectHelper";
-import API from "../api/ProjectAPI";
-import { ProjectAPI } from "../api";
-import "../assets/Projects.css";
-import AddProjectModal from "../components/project/AddProjectModal";
-import decode from "jwt-decode";
-const authority = decode(JSON.parse(localStorage.getItem("token"))).authorities;
+import React, { useEffect, useState, useRef } from 'react';
+import ProjectsTable from '../components/ProjectsTable';
+import redirectIfTokenNull from '../components/RedirectHelper';
+import API from '../api/ProjectAPI';
+import { ProjectAPI } from '../api';
+import '../assets/Projects.css';
+import AddProjectModal from '../components/project/AddProjectModal';
+import decode from 'jwt-decode';
+const authority = decode(JSON.parse(localStorage.getItem('token'))).authorities;
 
 export default function Projects() {
   redirectIfTokenNull();
@@ -76,10 +76,10 @@ export default function Projects() {
   function resetFilters(event) {
     event.preventDefault();
 
-    roomTypeRef.current.value = "";
+    roomTypeRef.current.value = '';
     setRoomType(roomTypeRef.current.value);
 
-    projectNameRef.current.value = "";
+    projectNameRef.current.value = '';
     setName(projectNameRef.current.value);
 
     setStatusFilter('all');
@@ -88,38 +88,38 @@ export default function Projects() {
   }
 
   return (
-    <div className="container-fluid mt-3">
-      {(authority === "admin" || authority === "architect") && (
+    <div className='container mt-3'>
+      {(authority === 'admin' || authority === 'architect') && (
         <div>
           <button
-            type="button"
-            className="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#addProject"
+            type='button'
+            className='btn btn-primary'
+            data-bs-toggle='modal'
+            data-bs-target='#addProject'
           >
             Add Project
           </button>
           <AddProjectModal
             handleNewProjectSubmit={handleNewProjectSubmit}
             hasAuthority={
-              authority === "admin" || authority === "architect" ? true : false
+              authority === 'admin' || authority === 'architect' ? true : false
             }
-            modalId="addProject"
+            modalId='addProject'
           ></AddProjectModal>
         </div>
       )}
-      <div className="row">
-        <div className="statusFilter">
+      <div className='row'>
+        <div className='statusFilter'>
           <div
-            className="btn-group"
-            role="group"
-            aria-label="Basic radio toggle button group"
+            className='btn-group'
+            role='group'
+            aria-label='Basic radio toggle button group'
           >
             <p
-              style={{ paddingTop: "13px", marginRight: "20px" }}
-              className="textField"
+              style={{ paddingTop: '13px', marginRight: '20px' }}
+              className='textField'
             >
-              Status :{" "}
+              Status :{' '}
             </p>
             <input
               onClick={() => {
@@ -135,8 +135,8 @@ export default function Projects() {
               defaultChecked={statusFilter === 'all' ? true : false}
             />
             <label
-              className="btn btn-outline-primary btn-sm"
-              htmlFor="allStatusFilter"
+              className='btn btn-outline-primary btn-sm'
+              htmlFor='allStatusFilter'
             >
               All
             </label>
@@ -154,8 +154,8 @@ export default function Projects() {
               defaultChecked=''
             />
             <label
-              className="btn btn-outline-primary btn-sm"
-              htmlFor="inProgressStatusFilter"
+              className='btn btn-outline-primary btn-sm'
+              htmlFor='inProgressStatusFilter'
             >
               In Progress
             </label>
@@ -173,18 +173,18 @@ export default function Projects() {
               defaultChecked=''
             />
             <label
-              className="btn btn-outline-primary btn-sm"
-              htmlFor="completedStatusFilter"
+              className='btn btn-outline-primary btn-sm'
+              htmlFor='completedStatusFilter'
             >
               Completed
             </label>
           </div>
-          <div className="plumbingFilter filter">
-            <p className="textField">Plumbing</p>
+          <div className='plumbingFilter filter'>
+            <p className='textField'>Plumbing</p>
             <div
-              className="btn-group"
-              role="group"
-              aria-label="Basic radio toggle button group"
+              className='btn-group'
+              role='group'
+              aria-label='Basic radio toggle button group'
             >
               <input
                 type='radio'
@@ -200,8 +200,8 @@ export default function Projects() {
                 defaultChecked=''
               />
               <label
-                className="btn btn-outline-secondary btn-sm"
-                htmlFor="btnradioPlumbingYes"
+                className='btn btn-outline-secondary btn-sm'
+                htmlFor='btnradioPlumbingYes'
               >
                 Yes
               </label>
@@ -238,19 +238,19 @@ export default function Projects() {
                 defaultChecked=''
               />
               <label
-                className="btn btn-outline-secondary btn-sm"
-                htmlFor="btnradioPlumbingNo"
+                className='btn btn-outline-secondary btn-sm'
+                htmlFor='btnradioPlumbingNo'
               >
                 No
               </label>
             </div>
           </div>
-          <div className="electricityFilter filter">
-            <p className="textField">Electricity</p>
+          <div className='electricityFilter filter'>
+            <p className='textField'>Electricity</p>
             <div
-              className="btn-group"
-              role="group"
-              aria-label="Basic radio toggle button group"
+              className='btn-group'
+              role='group'
+              aria-label='Basic radio toggle button group'
             >
               <input
                 type='radio'
@@ -266,8 +266,8 @@ export default function Projects() {
                 defaultChecked=''
               />
               <label
-                className="btn btn-outline-secondary btn-sm"
-                htmlFor="btnradioElectricityYes"
+                className='btn btn-outline-secondary btn-sm'
+                htmlFor='btnradioElectricityYes'
               >
                 Yes
               </label>
@@ -304,8 +304,8 @@ export default function Projects() {
                 defaultChecked=''
               />
               <label
-                className="btn btn-outline-secondary btn-sm"
-                htmlFor="btnradioElectricityNo"
+                className='btn btn-outline-secondary btn-sm'
+                htmlFor='btnradioElectricityNo'
               >
                 No
               </label>
@@ -314,24 +314,24 @@ export default function Projects() {
         </div>
       </div>
 
-      <div className="col">
-        <div className="otherFilters">
-          <div className="nameFilter filter">
-            <p className="textField">Project Name</p>
-            <input ref={projectNameRef} className="textInput" />
+      <div className='col'>
+        <div className='otherFilters'>
+          <div className='nameFilter filter'>
+            <p className='textField'>Project Name</p>
+            <input ref={projectNameRef} className='textInput' />
           </div>
-          <div className="roomFilter filter">
-            <p className="textField">Room Type</p>
-            <input ref={roomTypeRef} className="textInput" />
+          <div className='roomFilter filter'>
+            <p className='textField'>Room Type</p>
+            <input ref={roomTypeRef} className='textInput' />
           </div>
           <button
-            className="filterButton"
+            className='filterButton'
             onClick={(event) => setFilters(event)}
           >
             Filter
           </button>
           <button
-            className="filterButton"
+            className='filterButton'
             onClick={(event) => resetFilters(event)}
           >
             Reset
