@@ -73,36 +73,36 @@ public class ProjectServiceLayer {
         return pvmList;
     }
 
-    public List<ProjectViewModel> findByDeadline(LocalDate deadline) {
-        List<Project> byDeadline = projectRepository.findByDeadline(deadline);
+//    public List<ProjectViewModel> findByDeadline(LocalDate deadline) {
+//        List<Project> byDeadline = projectRepository.findByDeadline(deadline);
+//
+//
+//        List<ProjectViewModel> pvmList = new ArrayList<>();
+//
+//        for (Project project: byDeadline) {
+//            ProjectViewModel pvm = buildProjectViewModel(project);
+//
+//            pvmList.add(pvm);
+//        }
+//
+//        return pvmList;
+//
+//    }
 
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for (Project project: byDeadline) {
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-
-        return pvmList;
-
-    }
-
-    public List<ProjectViewModel> findByStartDate(LocalDate startDate) {
-        List<Project> byStartDate = projectRepository.findByStartDate(startDate);
-
-
-        List<ProjectViewModel> pvmList = new ArrayList<>();
-
-        for (Project project: byStartDate) {
-            ProjectViewModel pvm = buildProjectViewModel(project);
-
-            pvmList.add(pvm);
-        }
-
-        return pvmList;
-    }
+//    public List<ProjectViewModel> findByStartDate(LocalDate startDate) {
+//        List<Project> byStartDate = projectRepository.findByStartDate(startDate);
+//
+//
+//        List<ProjectViewModel> pvmList = new ArrayList<>();
+//
+//        for (Project project: byStartDate) {
+//            ProjectViewModel pvm = buildProjectViewModel(project);
+//
+//            pvmList.add(pvm);
+//        }
+//
+//        return pvmList;
+//    }
 
     public List<ProjectViewModel> findByRoomType(String roomType){
         List<Project> projectList = projectRepository.findByRoomType(roomType);
