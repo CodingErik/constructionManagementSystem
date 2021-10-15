@@ -43,7 +43,7 @@ public class ProjectController {
 
     @PostMapping("/api/projects")
     @ResponseStatus(HttpStatus.CREATED)
-    public Project addProject(@RequestBody Project project ) {
+    public Project addProject(@RequestBody Project project) {
         /**     CREATE
          * use feign with projectViewModel material object */
         /** materialWarehouseClient.updateMaterialAfterRetrieve(projectViewModel.material);
@@ -99,17 +99,17 @@ public class ProjectController {
         return pvm;
     }
 
-    @GetMapping("/api/projects/deadline/{deadline}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
-        return projectServiceLayer.findByDeadline(deadline);
-    }
+//    @GetMapping("/api/projects/deadline/{deadline}")
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
+//        return projectServiceLayer.findByDeadline(deadline);
+//    }
 
-    @GetMapping("/api/projects/startDate/{startDate}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public List<ProjectViewModel> findByStartDate(@PathVariable LocalDate startDate) {
-        return projectServiceLayer.findByStartDate(startDate);
-    }
+//    @GetMapping("/api/projects/startDate/{startDate}")
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public List<ProjectViewModel> findByStartDate(@PathVariable LocalDate startDate) {
+//        return projectServiceLayer.findByStartDate(startDate);
+//    }
 
     @GetMapping("/api/projects/status/{status}")
     @ResponseStatus(value = HttpStatus.OK)

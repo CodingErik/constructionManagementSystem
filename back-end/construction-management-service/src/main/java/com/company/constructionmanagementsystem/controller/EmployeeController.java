@@ -5,16 +5,12 @@ import com.company.constructionmanagementsystem.repository.EmployeeRepository;
 import com.company.constructionmanagementsystem.service.EmployeeServiceLayer;
 import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.ws.rs.HEAD;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -138,11 +134,11 @@ public class EmployeeController {
     }
 
 
-
     @PutMapping("/api/resetPassword")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void resetPassword(@RequestBody Map<String, String> inputJson) throws Exception {
         employeeServiceLayer.updateEmployeePassword(parseInt(inputJson.get("id")), inputJson.get("password"));
 
     }
+
 }
