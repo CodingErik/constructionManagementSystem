@@ -43,7 +43,7 @@ public class ProjectController {
 
     @PostMapping("/api/projects")
     @ResponseStatus(HttpStatus.CREATED)
-    public Project addProject(@RequestBody Project project ) {
+    public Project addProject(@RequestBody Project project) {
         /**     CREATE
          * use feign with projectViewModel material object */
         /** materialWarehouseClient.updateMaterialAfterRetrieve(projectViewModel.material);
@@ -53,13 +53,6 @@ public class ProjectController {
         return repo.save(project);
     }
 
-
-    /**     DELETE
-     *  when project is deleted, then returns all the machinery to microservice
-     *
-     *  ProjectRepository.deleteById();
-     *  machineWarehouseClient.returnMachinery(machinery);
-     * */
 
 
     /**
@@ -106,17 +99,17 @@ public class ProjectController {
         return pvm;
     }
 
-//    @GetMapping("/api/projects/deadline/{deadline}")
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
-//        return projectServiceLayer.findByDeadline(deadline);
-//    }
-
-    @GetMapping("/api/projects/startDate/{startDate}")
+    @GetMapping("/api/projects/deadline/{deadline}")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<ProjectViewModel> findByStartDate(@PathVariable LocalDate startDate) {
-        return projectServiceLayer.findByStartDate(startDate);
+    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
+        return projectServiceLayer.findByDeadline(deadline);
     }
+
+//    @GetMapping("/api/projects/startDate/{startDate}")
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public List<ProjectViewModel> findByStartDate(@PathVariable LocalDate startDate) {
+//        return projectServiceLayer.findByStartDate(startDate);
+//    }
 
     @GetMapping("/api/projects/status/{status}")
     @ResponseStatus(value = HttpStatus.OK)
@@ -150,6 +143,13 @@ public class ProjectController {
         List<ProjectViewModel> returnProjectList = projectServiceLayer.findByRoomTypeAndName(roomType, name);
 
         return returnProjectList;
+    }
+
+
+    @DeleteMapping("/api/projects/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteProject(@PathVariable Integer id){
+        projectServiceLayer.deleteProject(id);
     }
 
 }

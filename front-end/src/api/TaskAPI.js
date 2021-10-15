@@ -10,7 +10,14 @@ const taskAPI = {
     },
     putTask: (updatedTask) => {
         return axios.put(`${baseUrl}`, updatedTask)
-    }
+    },
+    getTaskByProjectId: (projectId) => {
+        return axios.get(`${baseUrl}?projectId=${projectId}`)
+    },
+    addTask: (updatedTask) => {
+        return axios.post(`${baseUrl}`, updatedTask);
+    },
+
 };
 
 export default taskAPI;

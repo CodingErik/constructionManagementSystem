@@ -11,6 +11,7 @@ import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +31,13 @@ public class EmployeeServiceLayer {
         this.taskRepository = taskRepository;
     }
 
-    public EmployeeViewModel findEmployeeById(int id){
+    public EmployeeViewModel findEmployeeById(int id) {
         Employee employee = employeeRepository.findById(id).get();
 
         return buildEmployeeViewModel(employee);
     }
 
-    public EmployeeViewModel findEmployeeByEmail(String email){
+    public EmployeeViewModel findEmployeeByEmail(String email) {
 
         if (!employeeRepository.findByEmail(email).isPresent()) throw new NotFoundException("Email Not Found.");
 
@@ -45,45 +46,58 @@ public class EmployeeServiceLayer {
         return buildEmployeeViewModel(employee);
     }
 
-    public EmployeeViewModel findEmployeeByName(String name){
+    public EmployeeViewModel findEmployeeByName(String name) {
         Employee employee = employeeRepository.findByName(name).get(0);
 
         return buildEmployeeViewModel(employee);
     }
 
-    public EmployeeViewModel findEmployeeByUsername(String username){
+    public EmployeeViewModel findEmployeeByUsername(String username) {
 
-        if (!employeeRepository.findByUsername(username).isPresent()) throw new NotFoundException("Username Not Found.");
+        if (!employeeRepository.findByUsername(username).isPresent())
+            throw new NotFoundException("Username Not Found.");
         Employee employee = employeeRepository.findByUsername(username).get();
 
         return buildEmployeeViewModel(employee);
     }
 
-    public List<EmployeeViewModel> findEmployeesByTitle(String title){
+    public List<EmployeeViewModel> findEmployeesByTitle(String title) {
         List<Employee> employeeList = employeeRepository.findByTitle(title);
 
         List<EmployeeViewModel> evmList = new ArrayList<>();
 
-        for(Employee employee : employeeList){
+        for (Employee employee : employeeList) {
             EmployeeViewModel evm = buildEmployeeViewModel(employee);
             evmList.add(evm);
         }
         return evmList;
     }
 
-    public List<EmployeeViewModel> findEmployeesByProjectId(Integer projectId){
+    public List<EmployeeViewModel> findAllEmployees() {
+        List<Employee> employeeList = employeeRepository.findAll();
+
+        List<EmployeeViewModel> evmList = new ArrayList<>();
+
+        for (Employee employee : employeeList) {
+            EmployeeViewModel evm = buildEmployeeViewModel(employee);
+            evmList.add(evm);
+        }
+        return evmList;
+    }
+
+    public List<EmployeeViewModel> findEmployeesByProjectId(Integer projectId) {
         List<Employee> employeeList = employeeRepository.findByProjectId(projectId);
 
         List<EmployeeViewModel> evmList = new ArrayList<>();
 
-        for(Employee employee : employeeList){
+        for (Employee employee : employeeList) {
             EmployeeViewModel evm = buildEmployeeViewModel(employee);
             evmList.add(evm);
         }
         return evmList;
     }
 
-    private EmployeeViewModel buildEmployeeViewModel(Employee employee){
+    private EmployeeViewModel buildEmployeeViewModel(Employee employee) {
 
         List<Task> taskList = taskRepository.findAllTasksByEmployeeId(employee.getId());
         EmployeeViewModel evm = new EmployeeViewModel();
@@ -108,6 +122,45 @@ public class EmployeeServiceLayer {
         evm.setYearsOfExperience(employee.getYearsOfExperience());
 
         return evm;
+    }
+
+
+    @Transactional
+    public void deleteEmployee(Integer id) {
+        Employee employee = employeeRepository.findById(id).get();
+
+        // Find all relevant tasks and project
+        List<Task> allRelevantTasks = taskRepository.findAllTasksByEmployeeId(id);
+
+<<<<<<< HEAD
+        if (allRelevantTasks.size() > 0) {
+
+            for (Task task : allRelevantTasks) {
+                taskRepository.deleteById(task.getId());
+            }
+=======
+        for (Task task : allRelevantTasks) {
+            taskRepository.deleteById(task.getId());
+>>>>>>> afc56d6fd4d70f108ce1edcccf9f34b66dbfcfef
+        }
+
+        employeeRepository.deleteById(id);
+    }
+<<<<<<< HEAD
+
+=======
+>>>>>>> afc56d6fd4d70f108ce1edcccf9f34b66dbfcfef
+
+    public void updateEmployeePassword(Integer id, String newPassword) {
+        if (!employeeRepository.findById(id).isPresent()) throw new IllegalArgumentException("Employee not found.");
+
+        Employee employee = employeeRepository.findById(id).get();
+
+
+        employee.setPassword(newPassword);
+
+        employeeRepository.saveAndFlush(employee);
+
     }
 }
 

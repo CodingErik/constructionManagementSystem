@@ -12,16 +12,16 @@ import java.util.Objects;
 public class EmployeeViewModel {
 
     private int id;
-    private String title;
     private String name;
-    private LocalDate dateOfBirth;
-    private BigDecimal salary;
-    private int yearsOfExperience;
-    private String email;
-    private String phoneNumber;
     private String username;
     private String password;
+    private String title;
+    private String phoneNumber;
+    private String email;
+    private BigDecimal salary;
+    private LocalDate dateOfBirth;
     private LocalDate userSince;
+    private int yearsOfExperience;
     private Project project;
     private List<Task> taskList = new ArrayList<>();
 

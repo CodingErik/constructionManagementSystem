@@ -6,6 +6,7 @@ import com.company.constructionmanagementsystem.service.EmployeeServiceLayer;
 import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,10 +16,13 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import static java.lang.Integer.parseInt;
 
 @CrossOrigin
 @RestController
-//@RefreshScope
+@RefreshScope
 public class EmployeeController {
 
     @Autowired
@@ -27,7 +31,7 @@ public class EmployeeController {
     @Autowired
     EmployeeServiceLayer employeeServiceLayer;
 
-    @RequestMapping(value="/construction", method = RequestMethod.GET)
+    @RequestMapping(value = "/construction", method = RequestMethod.GET)
     public String helloCloud() {
 
         return "construction service working";
@@ -35,8 +39,8 @@ public class EmployeeController {
 
     @GetMapping("/api/employees")
     @ResponseStatus(value = HttpStatus.OK)
-    public List<Employee> getAllEmployees() {
-        List<Employee> employeeList = repository.findAll();
+    public List<EmployeeViewModel> getAllEmployees() {
+        List<EmployeeViewModel> employeeList = employeeServiceLayer.findAllEmployees();
 
         return employeeList;
     }
@@ -104,10 +108,9 @@ public class EmployeeController {
             employee.setPassword(BCrypt.hashpw(employee.getPassword(), BCrypt.gensalt()));
         }
 
-        if(employee.getProjectId() == null){
+        if (employee.getProjectId() == null) {
             employee.setProjectId(0);
         }
-
 
         employee.setUsername(employee.getUsername().toLowerCase(Locale.ROOT));
         employee.setName(employee.getName().toLowerCase(Locale.ROOT));
@@ -127,4 +130,23 @@ public class EmployeeController {
         repository.save(employee);
     }
 
+    @DeleteMapping("/api/employees/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEmployee(@PathVariable Integer id) {
+        employeeServiceLayer.deleteEmployee(id);
+    }
+
+    }
+
+    @PutMapping("/api/resetPassword")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void resetPassword (@RequestBody Map < String, String > inputJson) throws Exception {
+        employeeServiceLayer.updateEmployeePassword(parseInt(inputJson.get("id")), inputJson.get("password"));
+<<<<<<< HEAD
+
+    }
+
+=======
+    }
+>>>>>>> afc56d6fd4d70f108ce1edcccf9f34b66dbfcfef
 }

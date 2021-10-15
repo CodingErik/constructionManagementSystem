@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link, useHistory, NavLink } from 'react-router-dom';
+import decode from 'jwt-decode';
 
 export default function NavBar() {
+  const tokenAuthority = decode(
+    JSON.parse(localStorage.getItem('token'))
+  ).authorities;
   const history = useHistory();
 
   const handleLogout = () => {
@@ -11,8 +15,14 @@ export default function NavBar() {
   };
 
   return (
-    <nav className='navbar navbar-expand-lg navbar-light bg-light'>
-      <div className='container-fluid'>
+    <nav
+      className='navbar navbar-expand-lg navbar-light bg-light'
+      style={{
+        width: '100vw',
+        marginLeft: '0xp',
+      }}
+    >
+      <div className='container'>
         <Link className='navbar-brand' to='/'>
           CMS
         </Link>
@@ -35,7 +45,6 @@ export default function NavBar() {
               </Link>
             </li>
             <li className='nav-item'>
-              {/* hard code to remove */}
               <Link className='nav-link' to='/MyProfile'>
                 MyProfile
               </Link>
@@ -50,6 +59,13 @@ export default function NavBar() {
                 Tasks
               </Link>
             </li>
+            {tokenAuthority === 'admin' && (
+              <li className='nav-item'>
+                <NavLink to='/AdminAllEmployeeViewPage' className='nav-link'>
+                  Administrative
+                </NavLink>
+              </li>
+            )}
             <li className='nav-item'>
               <NavLink onClick={handleLogout} to='/login' className='nav-link'>
                 Logout

@@ -16,14 +16,20 @@ function BriefProjectsDisplay({ originalProjectLists }) {
     setProjectList([...originalProjectLists]);
   }, [originalProjectLists]);
 
-  const handleProjectColumnHeaderClick = (target) => {
-    const sort_by = (field, reverse, primer) => {
+  const handleProjectColumnHeaderClick = (
+    neededVariable,
+    booleanVariable,
+    methodTranslate
+  ) => {
+    const sort_by = (neededField, reverse, primer) => {
+      const getField = (obj, path) =>
+        path.split('.').reduce((value, el) => value[el], obj);
       const key = primer
         ? function (x) {
-            return primer(x[field]);
+            return primer(getField(x, neededField));
           }
         : function (x) {
-            return x[field];
+            return getField(x, neededVariable);
           };
       reverse = !reverse ? 1 : -1;
 
@@ -32,103 +38,82 @@ function BriefProjectsDisplay({ originalProjectLists }) {
       };
     };
 
-    if (target === 'Name') {
-      if (columnBooleans.name) {
-        columnBooleans.name = false;
-      } else {
-        columnBooleans.name = true;
-      }
-      setProjectList(
-        [...projectList].sort(
-          sort_by('name', columnBooleans.name, (a) => a.toUpperCase())
-        )
-      );
-    } else if (target === 'ProjectId') {
-      if (columnBooleans.projectId) {
-        columnBooleans.projectId = false;
-      } else {
-        columnBooleans.projectId = true;
-      }
-      setProjectList(
-        [...projectList].sort(sort_by('id', columnBooleans.projectId, parseInt))
-      );
-    } else if (target === 'Status') {
-      if (columnBooleans.status) {
-        columnBooleans.status = false;
-      } else {
-        columnBooleans.status = true;
-      }
-      setProjectList(
-        [...projectList].sort(
-          sort_by('status', columnBooleans.status, (a) => a.toUpperCase())
-        )
-      );
-    } else if (target === 'StartDate') {
-      if (columnBooleans.startDate) {
-        columnBooleans.startDate = false;
-      } else {
-        columnBooleans.startDate = true;
-      }
-      setProjectList(
-        [...projectList].sort(
-          sort_by('startDate', columnBooleans.startDate, (a) => a.toUpperCase())
-        )
-      );
-    } else if (target === 'Deadline') {
-      if (columnBooleans.deadline) {
-        columnBooleans.deadline = false;
-      } else {
-        columnBooleans.deadline = true;
-      }
-      setProjectList(
-        [...projectList].sort(
-          sort_by('deadline', columnBooleans.deadline, (a) => a.toUpperCase())
-        )
-      );
+    if (columnBooleans[booleanVariable]) {
+      columnBooleans[booleanVariable] = false;
+    } else {
+      columnBooleans[booleanVariable] = true;
     }
+    setProjectList(
+      [...projectList].sort(
+        sort_by(
+          neededVariable,
+          columnBooleans[booleanVariable],
+          methodTranslate
+        )
+      )
+    );
   };
 
   return (
     <div>
-      <h3>Projects Table</h3>
+      <h3>Projects</h3>
       <div
         className='table-responsive'
         style={{
           maxHeight: '400px',
           overflowY: 'scroll',
-          overflowX: 'hidden',
         }}
       >
-        <table className='table table-hover'>
+        <table className='table table-hover m-auto'>
           <thead>
             <tr>
               <th
-                scope='col'
-                onClick={() => handleProjectColumnHeaderClick('ProjectId')}
+                className='col-2'
+                onClick={() =>
+                  handleProjectColumnHeaderClick('id', 'projectId', parseInt)
+                }
               >
                 Project Id
               </th>
               <th
-                scope='col'
-                onClick={() => handleProjectColumnHeaderClick('Name')}
+                className='col-2'
+                onClick={() =>
+                  handleProjectColumnHeaderClick('name', 'name', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Name
               </th>
               <th
-                scope='col'
-                onClick={() => handleProjectColumnHeaderClick('Status')}
+                className='col-2'
+                onClick={() =>
+                  handleProjectColumnHeaderClick('status', 'status', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Status
               </th>
               <th
-                scope='col'
-                onClick={() => handleProjectColumnHeaderClick('StartDate')}
+                className='col-2'
+                onClick={() =>
+                  handleProjectColumnHeaderClick(
+                    'startDate',
+                    'startDate',
+                    (a) => a.toUpperCase()
+                  )
+                }
               >
                 Start Date
               </th>
               <th
-                scope='col'
-                onClick={() => handleProjectColumnHeaderClick('Deadline')}
+                className='col-2'
+                onClick={() =>
+                  handleProjectColumnHeaderClick('deadline', 'deadline', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Deadline
               </th>
