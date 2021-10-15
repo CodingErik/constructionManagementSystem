@@ -8,6 +8,7 @@ import com.company.constructionmanagementsystem.viewmodel.ProjectViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -140,6 +141,27 @@ public class ProjectServiceLayer {
             pvmList.add(pvm);
         }
         return pvmList;
+    }
+
+    @Transactional
+    public void deleteProject(Integer id){
+        Project targetProject = projectRepository.findById(id).get();
+
+        List<Task> relatedTasks = taskRepository.findAllTasksByProjectId(targetProject.getId());
+
+        for(Task task : relatedTasks){
+            taskRepository.deleteById(task.getId());
+        }
+
+        List<Employee> relatedEmployees = employeeRepository.findByProjectId(targetProject.getId());
+
+        for(Employee employee : relatedEmployees){
+            employee.setProjectId(0);
+            employeeRepository.save(employee);
+        }
+
+        projectRepository.deleteById(id);
+
     }
 
     public ProjectViewModel buildProjectViewModel(Project inputProject) {
