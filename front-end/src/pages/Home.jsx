@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import BriefProjectsDisplay from '../components/home/BriefProjectsDisplay';
-import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
-import ProjectPieChart from '../components/home/ProjectPieChart';
-import EmployeeListTable from '../components/home/EmployeeListTable';
-import Materials from '../components/materials/Materials';
-import Machinery from '../components/machinery/Machinery';
+import React, { useEffect, useState } from "react";
+import BriefProjectsDisplay from "../components/home/BriefProjectsDisplay";
+import BriefTasksDisplay from "../components/home/BriefTasksDisplay";
+import ProjectPieChart from "../components/home/ProjectPieChart";
+import EmployeeListTable from "../components/home/EmployeeListTable";
+import Materials from "../components/materials/Materials";
+import Machinery from "../components/machinery/Machinery";
 import {
   ProjectAPI,
   EmployeeAPI,
   TaskAPI,
   MaterialAPI,
   MachineryAPI,
-} from '../api/index';
-import redirectIfTokenNull from '../components/RedirectHelper';
+} from "../api/index";
+import redirectIfTokenNull from "../components/RedirectHelper";
 
 function Home() {
   redirectIfTokenNull();
@@ -31,17 +31,17 @@ function Home() {
     ProjectAPI.getAllProjects().then((response) => {
       setProjectList([...response.data]);
       response.data.forEach((project) => {
-        if (project.status === 'in_progress') {
+        if (project.status === "in_progress") {
           setStatusCount((prevState) => ({
             ...prevState,
             inProgress: prevState.inProgress++,
           }));
-        } else if (project.status === 'completed') {
+        } else if (project.status === "completed") {
           setStatusCount((prevState) => ({
             ...prevState,
             completed: prevState.completed++,
           }));
-        } else if (project.status === 'cancelled') {
+        } else if (project.status === "cancelled") {
           setStatusCount((prevState) => ({
             ...prevState,
             cancelled: prevState.cancelled++,
@@ -49,14 +49,18 @@ function Home() {
         }
       });
     });
-
     EmployeeAPI.getAllEmployees().then((response) => {
       setEmployeeList(response.data);
     });
 
-    TaskAPI.getAllTasks().then((response) => {
-      setTaskList(response.data);
-    });
+    TaskAPI.getAllTasks()
+      .then((response) => {
+        setTaskList(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     MaterialAPI.getAllMaterialsInventory().then((response) => {
       setMaterials(response.data);
@@ -71,16 +75,16 @@ function Home() {
     <div
       className='container mt-3 home'
       style={{
-        overflowX: 'hidden',
+        overflowX: "hidden",
       }}
     >
-      <div className='row mb-3 mt-3'>
-        <div className='col col-xl-6 ml-1 mr-1'>
+      <div className="row mb-3 mt-3">
+        <div className="col col-xl-6 ml-1 mr-1">
           <BriefProjectsDisplay
             originalProjectLists={projectList}
           ></BriefProjectsDisplay>
         </div>
-        <div className='col col-xl-6 ml-1 mr-1'>
+        <div className="col col-xl-6 ml-1 mr-1">
           <ProjectPieChart statusCount={statusCount}></ProjectPieChart>
         </div>
       </div>
@@ -105,7 +109,7 @@ function Home() {
             ></BriefTasksDisplay>
           </div>
         </div>
-        <div className='col col-xl-6 ml-1 mr-1'>
+        <div className="col col-xl-6 ml-1 mr-1">
           <EmployeeListTable employeeList={employeeList} />
         </div>
       </div>

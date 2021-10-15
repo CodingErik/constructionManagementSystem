@@ -36,8 +36,140 @@ function ProjectForm({ project, hasAuthority }) {
     ProjectAPI.putProject(updatedProjectInformation);
   };
 
+  // return (
+  //   <div className='container'>
+  //     <form style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
+  //       <fieldset>
+  //         <div className='form-group'>
+  //           <label
+  //             htmlFor='projectTitle'
+  //             className='form-label mt-4 ms-4 d-flex align-items-start'
+  //           >
+  //             Project Id #{project.id}
+  //           </label>
+  //           <input
+  //             className='form-control m-auto'
+  //             id='projectTitle'
+  //             defaultValue={project.name}
+  //             readOnly={!hasAuthority}
+  //             ref={nameRef}
+  //           />
+  //         </div>
+  //         <div className='form-group'>
+  //           <label
+  //             htmlFor='status'
+  //             className='form-label mt-4 ms-4 d-flex align-items-start'
+  //           >
+  //             Status
+  //           </label>
+  //           <select
+  //             className='form-select m-auto'
+  //             id='status'
+  //             disabled={!hasAuthority}
+  //             value={projectState}
+  //             onChange={(event) => setProjectState(event.target.value)}
+  //           >
+  //             <option value='in_progress'>In Progress</option>
+  //             <option value='completed'>Completed</option>
+  //             <option value='cancelled'>Cancelled</option>
+  //           </select>
+  //         </div>
+  //         <div className='form-group mt-3'>
+  //           <div className='form-group row'>
+  //             <label htmlFor='startDate' className='col-sm-2 col-form-label'>
+  //               Start Date
+  //             </label>
+  //             <div className='col-sm-4'>
+  //               <input
+  //                 type='date'
+  //                 readOnly={!hasAuthority}
+  //                 className='form-control-plaintext m-auto'
+  //                 id='startDate'
+  //                 defaultValue={project.startDate}
+  //                 ref={startDateRef}
+  //               />
+  //             </div>
+  //             <label htmlFor='deadline' className='col-sm-2 col-form-label'>
+  //               Deadline
+  //             </label>
+  //             <div className='col-sm-4'>
+  //               <input
+  //                 type='date'
+  //                 readOnly={!hasAuthority}
+  //                 className='form-control-plaintext m-auto'
+  //                 id='deadline'
+  //                 defaultValue={project.deadline}
+  //                 ref={deadlineRef}
+  //               />
+  //             </div>
+  //           </div>
+  //         </div>
+  //         <div className='form-group'>
+  //           <label
+  //             htmlFor='roomType'
+  //             className='form-label mt-3 ms-4 d-flex align-items-start'
+  //           >
+  //             Room Type
+  //           </label>
+  //           <input
+  //             className='form-control m-auto'
+  //             id='roomType'
+  //             defaultValue={project.roomType}
+  //             readOnly={!hasAuthority}
+  //             ref={roomTypeRef}
+  //           />
+  //         </div>
+  //         <div className='form-group mt-3' id='budgetsFormGroup'>
+  //           <div className='form-group row'>
+  //             <div className='col-4'>
+  //               <label htmlFor='laborBudget' className='col-6 col-form-label'>
+  //                 Labor Budget:
+  //               </label>
+  //               <div className='col-6' style={{ display: 'inline' }}>
+  //                 <span
+  //                   className='input-group-text m-auto'
+  //                   style={{ marginLeft: '15px' }}
+  //                   style={{ display: 'inline' }}
+  //                 >
+  //                   $
+  //                 </span>
+  //                 <input
+  //                   type='number'
+  //                   readOnly={!hasAuthority}
+  //                   className='form-control-plaintext'
+  //                   style={{ display: 'inline', width: '20%' }}
+  //                   id='laborBudget'
+  //                   defaultValue={project.laborBudget}
+  //                   ref={laborBudgetRef}
+  //                 />
+  //               </div>
+  //             </div>
+
+  //             <div className='col-4'>
+  //               <label htmlFor='laborBudget' className='col-6 col-form-label'>
+  //                 Material Budget:
+  //               </label>
+  //               <div className='col-6' style={{ display: 'inline' }}>
+  //                 <span
+  //                   className='input-group-text'
+  //                   style={{ display: 'inline' }}
+  //                 >
+  //                   $
+  //                 </span>
+  //                 <input
+  //                   type='number'
+  //                   readOnly={!hasAuthority}
+  //                   className='form-control-plaintext'
+  //                   style={{ display: 'inline', width: '20%' }}
+  //                   id='materialBudget'
+  //                   defaultValue={project.materialBudget}
+  //                   ref={materialBudgetRef}
+  //                 />
+  //               </div>
+  //             </div>
+
   return (
-    <div className='container'>
+    <div>
       <form style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
         <fieldset>
           <div className='form-group'>
@@ -48,7 +180,7 @@ function ProjectForm({ project, hasAuthority }) {
               Project Id #{project.id}
             </label>
             <input
-              className='form-control m-auto'
+              className='form-control ms-4'
               id='projectTitle'
               defaultValue={project.name}
               readOnly={!hasAuthority}
@@ -63,7 +195,7 @@ function ProjectForm({ project, hasAuthority }) {
               Status
             </label>
             <select
-              className='form-select m-auto'
+              className='form-select ms-4'
               id='status'
               disabled={!hasAuthority}
               value={projectState}
@@ -74,7 +206,7 @@ function ProjectForm({ project, hasAuthority }) {
               <option value='cancelled'>Cancelled</option>
             </select>
           </div>
-          <div className='form-group mt-3'>
+          <div className='form-group'>
             <div className='form-group row'>
               <label htmlFor='startDate' className='col-sm-2 col-form-label'>
                 Start Date
@@ -83,7 +215,7 @@ function ProjectForm({ project, hasAuthority }) {
                 <input
                   type='date'
                   readOnly={!hasAuthority}
-                  className='form-control-plaintext m-auto'
+                  className='form-control-plaintext'
                   id='startDate'
                   defaultValue={project.startDate}
                   ref={startDateRef}
@@ -96,7 +228,7 @@ function ProjectForm({ project, hasAuthority }) {
                 <input
                   type='date'
                   readOnly={!hasAuthority}
-                  className='form-control-plaintext m-auto'
+                  className='form-control-plaintext'
                   id='deadline'
                   defaultValue={project.deadline}
                   ref={deadlineRef}
@@ -107,123 +239,118 @@ function ProjectForm({ project, hasAuthority }) {
           <div className='form-group'>
             <label
               htmlFor='roomType'
-              className='form-label mt-3 ms-4 d-flex align-items-start'
+              className='form-label mt-4 ms-4 d-flex align-items-start'
             >
               Room Type
             </label>
             <input
-              className='form-control m-auto'
+              className='form-control ms-4'
               id='roomType'
               defaultValue={project.roomType}
               readOnly={!hasAuthority}
               ref={roomTypeRef}
             />
           </div>
-          <div className='form-group mt-3' id='budgetsFormGroup'>
+          <div className='form-group' id='budgetsFormGroup'>
             <div className='form-group row'>
-              <div className='col-4'>
-                <label htmlFor='laborBudget' className='col-6 col-form-label'>
-                  Labor Budget:
-                </label>
-                <div className='col-6' style={{ display: 'inline' }}>
-                  <span
-                    className='input-group-text m-auto'
-                    style={{ marginLeft: '15px' }}
-                    style={{ display: 'inline' }}
-                  >
-                    $
-                  </span>
-                  <input
-                    type='number'
-                    readOnly={!hasAuthority}
-                    className='form-control-plaintext'
-                    style={{ display: 'inline', width: '20%' }}
-                    id='laborBudget'
-                    defaultValue={project.laborBudget}
-                    ref={laborBudgetRef}
-                  />
-                </div>
+              <label htmlFor='laborBudget' className='col-lg-1 col-form-label'>
+                Labor Budget
+              </label>
+              <div className='col-lg-3' style={{ display: 'inline' }}>
+                <span
+                  className='input-group-text'
+                  style={{ display: 'inline' }}
+                >
+                  $
+                </span>
+                <input
+                  type='number'
+                  readOnly={!hasAuthority}
+                  className='form-control-plaintext'
+                  style={{ display: 'inline', width: '20%' }}
+                  id='laborBudget'
+                  defaultValue={project.laborBudget}
+                  ref={laborBudgetRef}
+                />
               </div>
-
-              <div className='col-4'>
-                <label htmlFor='laborBudget' className='col-6 col-form-label'>
-                  Material Budget:
-                </label>
-                <div className='col-6' style={{ display: 'inline' }}>
-                  <span
-                    className='input-group-text'
-                    style={{ display: 'inline' }}
-                  >
-                    $
-                  </span>
-                  <input
-                    type='number'
-                    readOnly={!hasAuthority}
-                    className='form-control-plaintext'
-                    style={{ display: 'inline', width: '20%' }}
-                    id='materialBudget'
-                    defaultValue={project.materialBudget}
-                    ref={materialBudgetRef}
-                  />
-                </div>
+              <label htmlFor='laborBudget' className='col-lg-1 col-form-label'>
+                Material Budget
+              </label>
+              <div className='col-lg-3' style={{ display: 'inline' }}>
+                <span
+                  className='input-group-text'
+                  style={{ display: 'inline' }}
+                >
+                  $
+                </span>
+                <input
+                  type='number'
+                  readOnly={!hasAuthority}
+                  className='form-control-plaintext'
+                  style={{ display: 'inline', width: '20%' }}
+                  id='materialBudget'
+                  defaultValue={project.materialBudget}
+                  ref={materialBudgetRef}
+                />
               </div>
-
-              <div className='col-4'>
-                <label htmlFor='laborBudget' className='col-6 col-form-label'>
-                  Total Budget
-                </label>
-                <div className='col-6' style={{ display: 'inline' }}>
-                  <span
-                    className='input-group-text'
-                    style={{ display: 'inline' }}
-                  >
-                    $
-                  </span>
-                  <input
-                    type='number'
-                    readOnly={!hasAuthority}
-                    className='form-control-plaintext'
-                    style={{ display: 'inline', width: '20%' }}
-                    id='totalBudget'
-                    defaultValue={project.totalBudget}
-                    ref={totalBudgetRef}
-                  />
-                </div>
+              <label htmlFor='laborBudget' className='col-lg-1 col-form-label'>
+                Total Budget
+              </label>
+              <div className='col-lg-3' style={{ display: 'inline' }}>
+                <span
+                  className='input-group-text'
+                  style={{ display: 'inline' }}
+                >
+                  $
+                </span>
+                <input
+                  type='number'
+                  readOnly={!hasAuthority}
+                  className='form-control-plaintext'
+                  style={{ display: 'inline', width: '20%' }}
+                  id='totalBudget'
+                  defaultValue={project.totalBudget}
+                  ref={totalBudgetRef}
+                />
               </div>
             </div>
           </div>
-          <div className='row mt-3 mb-3 ms-3'>
-            <div className='form-check form-switch text-start col-2'>
-              <label className='form-check-label ' htmlFor='isPlumbing'>
-                Has Plumbing
-              </label>
-              <input
-                className='form-check-input'
-                type='checkbox'
-                id='isPlumbing'
-                defaultChecked={project.plumbing}
-                ref={isPlumbingRef}
-                disabled={!hasAuthority}
-              />
-            </div>
-            <div className='form-check form-switch text-start  col-2'>
-              <label className='form-check-label ' htmlFor='isElectric'>
-                Has Electric
-              </label>
-              <input
-                className='form-check-input'
-                type='checkbox'
-                id='isElectric'
-                defaultChecked={project.electric}
-                ref={isElectricRef}
-                disabled={!hasAuthority}
-              />
-            </div>
+          <div className='form-check form-switch text-start'>
+            <label className='form-check-label ' htmlFor='isPlumbing'>
+              Has Plumbing
+            </label>
+            <input
+              className='form-check-input'
+              type='checkbox'
+              id='isPlumbing'
+              defaultChecked={project.plumbing}
+              ref={isPlumbingRef}
+              disabled={!hasAuthority}
+            />
+          </div>
+          <div className='form-check form-switch text-start'>
+            <label className='form-check-label ' htmlFor='isElectric'>
+              Has Electric
+            </label>
+            <input
+              className='form-check-input'
+              type='checkbox'
+              id='isElectric'
+              defaultChecked={project.electric}
+              ref={isElectricRef}
+              disabled={!hasAuthority}
+            />
           </div>
         </fieldset>
-        <button className='btn btn-info' type='submit' disabled={!hasAuthority}>
-          Apply Changes
-        </button>
+        {hasAuthority && (
+          <button
+            className='btn btn-info'
+            type='submit'
+            disabled={!hasAuthority}
+          >
+            Apply Changes
+          </button>
+        )}
       </form>
     </div>
   );

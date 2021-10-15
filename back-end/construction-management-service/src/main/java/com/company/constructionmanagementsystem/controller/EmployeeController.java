@@ -6,6 +6,7 @@ import com.company.constructionmanagementsystem.service.EmployeeServiceLayer;
 import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,7 +22,7 @@ import static java.lang.Integer.parseInt;
 
 @CrossOrigin
 @RestController
-//@RefreshScope
+@RefreshScope
 public class EmployeeController {
 
     @Autowired
@@ -133,14 +134,19 @@ public class EmployeeController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteEmployee(@PathVariable Integer id) {
         employeeServiceLayer.deleteEmployee(id);
+    }
 
     }
 
     @PutMapping("/api/resetPassword")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void resetPassword(@RequestBody Map<String, String> inputJson) throws Exception {
+    public void resetPassword (@RequestBody Map < String, String > inputJson) throws Exception {
         employeeServiceLayer.updateEmployeePassword(parseInt(inputJson.get("id")), inputJson.get("password"));
+<<<<<<< HEAD
 
     }
 
+=======
+    }
+>>>>>>> afc56d6fd4d70f108ce1edcccf9f34b66dbfcfef
 }

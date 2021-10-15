@@ -18,49 +18,18 @@ let columnBooleans = {
 
 function AllEmployeeTable({ originalEmployeeList }) {
   const [employeeList, setEmployeeList] = useState([]);
-  console.log(originalEmployeeList);
 
   useEffect(() => {
+    const updatedEmployeeList = [...originalEmployeeList].filter(
+      (nullProjects) => nullProjects.project === null
+    );
+    updatedEmployeeList.map(
+      (project) => (project.project = { id: 0, name: '' })
+    );
     setEmployeeList([...originalEmployeeList]);
   }, [originalEmployeeList]);
 
   const handleProjectColumnHeaderClick = (
-    targetVariable,
-    booleanVariable,
-    methodTranslate
-  ) => {
-    const sort_by = (field, reverse, primer) => {
-      const key = primer
-        ? function (x) {
-            return primer(x[field]);
-          }
-        : function (x) {
-            return x[field];
-          };
-      reverse = !reverse ? 1 : -1;
-
-      return function (a, b) {
-        return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
-      };
-    };
-
-    if (columnBooleans[booleanVariable]) {
-      columnBooleans[booleanVariable] = false;
-    } else {
-      columnBooleans[booleanVariable] = true;
-    }
-    setEmployeeList(
-      [...employeeList].sort(
-        sort_by(
-          targetVariable,
-          columnBooleans[booleanVariable],
-          methodTranslate
-        )
-      )
-    );
-  };
-
-  const handleProjectColumnHeaderLeadClick = (
     neededVariable,
     booleanVariable,
     methodTranslate
@@ -97,12 +66,11 @@ function AllEmployeeTable({ originalEmployeeList }) {
       )
     );
   };
-
   return (
-    <div className='container-fluid'>
+    <div className className='container'>
       <h3>Employees Table</h3>
       <div className='table-responsive'>
-        <table className='table table-hover m-auto'>
+        <table className='table table-hover'>
           <thead>
             <tr>
               <th
@@ -125,27 +93,37 @@ function AllEmployeeTable({ originalEmployeeList }) {
               </th>
               <th
                 className='col-1'
-                onClick={() => handleProjectColumnHeaderClick('username')}
+                onClick={() =>
+                  handleProjectColumnHeaderClick(
+                    'username',
+                    'employeeUsername',
+                    (a) => a.toUpperCase()
+                  )
+                }
               >
                 Username
               </th>
               <th
                 className='col-1'
-                // onClick={() =>
-                //   handleProjectColumnHeaderLeadClick(
-                //     'project.id',
-                //     'employeeProjectId',
-                //     parseInt
-                //   )
-                // }
+                onClick={() =>
+                  handleProjectColumnHeaderClick(
+                    'project.id',
+                    'employeeProjectId',
+                    parseInt
+                  )
+                }
               >
                 Project Id
               </th>
               <th
-                className='col-2'
-                // onClick={() =>
-                //   handleProjectColumnHeaderLeadClick('project.name')
-                // }
+                className='col-1'
+                onClick={() =>
+                  handleProjectColumnHeaderClick(
+                    'project.name',
+                    'employeeProjectName',
+                    (a) => a.toUpperCase()
+                  )
+                }
               >
                 Project Name
               </th>
@@ -174,14 +152,14 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Email
               </th>
               <th
-                className='col-2'
-                // onClick={() =>
-                //   handleProjectColumnHeaderClick(
-                //     'phoneNumber',
-                //     'employeePhoneNumber',
-                //     (a) => a.toUpperCase()
-                //   )
-                // }
+                className='col-1'
+                onClick={() =>
+                  handleProjectColumnHeaderClick(
+                    'phoneNumber',
+                    'employeePhoneNumber',
+                    (a) => a.toUpperCase()
+                  )
+                }
               >
                 Phone Number
               </th>
@@ -222,7 +200,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 Years Of Experience
               </th>
               <th
-                className='col-2'
+                className='col-1'
                 onClick={() =>
                   handleProjectColumnHeaderClick(
                     'userSince',
@@ -247,16 +225,14 @@ function AllEmployeeTable({ originalEmployeeList }) {
                 </td>
                 <td>{employee.title}</td>
                 <td>{employee.email}</td>
-                <td>{employee.phoneNumber ? employee.phoneNumber : 'None'}</td>
-                <td>{employee.salary ? employee.salary : 'None'}</td>
-                <td>{employee.dateOfBirth ? employee.dateOfBirth : 'None'}</td>
+                <td>{employee.phoneNumber}</td>
+                <td>{employee.salary}</td>
+                <td>{employee.dateOfBirth}</td>
                 <td>{employee.yearsOfExperience}</td>
                 <td>{employee.userSince}</td>
                 <td>
                   <Link
-                    to={{
-                      pathname: `/AdminSingleEmployeePage/${employee.id}`,
-                    }}
+                    to={{ pathname: `/AdminSingleEmployeePage/${employee.id}` }}
                   >
                     <button type='button' className='btn btn-warning'>
                       Edit

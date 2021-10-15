@@ -57,38 +57,6 @@ export default function ProjectsTable(props) {
               );
             })}
 
-          {statusFilter === 'in_progress' &&
-            projects.map((project) => {
-              return (
-                project.status === 'in_progress' && (
-                  <tr key={project.id}>
-                    <th scope='row'>{project.id}</th>
-                    <td>{project.name}</td>
-                    <td>{project.deadline}</td>
-                    <td>{project.startDate}</td>
-                    <td>{project.roomType}</td>
-                    <td>{project.plumbing.toString()}</td>
-                    <td>{project.electric.toString()}</td>
-                    <td>${project.materialBudget.toLocaleString()}</td>
-                    <td>${project.laborBudget.toLocaleString()}</td>
-                    <td>${project.totalBudget.toLocaleString()}</td>
-                    <td className={`${project.status} projectStatus`}>
-                      {project.status}
-                    </td>
-                    <td>
-                      <Link
-                        to={{ pathname: `/SingleProjectPage/${project.id}` }}
-                      >
-                        <button type='button' className='btn btn-warning'>
-                          View
-                        </button>
-                      </Link>
-                    </td>
-                  </tr>
-                )
-              );
-            })}
-
           {statusFilter === 'completed' &&
             projects.map((project) => {
               return (

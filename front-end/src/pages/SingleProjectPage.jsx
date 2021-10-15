@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { ProjectAPI, EmployeeAPI } from '../api/index';
-import EmployeeListTableForProject from '../components/singleProject/EmployeeListTableForProject';
-import ProjectForm from '../components/singleProject/ProjectForm';
-import decode from 'jwt-decode';
-import redirectIfTokenNull from '../components/RedirectHelper';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { ProjectAPI, EmployeeAPI } from "../api/index";
+import EmployeeListTableForProject from "../components/singleProject/EmployeeListTableForProject";
+import ProjectForm from "../components/singleProject/ProjectForm";
+import TaskListTableForProject from "../components/singleProject/TaskListTableForProject";
+import decode from "jwt-decode";
+import redirectIfTokenNull from "../components/RedirectHelper";
 
-function SingleProjectPage({}) {
+function SingleProjectPage() {
   redirectIfTokenNull();
   const { projectId } = useParams();
   const [project, setProject] = useState({});
@@ -42,6 +43,7 @@ function SingleProjectPage({}) {
         projectId={projectId}
         hasAuthority={hasAuthority}
       ></EmployeeListTableForProject>
+      <TaskListTableForProject hasAuthority={hasAuthority} projectId={projectId} projectName={project.name}></TaskListTableForProject>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import AddModal from './AddModal';
+import AddModal from './AddEmployeeModal';
 import { EmployeeAPI } from '../../api';
 import { useState, useEffect } from 'react';
 
@@ -9,15 +9,16 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
   useEffect(() => {
     EmployeeAPI.getAllEmployees().then((response) => {
       setAllUnassignedEmployees(
-        [...response.data].filter(
-          (employee) => parseInt(employee.projectId) === 0
-        )
+        [...response.data].filter((employee) => employee.project === null)
       );
       setAllEmployeesInProject(
         [...response.data].filter(
-          (employee) => parseInt(employee.projectId) === parseInt(projectId)
+          (employee) => parseInt(employee.project?.id) === parseInt(projectId)
         )
       );
+      // console.log([...response.data].filter((employee) => {
+      //     return employee.project === null;
+      // }))
     });
   }, []);
 
@@ -59,28 +60,31 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
               ))}
           </tbody>
         </table>
+      </div>
 
-        <h3>Employees</h3>
-        <table className='table table-hover'>
-          <thead>
-            <tr>
-              <th scope='col'>Employee Id</th>
-              <th scope='col'>Name</th>
-              <th scope='col'>Email</th>
-              <th scope='col'>Phone Number</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allEmployeesInProject
-              ?.filter((employee) => employee.title === 'employee')
-              .map((filteredEmployee) => (
-                <tr className='table-active' key={filteredEmployee.id}>
-                  <th scope='row'>{filteredEmployee.id}</th>
-                  <td>{filteredEmployee.name}</td>
-                  <td>{filteredEmployee.email}</td>
-                  <td>{filteredEmployee.phoneNumber}</td>
-                </tr>
-              ))}
+      <h3>Employees</h3>
+      <div className=''></div>
+      <table className='table table-hover'>
+        <thead>
+          <tr>
+            <th scope='col'>Employee Id</th>
+            <th scope='col'>Name</th>
+            <th scope='col'>Email</th>
+            <th scope='col'>Phone Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          {allEmployeesInProject
+            ?.filter((employee) => employee.title === 'employee')
+            .map((filteredEmployee) => (
+              <tr className='table-active' key={filteredEmployee.id}>
+                <th scope='row'>{filteredEmployee.id}</th>
+                <td>{filteredEmployee.name}</td>
+                <td>{filteredEmployee.email}</td>
+                <td>{filteredEmployee.phoneNumber}</td>
+              </tr>
+            ))}
+          {hasAuthority && (
             <tr>
               <td colSpan='4' className='table'>
                 <button
@@ -94,9 +98,9 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
                 </button>
               </td>
             </tr>
-          </tbody>
-        </table>
-      </div>
+          )}
+        </tbody>
+      </table>
       <AddModal
         title='employee'
         modalId='addEmployeeModal'

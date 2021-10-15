@@ -1,66 +1,78 @@
 import { useEffect, useRef, useState } from 'react';
 import { EmployeeAPI, TaskAPI, ProjectAPI } from '../../api';
+import { useParams } from 'react-router-dom';
 
-function TaskForm({ task, hasAuthority }) {
-  const [taskState, setTaskState] = useState(task.status);
-  const [projectState, setProjectState] = useState(task.project);
-  const [employeeState, setEmployeeState] = useState(task.employee);
-  const [projectListState, setProjectListState] = useState([]);
+function TaskForm({ task, hasAuthority, isAddTaskForm }) {
+  const { taskId } = useParams();
+  const [taskState, setTaskState] = useState();
+  const [projectState, setProjectState] = useState();
+  const [employeeState, setEmployeeState] = useState();
+  const [projectList, setProjectList] = useState([]);
   const [
     availableEmployeesInProjectState,
     setAvailableEmployeesInProjectState,
   ] = useState([]);
-
-  //ONLY ADMIN CAN CHANGE THIS WHICH SHOULD REMOVE CURRENT USER WITH THIS TASK ASSIGNED. CONSIDER THIS AND IMPLICATIONS LATER
-  // const [changeProjectAuthority, setChangeProjectAuthority] = useState(false);
+  const nameRef = useRef(null);
+  const startDateRef = useRef(null);
+  const deadlineRef = useRef(null);
+  const descriptionRef = useRef(null);
 
   useEffect(() => {
     async function fetchData() {
       const projects = await ProjectAPI.getAllProjects();
-      setProjectListState(projects.data);
+      const taskInfo = await TaskAPI.getTaskById(taskId);
+      console.log(projects.data);
+      setTaskState(taskInfo.data?.status);
+      setProjectState(taskInfo.data.project?.id);
+      setEmployeeState(taskInfo.data.employee?.id);
+      setProjectList(projects.data);
     }
     fetchData();
   }, []);
 
   useEffect(() => {
     async function fetchData() {
-      const availableEmployees = await EmployeeAPI.getAllEmployeeByProjectId(
-        projectState
-      );
-      setAvailableEmployeesInProjectState(
-        [...availableEmployees.data].filter(
-          (employee) => employee.title === 'employee'
-        )
-      );
+      if (projectState !== null) {
+        const availableEmployees = await EmployeeAPI.getAllEmployeeByProjectId(
+          projectState
+        );
+        setAvailableEmployeesInProjectState(
+          [...availableEmployees.data].filter(
+            (employee) => employee.title === 'employee'
+          )
+        );
+      }
     }
     fetchData();
-    console.log(projectState);
   }, [projectState]);
-
-  useEffect(() => {
-    setTaskState(task.status);
-    setProjectState(task.project?.id);
-    setEmployeeState(task.employee?.id);
-  }, [task]);
-
-  const nameRef = useRef(null);
-  const startDateRef = useRef(null);
-  const deadlineRef = useRef(null);
-  const descriptionRef = useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const updatedTaskInformation = {
-      id: task.id,
-      name: nameRef.current.value,
-      status: taskState,
-      startDate: startDateRef.current.value,
-      deadline: deadlineRef.current.value,
-      projectId: projectState,
-      employeeId: employeeState,
-      description: descriptionRef.current.value,
-    };
+    let updatedTaskInformation = {};
 
+    if (isAddTaskForm) {
+      updatedTaskInformation = {
+        id: null,
+        name: nameRef.current.value,
+        status: taskState,
+        startDate: startDateRef.current.value,
+        deadline: deadlineRef.current.value,
+        projectId: projectState ? projectState : 0,
+        employeeId: employeeState,
+        description: descriptionRef.current.value,
+      };
+    } else {
+      updatedTaskInformation = {
+        id: task.id ? task.id : '',
+        name: nameRef.current.value,
+        status: taskState,
+        startDate: startDateRef.current.value,
+        deadline: deadlineRef.current.value,
+        projectId: projectState ? projectState : 1,
+        employeeId: employeeState,
+        description: descriptionRef.current.value,
+      };
+    }
     EmployeeAPI.getEmployeeById(employeeState).then((response) => {
       const updatedEmployeeInformation = {
         ...response.data,
@@ -72,7 +84,7 @@ function TaskForm({ task, hasAuthority }) {
   };
 
   return (
-    <div className='container'>
+    <div>
       <form style={{ margin: '0 auto' }} onSubmit={handleSubmit}>
         <fieldset>
           <div className='form-group'>
@@ -83,7 +95,7 @@ function TaskForm({ task, hasAuthority }) {
               Task Id #{task.id}
             </label>
             <input
-              className='form-control m-auto'
+              className='form-control ms-4'
               id='taskTitle'
               defaultValue={task.name}
               readOnly={!hasAuthority}
@@ -98,7 +110,7 @@ function TaskForm({ task, hasAuthority }) {
               Status
             </label>
             <select
-              className='form-select m-auto'
+              className='form-select ms-4'
               id='status'
               disabled={!hasAuthority}
               value={taskState}
@@ -109,19 +121,16 @@ function TaskForm({ task, hasAuthority }) {
               <option value='cancelled'>Cancelled</option>
             </select>
           </div>
-          <div className='form-group mt-3'>
+          <div className='form-group'>
             <div className='form-group row'>
-              <label
-                htmlFor='startDate'
-                className='col-sm-2 col-form-label pr-0 mr-0'
-              >
+              <label htmlFor='startDate' className='col-sm-2 col-form-label'>
                 Start Date
               </label>
               <div className='col-sm-4'>
                 <input
                   type='date'
                   readOnly={!hasAuthority}
-                  className='form-control-plaintext m-auto'
+                  className='form-control-plaintext'
                   id='startDate'
                   defaultValue={task.startDate}
                   ref={startDateRef}
@@ -134,7 +143,7 @@ function TaskForm({ task, hasAuthority }) {
                 <input
                   type='date'
                   readOnly={!hasAuthority}
-                  className='form-control-plaintext m-auto'
+                  className='form-control-plaintext'
                   id='deadline'
                   defaultValue={task.deadline}
                   ref={deadlineRef}
@@ -150,13 +159,13 @@ function TaskForm({ task, hasAuthority }) {
               Project Containing This Task
             </label>
             <select
-              className='form-select m-auto'
+              className='form-select ms-4'
               id='project'
-              disabled={true}
+              disabled={isAddTaskForm ? false : true}
               value={projectState}
               onChange={(event) => setProjectState(event.target.value)}
             >
-              {projectListState.map((project) => (
+              {projectList.map((project) => (
                 <option value={project.id} key={project.id}>
                   {project.id}. {project.name}
                 </option>
@@ -171,12 +180,13 @@ function TaskForm({ task, hasAuthority }) {
               Designate Employee For This Task
             </label>
             <select
-              className='form-select m-auto'
+              className='form-select ms-4'
               id='employee'
               disabled={!hasAuthority}
               value={employeeState}
               onChange={(event) => setEmployeeState(event.target.value)}
             >
+              <option value={0}>0. None</option>
               {availableEmployeesInProjectState.map((employee) => (
                 <option value={employee.id} key={employee.id}>
                   {employee.id}. {employee.name}
@@ -192,21 +202,15 @@ function TaskForm({ task, hasAuthority }) {
               Description
             </label>
             <textarea
+              defaultValue={task.description}
               disabled={!hasAuthority}
-              className='form-control m-auto'
+              className='form-control ms-4'
               id='description'
               rows='8'
               ref={descriptionRef}
             ></textarea>
           </div>
         </fieldset>
-        <button
-          className='btn btn-info mt-3 mb-3'
-          type='submit'
-          disabled={!hasAuthority}
-        >
-          Apply Changes
-        </button>
       </form>
     </div>
   );
