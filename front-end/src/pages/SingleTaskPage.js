@@ -33,6 +33,7 @@ function SingleTaskPage() {
       <TaskForm
         task={task}
         hasAuthority={hasAuthority}
+        isAddTaskForm={false}
       ></TaskForm>
     </div>
   );

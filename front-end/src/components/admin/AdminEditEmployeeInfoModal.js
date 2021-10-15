@@ -160,7 +160,7 @@ function AdminEditEmployeeInfoModal({ employeeInfo, modalId, handleBasicInformat
                                 </div>
                                 <div className="form-group">
                                     <label
-                                        htmlFor="employee-yearsOfExperience" s
+                                        htmlFor="employee-yearsOfExperience" 
                                         className="form-label mt-4 ms-4 d-flex align-items-start"
                                     >
                                         Years Of Experience:
@@ -189,9 +189,9 @@ function AdminEditEmployeeInfoModal({ employeeInfo, modalId, handleBasicInformat
                                     >
                                         New Password
                                     </label>
-                                    <div class="input-group mb-3">
-                                        <input ref={passwordNewInput} type="password" class="form-control ms-4" id="confirmPassword" />
-                                        <button class="btn" type="button" id="showPassword" onClick={() => togglePasswordShow(passwordNewInput)}><AiFillEye size={25} /></button>
+                                    <div className="input-group mb-3">
+                                        <input ref={passwordNewInput} type="password" className="form-control ms-4" id="confirmPassword" />
+                                        <button className="btn" type="button" id="showPassword" onClick={() => togglePasswordShow(passwordNewInput)}><AiFillEye size={25} /></button>
                                     </div>
                                     <label
                                         htmlFor="employee-password"
@@ -199,9 +199,9 @@ function AdminEditEmployeeInfoModal({ employeeInfo, modalId, handleBasicInformat
                                     >
                                         Confirm New Password
                                     </label>
-                                    <div class="input-group mb-3">
-                                        <input ref={passwordConfirmationInput} type="password" class="form-control ms-4" id="confirmPassword" />
-                                        <button class="btn" type="button" id="showConfirmPassword" onClick={() => togglePasswordShow(passwordConfirmationInput)}><AiFillEye size={25} /></button>
+                                    <div className="input-group mb-3">
+                                        <input ref={passwordConfirmationInput} type="password" className="form-control ms-4" id="confirmPassword" />
+                                        <button className="btn" type="button" id="showConfirmPassword" onClick={() => togglePasswordShow(passwordConfirmationInput)}><AiFillEye size={25} /></button>
                                     </div>
                                 </div>
                             </fieldset>

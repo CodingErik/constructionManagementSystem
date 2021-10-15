@@ -198,7 +198,7 @@ function DisplayEmployeeInfo() {
                         </div>
                         <div className="col-2">
                             <Link to={{ pathname: `/SingleProjectPage/${employeeInfo.project?.id}` }} >
-                                <button type="button" class="btn btn-info">View Info</button>
+                                <button type="button" className="btn btn-info">View Info</button>
                             </Link>
                         </div>
                     </div>
@@ -228,11 +228,11 @@ function DisplayEmployeeInfo() {
                                 </div>
                             </div>
                             <div className="col-2">
-                                <button type="button" class="btn btn-danger" onClick={() => handleRemoveUserFromTask(task.id)}>Remove</button>
+                                <button type="button" className="btn btn-danger" onClick={() => handleRemoveUserFromTask(task.id)}>Remove</button>
                             </div>
                             <div className="col-2">
                                 <Link to={{ pathname: `/SingleTaskPage/${task.id}` }} >
-                                    <button type="button" class="btn btn-info">View Info</button>
+                                    <button type="button" className="btn btn-info">View Info</button>
                                 </Link>
                             </div>
                         </div>

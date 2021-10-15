@@ -18,41 +18,14 @@ let columnBooleans = {
 
 function AllEmployeeTable({ originalEmployeeList }) {
     const [employeeList, setEmployeeList] = useState([])
-    console.log(originalEmployeeList);
 
     useEffect(() => {
+        const updatedEmployeeList = [...originalEmployeeList].filter(nullProjects => nullProjects.project === null);
+        updatedEmployeeList.map(project => project.project = { id: 0, name: "" });
         setEmployeeList([...originalEmployeeList]);
     }, [originalEmployeeList])
 
-    const handleProjectColumnHeaderClick = (targetVariable, booleanVariable, methodTranslate) => {
-        const sort_by = (field, reverse, primer) => {
-            const key = primer
-                ? function (x) {
-                    return primer(x[field]);
-                }
-                : function (x) {
-                    return x[field];
-                };
-            reverse = !reverse ? 1 : -1;
-
-            return function (a, b) {
-                return (a = key(a)), (b = key(b)), reverse * ((a > b) - (b > a));
-            };
-        };
-
-        if (columnBooleans[booleanVariable]) {
-            columnBooleans[booleanVariable] = false;
-        } else {
-            columnBooleans[booleanVariable] = true;
-        }
-        setEmployeeList(
-            [...employeeList].sort(
-                sort_by(targetVariable, columnBooleans[booleanVariable], methodTranslate)
-            )
-        );
-    }
-
-    const handleProjectColumnHeaderLeadClick = (neededVariable, booleanVariable, methodTranslate) => {
+    const handleProjectColumnHeaderClick = (neededVariable, booleanVariable, methodTranslate) => {
         const sort_by = (neededField, reverse, primer) => {
             const getField = (obj, path) => (path.split('.').reduce((value, el) => value[el], obj))
             const key = primer
@@ -60,7 +33,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                     return primer(getField(x, neededField));
                 }
                 : function (x) {
-                    return getField(x,neededVariable);
+                    return getField(x, neededVariable);
                 };
             reverse = !reverse ? 1 : -1;
 
@@ -89,9 +62,9 @@ function AllEmployeeTable({ originalEmployeeList }) {
                     <tr>
                         <th scope="col" onClick={() => handleProjectColumnHeaderClick("id", "employeeId", parseInt)}>Employee Id</th>
                         <th scope="col" onClick={() => handleProjectColumnHeaderClick("name", "employeeName", (a) => a.toUpperCase())}>Name</th>
-                        <th scope="col" onClick={() => handleProjectColumnHeaderClick("username")}>Username</th>
-                        <th scope="col" onClick={() => handleProjectColumnHeaderLeadClick("project.id", "employeeProjectId", parseInt)}>Project Id</th>
-                        <th scope="col" onClick={() => handleProjectColumnHeaderLeadClick("project.name")}>Project Name</th>
+                        <th scope="col" onClick={() => handleProjectColumnHeaderClick("username", "employeeUsername", (a) => a.toUpperCase())}>Username</th>
+                        <th scope="col" onClick={() => handleProjectColumnHeaderClick("project.id", "employeeProjectId", parseInt)}>Project Id</th>
+                        <th scope="col" onClick={() => handleProjectColumnHeaderClick("project.name", "employeeProjectName", (a) => a.toUpperCase())}>Project Name</th>
                         <th scope="col" onClick={() => handleProjectColumnHeaderClick("title", "employeeTitle", (a) => a.toUpperCase())}>Title</th>
                         <th scope="col" onClick={() => handleProjectColumnHeaderClick("email", "employeeEmail", (a) => a.toUpperCase())}>Email</th>
                         <th scope="col" onClick={() => handleProjectColumnHeaderClick("phoneNumber", "employeePhoneNumber", (a) => a.toUpperCase())}>Phone Number</th>

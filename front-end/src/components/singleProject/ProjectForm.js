@@ -202,9 +202,11 @@ function ProjectForm({ project, hasAuthority }) {
                         />
                     </div>
                 </fieldset>
-                <button className="btn btn-info" type="submit" disabled={!hasAuthority}>
-                    Apply Changes
-                </button>
+                {hasAuthority && (
+                    <button className="btn btn-info" type="submit" disabled={!hasAuthority}>
+                        Apply Changes
+                    </button>
+                )}
             </form>
         </div>
     )

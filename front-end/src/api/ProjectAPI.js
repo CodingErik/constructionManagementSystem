@@ -34,6 +34,9 @@ const projectAPI = {
   putProject: (updatedProject) => {
     return axios.put(`${baseUrl}`, updatedProject);
   },
+  addProject: (newProject) => {
+    return axios.post(`${baseUrl}`, newProject);
+  }
 };
 
 export default projectAPI;

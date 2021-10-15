@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import { ProjectAPI, EmployeeAPI } from "../api/index";
 import EmployeeListTableForProject from "../components/singleProject/EmployeeListTableForProject";
 import ProjectForm from "../components/singleProject/ProjectForm";
+import TaskListTableForProject from "../components/singleProject/TaskListTableForProject";
 import decode from "jwt-decode";
 import redirectIfTokenNull from "../components/RedirectHelper";
 
-function SingleProjectPage({}) {
+function SingleProjectPage() {
   redirectIfTokenNull();
   const { projectId } = useParams();
   const [project, setProject] = useState({});
@@ -20,7 +21,6 @@ function SingleProjectPage({}) {
       const userInfo = await EmployeeAPI.getEmployeeByUsername(token.sub);
       setUser(userInfo.data);
       setProject(projectInfo.data);
-
     }
     fetchData();
   }, []);
@@ -41,6 +41,7 @@ function SingleProjectPage({}) {
         projectId={projectId}
         hasAuthority={hasAuthority}
       ></EmployeeListTableForProject>
+      <TaskListTableForProject hasAuthority={hasAuthority} projectId={projectId} projectName={project.name}></TaskListTableForProject>
     </div>
   );
 }

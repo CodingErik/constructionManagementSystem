@@ -5,6 +5,7 @@ import com.company.constructionmanagementsystem.repository.TaskRepository;
 import com.company.constructionmanagementsystem.service.TaskServiceLayer;
 import com.company.constructionmanagementsystem.viewmodel.TaskViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
+@RefreshScope
 public class TaskController {
     @Autowired
     TaskRepository taskRepository;
