@@ -129,10 +129,15 @@ public class EmployeeController {
         repository.save(employee);
     }
 
+    @DeleteMapping("/api/employees/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEmployee(@PathVariable Integer id){
+        employeeServiceLayer.deleteEmployee(id);
+
     @PutMapping("/api/resetPassword")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void resetPassword(@RequestBody Map<String, String> inputJson) throws Exception {
         employeeServiceLayer.updateEmployeePassword(parseInt(inputJson.get("id")), inputJson.get("password"));
-    }
+
 
 }
