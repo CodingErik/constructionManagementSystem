@@ -9,6 +9,7 @@ import com.company.constructionmanagementsystem.util.feign.MaterialWarehouseClie
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -29,6 +30,7 @@ public class MaterialController {
      * update warehouse inventory
      * */
     @PostMapping("/api/materials/request")
+    @ResponseStatus(HttpStatus.CREATED)
     public String requestMaterials(@RequestBody Material material) {
         /** adding stock to main service
          * calling the microservice to update the warehouse inventory
@@ -42,28 +44,29 @@ public class MaterialController {
             System.out.println(e.getMessage());
             return e.getMessage();
         }
-
     }
 
     /** get project specific inventory y*/
     @GetMapping("/api/materials/{projectId}")
+    @ResponseStatus(HttpStatus.OK)
     public Material getProjectMaterial(@PathVariable Integer projectId){
-        Optional<Material> returnVal = repo.findByProjectId(projectId);
-        if(!returnVal.isPresent()){
+        Material returnVal = repo.findByProjectId(projectId).get();
+        if(returnVal == null){
             throw new NotFoundException("This project has no materials");
-        } else{
-            return returnVal.get();
         }
+        return returnVal;
     }
 
     /** get warehouse inventory*/
     @GetMapping("/api/materials")
+    @ResponseStatus(HttpStatus.OK)
     public Material getWarehouseInventory() {
         return materialWarehouseClient.getWarehouseInventory();
     }
 
     /** refill warehouse inventory */
     @PutMapping("/api/material/refill")
+    @ResponseStatus(HttpStatus.OK)
     public String updateMaterialRefill() {
         return materialWarehouseClient.updateMaterialRefill();
     }

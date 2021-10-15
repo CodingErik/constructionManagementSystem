@@ -262,49 +262,6 @@ public class ProjectControllerTest {
 
     }
 
-//    @Test
-//    public void shouldReturnProjectWithCorrectStartDate() throws Exception {
-//        projectRepository.deleteAll();
-//        projectRepository.deleteAll();
-//        taskRepository.deleteAll();
-//
-//        java.time.LocalDate startDate = java.time.LocalDate.of(1999,1 ,1);
-//
-//        projectRepository.save(project1);
-//        projectRepository.save(project2);
-//
-//        employeeRepository.save(employee1);
-//        employeeRepository.save(employee2);
-//        employeeRepository.save(employee3);
-//        employeeRepository.save(employee4);
-//        employeeRepository.save(employee5);
-//
-//        taskRepository.save(task1);
-//        taskRepository.save(task2);
-//        taskRepository.save(task3);
-//        taskRepository.save(task4);
-//        taskRepository.save(task5);
-//
-//        List<ProjectViewModel> pvmList = new ArrayList<>();
-//
-//        for(Project project : projectList){
-//            if(project.getStartDate() == startDate){
-//                ProjectViewModel pvm = buildProjectViewModel(project);
-//                pvmList.add(pvm);
-//            }
-//        }
-//
-//        String outputJson = mapper.writeValueAsString(pvmList);
-//
-//        given(projectServiceLayer.findByStartDate(startDate)).willReturn(pvmList);
-//
-//        mockMvc.perform(get("/api/projects/startDate/1999-01-01"))
-//                .andDo(print())
-//                .andExpect(status().isOk())
-//                .andExpect(content().json(outputJson));
-//
-//    }
-
     @Test
     public void shouldReturnListOfProjectsWithCorrectStatus() throws Exception {
         projectRepository.deleteAll();
