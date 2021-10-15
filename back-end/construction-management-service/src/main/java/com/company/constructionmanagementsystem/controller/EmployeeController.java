@@ -16,6 +16,9 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import static java.lang.Integer.parseInt;
 
 @CrossOrigin
 @RestController
@@ -28,7 +31,7 @@ public class EmployeeController {
     @Autowired
     EmployeeServiceLayer employeeServiceLayer;
 
-    @RequestMapping(value="/construction", method = RequestMethod.GET)
+    @RequestMapping(value = "/construction", method = RequestMethod.GET)
     public String helloCloud() {
 
         return "construction service working";
@@ -105,10 +108,9 @@ public class EmployeeController {
             employee.setPassword(BCrypt.hashpw(employee.getPassword(), BCrypt.gensalt()));
         }
 
-        if(employee.getProjectId() == null){
+        if (employee.getProjectId() == null) {
             employee.setProjectId(0);
         }
-
 
         employee.setUsername(employee.getUsername().toLowerCase(Locale.ROOT));
         employee.setName(employee.getName().toLowerCase(Locale.ROOT));
@@ -128,4 +130,15 @@ public class EmployeeController {
         repository.save(employee);
     }
 
+    @DeleteMapping("/api/employees/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEmployee(@PathVariable Integer id) {
+        employeeServiceLayer.deleteEmployee(id);
+    }
+
+    @PutMapping("/api/resetPassword")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void resetPassword (@RequestBody Map < String, String > inputJson) throws Exception {
+        employeeServiceLayer.updateEmployeePassword(parseInt(inputJson.get("id")), inputJson.get("password"));
+    }
 }

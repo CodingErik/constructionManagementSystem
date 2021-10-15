@@ -56,7 +56,6 @@ export default function ProjectsTable(props) {
             );
           })}
 
-
         {statusFilter === "in_progress" &&
           projects.map((project) => {
             return (
@@ -67,8 +66,8 @@ export default function ProjectsTable(props) {
                   <td>{project.deadline}</td>
                   <td>{project.startDate}</td>
                   <td>{project.roomType}</td>
-                  <td>{project.plumbing.toString()}</td>
-                  <td>{project.electric.toString()}</td>
+                  <td>{project.plumbing ? "✔️" : "❌"}</td>
+                  <td>{project.electric ? "✔️" : "❌"}</td>
                   <td>${project.materialBudget.toLocaleString()}</td>
                   <td>${project.laborBudget.toLocaleString()}</td>
                   <td>${project.totalBudget.toLocaleString()}</td>

@@ -11,11 +11,12 @@ const authority = decode(JSON.parse(localStorage.getItem("token"))).authorities;
 export default function Projects() {
   redirectIfTokenNull();
   const [projects, setProjects] = useState([]);
-  const [statusFilter, setStatusFilter] = useState("all");
-  const [roomType, setRoomType] = useState("");
-  const [name, setName] = useState("");
-  const [isPlumbing, setIsPlumbing] = useState();
-  const [isElectric, setIsElectric] = useState();
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [roomType, setRoomType] = useState('');
+  const [name, setName] = useState('');
+  const [isPlumbing, setIsPlumbing] = useState('all');
+  const [isElectric, setIsElectric] = useState('all');
+
   const projectNameRef = useRef();
   const roomTypeRef = useRef();
 
@@ -32,38 +33,31 @@ export default function Projects() {
       name.length > 0 ? name : null
     )
       .then((res) => {
-        if (isElectric === false && isPlumbing === false) {
+        // console.log(res.data);
+        if (isElectric === 'all' && isPlumbing === 'all') {
+          setProjects(res.data);
+        } else if (isElectric === false && isPlumbing === 'all') {
           let results = [];
-
-          res.data.forEach((project) => {
-            if (project.plumbing === false && project.electric === false) {
-              results.push(project);
-            }
-          });
-
-          setProjects(results);
-        } else if (isElectric === false) {
-          let results = [];
-
           res.data.forEach((project) => {
             if (project.electric === false) {
               results.push(project);
             }
           });
-
           setProjects(results);
-        } else if (isPlumbing === false) {
-          let results = [];
-
-          res.data.forEach((project) => {
-            if (project.plumbing === false) {
-              results.push(project);
-            }
-          });
-
-          setProjects(results);
+        } else if (isElectric === true && isPlumbing === 'all') {
+          setProjects(res.data.filter((project) => project.electric));
+        } else if (isElectric === 'all' && isPlumbing === false) {
+          setProjects(res.data.filter((project) => !project.plumbing));
+        } else if (isElectric === 'all' && isPlumbing === true) {
+          setProjects(res.data.filter((project) => project.plumbing));
+        } else if (isElectric === false && isPlumbing === false) {
+          setProjects(
+            res.data.filter((proejct) => !proejct.electric && !proejct.plumbing)
+          );
         } else {
-          setProjects(res.data);
+          setProjects(
+            res.data.filter((proejct) => proejct.electric && proejct.plumbing)
+          );
         }
       })
       .catch((error) => {
@@ -87,6 +81,10 @@ export default function Projects() {
 
     projectNameRef.current.value = "";
     setName(projectNameRef.current.value);
+
+    setStatusFilter('all');
+    setIsElectric('all');
+    setIsPlumbing('all');
   }
 
   return (
@@ -124,13 +122,17 @@ export default function Projects() {
               Status :{" "}
             </p>
             <input
-              onClick={() => setStatusFilter("all")}
-              type="radio"
-              className="btn-check"
-              name="btnradio"
-              id="allStatusFilter"
-              autoComplete="off"
-              defaultChecked=""
+              onClick={() => {
+                setStatusFilter('all');
+                setIsElectric('all');
+                setIsPlumbing('all');
+              }}
+              type='radio'
+              className='btn-check'
+              name='btnradio'
+              id='allStatusFilter'
+              autoComplete='off'
+              defaultChecked={statusFilter === 'all' ? true : false}
             />
             <label
               className="btn btn-outline-primary btn-sm"
@@ -139,13 +141,17 @@ export default function Projects() {
               All
             </label>
             <input
-              onClick={() => setStatusFilter("in_progress")}
-              type="radio"
-              className="btn-check"
-              name="btnradio"
-              id="inProgressStatusFilter"
-              autoComplete="off"
-              defaultChecked=""
+              onClick={() => {
+                setStatusFilter('in_progress');
+                setIsElectric('all');
+                setIsPlumbing('all');
+              }}
+              type='radio'
+              className='btn-check'
+              name='btnradio'
+              id='inProgressStatusFilter'
+              autoComplete='off'
+              defaultChecked=''
             />
             <label
               className="btn btn-outline-primary btn-sm"
@@ -154,13 +160,17 @@ export default function Projects() {
               In Progress
             </label>
             <input
-              onClick={() => setStatusFilter("completed")}
-              type="radio"
-              className="btn-check"
-              name="btnradio"
-              id="completedStatusFilter"
-              autoComplete="off"
-              defaultChecked=""
+              onClick={() => {
+                setStatusFilter('completed');
+                setIsElectric('all');
+                setIsPlumbing('all');
+              }}
+              type='radio'
+              className='btn-check'
+              name='btnradio'
+              id='completedStatusFilter'
+              autoComplete='off'
+              defaultChecked=''
             />
             <label
               className="btn btn-outline-primary btn-sm"
@@ -177,13 +187,17 @@ export default function Projects() {
               aria-label="Basic radio toggle button group"
             >
               <input
-                type="radio"
-                onClick={() => setIsPlumbing(true)}
-                className="btn-check"
-                name="btnradio"
-                id="btnradioPlumbingYes"
-                autoComplete="off"
-                defaultChecked=""
+                type='radio'
+                onClick={() => {
+                  setIsPlumbing(true);
+                  setStatusFilter('all');
+                  setIsElectric('all');
+                }}
+                className='btn-check'
+                name='btnradio'
+                id='btnradioPlumbingYes'
+                autoComplete='off'
+                defaultChecked=''
               />
               <label
                 className="btn btn-outline-secondary btn-sm"
@@ -192,13 +206,36 @@ export default function Projects() {
                 Yes
               </label>
               <input
-                type="radio"
-                onClick={() => setIsPlumbing(false)}
-                className="btn-check"
-                name="btnradio"
-                id="btnradioPlumbingNo"
-                autoComplete="off"
-                defaultChecked=""
+                type='radio'
+                onClick={() => {
+                  setIsPlumbing('all');
+                  setStatusFilter('all');
+                  setIsElectric('all');
+                }}
+                className='btn-check'
+                name='btnradio'
+                id='btnradioPlumbingAll'
+                autoComplete='off'
+                defaultChecked=''
+              />
+              <label
+                className='btn btn-outline-secondary btn-sm'
+                htmlFor='btnradioPlumbingAll'
+              >
+                All
+              </label>
+              <input
+                type='radio'
+                onClick={() => {
+                  setIsPlumbing(false);
+                  setStatusFilter('all');
+                  setIsElectric('all');
+                }}
+                className='btn-check'
+                name='btnradio'
+                id='btnradioPlumbingNo'
+                autoComplete='off'
+                defaultChecked=''
               />
               <label
                 className="btn btn-outline-secondary btn-sm"
@@ -216,13 +253,17 @@ export default function Projects() {
               aria-label="Basic radio toggle button group"
             >
               <input
-                type="radio"
-                onClick={() => setIsElectric(true)}
-                className="btn-check"
-                name="btnradio"
-                id="btnradioElectricityYes"
-                autoComplete="off"
-                defaultChecked=""
+                type='radio'
+                onClick={() => {
+                  setIsElectric(true);
+                  setIsPlumbing('all');
+                  setStatusFilter('all');
+                }}
+                className='btn-check'
+                name='btnradio'
+                id='btnradioElectricityYes'
+                autoComplete='off'
+                defaultChecked=''
               />
               <label
                 className="btn btn-outline-secondary btn-sm"
@@ -231,13 +272,36 @@ export default function Projects() {
                 Yes
               </label>
               <input
-                type="radio"
-                onClick={() => setIsElectric(false)}
-                className="btn-check"
-                name="btnradio"
-                id="btnradioElectricityNo"
-                autoComplete="off"
-                defaultChecked=""
+                type='radio'
+                onClick={() => {
+                  setIsElectric('all');
+                  setIsPlumbing('all');
+                  setStatusFilter('all');
+                }}
+                className='btn-check'
+                name='btnradio'
+                id='btnradioElectricityAll'
+                autoComplete='off'
+                defaultChecked=''
+              />
+              <label
+                className='btn btn-outline-secondary btn-sm'
+                htmlFor='btnradioElectricityAll'
+              >
+                All
+              </label>
+              <input
+                type='radio'
+                onClick={() => {
+                  setIsElectric(false);
+                  setIsPlumbing('all');
+                  setStatusFilter('all');
+                }}
+                className='btn-check'
+                name='btnradio'
+                id='btnradioElectricityNo'
+                autoComplete='off'
+                defaultChecked=''
               />
               <label
                 className="btn btn-outline-secondary btn-sm"

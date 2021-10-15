@@ -13,7 +13,7 @@ function SingleProjectPage() {
   const [project, setProject] = useState({});
   const [user, setUser] = useState({});
   const [hasAuthority, setHasAuthority] = useState(false);
-  const token = decode(JSON.parse(localStorage.getItem("token")));
+  const token = decode(JSON.parse(localStorage.getItem('token')));
 
   useEffect(() => {
     async function fetchData() {
@@ -25,17 +25,19 @@ function SingleProjectPage() {
     fetchData();
   }, []);
 
-  useEffect(()=> {
-    if((user.project?.id === project.id && user.title === "architect") || user.title === "admin") {
+  useEffect(() => {
+    if (
+      (user.project?.id === project.id && user.title === 'architect') ||
+      user.title === 'admin'
+    ) {
       setHasAuthority(true);
     } else {
       setHasAuthority(false);
     }
-  },[user,project])
-
+  }, [user, project]);
 
   return (
-    <div>
+    <div className='container'>
       <ProjectForm hasAuthority={hasAuthority} project={project} />
       <EmployeeListTableForProject
         projectId={projectId}

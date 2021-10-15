@@ -82,6 +82,11 @@ public class TaskController {
     }
 
 
+    @DeleteMapping("/api/tasks/{id}")
+    public void deleteTask(@PathVariable Integer id){
+        taskRepository.deleteById(id);
+    }
+
 //
 //    //  getting tasks by employee Id
 //    // /api/tasks/employee?id=1

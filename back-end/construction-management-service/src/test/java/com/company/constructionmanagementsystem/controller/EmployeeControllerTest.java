@@ -28,7 +28,9 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
@@ -69,6 +71,13 @@ public class EmployeeControllerTest {
     Employee employee4;
     Employee employee5;
     List<Employee> employeeInputList;
+
+    EmployeeViewModel employeeViewModel1;
+    EmployeeViewModel employeeViewModel2;
+    EmployeeViewModel employeeViewModel3;
+    EmployeeViewModel employeeViewModel4;
+    EmployeeViewModel employeeViewModel5;
+    List<EmployeeViewModel> employeeViewModelList;
 
     Project project1;
     Project project2;
@@ -121,10 +130,24 @@ public class EmployeeControllerTest {
         taskList.add(task3);
         taskList.add(task4);
         taskList.add(task5);
+
+        employeeViewModel1 = buildEmployeeViewModel(employee1);
+        employeeViewModel2 = buildEmployeeViewModel(employee2);
+        employeeViewModel3 = buildEmployeeViewModel(employee3);
+        employeeViewModel4 = buildEmployeeViewModel(employee4);
+        employeeViewModel5 = buildEmployeeViewModel(employee5);
+
+        employeeViewModelList = new ArrayList<>();
+        employeeViewModelList.add(employeeViewModel1);
+        employeeViewModelList.add(employeeViewModel2);
+        employeeViewModelList.add(employeeViewModel3);
+        employeeViewModelList.add(employeeViewModel4);
+        employeeViewModelList.add(employeeViewModel5);
+
     }
 
     @Test
-    @WithMockUser(roles = {"Admin"})
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnAllEmployees() throws Exception{
         employeeRepository.deleteAll();
 
@@ -134,9 +157,9 @@ public class EmployeeControllerTest {
         employeeRepository.save(employee4);
         employeeRepository.save(employee5);
 
-        given(employeeRepository.findAll()).willReturn(employeeInputList);
+        given(employeeServiceLayer.findAllEmployees()).willReturn(employeeViewModelList);
 
-        String jsonOutput = mapper.writeValueAsString(employeeInputList);
+        String jsonOutput = mapper.writeValueAsString(employeeViewModelList);
 
         mockMvc.perform(get("/api/employees"))
                 .andDo(print())
@@ -403,7 +426,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = {"Worker"})
+    @WithMockUser(roles = {"admin"})
     public void shouldUpdateEmployee() throws Exception {
         java.time.LocalDate birth = java.time.LocalDate.of(1999,9 ,9);
         java.time.LocalDate since = java.time.LocalDate.now();
@@ -415,6 +438,30 @@ public class EmployeeControllerTest {
 
         mockMvc.perform(
                 put("/api/employees")
+                        .content(inputJson)
+                        .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void shouldDeleteEmployeeAndAllTasksWithIt() throws Exception {
+
+        mockMvc.perform(delete("/api/employees/1")).andDo(print()).andExpect(status().isNoContent());
+    }
+  
+  
+    @WithMockUser(roles = {"Admin"})
+    public void shouldUpdatePassword() throws Exception {
+        Map<String, String> inputBody = new HashMap<>();
+        inputBody.put("id", "1");
+        inputBody.put("password", "newPass");
+
+        String inputJson = mapper.writeValueAsString(inputBody);
+
+        mockMvc.perform(
+                put("/api/resetPassword")
                         .content(inputJson)
                         .contentType(MediaType.APPLICATION_JSON)
         )
@@ -448,4 +495,5 @@ public class EmployeeControllerTest {
 
         return evm;
     }
+
 }
