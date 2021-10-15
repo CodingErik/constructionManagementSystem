@@ -10,6 +10,8 @@ import com.company.constructionmanagementsystem.security.JwtConverter;
 import com.company.constructionmanagementsystem.service.EmployeeServiceLayer;
 import com.company.constructionmanagementsystem.service.ProjectServiceLayer;
 import com.company.constructionmanagementsystem.util.LoginDetailsService;
+import com.company.constructionmanagementsystem.util.feign.MachineWarehouseClient;
+import com.company.constructionmanagementsystem.util.feign.MaterialWarehouseClient;
 import com.company.constructionmanagementsystem.viewmodel.ProjectViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -19,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.autoconfigure.RefreshAutoConfiguration;
@@ -26,6 +29,9 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.openfeign.FeignContext;
+import org.springframework.cloud.openfeign.FeignLoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -44,7 +50,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(ProjectController.class)
-@ImportAutoConfiguration({FeignAutoConfiguration.class, RefreshAutoConfiguration.class, LoadBalancerAutoConfiguration.class})
+//@AutoConfigureMockMvc(addFilters = false)
+@ImportAutoConfiguration(RefreshAutoConfiguration.class)
 public class ProjectControllerTest {
 
     @MockBean
@@ -60,13 +67,23 @@ public class ProjectControllerTest {
     ProjectServiceLayer projectServiceLayer;
 
     @MockBean
+    FeignContext feignContext;
+
+    @MockBean
+    FeignLoggerFactory feignLoggerFactory;
+
+    @MockBean
+    MachineWarehouseClient machineWarehouseClient;
+
+    @MockBean
+    MaterialWarehouseClient materialWarehouseClient;
+
+    @MockBean
     JwtConverter jwtConverter;
 
     @MockBean
     LoginDetailsService loginDetailsService;
 
-    @MockBean
-    LoadBalancerClient loadBalancerClient;
 
     @Autowired
     private MockMvc mockMvc;
@@ -96,7 +113,7 @@ public class ProjectControllerTest {
         java.time.LocalDate birth = java.time.LocalDate.of(1999,9 ,9);
         java.time.LocalDate since = java.time.LocalDate.now();
         java.time.LocalDate deadline = java.time.LocalDate.of(2010,4 ,4);
-        java.time.LocalDate startDate = java.time.LocalDate.now();
+        java.time.LocalDate startDate = java.time.LocalDate.of(1999,1 ,1);
         MathContext mathContext = new MathContext(4);
 
         mapper.registerModule(new JavaTimeModule());
@@ -173,6 +190,7 @@ public class ProjectControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnAllProjects() throws Exception {
         projectRepository.deleteAll();
         projectRepository.deleteAll();
@@ -210,6 +228,249 @@ public class ProjectControllerTest {
                 .andExpect(content().json(outputJson));
     }
 
+    @Test
+    public void shouldReturnProjectWithCorrectId() throws Exception {
+        projectRepository.deleteAll();
+        projectRepository.deleteAll();
+        taskRepository.deleteAll();
+
+        projectRepository.save(project1);
+        projectRepository.save(project2);
+
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+        employeeRepository.save(employee3);
+        employeeRepository.save(employee4);
+        employeeRepository.save(employee5);
+
+        taskRepository.save(task1);
+        taskRepository.save(task2);
+        taskRepository.save(task3);
+        taskRepository.save(task4);
+        taskRepository.save(task5);
+
+        ProjectViewModel targetProject = buildProjectViewModel(project1);
+
+        String outputJson = mapper.writeValueAsString(targetProject);
+
+        given(projectServiceLayer.findById(targetProject.getId())).willReturn(targetProject);
+
+        mockMvc.perform(get("/api/projects/id/1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(outputJson));
+
+    }
+
+//    @Test
+//    public void shouldReturnProjectWithCorrectStartDate() throws Exception {
+//        projectRepository.deleteAll();
+//        projectRepository.deleteAll();
+//        taskRepository.deleteAll();
+//
+//        java.time.LocalDate startDate = java.time.LocalDate.of(1999,1 ,1);
+//
+//        projectRepository.save(project1);
+//        projectRepository.save(project2);
+//
+//        employeeRepository.save(employee1);
+//        employeeRepository.save(employee2);
+//        employeeRepository.save(employee3);
+//        employeeRepository.save(employee4);
+//        employeeRepository.save(employee5);
+//
+//        taskRepository.save(task1);
+//        taskRepository.save(task2);
+//        taskRepository.save(task3);
+//        taskRepository.save(task4);
+//        taskRepository.save(task5);
+//
+//        List<ProjectViewModel> pvmList = new ArrayList<>();
+//
+//        for(Project project : projectList){
+//            if(project.getStartDate() == startDate){
+//                ProjectViewModel pvm = buildProjectViewModel(project);
+//                pvmList.add(pvm);
+//            }
+//        }
+//
+//        String outputJson = mapper.writeValueAsString(pvmList);
+//
+//        given(projectServiceLayer.findByStartDate(startDate)).willReturn(pvmList);
+//
+//        mockMvc.perform(get("/api/projects/startDate/1999-01-01"))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(content().json(outputJson));
+//
+//    }
+
+    @Test
+    public void shouldReturnListOfProjectsWithCorrectStatus() throws Exception {
+        projectRepository.deleteAll();
+        projectRepository.deleteAll();
+        taskRepository.deleteAll();
+
+        projectRepository.save(project1);
+        projectRepository.save(project2);
+
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+        employeeRepository.save(employee3);
+        employeeRepository.save(employee4);
+        employeeRepository.save(employee5);
+
+        taskRepository.save(task1);
+        taskRepository.save(task2);
+        taskRepository.save(task3);
+        taskRepository.save(task4);
+        taskRepository.save(task5);
+
+        List<ProjectViewModel> pvmList = new ArrayList<>();
+
+        for(Project project : projectList){
+            if(project.getStatus() == "in_progress"){
+                ProjectViewModel pvm = buildProjectViewModel(project);
+                pvmList.add(pvm);
+            }
+        }
+
+        String outputJson = mapper.writeValueAsString(pvmList);
+
+        given(projectServiceLayer.findByStatus("in_progress")).willReturn(pvmList);
+
+        mockMvc.perform(get("/api/projects/status/in_progress"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(outputJson));
+    }
+
+    @Test
+    public void shouldReturnListOfProjectsWithCorrectRoomType() throws Exception {
+        projectRepository.deleteAll();
+        projectRepository.deleteAll();
+        taskRepository.deleteAll();
+
+        projectRepository.save(project1);
+        projectRepository.save(project2);
+
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+        employeeRepository.save(employee3);
+        employeeRepository.save(employee4);
+        employeeRepository.save(employee5);
+
+        taskRepository.save(task1);
+        taskRepository.save(task2);
+        taskRepository.save(task3);
+        taskRepository.save(task4);
+        taskRepository.save(task5);
+
+        List<ProjectViewModel> pvmList = new ArrayList<>();
+
+        for(Project project : projectList){
+            if(project.getRoomType() == "Living Room"){
+                ProjectViewModel pvm = buildProjectViewModel(project);
+                pvmList.add(pvm);
+            }
+        }
+
+        String outputJson = mapper.writeValueAsString(pvmList);
+
+        given(projectServiceLayer.findByRoomType("Living Room")).willReturn(pvmList);
+
+        mockMvc.perform(get("/api/projects/roomType/Living Room"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(outputJson));
+    }
+
+    @Test
+    public void shouldReturnListOfProjectsWithCorrectName() throws Exception {
+        projectRepository.deleteAll();
+        projectRepository.deleteAll();
+        taskRepository.deleteAll();
+
+        projectRepository.save(project1);
+        projectRepository.save(project2);
+
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+        employeeRepository.save(employee3);
+        employeeRepository.save(employee4);
+        employeeRepository.save(employee5);
+
+        taskRepository.save(task1);
+        taskRepository.save(task2);
+        taskRepository.save(task3);
+        taskRepository.save(task4);
+        taskRepository.save(task5);
+
+        List<ProjectViewModel> pvmList = new ArrayList<>();
+
+        for(Project project : projectList){
+            if(project.getName() == "Project1"){
+                ProjectViewModel pvm = buildProjectViewModel(project);
+                pvmList.add(pvm);
+            }
+        }
+
+        String outputJson = mapper.writeValueAsString(pvmList);
+
+        given(projectServiceLayer.findByName("Project1")).willReturn(pvmList);
+
+        mockMvc.perform(get("/api/projects/name/Project1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(outputJson));
+    }
+
+    @Test
+    public void shouldReturnListOfProjectsWithCorrectNameAndRoomType() throws Exception {
+        projectRepository.deleteAll();
+        projectRepository.deleteAll();
+        taskRepository.deleteAll();
+
+        projectRepository.save(project1);
+        projectRepository.save(project2);
+
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+        employeeRepository.save(employee3);
+        employeeRepository.save(employee4);
+        employeeRepository.save(employee5);
+
+        taskRepository.save(task1);
+        taskRepository.save(task2);
+        taskRepository.save(task3);
+        taskRepository.save(task4);
+        taskRepository.save(task5);
+
+        List<ProjectViewModel> pvmList = new ArrayList<>();
+
+        for(Project project : projectList){
+            if(project.getName() == "Project1" && project.getRoomType() == "Kitchen"){
+                ProjectViewModel pvm = buildProjectViewModel(project);
+                pvmList.add(pvm);
+            }
+        }
+
+        String outputJson = mapper.writeValueAsString(pvmList);
+
+        given(projectServiceLayer.findByRoomTypeAndName("Kitchen", "Project1")).willReturn(pvmList);
+
+        mockMvc.perform(get("/api/projects/roomType/Kitchen/name/Project1"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(outputJson));
+    }
+
+
+    @Test
+    public void shouldDeleteProject() throws Exception {
+        mockMvc.perform(delete("/api/projects/1")).andDo(print()).andExpect(status().isNoContent());
+    }
+
     public ProjectViewModel buildProjectViewModel(Project inputProject) {
 
         List<Task> taskList = taskRepository.findAllTasksByProjectId(inputProject.getId());
@@ -236,4 +497,6 @@ public class ProjectControllerTest {
         return pvm;
 
     }
+
+
 }
