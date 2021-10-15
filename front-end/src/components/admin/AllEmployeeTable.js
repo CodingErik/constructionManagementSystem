@@ -47,7 +47,13 @@ function AllEmployeeTable({ originalEmployeeList }) {
         } else {
             columnBooleans[booleanVariable] = true;
         }
+        setEmployeeList(
+            [...employeeList].sort(
+                sort_by(neededVariable, columnBooleans[booleanVariable], methodTranslate)
+            )
+        );
     }
+
     return (
         <div>
             <h3>Employees Table</h3>
@@ -96,178 +102,178 @@ function AllEmployeeTable({ originalEmployeeList }) {
     );
 };
 
-    // return (
-    //   <div className='container'>
-    //     <h3>Employees Table</h3>
-    //     <div className='table-responsive'>
-    //       <table className='table table-hover'>
-    //         <thead>
-    //           <tr>
-    //             <th
-    //               scope='col'
-    //               onClick={() =>
-    //                 handleProjectColumnHeaderClick('id', 'employeeId', parseInt)
-    //               }
-    //             >
-    //               Employee Id
-    //             </th>
-    //             <th
-    //               scope='col'
-    //               onClick={() =>
-    //                 handleProjectColumnHeaderClick('name', 'employeeName', (a) =>
-    //                   a.toUpperCase()
-    //                 )
-    //               }
-    //             >
-    //               Name
-    //             </th>
-    //             <th
-    //               scope='col'
-    //               onClick={() => handleProjectColumnHeaderClick('username')}
-    //             >
-    //               Username
-    //             </th>
-    //             <th
-    //               scope='col'
-    //               // onClick={() =>
-    //               //   handleProjectColumnHeaderLeadClick(
-    //               //     'project.id',
-    //               //     'employeeProjectId',
-    //               //     parseInt
-    //               //   )
-    //               // }
-    //             >
-    //               Project Id
-    //             </th>
-    //             <th
-    //               scope='col'
-    //               // onClick={() =>
-    //               //   handleProjectColumnHeaderLeadClick('project.name')
-    //               // }
-    //             >
-    //               Project Name
-    //             </th>
-    //             <th
-    //               scope='col'
-    //               onClick={() =>
-    //                 handleProjectColumnHeaderClick(
-    //                   'title',
-    //                   'employeeTitle',
-    //                   (a) => a.toUpperCase()
-    //                 )
-    //               }
-    //             >
-    //               Title
-    //             </th>
-    //             <th
-    //               scope='col'
-    //               onClick={() =>
-    //                 handleProjectColumnHeaderClick(
-    //                   'email',
-    //                   'employeeEmail',
-    //                   (a) => a.toUpperCase()
-    //                 )
-    //               }
-    //             >
-    //               Email
-    //             </th>
-    //             <th
-    //               scope='col'
-    //               // onClick={() =>
-    //               //   handleProjectColumnHeaderClick(
-    //               //     'phoneNumber',
-    //               //     'employeePhoneNumber',
-    //               //     (a) => a.toUpperCase()
-    //               //   )
-    //               // }
-    //             >
-    //               Phone Number
-    //             </th>
-    //             <th
-    //               scope='col'
-    //               onClick={() =>
-    //                 handleProjectColumnHeaderClick(
-    //                   'salary',
-    //                   'employeeSalary',
-    //                   parseInt
-    //                 )
-    //               }
-    //             >
-    //               Salary
-    //             </th>
-    //             <th
-    //               scope='col'
-    //               onClick={() =>
-    //                 handleProjectColumnHeaderClick(
-    //                   'dateOfBirth',
-    //                   'employeeDateOfBirth',
-    //                   (a) => a.toUpperCase()
-    //                 )
-    //               }
-    //             >
-    //               Date Of Birth
-    //             </th>
-    //             <th
-    //               scope='col'
-    //               onClick={() =>
-    //                 handleProjectColumnHeaderClick(
-    //                   'yearsOfExperience',
-    //                   'employeeYearsOfExperience',
-    //                   parseInt
-    //                 )
-    //               }
-    //             >
-    //               Years Of Experience
-    //             </th>
-    //             <th
-    //               scope='col'
-    //               onClick={() =>
-    //                 handleProjectColumnHeaderClick(
-    //                   'userSince',
-    //                   'employeeUserSince',
-    //                   parseInt
-    //                 )
-    //               }
-    //             >
-    //               User Since
-    //             </th>
-    //           </tr>
-    //         </thead>
-    //         <tbody>
-    //           {employeeList.map((employee) => (
-    //             <tr className='table-active' key={employee.id}>
-    //               <th scope='row'>{employee.id}</th>
-    //               <td>{employee.name}</td>
-    //               <td>{employee.username}</td>
-    //               <td>{employee.project ? employee.project.id : 0}</td>
-    //               <td>
-    //                 {employee.project ? employee.project.name : 'Unassigned'}
-    //               </td>
-    //               <td>{employee.title}</td>
-    //               <td>{employee.email}</td>
-    //               <td>{employee.phoneNumber}</td>
-    //               <td>{employee.salary}</td>
-    //               <td>{employee.dateOfBirth}</td>
-    //               <td>{employee.yearsOfExperience}</td>
-    //               <td>{employee.userSince}</td>
-    //               <td>
-    //                 <Link
-    //                   to={{
-    //                     pathname: `/AdminSingleEmployeePage/${employee.id}`,
-    //                   }}
-    //                 >
-    //                   <button type='button' className='btn btn-warning'>
-    //                     Edit
-    //                   </button>
-    //                 </Link>
-    //               </td>
-    //             </tr>
-    //           ))}
-    //         </tbody>
-    //       </table>
-    //     </div>
-    //   </div>
-    // );
+// return (
+//   <div className='container'>
+//     <h3>Employees Table</h3>
+//     <div className='table-responsive'>
+//       <table className='table table-hover'>
+//         <thead>
+//           <tr>
+//             <th
+//               scope='col'
+//               onClick={() =>
+//                 handleProjectColumnHeaderClick('id', 'employeeId', parseInt)
+//               }
+//             >
+//               Employee Id
+//             </th>
+//             <th
+//               scope='col'
+//               onClick={() =>
+//                 handleProjectColumnHeaderClick('name', 'employeeName', (a) =>
+//                   a.toUpperCase()
+//                 )
+//               }
+//             >
+//               Name
+//             </th>
+//             <th
+//               scope='col'
+//               onClick={() => handleProjectColumnHeaderClick('username')}
+//             >
+//               Username
+//             </th>
+//             <th
+//               scope='col'
+//               // onClick={() =>
+//               //   handleProjectColumnHeaderLeadClick(
+//               //     'project.id',
+//               //     'employeeProjectId',
+//               //     parseInt
+//               //   )
+//               // }
+//             >
+//               Project Id
+//             </th>
+//             <th
+//               scope='col'
+//               // onClick={() =>
+//               //   handleProjectColumnHeaderLeadClick('project.name')
+//               // }
+//             >
+//               Project Name
+//             </th>
+//             <th
+//               scope='col'
+//               onClick={() =>
+//                 handleProjectColumnHeaderClick(
+//                   'title',
+//                   'employeeTitle',
+//                   (a) => a.toUpperCase()
+//                 )
+//               }
+//             >
+//               Title
+//             </th>
+//             <th
+//               scope='col'
+//               onClick={() =>
+//                 handleProjectColumnHeaderClick(
+//                   'email',
+//                   'employeeEmail',
+//                   (a) => a.toUpperCase()
+//                 )
+//               }
+//             >
+//               Email
+//             </th>
+//             <th
+//               scope='col'
+//               // onClick={() =>
+//               //   handleProjectColumnHeaderClick(
+//               //     'phoneNumber',
+//               //     'employeePhoneNumber',
+//               //     (a) => a.toUpperCase()
+//               //   )
+//               // }
+//             >
+//               Phone Number
+//             </th>
+//             <th
+//               scope='col'
+//               onClick={() =>
+//                 handleProjectColumnHeaderClick(
+//                   'salary',
+//                   'employeeSalary',
+//                   parseInt
+//                 )
+//               }
+//             >
+//               Salary
+//             </th>
+//             <th
+//               scope='col'
+//               onClick={() =>
+//                 handleProjectColumnHeaderClick(
+//                   'dateOfBirth',
+//                   'employeeDateOfBirth',
+//                   (a) => a.toUpperCase()
+//                 )
+//               }
+//             >
+//               Date Of Birth
+//             </th>
+//             <th
+//               scope='col'
+//               onClick={() =>
+//                 handleProjectColumnHeaderClick(
+//                   'yearsOfExperience',
+//                   'employeeYearsOfExperience',
+//                   parseInt
+//                 )
+//               }
+//             >
+//               Years Of Experience
+//             </th>
+//             <th
+//               scope='col'
+//               onClick={() =>
+//                 handleProjectColumnHeaderClick(
+//                   'userSince',
+//                   'employeeUserSince',
+//                   parseInt
+//                 )
+//               }
+//             >
+//               User Since
+//             </th>
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {employeeList.map((employee) => (
+//             <tr className='table-active' key={employee.id}>
+//               <th scope='row'>{employee.id}</th>
+//               <td>{employee.name}</td>
+//               <td>{employee.username}</td>
+//               <td>{employee.project ? employee.project.id : 0}</td>
+//               <td>
+//                 {employee.project ? employee.project.name : 'Unassigned'}
+//               </td>
+//               <td>{employee.title}</td>
+//               <td>{employee.email}</td>
+//               <td>{employee.phoneNumber}</td>
+//               <td>{employee.salary}</td>
+//               <td>{employee.dateOfBirth}</td>
+//               <td>{employee.yearsOfExperience}</td>
+//               <td>{employee.userSince}</td>
+//               <td>
+//                 <Link
+//                   to={{
+//                     pathname: `/AdminSingleEmployeePage/${employee.id}`,
+//                   }}
+//                 >
+//                   <button type='button' className='btn btn-warning'>
+//                     Edit
+//                   </button>
+//                 </Link>
+//               </td>
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+//     </div>
+//   </div>
+// );
 
 
 export default AllEmployeeTable;
