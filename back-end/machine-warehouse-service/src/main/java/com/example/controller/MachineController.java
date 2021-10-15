@@ -23,7 +23,6 @@ public class MachineController {
 
     @RequestMapping(value = "/machine", method = RequestMethod.GET)
     public String helloCloud() {
-
         return materialWarehouse + servicePath;
     }
 

@@ -3,8 +3,16 @@ import BriefProjectsDisplay from '../components/home/BriefProjectsDisplay';
 import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
 import ProjectPieChart from '../components/home/ProjectPieChart';
 import EmployeeListTable from '../components/home/EmployeeListTable';
-import Materials from '../components/materials/Materials';
-import Machinery from '../components/machinery/Machinery';
+import Resources from '../components/resources/Resources';
+import steelIcon from '../assets/steel.png';
+import brickIcon from '../assets/brick.png';
+import lumberIcon from '../assets/lumber.png';
+import cementIcon from '../assets/cement.png';
+import craneIcon from '../assets/crane.png';
+import forkliftIcon from '../assets/forklift.png';
+import ladderIcon from '../assets/ladder.png';
+import drillIcon from '../assets/drill.png';
+
 import {
   ProjectAPI,
   EmployeeAPI,
@@ -64,11 +72,56 @@ function Home() {
       });
 
     MaterialAPI.getAllMaterialsInventory().then((response) => {
-      setMaterials(response.data);
+      const materialsHolder = {
+        steel: {
+          name: 'Steel',
+          amount: response.data?.steel,
+          icon: steelIcon,
+        },
+        brick: {
+          name: 'Brick',
+          amount: response.data?.brick,
+          icon: brickIcon,
+        },
+        lumber: {
+          name: 'Lumber',
+          amount: response.data?.lumber,
+          icon: lumberIcon,
+        },
+        cement: {
+          name: 'Cement',
+          amount: response.data?.cement,
+          icon: cementIcon,
+        },
+      };
+      setMaterials(materialsHolder);
     });
 
     MachineryAPI.getAllMachineryInventory().then((response) => {
-      setMachinery(response.data);
+      const machineHolder = {
+        crane: {
+          name: 'Crane',
+          amount: response.data?.crane,
+          icon: craneIcon,
+        },
+        forklift: {
+          name: 'Forklift',
+          amount: response.data?.forklift,
+          icon: forkliftIcon,
+        },
+        ladder: {
+          name: 'Ladder',
+          amount: response.data?.ladder,
+          icon: ladderIcon,
+        },
+        drill: {
+          name: 'Drill',
+          amount: response.data?.drill,
+          icon: drillIcon,
+        },
+      };
+      console.log(machineHolder);
+      setMachinery(machineHolder);
     });
 
     setIsLoading(false);
@@ -101,10 +154,18 @@ function Home() {
           <div className='row mb-3'>
             <div className='row mt-3' style={{ minHeight: '445px' }}>
               <div className='col col-xl-6'>
-                <Materials materials={materials} />
+                <Resources
+                  resources={materials}
+                  title='Materials'
+                  denominator='/1000 lbs'
+                />
               </div>
               <div className='col col-xl-6'>
-                <Machinery machinery={machinery} />
+                <Resources
+                  resources={machinery}
+                  title='Machines'
+                  denominator='/30 units'
+                />
               </div>
             </div>
           </div>
