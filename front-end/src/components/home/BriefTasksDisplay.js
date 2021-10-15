@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import './home.css';
 
 let taskColumnBooleans = {
   taskId: false,
@@ -130,11 +131,9 @@ export default function BriefTasksDisplay({
   };
 
   return (
-    <div
-      className='container'
-    >
+    <div className='container'>
       <div className='row'>
-        <h3>Task Table</h3>
+        <h3>Task</h3>
       </div>
 
       <div
@@ -179,7 +178,6 @@ export default function BriefTasksDisplay({
               >
                 Deadline
               </th>
-
             </tr>
           </thead>
           <tbody>

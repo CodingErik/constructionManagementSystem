@@ -10,8 +10,8 @@ export default function Projects() {
   const [statusFilter, setStatusFilter] = useState('all');
   const [roomType, setRoomType] = useState('');
   const [name, setName] = useState('');
-  const [isPlumbing, setIsPlumbing] = useState();
-  const [isElectric, setIsElectric] = useState();
+  const [isPlumbing, setIsPlumbing] = useState('all');
+  const [isElectric, setIsElectric] = useState('all');
 
   const projectNameRef = useRef();
   const roomTypeRef = useRef();
@@ -22,39 +22,31 @@ export default function Projects() {
       name.length > 0 ? name : null
     )
       .then((res) => {
-        console.log(res.data);
-        if (isElectric === false && isPlumbing === false) {
+        // console.log(res.data);
+        if (isElectric === 'all' && isPlumbing === 'all') {
+          setProjects(res.data);
+        } else if (isElectric === false && isPlumbing === 'all') {
           let results = [];
-
-          res.data.forEach((project) => {
-            if (project.plumbing === false && project.electric === false) {
-              results.push(project);
-            }
-          });
-
-          setProjects(results);
-        } else if (isElectric === false) {
-          let results = [];
-
           res.data.forEach((project) => {
             if (project.electric === false) {
               results.push(project);
             }
           });
-
           setProjects(results);
-        } else if (isPlumbing === false) {
-          let results = [];
-
-          res.data.forEach((project) => {
-            if (project.plumbing === false) {
-              results.push(project);
-            }
-          });
-
-          setProjects(results);
+        } else if (isElectric === true && isPlumbing === 'all') {
+          setProjects(res.data.filter((project) => project.electric));
+        } else if (isElectric === 'all' && isPlumbing === false) {
+          setProjects(res.data.filter((project) => !project.plumbing));
+        } else if (isElectric === 'all' && isPlumbing === true) {
+          setProjects(res.data.filter((project) => project.plumbing));
+        } else if (isElectric === false && isPlumbing === false) {
+          setProjects(
+            res.data.filter((proejct) => !proejct.electric && !proejct.plumbing)
+          );
         } else {
-          setProjects(res.data);
+          setProjects(
+            res.data.filter((proejct) => proejct.electric && proejct.plumbing)
+          );
         }
       })
       .catch((error) => {
@@ -78,10 +70,14 @@ export default function Projects() {
 
     projectNameRef.current.value = '';
     setName(projectNameRef.current.value);
+
+    setStatusFilter('all');
+    setIsElectric('all');
+    setIsPlumbing('all');
   }
 
   return (
-    <div className='container-fluid mt-3'>
+    <div className='container mt-3'>
       <div className='row'>
         <div className='statusFilter'>
           <div
@@ -96,13 +92,17 @@ export default function Projects() {
               Status :{' '}
             </p>
             <input
-              onClick={() => setStatusFilter('all')}
+              onClick={() => {
+                setStatusFilter('all');
+                setIsElectric('all');
+                setIsPlumbing('all');
+              }}
               type='radio'
               className='btn-check'
               name='btnradio'
               id='allStatusFilter'
               autoComplete='off'
-              defaultChecked=''
+              defaultChecked={statusFilter === 'all' ? true : false}
             />
             <label
               className='btn btn-outline-primary btn-sm'
@@ -111,7 +111,11 @@ export default function Projects() {
               All
             </label>
             <input
-              onClick={() => setStatusFilter('in_progress')}
+              onClick={() => {
+                setStatusFilter('in_progress');
+                setIsElectric('all');
+                setIsPlumbing('all');
+              }}
               type='radio'
               className='btn-check'
               name='btnradio'
@@ -126,7 +130,11 @@ export default function Projects() {
               In Progress
             </label>
             <input
-              onClick={() => setStatusFilter('completed')}
+              onClick={() => {
+                setStatusFilter('completed');
+                setIsElectric('all');
+                setIsPlumbing('all');
+              }}
               type='radio'
               className='btn-check'
               name='btnradio'
@@ -150,7 +158,11 @@ export default function Projects() {
             >
               <input
                 type='radio'
-                onClick={() => setIsPlumbing(true)}
+                onClick={() => {
+                  setIsPlumbing(true);
+                  setStatusFilter('all');
+                  setIsElectric('all');
+                }}
                 className='btn-check'
                 name='btnradio'
                 id='btnradioPlumbingYes'
@@ -165,7 +177,30 @@ export default function Projects() {
               </label>
               <input
                 type='radio'
-                onClick={() => setIsPlumbing(false)}
+                onClick={() => {
+                  setIsPlumbing('all');
+                  setStatusFilter('all');
+                  setIsElectric('all');
+                }}
+                className='btn-check'
+                name='btnradio'
+                id='btnradioPlumbingAll'
+                autoComplete='off'
+                defaultChecked=''
+              />
+              <label
+                className='btn btn-outline-secondary btn-sm'
+                htmlFor='btnradioPlumbingAll'
+              >
+                All
+              </label>
+              <input
+                type='radio'
+                onClick={() => {
+                  setIsPlumbing(false);
+                  setStatusFilter('all');
+                  setIsElectric('all');
+                }}
                 className='btn-check'
                 name='btnradio'
                 id='btnradioPlumbingNo'
@@ -189,7 +224,11 @@ export default function Projects() {
             >
               <input
                 type='radio'
-                onClick={() => setIsElectric(true)}
+                onClick={() => {
+                  setIsElectric(true);
+                  setIsPlumbing('all');
+                  setStatusFilter('all');
+                }}
                 className='btn-check'
                 name='btnradio'
                 id='btnradioElectricityYes'
@@ -204,7 +243,30 @@ export default function Projects() {
               </label>
               <input
                 type='radio'
-                onClick={() => setIsElectric(false)}
+                onClick={() => {
+                  setIsElectric('all');
+                  setIsPlumbing('all');
+                  setStatusFilter('all');
+                }}
+                className='btn-check'
+                name='btnradio'
+                id='btnradioElectricityAll'
+                autoComplete='off'
+                defaultChecked=''
+              />
+              <label
+                className='btn btn-outline-secondary btn-sm'
+                htmlFor='btnradioElectricityAll'
+              >
+                All
+              </label>
+              <input
+                type='radio'
+                onClick={() => {
+                  setIsElectric(false);
+                  setIsPlumbing('all');
+                  setStatusFilter('all');
+                }}
                 className='btn-check'
                 name='btnradio'
                 id='btnradioElectricityNo'

@@ -1,17 +1,18 @@
-import { AiFillEye } from "react-icons/ai";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import "./UserPersonalInformationFormModal.css";
 import { useRef } from "react";
-import { EmployeeAPI } from "../../api";
+import { EmployeeAPI, LoginAPI } from "../../api";
 
 
-function UserPersonalInformationModal({ userInfo, hasAuthority, modalId }) {
+function UserPersonalInformationModal({ userInfo, modalId }) {
     const userNameRef = useRef(null);
     const userEmailRef = useRef(null);
     const userPhoneRef = useRef(null);
     const userDateOfBirthRef = useRef(null);
-    const userYearsOfExprienceRef = useRef(null);
-    const passwordInputButton = useRef(null);
-    const passwordConfirmationInputButton = useRef(null);
+    const userYearsOfExperienceRef = useRef(null);
+    const passwordOriginalInput = useRef(null);
+    const passwordNewInput = useRef(null);
+    const passwordConfirmationInput = useRef(null);
 
     const handleBasicInformationUpdateSubmit = (event) => {
         event.preventDefault();
@@ -21,31 +22,34 @@ function UserPersonalInformationModal({ userInfo, hasAuthority, modalId }) {
             email: userEmailRef.current.value,
             phoneNumber: userPhoneRef.current.value,
             dateOfBirth: userDateOfBirthRef.current.value,
-            yearsOfExperience: userYearsOfExprienceRef.current.value,
-            projectId: userInfo.project.id
+            yearsOfExperience: userYearsOfExperienceRef.current.value,
+            projectId: userInfo.project ? userInfo.project.id : 0
         };
         EmployeeAPI.putEmployee(updatedInformation);
     }
 
-    const handlePasswordSubmit = (event) => {
+    const handlePasswordSubmit = async (event) => {
         event.preventDefault();
-        // passwordInputButton.current.type = "text";
-        // console.log(passwordInputButton);
-    }
-
-    const togglePasswordShow = () => {
-        if(passwordInputButton.current.type === "password") {
-            passwordInputButton.current.type = "text";
-        } else if (passwordInputButton.current.type === "text") {
-            passwordInputButton.current.type = "password";
+        const passwordCheck = await LoginAPI.login(userInfo.username, passwordOriginalInput.current.value);
+        console.log(passwordCheck);
+        if (passwordCheck.status === 200 && passwordNewInput.current.value === passwordConfirmationInput.current.value) {
+            const userInformationWithUpdatedPassword = {
+                ...userInfo,
+                projectId: userInfo.project ? userInfo.project.id : 0,
+                password: passwordConfirmationInput.current.value
+            }
+            EmployeeAPI.putEmployee(userInformationWithUpdatedPassword);
+            alert("Password Updated");
+        } else {
+            alert("Original password is incorrect");
         }
     }
 
-    const togglePasswordConfirmShow = () => {
-        if(passwordConfirmationInputButton.current.type === "password") {
-            passwordConfirmationInputButton.current.type = "text";
-        } else if (passwordConfirmationInputButton.current.type === "text") {
-            passwordConfirmationInputButton.current.type = "password";
+    const togglePasswordShow = (passwordInputRef) => {
+        if (passwordInputRef.current.type === "password") {
+            passwordInputRef.current.type = "text";
+        } else if (passwordInputRef.current.type === "text") {
+            passwordInputRef.current.type = "password";
         }
     }
 
@@ -99,10 +103,11 @@ function UserPersonalInformationModal({ userInfo, hasAuthority, modalId }) {
                                     <input
                                         id='user-phone'
                                         type='tel'
-                                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
-                                        className="form-control ms-4 inputInformation" 
+                                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                        className="form-control ms-4 inputInformation"
                                         defaultValue={userInfo.phoneNumber}
                                         ref={userPhoneRef}></input>
+                                    <small className="form-label ms-4 d-flex align-items-start">Format: 123-456-7890</small>
                                 </div>
                                 <div className="form-group row">
                                     <label htmlFor="dateOfBirth" className="form-label mt-4 ms-4 d-flex align-items-start">
@@ -127,7 +132,7 @@ function UserPersonalInformationModal({ userInfo, hasAuthority, modalId }) {
                                         className="form-control ms-4 inputInformation"
                                         id="user-yearsOfExperience"
                                         defaultValue={userInfo.yearsOfExperience}
-                                        ref={userYearsOfExprienceRef}
+                                        ref={userYearsOfExperienceRef}
                                     />
                                 </div>
                             </fieldset>
@@ -141,29 +146,41 @@ function UserPersonalInformationModal({ userInfo, hasAuthority, modalId }) {
                             <fieldset>
                                 <div className="form-group">
                                     <label
-                                        htmlFor="user-password"
+                                        htmlFor="user-oldPassword"
                                         className="form-label mt-4 ms-4 d-flex align-items-start"
                                     >
-                                        Password
+                                        Old Password
                                     </label>
                                     <div class="input-group mb-3">
-                                        <input ref={passwordInputButton} type="password" class="form-control ms-4" placeholder="**********" id="confirmPassword" />
-                                        <button class="btn" type="button" id="showPassword" onClick={togglePasswordShow}><AiFillEye size={25} /></button>
+                                        <input ref={passwordOriginalInput} type="password" class="form-control ms-4" placeholder="**********" id="confirmPassword" />
+                                        <button class="btn" type="button" id="showPassword" onClick={() => togglePasswordShow(passwordOriginalInput)}>
+                                            <AiFillEye size={25} />
+                                        </button>
                                     </div>
                                     <label
                                         htmlFor="user-password"
                                         className="form-label mt-4 ms-4 d-flex align-items-start"
                                     >
-                                        Confirm Password
+                                        New Password
                                     </label>
                                     <div class="input-group mb-3">
-                                        <input ref={passwordConfirmationInputButton} type="password" class="form-control ms-4" placeholder="**********" id="confirmPassword" />
-                                        <button class="btn" type="button" id="showConfirmPassword" onClick={togglePasswordConfirmShow}><AiFillEye size={25} /></button>
+                                        <input ref={passwordNewInput} type="password" class="form-control ms-4" id="confirmPassword" />
+                                        <button class="btn" type="button" id="showPassword" onClick={() => togglePasswordShow(passwordNewInput)}><AiFillEye size={25} /></button>
+                                    </div>
+                                    <label
+                                        htmlFor="user-password"
+                                        className="form-label mt-4 ms-4 d-flex align-items-start"
+                                    >
+                                        Confirm New Password
+                                    </label>
+                                    <div class="input-group mb-3">
+                                        <input ref={passwordConfirmationInput} type="password" class="form-control ms-4" id="confirmPassword" />
+                                        <button class="btn" type="button" id="showConfirmPassword" onClick={() => togglePasswordShow(passwordConfirmationInput)}><AiFillEye size={25} /></button>
                                     </div>
                                 </div>
                             </fieldset>
                             <button className="btn btn-info mt-3" type="submit">
-                                Submit
+                                Update Password
                             </button>
                         </form>
                     </div>
