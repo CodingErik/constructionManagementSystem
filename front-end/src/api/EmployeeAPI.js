@@ -24,6 +24,17 @@ const employeeAPI = {
   getEmployeeByTitle: (title) => {
     return axios.get(`${baseUrl}/findByTitle/${title}`);
   },
+  updatePassword: async (id, newPassword) => {
+    const res = await axios.put(`http://localhost:8979/api/resetPassword`, {
+      id: id,
+      password: newPassword,
+    });
+
+    return res;
+  },
+  deleteEmployeeById: (employeeId) => {
+    return axios.delete(`${baseUrl}/${employeeId}`)
+  }
 };
 
 export default employeeAPI;

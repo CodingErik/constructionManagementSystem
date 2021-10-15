@@ -3,7 +3,7 @@ import './UserPersonalInformationFormModal.css';
 import { useRef } from 'react';
 import { EmployeeAPI, LoginAPI } from '../../api';
 
-function UserPersonalInformationModal({ userInfo, modalId }) {
+function UserPersonalInformationModal({ userInfo, modalId , updateUserBasicInformation}) {
   const userNameRef = useRef(null);
   const userEmailRef = useRef(null);
   const userPhoneRef = useRef(null);
@@ -22,9 +22,9 @@ function UserPersonalInformationModal({ userInfo, modalId }) {
       phoneNumber: userPhoneRef.current.value,
       dateOfBirth: userDateOfBirthRef.current.value,
       yearsOfExperience: userYearsOfExperienceRef.current.value,
-      projectId: userInfo.project ? userInfo.project.id : 0,
+      projectId: userInfo.project ? userInfo.project.id : 0,    
     };
-    EmployeeAPI.putEmployee(updatedInformation);
+    updateUserBasicInformation(updatedInformation);
   };
 
   const handlePasswordSubmit = async (event) => {
@@ -33,20 +33,23 @@ function UserPersonalInformationModal({ userInfo, modalId }) {
       userInfo.username,
       passwordOriginalInput.current.value
     );
-    console.log(passwordCheck);
-    if (
-      passwordCheck.status === 200 &&
-      passwordNewInput.current.value === passwordConfirmationInput.current.value
-    ) {
-      const userInformationWithUpdatedPassword = {
-        ...userInfo,
-        projectId: userInfo.project ? userInfo.project.id : 0,
-        password: passwordConfirmationInput.current.value,
-      };
-      EmployeeAPI.putEmployee(userInformationWithUpdatedPassword);
-      alert('Password Updated');
-    } else {
+    if (passwordCheck.status !== 200) {
       alert('Original password is incorrect');
+    } else if (passwordNewInput.current.value === '') {
+      alert('No new password');
+    } else if (
+      passwordNewInput.current.value !== passwordConfirmationInput.current.value
+    ) {
+      alert('Password not match');
+    } else {
+      EmployeeAPI.updatePassword(
+        userInfo.id,
+        passwordConfirmationInput.current.value
+      ).then((res) => {
+        if (res.status === 204) {
+          alert('Password Updated');
+        } else alert(res.data);
+      });
     }
   };
 

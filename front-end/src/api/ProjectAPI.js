@@ -36,6 +36,9 @@ const projectAPI = {
   },
   addProject: (newProject) => {
     return axios.post(`${baseUrl}`, newProject);
+  },
+  deleteProjectById: (projectId) => {
+    return axios.delete(`${baseUrl}/${projectId}`);
   }
 };
 
