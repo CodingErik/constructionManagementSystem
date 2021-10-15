@@ -16,16 +16,21 @@ function BriefProjectsDisplay({ originalProjectLists }) {
     setProjectList([...originalProjectLists]);
   }, [originalProjectLists]);
 
-  const handleProjectColumnHeaderClick = (neededVariable, booleanVariable, methodTranslate) => {
+  const handleProjectColumnHeaderClick = (
+    neededVariable,
+    booleanVariable,
+    methodTranslate
+  ) => {
     const sort_by = (neededField, reverse, primer) => {
-      const getField = (obj, path) => (path.split('.').reduce((value, el) => value[el], obj))
+      const getField = (obj, path) =>
+        path.split('.').reduce((value, el) => value[el], obj);
       const key = primer
         ? function (x) {
-          return primer(getField(x, neededField));
-        }
+            return primer(getField(x, neededField));
+          }
         : function (x) {
-          return getField(x, neededVariable);
-        };
+            return getField(x, neededVariable);
+          };
       reverse = !reverse ? 1 : -1;
 
       return function (a, b) {
@@ -40,10 +45,14 @@ function BriefProjectsDisplay({ originalProjectLists }) {
     }
     setProjectList(
       [...projectList].sort(
-        sort_by(neededVariable, columnBooleans[booleanVariable], methodTranslate)
+        sort_by(
+          neededVariable,
+          columnBooleans[booleanVariable],
+          methodTranslate
+        )
       )
     );
-  }
+  };
 
   return (
     <div>
@@ -55,36 +64,56 @@ function BriefProjectsDisplay({ originalProjectLists }) {
           overflowY: 'scroll',
         }}
       >
-        <table className='table table-hover'>
+        <table className='table table-hover m-auto'>
           <thead>
             <tr>
               <th
-                scope='col'
-                onClick={() => handleProjectColumnHeaderClick('id', "projectId", parseInt)}
+                className='col-2'
+                onClick={() =>
+                  handleProjectColumnHeaderClick('id', 'projectId', parseInt)
+                }
               >
                 Project Id
               </th>
               <th
-                scope='col'
-                onClick={() => handleProjectColumnHeaderClick('name', "name", (a) => a.toUpperCase())}
+                className='col-2'
+                onClick={() =>
+                  handleProjectColumnHeaderClick('name', 'name', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Name
               </th>
               <th
-                scope='col'
-                onClick={() => handleProjectColumnHeaderClick('status', "status", (a) => a.toUpperCase())}
+                className='col-2'
+                onClick={() =>
+                  handleProjectColumnHeaderClick('status', 'status', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Status
               </th>
               <th
-                scope='col'
-                onClick={() => handleProjectColumnHeaderClick('startDate', "startDate", (a) => a.toUpperCase())}
+                className='col-2'
+                onClick={() =>
+                  handleProjectColumnHeaderClick(
+                    'startDate',
+                    'startDate',
+                    (a) => a.toUpperCase()
+                  )
+                }
               >
                 Start Date
               </th>
               <th
-                scope='col'
-                onClick={() => handleProjectColumnHeaderClick('deadline', "deadline", (a) => a.toUpperCase())}
+                className='col-2'
+                onClick={() =>
+                  handleProjectColumnHeaderClick('deadline', 'deadline', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Deadline
               </th>

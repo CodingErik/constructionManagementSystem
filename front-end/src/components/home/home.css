@@ -2,10 +2,6 @@ th {
   cursor: pointer;
 }
 
-body {
-  overflow-x: hidden;
-}
-
 body::-webkit-scrollbar,
 table::-webkit-scrollbar {
   width: 1em;

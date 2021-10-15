@@ -145,6 +145,10 @@ public class ProjectServiceLayer {
 
     @Transactional
     public void deleteProject(Integer id){
+        if(!projectRepository.findById(id).isPresent()) {
+            throw new IllegalArgumentException("Project Id not found.");
+        }
+
         Project targetProject = projectRepository.findById(id).get();
 
         List<Task> relatedTasks = taskRepository.findAllTasksByProjectId(targetProject.getId());

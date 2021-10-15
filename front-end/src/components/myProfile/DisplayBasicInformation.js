@@ -41,7 +41,7 @@ function DisplayBasicInformation({ userInfo }) {
             </div>
             <div className='list-group-item bg-transparent text-start '>
               <p id='employee-phoneNumber'>
-                Phone: {userInfo?.phoneNumber || 'none'}
+                Phone: {userInfo?.phoneNumber || 'None'}
               </p>
             </div>
             <div className='list-group-item bg-transparent text-start '>
@@ -49,11 +49,11 @@ function DisplayBasicInformation({ userInfo }) {
             </div>
             <div className='list-group-item bg-transparent text-start '>
               <span id='employee-dateOfBirth'>
-                Date Of Birth: {userInfo?.dateOfBirth || 'none'}
+                Date Of Birth: {userInfo?.dateOfBirth || 'None'}
               </span>
             </div>
             <div className='list-group-item bg-transparent text-start '>
-              <p id='employee-salary'>Salary: {userInfo?.salary || 'none'}</p>
+              <p id='employee-salary'>Salary: {userInfo?.salary || 'None'}</p>
             </div>
             <div className='list-group-item bg-transparent text-start '>
               <p id='employee-yearsOfExperience'>

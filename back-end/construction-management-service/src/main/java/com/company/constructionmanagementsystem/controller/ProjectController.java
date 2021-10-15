@@ -54,13 +54,6 @@ public class ProjectController {
     }
 
 
-    /**     DELETE
-     *  when project is deleted, then returns all the machinery to microservice
-     *
-     *  ProjectRepository.deleteById();
-     *  machineWarehouseClient.returnMachinery(machinery);
-     * */
-
 
     /**
      * request for filtering fits this category more
@@ -106,11 +99,11 @@ public class ProjectController {
         return pvm;
     }
 
-//    @GetMapping("/api/projects/deadline/{deadline}")
-//    @ResponseStatus(value = HttpStatus.OK)
-//    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
-//        return projectServiceLayer.findByDeadline(deadline);
-//    }
+    @GetMapping("/api/projects/deadline/{deadline}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
+        return projectServiceLayer.findByDeadline(deadline);
+    }
 
     @GetMapping("/api/projects/startDate/{startDate}")
     @ResponseStatus(value = HttpStatus.OK)
@@ -151,6 +144,7 @@ public class ProjectController {
 
         return returnProjectList;
     }
+
 
     @DeleteMapping("/api/projects/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
