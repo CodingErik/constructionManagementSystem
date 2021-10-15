@@ -8,7 +8,6 @@ function AdminAllEmployeeViewPage() {
     useEffect(() => {
         EmployeeAPI.getAllEmployees().then(response => {
             setOriginalEmployeeList(response.data);
-            console.log(response.data);
         })
     }, [])
 

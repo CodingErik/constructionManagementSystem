@@ -185,81 +185,166 @@ function AdminEditEmployeeInfoModal({
                         ref={employeeSalaryRef}
                       />
                     </div>
-                  </div>
-                  <div className='form-group'>
-                    <label
-                      htmlFor='employee-yearsOfExperience'
-                      s
-                      className='form-label mt-4 ms-4 d-flex align-items-start'
-                    >
-                      Years Of Experience:
-                    </label>
-                    <input
-                      type='number'
-                      className='form-control m-auto'
-                      id='employee-yearsOfExperience'
-                      defaultValue={employeeInfo.yearsOfExperience}
-                      ref={employeeYearsOfExperienceRef}
-                    />
-                  </div>
-                </fieldset>
-                <button className='btn btn-info mt-3' type='submit'>
-                  Apply Changes
-                </button>
-              </form>
+                    <div className="modal-body">
+                        <form onSubmit={(event) => handleBasicInformationUpdateSubmit(event,
+                            {
+                                ...employeeInfo,
+                                name: employeeNameRef.current.value,
+                                title: employeeTitle,
+                                email: employeeEmailRef.current.value,
+                                phoneNumber: employeePhoneRef.current.value,
+                                dateOfBirth: employeeDateOfBirthRef.current.value,
+                                salary: employeeSalaryRef.current.value,
+                                yearsOfExperience: employeeYearsOfExperienceRef.current.value,
+                                projectId: employeeInfo.project ? employeeInfo.project.id : 0
+                            }
+                        )}>
+                            <h5 className="ms-4 text-start">Basic Information</h5>
+                            <fieldset>
+                                <div className="form-group">
+                                    <label
+                                        htmlFor="employee-name"
+                                        className="form-label mt-4 ms-4 d-flex align-items-start"
+                                    >
+                                        Employee Id #{employeeInfo.id}:
+                                    </label>
+                                    <input
+                                        className="form-control ms-4"
+                                        id="employee-name"
+                                        defaultValue={employeeInfo.name}
+                                        ref={employeeNameRef}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label
+                                        htmlFor="employee-title"
+                                        className="form-label mt-4 ms-4 d-flex align-items-start"
+                                    >
+                                        Employee Title:
+                                    </label>
+                                    <select
+                                        className="form-select ms-4"
+                                        id="title"
+                                        value={employeeTitle}
+                                        onChange={(event) => setEmployeeTitle(event.target.value)}
+                                    >
+                                        <option value="architect" >Architect</option>
+                                        <option value="employee" >Employee</option>
+                                    </select>
+                                </div>
+                                <div className="form-group">
+                                    <label
+                                        htmlFor="employee-email"
+                                        className="form-label mt-4 ms-4 d-flex align-items-start"
+                                    >
+                                        Email:
+                                    </label>
+                                    <input
+                                        className="form-control ms-4"
+                                        id="employee-email"
+                                        defaultValue={employeeInfo.email}
+                                        ref={employeeEmailRef}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label
+                                        htmlFor="employee-phone"
+                                        className="form-label mt-4 ms-4 d-flex align-items-start"
+                                    >
+                                        Phone:
+                                    </label>
+                                    <input
+                                        id='employee-phone'
+                                        type='tel'
+                                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                        className="form-control ms-4"
+                                        defaultValue={employeeInfo.phoneNumber}
+                                        ref={employeePhoneRef}></input>
+                                    <small className="form-label ms-4 d-flex align-items-start">Format: 123-456-7890</small>
+                                </div>
+                                <div className="form-group row">
+                                    <label htmlFor="dateOfBirth" className="form-label mt-4 ms-4 d-flex align-items-start">
+                                        Date Of Birth:
+                                    </label>
+                                    <input
+                                        type="date"
+                                        className="form-control ms-4"
+                                        id="employee-dateOfBirth"
+                                        defaultValue={employeeInfo.dateOfBirth}
+                                        ref={employeeDateOfBirthRef}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label
+                                        htmlFor="employee-salary"
+                                        className="form-label mt-4 ms-4 d-flex align-items-start"
+                                    >
+                                        Salary:
+                                    </label>
+                                    <div className="input-group">
+                                        <span className="input-group-text ms-4 " >
+                                            $
+                                        </span>
+                                        <input
+                                            type="number"
+                                            className="form-control ms-4"
+                                            id="employee-salary"
+                                            defaultValue={employeeInfo.salary}
+                                            ref={employeeSalaryRef}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <label
+                                        htmlFor="employee-yearsOfExperience" 
+                                        className="form-label mt-4 ms-4 d-flex align-items-start"
+                                    >
+                                        Years Of Experience:
+                                    </label>
+                                    <input
+                                        type="number"
+                                        className="form-control ms-4"
+                                        id="employee-yearsOfExperience"
+                                        defaultValue={employeeInfo.yearsOfExperience}
+                                        ref={employeeYearsOfExperienceRef}
+                                    />
+                                </div>
+                            </fieldset>
+                            <button className="btn btn-info mt-3" type="submit">
+                                Apply Changes
+                            </button>
+                        </form>
 
-              <form
-                style={{ marginTop: '50px' }}
-                onSubmit={handlePasswordSubmit}
-              >
-                <h5 className='ms-4 text-start'>Password</h5>
-                <fieldset>
-                  <div className='form-group'>
-                    <label
-                      htmlFor='employee-password'
-                      className='form-label mt-4 ms-4 d-flex align-items-start'
-                    >
-                      New Password
-                    </label>
-                    <div class='input-group mb-3'>
-                      <input
-                        ref={passwordNewInput}
-                        type='password'
-                        class='form-control m-auto'
-                        id='confirmPassword'
-                      />
-                      <button
-                        class='btn'
-                        type='button'
-                        id='showPassword'
-                        onClick={() => togglePasswordShow(passwordNewInput)}
-                      >
-                        <AiFillEye size={25} />
-                      </button>
-                    </div>
-                    <label
-                      htmlFor='employee-password'
-                      className='form-label mt-4 ms-4 d-flex align-items-start'
-                    >
-                      Confirm New Password
-                    </label>
-                    <div class='input-group mb-3'>
-                      <input
-                        ref={passwordConfirmationInput}
-                        type='password'
-                        class='form-control m-auto'
-                        id='confirmPassword'
-                      />
-                      <button
-                        class='btn'
-                        type='button'
-                        id='showConfirmPassword'
-                        onClick={() =>
-                          togglePasswordShow(passwordConfirmationInput)
-                        }
-                      >
-                        <AiFillEye size={25} />
-                      </button>
+                        <form style={{ marginTop: "50px" }} onSubmit={handlePasswordSubmit}>
+                            <h5 className="ms-4 text-start">Password</h5>
+                            <fieldset>
+                                <div className="form-group">
+                                    <label
+                                        htmlFor="employee-password"
+                                        className="form-label mt-4 ms-4 d-flex align-items-start"
+                                    >
+                                        New Password
+                                    </label>
+                                    <div className="input-group mb-3">
+                                        <input ref={passwordNewInput} type="password" className="form-control ms-4" id="confirmPassword" />
+                                        <button className="btn" type="button" id="showPassword" onClick={() => togglePasswordShow(passwordNewInput)}><AiFillEye size={25} /></button>
+                                    </div>
+                                    <label
+                                        htmlFor="employee-password"
+                                        className="form-label mt-4 ms-4 d-flex align-items-start"
+                                    >
+                                        Confirm New Password
+                                    </label>
+                                    <div className="input-group mb-3">
+                                        <input ref={passwordConfirmationInput} type="password" className="form-control ms-4" id="confirmPassword" />
+                                        <button className="btn" type="button" id="showConfirmPassword" onClick={() => togglePasswordShow(passwordConfirmationInput)}><AiFillEye size={25} /></button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <button className="btn btn-info mt-3" type="submit">
+                                Update Password
+                            </button>
+                        </form>
                     </div>
                   </div>
                 </fieldset>

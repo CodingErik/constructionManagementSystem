@@ -163,48 +163,75 @@ function DisplayEmployeeInfo() {
                 </button>
               </Link>
             </div>
-          </div>
-        </div>
-      </div>
-      <h4 className='mt-4 text-start'>
-        {employeeInfo.name}'s Tasks For {employeeInfo.project?.name} Project
-      </h4>
-      {employeeTasks.map((task) => (
-        <div className='list-group text-black'>
-          <div className='list-group-item bg-transparent text-start'>
-            <div className='row'>
-              <div className='col-8'>
-                <div className='row'>
-                  <div className='col-3'>Task Id:</div>
-                  <div className='col-9'>{task.id}</div>
+            <div className="list-group text-black">
+              <div className="list-group-item bg-transparent text-start" >
+                <div className="row">
+                  <div className="col-10">
+                    <div className="row">
+                      <div className="col-3">
+                        Project Id:
+                      </div>
+                      <div className="col-9">
+                        {employeeInfo.project?.id}
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-3">
+                        Project Name:
+                      </div>
+                      <div className="col-9">
+                        {employeeInfo.project?.name}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-2">
+                    <Link to={{ pathname: `/SingleProjectPage/${employeeInfo.project?.id}` }} >
+                      <button type="button" className="btn btn-info">View Info</button>
+                    </Link>
+                  </div>
                 </div>
-                <div className='row'>
-                  <div className='col-3'>Task Name:</div>
-                  <div className='col-9'>{task.name}</div>
-                </div>
-              </div>
-              <div className='col-2'>
-                <button
-                  type='button'
-                  class='btn btn-danger'
-                  onClick={() => handleRemoveUserFromTask(task.id)}
-                >
-                  Remove
-                </button>
-              </div>
-              <div className='col-2'>
-                <Link to={{ pathname: `/SingleTaskPage/${task.id}` }}>
-                  <button type='button' class='btn btn-info'>
-                    View Info
-                  </button>
-                </Link>
               </div>
             </div>
-          </div>
+            <h4 className="mt-4 text-start">{employeeInfo.name}'s Tasks For {employeeInfo.project?.name} Project</h4>
+            {employeeTasks.map(task => (
+              <div className="list-group text-black">
+                <div className="list-group-item bg-transparent text-start" >
+                  <div className="row">
+                    <div className="col-8">
+                      <div className="row">
+                        <div className="col-3">
+                          Task Id:
+                        </div>
+                        <div className="col-9">
+                          {task.id}
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-3">
+                          Task Name:
+                        </div>
+                        <div className="col-9">
+                          {task.name}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-2">
+                      <button type="button" className="btn btn-danger" onClick={() => handleRemoveUserFromTask(task.id)}>Remove</button>
+                    </div>
+                    <div className="col-2">
+                      <Link to={{ pathname: `/SingleTaskPage/${task.id}` }} >
+                        <button type="button" className="btn btn-info">View Info</button>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div >
         </div>
-      ))}
+      </div>
     </div>
-  );
+  )
 }
 
 export default DisplayEmployeeInfo;

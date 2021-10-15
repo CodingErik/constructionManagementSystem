@@ -1,4 +1,4 @@
-import AddModal from "./AddModal";
+import AddModal from "./AddEmployeeModal";
 import { EmployeeAPI } from "../../api";
 import { useState, useEffect } from "react";
 
@@ -8,8 +8,11 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
 
     useEffect(() => {
         EmployeeAPI.getAllEmployees().then((response) => {
-            setAllUnassignedEmployees([...response.data].filter(employee => parseInt(employee.projectId) === 0));
-            setAllEmployeesInProject([...response.data].filter(employee => parseInt(employee.projectId) === parseInt(projectId)));
+            setAllUnassignedEmployees([...response.data].filter(employee => employee.project === null));
+            setAllEmployeesInProject([...response.data].filter(employee => parseInt(employee.project?.id) === parseInt(projectId)));
+            // console.log([...response.data].filter((employee) => {
+            //     return employee.project === null;
+            // }))
         });
     }, []);
 
@@ -67,11 +70,13 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
                             <td>{filteredEmployee.phoneNumber}</td>
                         </tr>
                     ))}
-                    <tr>
-                        <td colSpan="4" className="table">
-                            <button type="button" disabled={!hasAuthority} className="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add Employee</button>
-                        </td>
-                    </tr>
+                    {hasAuthority && (
+                        <tr>
+                            <td colSpan="4" className="table">
+                                <button type="button" disabled={!hasAuthority} className="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">Add Employee</button>
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
             <AddModal title="employee" modalId="addEmployeeModal" allUnassignedEmployees={allUnassignedEmployees} projectId={projectId} handleAddEmployeeToProject={handleAddEmployeeToProject} />
