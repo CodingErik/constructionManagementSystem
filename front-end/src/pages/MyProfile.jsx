@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { EmployeeAPI } from '../api';
-import BriefProjectsDisplay from '../components/home/BriefProjectsDisplay';
-import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
-import decode from 'jwt-decode';
-import redirectIfTokenNull from '../components/RedirectHelper';
-import DisplayBasicInformation from '../components/myProfile/DisplayBasicInformation';
+import React, { useEffect, useState, useContext } from "react";
+import { EmployeeAPI } from "../api";
+import BriefProjectsDisplay from "../components/home/BriefProjectsDisplay";
+import BriefTasksDisplay from "../components/home/BriefTasksDisplay";
+import decode from "jwt-decode";
+import redirectIfTokenNull from "../components/RedirectHelper";
+import DisplayBasicInformation from "../components/myProfile/DisplayBasicInformation";
 
 export default function MyProfile() {
   redirectIfTokenNull();
@@ -13,15 +13,15 @@ export default function MyProfile() {
   const [userProjects, setUserProject] = useState([]);
   const [userTasks, setUserTask] = useState([]);
 
-  const username = localStorage.getItem('token')
-    ? decode(JSON.parse(localStorage.getItem('token'))).sub
+  const username = localStorage.getItem("token")
+    ? decode(JSON.parse(localStorage.getItem("token"))).sub
     : null;
 
   useEffect(() => {
     EmployeeAPI.getEmployeeByUsername(username)
       .then(({ data }) => {
         setUserInfo(data);
-        setUserProject([{ ...data.project }]);
+        setUserProject({ ...data.project });
         setUserTask([...data.taskList]);
       })
       .catch((error) => {
@@ -29,23 +29,30 @@ export default function MyProfile() {
       });
   }, [username]);
 
+  const updateUserBasicInformation = (updatedUserInfo) => {
+    EmployeeAPI.putEmployee(updatedUserInfo);
+    setUserInfo(updatedUserInfo);
+  };
+
   return (
-    <div className='container'>
-      <div className='mt-5'>
-        <div className='row'>
-          <div className='col col-lg-6'>
+    <div className="container">
+      <div className="mt-5">
+        <div className="row">
+          <div className="col col-lg-6">
             <img
-              src='https://source.unsplash.com/random/550x550'
-              //   add image for the user aws implementation
-              className='rounded-circle'
-              alt='profile image'
+              src="https://source.unsplash.com/random/550x550"
+              className="rounded-circle"
+              alt="profile"
             ></img>
           </div>
-          <DisplayBasicInformation userInfo={userInfo} />
+          <DisplayBasicInformation
+            userInfo={userInfo}
+            updateUserBasicInformation={updateUserBasicInformation}
+          />
         </div>
-        <div className='row mt-5'>
-          <div className='col '>
-            {userProjects[0]?.id ? (
+        <div className="row mt-5">
+          <div className="col ">
+            {userProjects.id ? (
               <BriefProjectsDisplay
                 originalProjectLists={userProjects}
               ></BriefProjectsDisplay>
@@ -53,7 +60,7 @@ export default function MyProfile() {
               <h2>No Available projects... </h2>
             )}
           </div>
-          <div className=' col '>
+          <div className=" col ">
             {userTasks.length ? (
               <BriefTasksDisplay
                 originalTaskList={userTasks}

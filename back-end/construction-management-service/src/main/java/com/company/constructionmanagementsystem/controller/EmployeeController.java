@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.ws.rs.HEAD;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
@@ -136,17 +137,12 @@ public class EmployeeController {
         employeeServiceLayer.deleteEmployee(id);
     }
 
-    }
+
 
     @PutMapping("/api/resetPassword")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void resetPassword (@RequestBody Map < String, String > inputJson) throws Exception {
+    public void resetPassword(@RequestBody Map<String, String> inputJson) throws Exception {
         employeeServiceLayer.updateEmployeePassword(parseInt(inputJson.get("id")), inputJson.get("password"));
-<<<<<<< HEAD
 
     }
-
-=======
-    }
->>>>>>> afc56d6fd4d70f108ce1edcccf9f34b66dbfcfef
 }

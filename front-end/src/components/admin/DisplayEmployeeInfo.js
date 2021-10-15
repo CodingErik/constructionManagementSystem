@@ -25,14 +25,8 @@ function DisplayEmployeeInfo() {
     });
   }, []);
 
-  const handleRemoveUserFromTask = async (taskId) => {
-    const taskInfo = await TaskAPI.getTaskById(taskId);
-    const updatedTaskInfo = {
-      ...taskInfo.data,
-      projectId: taskInfo.data.project.id,
-      employeeId: 0,
-    };
-    TaskAPI.putTask(updatedTaskInfo);
+  const handleRemoveUserFromTask = (taskId) => {
+    TaskAPI.deleteTask(taskId);
     setEmployeeTasks([...employeeTasks].filter((task) => task.id !== taskId));
     alert('User removed from task');
   };
@@ -191,7 +185,7 @@ function DisplayEmployeeInfo() {
                 </div>
               </div>
               <div className="col-2">
-                <button type="button" className="btn btn-danger" onClick={() => handleRemoveUserFromTask(task.id)}>Remove</button>
+                <button type="button" className="btn btn-danger" onClick={() => handleRemoveUserFromTask(task.id)}>Delete Task</button>
               </div>
               <div className="col-2">
                 <Link to={{ pathname: `/SingleTaskPage/${task.id}` }} >

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { FaTrash } from "react-icons/fa";
 
 let columnBooleans = {
     employeeId: false,
@@ -102,6 +103,9 @@ function AllEmployeeTable({ originalEmployeeList }) {
                                 <Link to={{ pathname: `/AdminSingleEmployeePage/${employee.id}` }} >
                                     <button type="button" className="btn btn-warning">Edit</button>
                                 </Link>
+                            </td>
+                            <td>
+                                <button type="button" className="btn btn-danger"><FaTrash/></button>
                             </td>
                         </tr>
                     ))}

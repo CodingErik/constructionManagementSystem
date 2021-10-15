@@ -199,7 +199,7 @@ function AddProjectModal({ modalId, handleNewProjectSubmit, hasAuthority }) {
                                 </div>
                             </fieldset>
                             <button className="btn btn-info" type="submit" disabled={!hasAuthority}>
-                                Apply Changes
+                                Add Project
                             </button>
                         </form>
                     </div>
