@@ -13,6 +13,7 @@ import {
   MachineryAPI,
 } from '../api/index';
 import redirectIfTokenNull from '../components/RedirectHelper';
+import Spinner from '../components/Spinner';
 
 function Home() {
   redirectIfTokenNull();
@@ -26,6 +27,7 @@ function Home() {
   const [taskList, setTaskList] = useState([]);
   const [materials, setMaterials] = useState();
   const [machinery, setMachinery] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     ProjectAPI.getAllProjects().then((response) => {
@@ -69,7 +71,13 @@ function Home() {
     MachineryAPI.getAllMachineryInventory().then((response) => {
       setMachinery(response.data);
     });
+
+    setIsLoading(false);
   }, []);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div

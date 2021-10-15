@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import HomePageSpinner from './HomePageSpinner';
 let columnBooleans = {
   employeeId: false,
   project: false,
@@ -9,8 +10,12 @@ let columnBooleans = {
 
 function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
   const [employeeList, setEmployeeList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     setEmployeeList([...originalEmployeeList]);
+
+    setIsLoading(false);
   }, [originalEmployeeList]);
 
   const handleEmployeeColumnHeaderClick = (target) => {
@@ -138,23 +143,27 @@ function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
               </th>
             </tr>
           </thead>
-          <tbody>
-            {employeeList
-              .filter(
-                (employee) =>
-                  employee?.title.toLowerCase() === filter.toLowerCase()
-              )
-              .map((filteredEmployee) => (
-                <tr className='table-active' key={filteredEmployee.id}>
-                  <th scope='row'>{filteredEmployee.id}</th>
-                  <td>{filteredEmployee.name}</td>
-                  <td>{filteredEmployee.project?.name || 'None'} </td>
-                  <td>{filteredEmployee.email}</td>
-                  <td>{filteredEmployee.phoneNumber || 'None'}</td>
-                  <td></td>
-                </tr>
-              ))}
-          </tbody>
+          {isLoading ? (
+            <HomePageSpinner />
+          ) : (
+            <tbody>
+              {employeeList
+                .filter(
+                  (employee) =>
+                    employee?.title.toLowerCase() === filter.toLowerCase()
+                )
+                .map((filteredEmployee) => (
+                  <tr className='table-active' key={filteredEmployee.id}>
+                    <th scope='row'>{filteredEmployee.id}</th>
+                    <td>{filteredEmployee.name}</td>
+                    <td>{filteredEmployee.project?.name || 'None'} </td>
+                    <td>{filteredEmployee.email}</td>
+                    <td>{filteredEmployee.phoneNumber || 'None'}</td>
+                    <td></td>
+                  </tr>
+                ))}
+            </tbody>
+          )}
         </table>
       </div>
     </div>

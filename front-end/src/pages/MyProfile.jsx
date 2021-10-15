@@ -5,6 +5,7 @@ import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
 import decode from 'jwt-decode';
 import redirectIfTokenNull from '../components/RedirectHelper';
 import DisplayBasicInformation from '../components/myProfile/DisplayBasicInformation';
+import Spinner from '../components/Spinner';
 
 export default function MyProfile() {
   redirectIfTokenNull();
@@ -12,6 +13,7 @@ export default function MyProfile() {
   const [userInfo, setUserInfo] = useState({});
   const [userProjects, setUserProject] = useState([]);
   const [userTasks, setUserTask] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const username = localStorage.getItem('token')
     ? decode(JSON.parse(localStorage.getItem('token'))).sub
@@ -27,7 +29,13 @@ export default function MyProfile() {
       .catch((error) => {
         console.error(error);
       });
+
+    setIsLoading(false);
   }, [username]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className='container'>
