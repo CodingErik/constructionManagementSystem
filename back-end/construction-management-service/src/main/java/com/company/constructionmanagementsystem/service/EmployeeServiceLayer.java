@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.ws.rs.HEAD;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -132,24 +133,17 @@ public class EmployeeServiceLayer {
         // Find all relevant tasks and project
         List<Task> allRelevantTasks = taskRepository.findAllTasksByEmployeeId(id);
 
-<<<<<<< HEAD
+
         if (allRelevantTasks.size() > 0) {
 
             for (Task task : allRelevantTasks) {
                 taskRepository.deleteById(task.getId());
             }
-=======
-        for (Task task : allRelevantTasks) {
-            taskRepository.deleteById(task.getId());
->>>>>>> afc56d6fd4d70f108ce1edcccf9f34b66dbfcfef
+
         }
 
         employeeRepository.deleteById(id);
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> afc56d6fd4d70f108ce1edcccf9f34b66dbfcfef
 
     public void updateEmployeePassword(Integer id, String newPassword) {
         if (!employeeRepository.findById(id).isPresent()) throw new IllegalArgumentException("Employee not found.");
