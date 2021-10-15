@@ -33,20 +33,23 @@ function UserPersonalInformationModal({ userInfo, modalId }) {
       userInfo.username,
       passwordOriginalInput.current.value
     );
-    console.log(passwordCheck);
-    if (
-      passwordCheck.status === 200 &&
-      passwordNewInput.current.value === passwordConfirmationInput.current.value
-    ) {
-      const userInformationWithUpdatedPassword = {
-        ...userInfo,
-        projectId: userInfo.project ? userInfo.project.id : 0,
-        password: passwordConfirmationInput.current.value,
-      };
-      EmployeeAPI.putEmployee(userInformationWithUpdatedPassword);
-      alert('Password Updated');
-    } else {
+    if (passwordCheck.status !== 200) {
       alert('Original password is incorrect');
+    } else if (passwordNewInput.current.value === '') {
+      alert('No new password');
+    } else if (
+      passwordNewInput.current.value !== passwordConfirmationInput.current.value
+    ) {
+      alert('Password not match');
+    } else {
+      EmployeeAPI.updatePassword(
+        userInfo.id,
+        passwordConfirmationInput.current.value
+      ).then((res) => {
+        if (res.status === 204) {
+          alert('Password Updated');
+        } else alert(res.data);
+      });
     }
   };
 
