@@ -152,4 +152,10 @@ public class ProjectController {
         return returnProjectList;
     }
 
+    @DeleteMapping("/api/projects/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void deleteProject(@PathVariable Integer id){
+        projectServiceLayer.deleteProject(id);
+    }
+
 }
