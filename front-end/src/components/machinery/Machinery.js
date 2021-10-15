@@ -15,7 +15,7 @@ export default function Materials(props) {
       <div
         className='materialsWrapper row mt-3'
         style={{
-          minHeight: '400px',
+          minHeight: '375px',
           minWidth: '275px',
         }}
       >
