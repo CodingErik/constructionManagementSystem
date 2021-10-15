@@ -13,6 +13,7 @@ import SingleProjectPage from './pages/SingleProjectPage';
 import SingleTaskPage from './pages/SingleTaskPage';
 import AdminSingleEmployeePage from './pages/AdminSingleEmployeeEditPage';
 import AdminAllEmployeeViewPage from './pages/AdminAllEmployeeViewPage';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
               '/SingleTaskPage',
               '/home',
               '/AdminSingleEmployeePage',
-              '/AdminAllEmployeeViewPage'
+              '/AdminAllEmployeeViewPage',
             ]}
           >
             <NavBar />
@@ -41,14 +42,31 @@ function App() {
             <Route exact path='/MyProfile' component={MyProfile} />
             <Route exact path='/Projects' component={Projects} />
             <Route exact path='/Tasks' component={Tasks} />
-            <Route exact path='/SingleProjectPage/:projectId' component={SingleProjectPage} />
-            <Route exact path='/SingleTaskPage/:taskId' component={SingleTaskPage} />
-            <Route exact path='/AdminSingleEmployeePage/:employeeId' component={AdminSingleEmployeePage} />
-            <Route exact path='/AdminAllEmployeeViewPage' component={AdminAllEmployeeViewPage} />
+            <Route
+              exact
+              path='/SingleProjectPage/:projectId'
+              component={SingleProjectPage}
+            />
+            <Route
+              exact
+              path='/SingleTaskPage/:taskId'
+              component={SingleTaskPage}
+            />
+            <Route
+              exact
+              path='/AdminSingleEmployeePage/:employeeId'
+              component={AdminSingleEmployeePage}
+            />
+            <Route
+              exact
+              path='/AdminAllEmployeeViewPage'
+              component={AdminAllEmployeeViewPage}
+            />
             <Route component={NoMatch} />
           </Switch>
         </div>
       </Router>
+      <Footer></Footer>
     </div>
   );
 }
