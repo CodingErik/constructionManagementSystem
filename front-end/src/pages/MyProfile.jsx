@@ -23,7 +23,7 @@ export default function MyProfile() {
     EmployeeAPI.getEmployeeByUsername(username)
       .then(({ data }) => {
         setUserInfo(data);
-        setUserProject([{ ...data.project }]);
+        setUserProject({ ...data.project });
         setUserTask([...data.taskList]);
       })
       .catch((error) => {
@@ -33,6 +33,10 @@ export default function MyProfile() {
     setIsLoading(false);
   }, [username]);
 
+  const updateUserBasicInformation = (updatedUserInfo) => {
+    EmployeeAPI.putEmployee(updatedUserInfo);
+    setUserInfo(updatedUserInfo);
+  };
   if (isLoading) {
     return <Spinner />;
   }
@@ -44,16 +48,18 @@ export default function MyProfile() {
           <div className='col col-lg-6'>
             <img
               src='https://source.unsplash.com/random/550x550'
-              //   add image for the user aws implementation
               className='rounded-circle'
-              alt='profile image'
+              alt='profile'
             ></img>
           </div>
-          <DisplayBasicInformation userInfo={userInfo} />
+          <DisplayBasicInformation
+            userInfo={userInfo}
+            updateUserBasicInformation={updateUserBasicInformation}
+          />
         </div>
         <div className='row mt-5'>
           <div className='col '>
-            {userProjects[0]?.id ? (
+            {userProjects.id ? (
               <BriefProjectsDisplay
                 originalProjectLists={userProjects}
               ></BriefProjectsDisplay>

@@ -1,6 +1,7 @@
 import UserPersonalInformationModal from './UserPersonalInformationFormModal';
 
-function DisplayBasicInformation({ userInfo }) {
+function DisplayBasicInformation({ userInfo, updateUserBasicInformation }) {
+    
   return (
     <div className='col col-8-lg'>
       <div className='row mb-3'>
@@ -22,6 +23,7 @@ function DisplayBasicInformation({ userInfo }) {
         <UserPersonalInformationModal
           userInfo={userInfo}
           modalId='editPersonalInformationModal'
+          updateUserBasicInformation={updateUserBasicInformation}
         ></UserPersonalInformationModal>
       </div>
       <div className='row'>

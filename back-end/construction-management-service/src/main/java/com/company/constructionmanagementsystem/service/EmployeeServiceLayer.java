@@ -140,10 +140,8 @@ public class EmployeeServiceLayer {
                 taskRepository.deleteById(task.getId());
             }
         }
-
         employeeRepository.deleteById(id);
     }
-
 
     public void updateEmployeePassword(Integer id, String newPassword) {
         if (!employeeRepository.findById(id).isPresent()) throw new IllegalArgumentException("Employee not found.");

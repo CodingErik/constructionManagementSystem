@@ -58,7 +58,6 @@ function Home() {
     TaskAPI.getAllTasks()
       .then((response) => {
         setTaskList(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);

@@ -32,6 +32,9 @@ const employeeAPI = {
 
     return res;
   },
+  deleteEmployeeById: (employeeId) => {
+    return axios.delete(`${baseUrl}/${employeeId}`)
+  }
 };
 
 export default employeeAPI;
