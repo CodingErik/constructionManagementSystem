@@ -21,6 +21,7 @@ function DisplayEmployeeInfo() {
     EmployeeAPI.getEmployeeById(employeeId).then((response) => {
       setEmployeeInfo(response.data);
       setEmployeeTasks([...response.data.taskList]);
+      console.log(response.data);
     });
   }, []);
 
@@ -36,9 +37,7 @@ function DisplayEmployeeInfo() {
     alert('User removed from task');
   };
 
-  const handleBasicInformationUpdateSubmit = (event, updatedBasicInfo) => {
-    event.preventDefault();
-    console.log(updatedBasicInfo);
+  const handleBasicInformationUpdateSubmit = (updatedBasicInfo) => {
     EmployeeAPI.putEmployee(updatedBasicInfo);
     setEmployeeInfo(updatedBasicInfo);
   };
@@ -73,7 +72,7 @@ function DisplayEmployeeInfo() {
         <div className='list-group-item bg-transparent text-start '>
           <div className='row'>
             <div className='col-3'>Id:</div>
-            <div className='col-9'>{employeeInfo.id}</div>
+            <div className='col-9'>{employeeInfo?.id}</div>
           </div>
         </div>
         <div className='list-group-item bg-transparent text-start '>
@@ -139,98 +138,75 @@ function DisplayEmployeeInfo() {
         </div>
         <div className='col-3'></div>
       </div>
-      <div className='list-group text-black'>
-        <div className='list-group-item bg-transparent text-start'>
-          <div className='row'>
-            <div className='col-10'>
-              <div className='row'>
-                <div className='col-3'>Project Id:</div>
-                <div className='col-9'>{employeeInfo.project?.id}</div>
-              </div>
-              <div className='row'>
-                <div className='col-3'>Project Name:</div>
-                <div className='col-9'>{employeeInfo.project?.name}</div>
-              </div>
-            </div>
-            <div className='col-2'>
-              <Link
-                to={{
-                  pathname: `/SingleProjectPage/${employeeInfo.project?.id}`,
-                }}
-              >
-                <button type='button' class='btn btn-info'>
-                  View Info
-                </button>
-              </Link>
-            </div>
-            <div className="list-group text-black">
-              <div className="list-group-item bg-transparent text-start" >
-                <div className="row">
-                  <div className="col-10">
-                    <div className="row">
-                      <div className="col-3">
-                        Project Id:
-                      </div>
-                      <div className="col-9">
-                        {employeeInfo.project?.id}
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-3">
-                        Project Name:
-                      </div>
-                      <div className="col-9">
-                        {employeeInfo.project?.name}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <Link to={{ pathname: `/SingleProjectPage/${employeeInfo.project?.id}` }} >
-                      <button type="button" className="btn btn-info">View Info</button>
-                    </Link>
-                  </div>
+      {employeeInfo.project && (
+        <div className='list-group text-black'>
+          <div className='list-group-item bg-transparent text-start'>
+            <div className='row'>
+              <div className='col-10'>
+                <div className='row'>
+                  <div className='col-3'>Project Id:</div>
+                  <div className='col-9'>{employeeInfo.project?.id}</div>
+                </div>
+                <div className='row'>
+                  <div className='col-3'>Project Name:</div>
+                  <div className='col-9'>{employeeInfo.project?.name}</div>
                 </div>
               </div>
-            </div>
-            <h4 className="mt-4 text-start">{employeeInfo.name}'s Tasks For {employeeInfo.project?.name} Project</h4>
-            {employeeTasks.map(task => (
-              <div className="list-group text-black">
-                <div className="list-group-item bg-transparent text-start" >
-                  <div className="row">
-                    <div className="col-8">
-                      <div className="row">
-                        <div className="col-3">
-                          Task Id:
-                        </div>
-                        <div className="col-9">
-                          {task.id}
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-3">
-                          Task Name:
-                        </div>
-                        <div className="col-9">
-                          {task.name}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-2">
-                      <button type="button" className="btn btn-danger" onClick={() => handleRemoveUserFromTask(task.id)}>Remove</button>
-                    </div>
-                    <div className="col-2">
-                      <Link to={{ pathname: `/SingleTaskPage/${task.id}` }} >
-                        <button type="button" className="btn btn-info">View Info</button>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+              <div className='col-2'>
+                <Link to={{ pathname: `/SingleProjectPage/${employeeInfo.project?.id}` }}>
+                  <button type='button' class='btn btn-info'>
+                    View Info
+                  </button>
+                </Link>
               </div>
-            ))}
-          </div >
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+      {!employeeInfo.project && (
+        <div className="text-start">{employeeInfo.name} Is Not Assigned To A Project</div>
+      )}
+
+      <h4 className="mt-4 text-start">{employeeInfo.name}'s Tasks For {employeeInfo.project?.name} Project</h4>
+      {employeeTasks.map(task => (
+        <div className="list-group text-black">
+          <div className="list-group-item bg-transparent text-start" >
+            <div className="row">
+              <div className="col-8">
+                <div className="row">
+                  <div className="col-3">
+                    Task Id:
+                  </div>
+                  <div className="col-9">
+                    {task.id}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-3">
+                    Task Name:
+                  </div>
+                  <div className="col-9">
+                    {task.name}
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <button type="button" className="btn btn-danger" onClick={() => handleRemoveUserFromTask(task.id)}>Remove</button>
+              </div>
+              <div className="col-2">
+                <Link to={{ pathname: `/SingleTaskPage/${task.id}` }} >
+                  <button type="button" className="btn btn-info">View Info</button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+      {employeeInfo.taskList?.length === 0 && (
+        <div className="text-start">{employeeInfo.name} Is Not Assigned To A Project</div>
+      )}
+    </div >
+
   )
 }
 

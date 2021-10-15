@@ -90,12 +90,12 @@ public class ProjectServiceLayer {
     }
 
     public List<ProjectViewModel> findByStartDate(LocalDate startDate) {
-        List<Project> byDeadline = projectRepository.findByStartDate(startDate);
+        List<Project> byStartDate = projectRepository.findByStartDate(startDate);
 
 
         List<ProjectViewModel> pvmList = new ArrayList<>();
 
-        for (Project project: byDeadline) {
+        for (Project project: byStartDate) {
             ProjectViewModel pvm = buildProjectViewModel(project);
 
             pvmList.add(pvm);
@@ -145,6 +145,10 @@ public class ProjectServiceLayer {
 
     @Transactional
     public void deleteProject(Integer id){
+        if(!projectRepository.findById(id).isPresent()) {
+            throw new IllegalArgumentException("Project Id not found.");
+        }
+
         Project targetProject = projectRepository.findById(id).get();
 
         List<Task> relatedTasks = taskRepository.findAllTasksByProjectId(targetProject.getId());

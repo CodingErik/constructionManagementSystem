@@ -136,9 +136,17 @@ public class EmployeeController {
         employeeServiceLayer.deleteEmployee(id);
     }
 
+    }
+
     @PutMapping("/api/resetPassword")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void resetPassword (@RequestBody Map < String, String > inputJson) throws Exception {
         employeeServiceLayer.updateEmployeePassword(parseInt(inputJson.get("id")), inputJson.get("password"));
+<<<<<<< HEAD
+
     }
+
+=======
+    }
+>>>>>>> afc56d6fd4d70f108ce1edcccf9f34b66dbfcfef
 }

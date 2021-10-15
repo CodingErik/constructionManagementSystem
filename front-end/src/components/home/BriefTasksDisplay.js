@@ -12,24 +12,28 @@ let columnBooleans = {
   description: false,
 };
 
-export default function BriefTasksDisplay({ originalTaskList, }) {
+export default function BriefTasksDisplay({ originalTaskList }) {
   const [taskList, setTaskList] = useState([]);
-
 
   useEffect(() => {
     setTaskList([...originalTaskList]);
   }, [originalTaskList]);
 
-  const handleTaskColumnHeaderClick = (neededVariable, booleanVariable, methodTranslate) => {
+  const handleTaskColumnHeaderClick = (
+    neededVariable,
+    booleanVariable,
+    methodTranslate
+  ) => {
     const sort_by = (neededField, reverse, primer) => {
-      const getField = (obj, path) => (path.split('.').reduce((value, el) => value[el], obj))
+      const getField = (obj, path) =>
+        path.split('.').reduce((value, el) => value[el], obj);
       const key = primer
         ? function (x) {
-          return primer(getField(x, neededField));
-        }
+            return primer(getField(x, neededField));
+          }
         : function (x) {
-          return getField(x, neededVariable);
-        };
+            return getField(x, neededVariable);
+          };
       reverse = !reverse ? 1 : -1;
 
       return function (a, b) {
@@ -44,10 +48,14 @@ export default function BriefTasksDisplay({ originalTaskList, }) {
     }
     setTaskList(
       [...taskList].sort(
-        sort_by(neededVariable, columnBooleans[booleanVariable], methodTranslate)
+        sort_by(
+          neededVariable,
+          columnBooleans[booleanVariable],
+          methodTranslate
+        )
       )
     );
-  }
+  };
 
   return (
     <div className='container'>
@@ -63,37 +71,55 @@ export default function BriefTasksDisplay({ originalTaskList, }) {
           overflow: 'scroll',
         }}
       >
-        <table className='table table-hover'>
+        <table className='table table-hover m-auto'>
           <thead>
             <tr>
               <th
-                scope='col'
-                onClick={() => handleTaskColumnHeaderClick('id', "id", parseInt)}
+                className='col-2'
+                onClick={() =>
+                  handleTaskColumnHeaderClick('id', 'id', parseInt)
+                }
               >
                 TaskId
               </th>
               <th
-                scope='col'
-                onClick={() => handleTaskColumnHeaderClick('name', "name", (a) => a.toUpperCase())}
+                className='col-2'
+                onClick={() =>
+                  handleTaskColumnHeaderClick('name', 'name', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Name
               </th>
               <th
-                scope='col'
-                onClick={() => handleTaskColumnHeaderClick('status', "status", (a) => a.toUpperCase())}
+                className='col-2'
+                onClick={() =>
+                  handleTaskColumnHeaderClick('status', 'status', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Status
               </th>
               <th
-                scope='col'
-                onClick={() => handleTaskColumnHeaderClick('project.name', "project", (a) => a.toUpperCase())}
+                className='col-2'
+                onClick={() =>
+                  handleTaskColumnHeaderClick('project.name', 'project', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Project Containing
               </th>
 
               <th
-                scope='col'
-                onClick={() => handleTaskColumnHeaderClick('deadline', "deadline", (a) => a.toUpperCase())}
+                className='col-2'
+                onClick={() =>
+                  handleTaskColumnHeaderClick('deadline', 'deadline', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Deadline
               </th>
