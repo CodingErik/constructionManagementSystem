@@ -11,6 +11,7 @@ import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,6 +109,21 @@ public class EmployeeServiceLayer {
         evm.setYearsOfExperience(employee.getYearsOfExperience());
 
         return evm;
+    }
+
+    @Transactional
+    public void deleteEmployee(Integer id){
+        Employee employee = employeeRepository.findById(id).get();
+
+        // Find all relevant tasks and project
+        List<Task> allRelevantTasks = taskRepository.findAllTasksByEmployeeId(id);
+        Project relevantProject = projectRepository.findById(employee.getProjectId()).get();
+
+        for(Task task : allRelevantTasks){
+            taskRepository.deleteById(task.getId());
+        }
+
+        employeeRepository.deleteById(id);
     }
 }
 

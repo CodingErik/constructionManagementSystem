@@ -124,7 +124,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = {"Admin"})
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnAllEmployees() throws Exception{
         employeeRepository.deleteAll();
 
@@ -403,7 +403,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = {"Worker"})
+    @WithMockUser(roles = {"admin"})
     public void shouldUpdateEmployee() throws Exception {
         java.time.LocalDate birth = java.time.LocalDate.of(1999,9 ,9);
         java.time.LocalDate since = java.time.LocalDate.now();
@@ -420,6 +420,13 @@ public class EmployeeControllerTest {
         )
                 .andDo(print())
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void shouldDeleteEmployeeAndAllTasksWithIt() throws Exception {
+
+        mockMvc.perform(delete("/api/employees/1")).andDo(print()).andExpect(status().isNoContent());
+
     }
 
     private EmployeeViewModel buildEmployeeViewModel(Employee employee){
