@@ -99,11 +99,11 @@ public class ProjectController {
         return pvm;
     }
 
-    @GetMapping("/api/projects/deadline/{deadline}")
-    @ResponseStatus(value = HttpStatus.OK)
-    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
-        return projectServiceLayer.findByDeadline(deadline);
-    }
+//    @GetMapping("/api/projects/deadline/{deadline}")
+//    @ResponseStatus(value = HttpStatus.OK)
+//    public List<ProjectViewModel> findByDeadline(@PathVariable LocalDate deadline){
+//        return projectServiceLayer.findByDeadline(deadline);
+//    }
 
 //    @GetMapping("/api/projects/startDate/{startDate}")
 //    @ResponseStatus(value = HttpStatus.OK)
