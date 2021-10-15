@@ -4,7 +4,6 @@ import { Link, useHistory, Redirect } from 'react-router-dom';
 import { LoginAPI } from '../api';
 import LoginSpinner from '../components/LoginSpinner';
 import Message from '../components/Message';
-import Spinner from '../components/Spinner';
 
 export default function Login() {
   const [username, setUsername] = useState('');
