@@ -5,7 +5,7 @@ import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
 import decode from 'jwt-decode';
 import redirectIfTokenNull from '../components/RedirectHelper';
 import DisplayBasicInformation from '../components/myProfile/DisplayBasicInformation';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/spinner/Spinner';
 
 export default function MyProfile() {
   redirectIfTokenNull();

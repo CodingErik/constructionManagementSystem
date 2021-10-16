@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -33,7 +34,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(MachineController.class)
-//@AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureMockMvc(addFilters = false)
 public class MachineControllerTest {
 
     @Autowired
@@ -65,13 +66,14 @@ public class MachineControllerTest {
     }
 
     @Test
-    public void getAllInventory() throws Exception {
+    @WithMockUser(roles = {"admin"})
+    public void getMachineWarehouseInventory() throws Exception {
 
         given(machineWarehouseClient.getMachineryInventory()).willReturn(machine);
 
         String jsonMachine = mapper.writeValueAsString(machine);
 
-        mockMvc.perform(get("/api/machine/inventory"))
+        mockMvc.perform(get("/api/machines/warehouse"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(jsonMachine));
@@ -79,26 +81,28 @@ public class MachineControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void getProjectSpecificMachineInventory() throws Exception{
 
         given(repo.findByProjectId(machine.getId())).willReturn(java.util.Optional.ofNullable(machine));
 
         String jsonMachine = mapper.writeValueAsString(machine);
 
-        mockMvc.perform(get("/api/machine/1"))
+        mockMvc.perform(get("/api/machines/project/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(jsonMachine));
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void rentOutMachinery() throws Exception {
 
         given(repo.save(machine)).willReturn(machine);
 
         String jsoninputMachine = mapper.writeValueAsString(rentMachine);
 
-        mockMvc.perform(post("/api/machine/request")
+        mockMvc.perform(post("/api/machines/project/request")
                         .content(jsoninputMachine)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -109,6 +113,7 @@ public class MachineControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void returnMachinery() throws Exception{
 
        doNothing().when(repo).deleteAll();
@@ -116,7 +121,7 @@ public class MachineControllerTest {
 
         String jsoninputMachine = mapper.writeValueAsString(rentMachine);
 
-        mockMvc.perform(post("/api/machine/return")
+        mockMvc.perform(post("/api/machines/project/return")
                         .content(jsoninputMachine)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
