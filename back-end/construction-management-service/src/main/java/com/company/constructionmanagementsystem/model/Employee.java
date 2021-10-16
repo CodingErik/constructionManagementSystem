@@ -29,6 +29,7 @@ public class Employee implements Serializable {
     private String email;
     @NotEmpty(message = "The employee must have a password")
     private String password;
+    @NotEmpty(message = "The employee must have a title")
     private String title;
     private String phoneNumber;
     private BigDecimal salary;

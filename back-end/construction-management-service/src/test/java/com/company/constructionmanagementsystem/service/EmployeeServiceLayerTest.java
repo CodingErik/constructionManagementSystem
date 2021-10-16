@@ -200,17 +200,17 @@ public class EmployeeServiceLayerTest {
         when(projectRepository.findById(1)).thenReturn(java.util.Optional.ofNullable(project1));
         when(taskRepository.findAllTasksByEmployeeId(1)).thenReturn(thisEmployeeTaskList);
 
-        EmployeeViewModel evm = employeeServiceLayer.findEmployeeByName("Amal");
+        List<EmployeeViewModel> evmList = employeeServiceLayer.findEmployeeByName("Amal");
 
-        assertEquals("Architect", evm.getTitle());
-        assertEquals("Amal", evm.getName());
-        assertEquals(birth, evm.getDateOfBirth());
-        assertEquals("amalj2426@gmail.com", evm.getEmail());
-        assertEquals("314-378-4297", evm.getPhoneNumber());
-        assertEquals(since, evm.getUserSince());
-        assertEquals(4, evm.getYearsOfExperience());
-        assertEquals(project1, evm.getProject());
-        assertEquals(thisEmployeeTaskList, evm.getTaskList());
+        assertEquals("Architect", evmList.get(0).getTitle());
+        assertEquals("Amal", evmList.get(0).getName());
+        assertEquals(birth, evmList.get(0).getDateOfBirth());
+        assertEquals("amalj2426@gmail.com", evmList.get(0).getEmail());
+        assertEquals("314-378-4297", evmList.get(0).getPhoneNumber());
+        assertEquals(since, evmList.get(0).getUserSince());
+        assertEquals(4, evmList.get(0).getYearsOfExperience());
+        assertEquals(project1, evmList.get(0).getProject());
+        assertEquals(thisEmployeeTaskList, evmList.get(0).getTaskList());
     }
 
     @Test
@@ -298,7 +298,7 @@ public class EmployeeServiceLayerTest {
     }
 
 
-//        private EmployeeViewModel buildEmployeeViewModel(Employee employee){
+    //        private EmployeeViewModel buildEmployeeViewModel(Employee employee){
 //
 //        List<Task> taskList = taskRepository.findAllTasksByEmployeeId(employee.getId());
 //        EmployeeViewModel evm = new EmployeeViewModel();

@@ -6,9 +6,6 @@ const employeeAPI = {
   getAllEmployees: () => {
     return axios.get(`${baseUrl}`);
   },
-  // getEmployeeByName: (name) => {
-  //     return axios.get(`${baseUrl}/findByName/${name}`)
-  // },
   getEmployeeByUsername: (username) => {
     return axios.get(`${baseUrl}/findByUsername/${username}`);
   },
