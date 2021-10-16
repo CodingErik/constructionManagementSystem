@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ProjectAPI, EmployeeAPI } from "../api/index";
+import {
+  ProjectAPI,
+  EmployeeAPI,
+  MaterialAPI,
+  MachineryAPI,
+} from "../api/index";
 import EmployeeListTableForProject from "../components/singleProject/EmployeeListTableForProject";
 import ProjectForm from "../components/singleProject/ProjectForm";
 import TaskListTableForProject from "../components/singleProject/TaskListTableForProject";
@@ -13,6 +18,7 @@ function SingleProjectPage() {
   const { projectId } = useParams();
   const [project, setProject] = useState({});
   const [user, setUser] = useState({});
+
   const [hasAuthority, setHasAuthority] = useState(false);
   const token = localStorage.getItem("token")
     ? decode(JSON.parse(localStorage.getItem("token")))
@@ -27,6 +33,17 @@ function SingleProjectPage() {
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    if (
+      (user.project?.id === project.id && user.title === "architect") ||
+      user.title === "admin"
+    ) {
+      setHasAuthority(true);
+    } else {
+      setHasAuthority(false);
+    }
+  }, [user, project]);
 
   useEffect(() => {
     if (
@@ -60,7 +77,17 @@ function SingleProjectPage() {
         </div>
       </div>
       <div className="row">
-        <ResourcesForSingleProjectPage></ResourcesForSingleProjectPage>
+        <TaskListTableForProject
+          hasAuthority={hasAuthority}
+          projectId={projectId}
+          projectName={project.name}
+        ></TaskListTableForProject>
+      </div>
+      <div>
+        <ResourcesForSingleProjectPage
+          projectId={projectId}
+          hasAuthority={hasAuthority}
+        ></ResourcesForSingleProjectPage>
       </div>
     </div>
   );

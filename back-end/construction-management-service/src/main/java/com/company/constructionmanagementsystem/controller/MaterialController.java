@@ -30,17 +30,43 @@ public class MaterialController {
      * update project specific inventory
      * update warehouse inventory
      * */
+//    @PostMapping("/api/materials/project/request")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public String requestMaterials(@RequestBody Material materialForWarehouse, @RequestBody Material finalProjectMaterials) {
+//        /** adding stock to main service
+//         * calling the microservice to update the warehouse inventory
+//         * */
+//
+//        try {
+//            materialWarehouseClient.updateMaterialAfterRetrieve(materialForWarehouse);
+//            repo.save(finalProjectMaterials);
+//            return "the following material was added to the project " + materialForWarehouse.toString();
+//        } catch (FeignException e) {
+//            System.out.println(e.getMessage());
+//            return e.getMessage();
+//        }
+//    }
+
     @PostMapping("/api/materials/project/request")
     @ResponseStatus(HttpStatus.CREATED)
-    public String requestMaterials(@RequestBody Material material) {
+    public String requestMaterials(@RequestBody Material requestMaterials) {
         /** adding stock to main service
          * calling the microservice to update the warehouse inventory
          * */
 
         try {
-            materialWarehouseClient.updateMaterialAfterRetrieve(material);
-            repo.save(material);
-            return "the following material was added to the project " + material.toString();
+            materialWarehouseClient.updateMaterialAfterRetrieve(requestMaterials);
+            Material currentProjectMaterials = repo.findByProjectId(requestMaterials.getProjectId()).get();
+            Material finalProjectMaterials = new Material();
+            finalProjectMaterials.setBrick(currentProjectMaterials.getBrick() + requestMaterials.getBrick());
+            finalProjectMaterials.setCement(currentProjectMaterials.getCement() + requestMaterials.getCement());
+            finalProjectMaterials.setLumber(currentProjectMaterials.getLumber() + requestMaterials.getLumber());
+            finalProjectMaterials.setSteel(currentProjectMaterials.getSteel() + requestMaterials.getSteel());
+            finalProjectMaterials.setProjectId(requestMaterials.getProjectId());
+            finalProjectMaterials.setId(requestMaterials.getId());
+
+            repo.save(finalProjectMaterials);
+            return "the following material was added to the project " + requestMaterials.toString();
         } catch (FeignException e) {
             System.out.println(e.getMessage());
             return e.getMessage();
