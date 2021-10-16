@@ -6,6 +6,7 @@ import ProjectForm from "../components/singleProject/ProjectForm";
 import TaskListTableForProject from "../components/singleProject/TaskListTableForProject";
 import decode from "jwt-decode";
 import redirectIfTokenNull from "../components/RedirectHelper";
+import ResourcesForSingleProjectPage from "../components/resources/ResourcesForSingleProjectPage";
 
 function SingleProjectPage() {
   redirectIfTokenNull();
@@ -13,9 +14,9 @@ function SingleProjectPage() {
   const [project, setProject] = useState({});
   const [user, setUser] = useState({});
   const [hasAuthority, setHasAuthority] = useState(false);
-  const token = localStorage.getItem('token')
-    ? decode(JSON.parse(localStorage.getItem('token')))
-    : 'illegal';
+  const token = localStorage.getItem("token")
+    ? decode(JSON.parse(localStorage.getItem("token")))
+    : "illegal";
 
   useEffect(() => {
     async function fetchData() {
@@ -43,20 +44,23 @@ function SingleProjectPage() {
       <div className="row">
         <ProjectForm hasAuthority={hasAuthority} project={project} />
       </div>
-
       <div className="row">
-        <EmployeeListTableForProject
-          projectId={projectId}
-          hasAuthority={hasAuthority}
-        ></EmployeeListTableForProject>
+        <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <EmployeeListTableForProject
+            projectId={projectId}
+            hasAuthority={hasAuthority}
+          ></EmployeeListTableForProject>
+        </div>
+        <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <TaskListTableForProject
+            hasAuthority={hasAuthority}
+            projectId={projectId}
+            projectName={project.name}
+          ></TaskListTableForProject>
+        </div>
       </div>
-
       <div className="row">
-        <TaskListTableForProject
-          hasAuthority={hasAuthority}
-          projectId={projectId}
-          projectName={project.name}
-        ></TaskListTableForProject>
+        <ResourcesForSingleProjectPage></ResourcesForSingleProjectPage>
       </div>
     </div>
   );

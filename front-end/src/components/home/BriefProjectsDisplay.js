@@ -67,21 +67,22 @@ function BriefProjectsDisplay({ originalProjectLists }) {
           maxHeight: '400px',
           minHeight: '400px',
           overflowY: 'scroll',
+          
         }}
       >
         <table className='table table-hover m-auto'>
           <thead>
             <tr>
               <th
-                className='col-2'
+                className='col-1'
                 onClick={() =>
                   handleProjectColumnHeaderClick('id', 'projectId', parseInt)
                 }
               >
-                Project Id
+                Id
               </th>
               <th
-                className='col-2'
+                className='col-3.5'
                 onClick={() =>
                   handleProjectColumnHeaderClick('name', 'name', (a) =>
                     a.toUpperCase()
@@ -91,7 +92,7 @@ function BriefProjectsDisplay({ originalProjectLists }) {
                 Name
               </th>
               <th
-                className='col-2'
+                className='col-1'
                 onClick={() =>
                   handleProjectColumnHeaderClick('status', 'status', (a) =>
                     a.toUpperCase()
@@ -132,7 +133,7 @@ function BriefProjectsDisplay({ originalProjectLists }) {
                 <tr className='table-active' key={project.id}>
                   <th scope='row'>{project.id}</th>
                   <td>{project.name}</td>
-                  <td>{project.status}</td>
+                  <td className={project.status} style={{fontWeight:"900"}}>{project.status}</td>
                   <td>{project.startDate}</td>
                   <td>{project.deadline}</td>
                   <td>

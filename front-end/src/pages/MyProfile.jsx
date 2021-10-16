@@ -45,17 +45,21 @@ export default function MyProfile() {
     <div className='container'>
       <div className='mt-5'>
         <div className='row'>
-          <div className='col col-lg-6'>
+          <div className='col-12 col-lg-6'>
             <img
-              src='https://source.unsplash.com/random/550x550'
+              src={'https://source.unsplash.com/random/250x250'}
               className='rounded-circle'
               alt='profile'
+            
             ></img>
           </div>
+          <div className="col-12 col-lg-6">
+
           <DisplayBasicInformation
             userInfo={userInfo}
             updateUserBasicInformation={updateUserBasicInformation}
           />
+          </div>
         </div>
         <div className='row mt-5'>
           <div className='col '>
