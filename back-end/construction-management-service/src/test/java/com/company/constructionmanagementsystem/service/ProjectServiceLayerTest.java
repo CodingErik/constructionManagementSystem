@@ -90,8 +90,6 @@ public class ProjectServiceLayerTest {
         startDate = java.time.LocalDate.of(1999, 9, 9);
         deadLine = java.time.LocalDate.of(2010, 4, 4);
 
-        service = new ProjectServiceLayer(projectRepository, employeeRepository, taskRepository);
-
         project = new Project(1, "project", deadLine, startDate, "kitchen", true, true, new BigDecimal("100"), new BigDecimal("100"), new BigDecimal("100"), "in_progress");
 
         otherProject = new Project(2, "other", deadLine, startDate, "bedroom", true, true, new BigDecimal("100"),new BigDecimal("100"),new BigDecimal("100"),"in_progress");

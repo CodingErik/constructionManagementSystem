@@ -9,8 +9,7 @@ function DisplayEmployeeInfo() {
   const { employeeId } = useParams();
   const [employeeTasks, setEmployeeTasks] = useState([]);
   const tokenAuthority = localStorage.getItem('token')
-    ? decode(JSON.parse(localStorage.getItem('token'))).authorities
-    : 'illegal';
+    ? decode(JSON.parse(localStorage.getItem('token'))).authorities: 'illegal';
   let history = useHistory();
 
   if (tokenAuthority !== 'admin') {
