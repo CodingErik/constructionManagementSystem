@@ -67,6 +67,7 @@ function BriefProjectsDisplay({ originalProjectLists }) {
           maxHeight: '400px',
           minHeight: '400px',
           overflowY: 'scroll',
+          
         }}
       >
         <table className='table table-hover m-auto'>
