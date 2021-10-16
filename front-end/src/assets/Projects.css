@@ -69,20 +69,26 @@
 }
 
 .projectStatus{
-    font-weight: 800;
+    font-weight: 900;
+    filter:brightness(100%);
 }
 
 .in_progress{
-    color:rgb(255,215,0);
+    color:rgb(89, 129, 123);
 }
 
 .completed{
-    color:green;
+    color:rgb(162, 185, 101);
+}
+
+.cancelled{
+    color:rgb(179, 87, 82);
 }
 
 .textInput{
     width:50%;
     height:30px;
+    font-size:14px;
 }
 
 .textField{

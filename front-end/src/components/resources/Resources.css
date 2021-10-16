@@ -24,6 +24,7 @@
   height:10px;
   width:100px;
   border:1px solid black;
+  border-radius: 10rem;
   background:transparent; 
   display:block; 
   margin-top:10px;
@@ -32,6 +33,7 @@
 }
 
 .innerInventoryBar{
+  border-radius: 10rem;
   height:8px;
   background:rgb(64, 64, 105);
   display:block; 

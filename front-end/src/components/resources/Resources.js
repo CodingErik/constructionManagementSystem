@@ -40,15 +40,15 @@ export default function Resources({
                   <p className='textElementMaterials'>{value.name}</p>
                   <img
                     src={value.icon}
-                    width='60'
-                    height='60'
+                    width='50'
+                    height='50'
                     alt={value.name}
                   ></img>
                   <div className='wrapperInventoryBar'>
                     <div
                       className={innerInventoryBar}
                       style={{
-                        width: `${(value.amount * 100) / denominatorValue}px`,
+                        width: `${(value.amount * 98.5) / denominatorValue}px`,
                       }}
                     ></div>
                   </div>
