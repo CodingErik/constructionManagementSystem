@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './Resources.css';
 
-export default function Resources({ resources, title, denominator }) {
+export default function Resources({ resources, title, denominator, denominatorValue }) {
   const [resourcesObject, setResources] = useState();
+  const [innerInventoryBar, setInnerInventoryBar] = useState();
 
   useEffect(() => {
     setResources(resources);
+    setInnerInventoryBar("innerInventoryBar")
     console.log(resources);
   }, [resources]);
 
@@ -28,7 +30,10 @@ export default function Resources({ resources, title, denominator }) {
                   <p className='textElementMaterials'>
                     {value.name}
                   </p>
-                  <img src={value.icon} width="100" height="100" alt={value.name}></img>
+                  <img src={value.icon} width="60" height="60" alt={value.name}></img>
+                  <div className="wrapperInventoryBar">
+                    <div className={innerInventoryBar} style={{width:`${value.amount*100/denominatorValue}px`}}></div>
+                  </div>
                   <p className='textElementMaterials'>{value.amount}{denominator}</p>
                 </div>
               </div>

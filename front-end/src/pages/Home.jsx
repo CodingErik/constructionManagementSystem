@@ -161,15 +161,27 @@ function Home() {
               <div className="col col-xl-6">
                 <Resources
                   resources={materials}
+<<<<<<< HEAD
                   title="Materials"
                   denominator="/1000 lbs"
+=======
+                  title='Materials'
+                  denominator='/1000 lbs'
+                  denominatorValue = '1000'
+>>>>>>> 7655c77d8eca77bb08d59e582272c5690542c9e7
                 />
               </div>
               <div className="col col-xl-6">
                 <Resources
                   resources={machinery}
+<<<<<<< HEAD
                   title="Machines"
                   denominator="/30 units"
+=======
+                  title='Machines'
+                  denominator='/30 units'
+                  denominatorValue = '30'
+>>>>>>> 7655c77d8eca77bb08d59e582272c5690542c9e7
                 />
               </div>
             </div>
