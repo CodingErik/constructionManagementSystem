@@ -13,6 +13,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -30,7 +31,7 @@ public class MachineController {
 
 
     /** get project specific inventory y*/
-    @GetMapping("/api/machine/{projectId}")
+    @GetMapping("/api/machines/project/{projectId}")
     public Machine getProjectMachinery(@PathVariable Integer projectId){
         Optional<Machine> returnVal = repo.findByProjectId(projectId);
         if(!returnVal.isPresent()){
@@ -42,13 +43,21 @@ public class MachineController {
 
 
     /** get the warehouse Inventory */
-    @GetMapping("/api/machine/inventory")
+    @GetMapping("/api/machines/warehouse")
+    @ResponseStatus(HttpStatus.OK)
     public Machine getMachineWarehouseInventory() {
         return machineWarehouseClient.getMachineryInventory();
     }
 
+    @GetMapping("/api/machines")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Machine> getAllMachinesInProjects() {
+        List<Machine> returnVal = repo.findAll();
+        return returnVal;
+    }
+
     /** to rent out, and update the warehouse inventoty*/
-    @PostMapping("/api/machine/request")
+    @PostMapping("/api/machines/project/request")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String requestMachinery(@RequestBody Machine machine) {
         /** adding stock to main service
@@ -63,11 +72,11 @@ public class MachineController {
             System.out.println(e.getMessage());
             return e.getMessage();
         }
-
     }
 
+
     /** to return machines to Machinery warehouse inventoty*/
-    @PostMapping("/api/machine/return")
+    @PostMapping("/api/machines/project/return")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String returnMachinery(@RequestBody Machine machine) {
 
