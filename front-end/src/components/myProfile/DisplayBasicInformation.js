@@ -1,7 +1,6 @@
 import UserPersonalInformationModal from './UserPersonalInformationFormModal';
 
 function DisplayBasicInformation({ userInfo, updateUserBasicInformation }) {
-    
   return (
     <div className='col col-12-lg'>
       <div className='row mb-3'>
@@ -9,9 +8,7 @@ function DisplayBasicInformation({ userInfo, updateUserBasicInformation }) {
           <h2>My Info </h2>
         </div>
         <div className='col-5'></div>
-        <div className='col-3'>
-          
-        </div>
+        <div className='col-3'></div>
       </div>
       <div className='row'>
         <div className='col-12'>
@@ -55,15 +52,15 @@ function DisplayBasicInformation({ userInfo, updateUserBasicInformation }) {
             </div>
           </ul>
         </div>
-       <button
-            // style={{ display: 'inline' }}
-            type='button'
-            className='btn btn-warning btn-block'
-            data-bs-toggle='modal'
-            data-bs-target='#editPersonalInformationModal'
-          >
-            Edit Info
-          </button>
+        <button
+          // style={{ display: 'inline' }}
+          type='button'
+          className='btn btn-warning btn-block mt-3'
+          data-bs-toggle='modal'
+          data-bs-target='#editPersonalInformationModal'
+        >
+          Edit Info
+        </button>
         <UserPersonalInformationModal
           userInfo={userInfo}
           modalId='editPersonalInformationModal'
