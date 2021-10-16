@@ -14,7 +14,7 @@ import ladderIcon from "../../assets/ladder.png";
 
 
 
-export default function ResourcesForSingleProjectPage({  projectId, hasAuthority }) {
+export default function ResourcesForSingleProjectPage({ projectId, hasAuthority }) {
     const [maxMaterialAmount, setMaxMaterialAmount] = useState({
         brick: 1000,
         cement: 1000,
@@ -40,7 +40,6 @@ export default function ResourcesForSingleProjectPage({  projectId, hasAuthority
             const materialWarehouseInfo = await MaterialAPI.getWarehouseMaterialsInventory();
             const machineWarehouseInfo = await MachineryAPI.getWarehouseMachineryInventory();
 
-            console.log(machineWarehouseInfo.data);
 
             const materialHolder = {
                 brick: {
@@ -93,11 +92,12 @@ export default function ResourcesForSingleProjectPage({  projectId, hasAuthority
                 lumber: Math.min(parseInt(materialWarehouseInfo.data.lumber), 1000),
                 steel: Math.min(parseInt(materialWarehouseInfo.data.steel), 1000),
             }
+
             const updatedMaxMachineAmount = {
-                crane: Math.min(parseInt(machineWarehouseInfo.data.crane, 30)),
-                drill: Math.min(parseInt(machineWarehouseInfo.data.drill, 30)),
-                forklift: Math.min(parseInt(machineWarehouseInfo.data.forklift, 30)),
-                ladder: Math.min(parseInt(machineWarehouseInfo.data.ladder, 30)),
+                crane: Math.min(parseInt(machineWarehouseInfo.data.crane), 30),
+                drill: Math.min(parseInt(machineWarehouseInfo.data.drill), 30),
+                forklift: Math.min(parseInt(machineWarehouseInfo.data.forklift), 30),
+                ladder: Math.min(parseInt(machineWarehouseInfo.data.ladder), 30),
             }
             setMaterials(materialHolder);
             setMachines(machineHolder);
@@ -132,19 +132,19 @@ export default function ResourcesForSingleProjectPage({  projectId, hasAuthority
         const updatedMachine = {
             crane: {
                 ...machines.crane,
-                amount: machines.crane.amount - parseFloat(machinesInformation.crane)
+                amount: machines.crane.amount + parseFloat(machinesInformation.crane)
             },
             drill: {
                 ...machines.drill,
-                amount: machines.drill.amount - parseFloat(machinesInformation.drill),
+                amount: machines.drill.amount + parseFloat(machinesInformation.drill),
             },
             forklift: {
                 ...machines.forklift,
-                amount: machines.forklift.amount - parseFloat(machinesInformation.forklift)
+                amount: machines.forklift.amount + parseFloat(machinesInformation.forklift)
             },
             ladder: {
                 ...machines.ladder,
-                amount: machines.ladder.amount - parseFloat(machinesInformation.ladder)
+                amount: machines.ladder.amount + parseFloat(machinesInformation.ladder)
             }
         }
         setMachines(updatedMachine);
@@ -174,19 +174,19 @@ export default function ResourcesForSingleProjectPage({  projectId, hasAuthority
         const updatedMaterial = {
             brick: {
                 ...materials.brick,
-                amount: materials.brick.amount - parseFloat(materialInformation.brick)
+                amount: materials.brick.amount + parseFloat(materialInformation.brick)
             },
             cement: {
                 ...materials.cement,
-                amount: materials.cement.amount - parseFloat(materialInformation.cement),
+                amount: materials.cement.amount + parseFloat(materialInformation.cement),
             },
             lumber: {
                 ...materials.lumber,
-                amount: materials.lumber.amount - parseFloat(materialInformation.lumber)
+                amount: materials.lumber.amount + parseFloat(materialInformation.lumber)
             },
             steel: {
                 ...materials.steel,
-                amount: materials.steel.amount - parseFloat(materialInformation.steel)
+                amount: materials.steel.amount + parseFloat(materialInformation.steel)
             }
         }
         setMaterials(updatedMaterial);

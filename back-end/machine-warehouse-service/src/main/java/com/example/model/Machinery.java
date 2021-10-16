@@ -37,6 +37,14 @@ public class Machinery {
         this.drill = drill;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getCrane() {
         return crane;
     }
@@ -74,18 +82,19 @@ public class Machinery {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Machinery machinery = (Machinery) o;
-        return crane == machinery.crane && forklift == machinery.forklift && ladder == machinery.ladder && drill == machinery.drill;
+        return id == machinery.id && crane == machinery.crane && forklift == machinery.forklift && ladder == machinery.ladder && drill == machinery.drill;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(crane, forklift, ladder, drill);
+        return Objects.hash(id, crane, forklift, ladder, drill);
     }
 
     @Override
     public String toString() {
         return "Machinery{" +
-                "crane=" + crane +
+                "id=" + id +
+                ", crane=" + crane +
                 ", forklift=" + forklift +
                 ", ladder=" + ladder +
                 ", drill=" + drill +

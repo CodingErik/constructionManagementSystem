@@ -32,6 +32,7 @@ public class MachineController {
     @GetMapping("/api/machinery")
     @ResponseStatus(HttpStatus.OK)
     public Machinery getMachineryInventory() {
+        System.out.println(repo.getById(1));
         return repo.getById(1);
     }
 
