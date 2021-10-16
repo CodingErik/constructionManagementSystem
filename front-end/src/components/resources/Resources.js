@@ -8,7 +8,6 @@ export default function Resources({ resources, title, denominator, denominatorVa
   useEffect(() => {
     setResources(resources);
     setInnerInventoryBar("innerInventoryBar")
-    console.log(resources);
   }, [resources]);
 
   return (
