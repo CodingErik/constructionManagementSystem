@@ -83,27 +83,27 @@ function Home() {
         console.log(error);
       });
 
-    MaterialAPI.getAllMaterialsInProjects().then((response) => {
-      response.data.forEach((material) => {
-        setMaterialCount((prevState) => ({
-          brick: (prevState.brick += material.brick),
-          cement: (prevState.cement += material.cement),
-          lumber: (prevState.lumber += material.lumber),
-          steel: (prevState.steel += material.steel),
-        }));
-      });
-    });
+    // MaterialAPI.getAllMaterialsInProjects().then((response) => {
+    //   response.data.forEach((material) => {
+    //     setMaterialCount((prevState) => ({
+    //       brick: (prevState.brick += material.brick),
+    //       cement: (prevState.cement += material.cement),
+    //       lumber: (prevState.lumber += material.lumber),
+    //       steel: (prevState.steel += material.steel),
+    //     }));
+    //   });
+    // });
 
-    MachineryAPI.getAllMachinesInProjects().then((response) => {
-      response.data.forEach((machine) => {
-        setMachineCount((prevState) => ({
-          crane: (prevState.crane += machine.crane),
-          drill: (prevState.drill += machine.drill),
-          forklift: (prevState.forklift += machine.forklift),
-          ladder: (prevState.ladder += machine.ladder),
-        }));
-      });
-    });
+    // MachineryAPI.getAllMachinesInProjects().then((response) => {
+    //   response.data.forEach((machine) => {
+    //     setMachineCount((prevState) => ({
+    //       crane: (prevState.crane += machine.crane),
+    //       drill: (prevState.drill += machine.drill),
+    //       forklift: (prevState.forklift += machine.forklift),
+    //       ladder: (prevState.ladder += machine.ladder),
+    //     }));
+    //   });
+    // });
 
     MaterialAPI.getWarehouseMaterialsInventory().then((response) => {
       const materialsHolder = {
