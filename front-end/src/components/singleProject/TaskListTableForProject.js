@@ -27,17 +27,18 @@ function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
     <div className='container'>
       <h3>Tasks</h3>
       <div
-        className='table-responsive mt-3 mb-3'
+        className='table-responsive mb-3'
         style={{
-          width: '85vw',
+          width: '100%',
+          marginTop:"5.2%"
         }}
       >
         <table className='table table-hover m-auto'>
           <thead>
             <tr>
-              <th className='col-3'>Task Id</th>
+              <th className='col-1'>Id</th>
               <th className='col-4'>Name</th>
-              <th className='col-4'>Employee Assigned</th>
+              <th className='col-7'>Employee Assigned</th>
               <th className='col-4'>Status</th>
             </tr>
           </thead>
@@ -50,23 +51,20 @@ function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
                 <td>{task.status}</td>
               </tr>
             ))}
-            {hasAuthority && (
-              <tr>
-                <td>
-                  <button
-                    type='button'
-                    className='btn btn-outline-warning'
-                    data-bs-toggle='modal'
-                    data-bs-target='#addTaskModal'
-                    disabled={!hasAuthority}
-                  >
-                    Add Task
-                  </button>
-                </td>
-              </tr>
-            )}
           </tbody>
         </table>
+        {hasAuthority && (
+          <button
+            type='button'
+            className='btn btn-outline-warning'
+            data-bs-toggle='modal'
+            data-bs-target='#addTaskModal'
+            disabled={!hasAuthority}
+            style={{width:"100%", marginTop:"3%"}}
+          >
+            Add Task
+          </button>
+        )}
       </div>
       <AddTaskModal
         modalId='addTaskModal'
