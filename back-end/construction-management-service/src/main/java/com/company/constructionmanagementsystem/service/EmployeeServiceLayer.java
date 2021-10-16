@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.ws.rs.HEAD;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Component
 @Service
@@ -79,11 +80,11 @@ public class EmployeeServiceLayer {
     }
 
     public List<EmployeeViewModel> findEmployeesByTitle(String title) {
-        if(employeeRepository.findByTitle(title).size() > 0) {
+        if(employeeRepository.findByTitle(title).size() < 1) {
             throw new NotFoundException("Title Not Found.");
         }
 
-        List<Employee> employeeList = employeeRepository.findByTitle(title);
+        List<Employee> employeeList = employeeRepository.findByTitle(title.toLowerCase(Locale.ROOT));
 
         List<EmployeeViewModel> evmList = new ArrayList<>();
 
