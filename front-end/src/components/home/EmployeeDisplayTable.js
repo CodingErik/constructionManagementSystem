@@ -79,12 +79,12 @@ function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
           <thead>
             <tr>
               <th
-                className='col-2'
+                className='col-1'
                 onClick={() =>
                   handleEmployeeColumnHeaderClick('id', 'employeeId', parseInt)
                 }
               >
-                Employee Id
+                Id
               </th>
               <th
                 className='col-2'
@@ -128,7 +128,7 @@ function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
                   )
                 }
               >
-                Phone Number
+                Phone #
               </th>
             </tr>
           </thead>
