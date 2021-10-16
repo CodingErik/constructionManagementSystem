@@ -137,7 +137,7 @@ function ProjectForm({ project, hasAuthority }) {
                     type='number'
                     readOnly={!hasAuthority}
                     className='form-control-plaintext'
-                    style={{ display: 'inline', width: '20%' }}
+                    style={{ display: 'inline', width: '30%' }}
                     id='laborBudget'
                     defaultValue={project.laborBudget}
                     ref={laborBudgetRef}
@@ -160,7 +160,7 @@ function ProjectForm({ project, hasAuthority }) {
                     type='number'
                     readOnly={!hasAuthority}
                     className='form-control-plaintext'
-                    style={{ display: 'inline', width: '20%' }}
+                    style={{ display: 'inline', width: '30%' }}
                     id='materialBudget'
                     defaultValue={project.materialBudget}
                     ref={materialBudgetRef}
@@ -182,7 +182,7 @@ function ProjectForm({ project, hasAuthority }) {
                     type='number'
                     readOnly={!hasAuthority}
                     className='form-control-plaintext'
-                    style={{ display: 'inline', width: '20%' }}
+                    style={{ display: 'inline', width: '30%' }}
                     id='totalBudget'
                     defaultValue={project.totalBudget}
                     ref={totalBudgetRef}
