@@ -12,6 +12,7 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,7 +30,7 @@ public class MaterialController {
      * update project specific inventory
      * update warehouse inventory
      * */
-    @PostMapping("/api/materials/request")
+    @PostMapping("/api/materials/project/request")
     @ResponseStatus(HttpStatus.CREATED)
     public String requestMaterials(@RequestBody Material material) {
         /** adding stock to main service
@@ -47,7 +48,7 @@ public class MaterialController {
     }
 
     /** get project specific inventory y*/
-    @GetMapping("/api/materials/{projectId}")
+    @GetMapping("/api/materials/project/{projectId}")
     @ResponseStatus(HttpStatus.OK)
     public Material getProjectMaterial(@PathVariable Integer projectId){
         Material returnVal = repo.findByProjectId(projectId).get();
@@ -57,15 +58,22 @@ public class MaterialController {
         return returnVal;
     }
 
-    /** get warehouse inventory*/
     @GetMapping("/api/materials")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Material> getAllMaterialsInProjects() {
+        List<Material> returnVal = repo.findAll();
+        return returnVal;
+    }
+
+    /** get warehouse inventory*/
+    @GetMapping("/api/materials/warehouse")
     @ResponseStatus(HttpStatus.OK)
     public Material getWarehouseInventory() {
         return materialWarehouseClient.getWarehouseInventory();
     }
 
     /** refill warehouse inventory */
-    @PutMapping("/api/material/refill")
+    @PutMapping("/api/material/warehouse/refill")
     @ResponseStatus(HttpStatus.OK)
     public String updateMaterialRefill() {
         return materialWarehouseClient.updateMaterialRefill();
