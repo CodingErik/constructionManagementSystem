@@ -37,6 +37,7 @@ function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
             <tr>
               <th className='col-5'>Task Id</th>
               <th className='col-7'>Name</th>
+              <th className='col-7'>Employee Assigned</th>
               <th className='col-7'>Status</th>
             </tr>
           </thead>
