@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { LoginAPI, EmployeeAPI } from '../api';
 import Message from '../components/Message';
-import LoginSpinner from '../components/LoginSpinner';
+import LoginSpinner from '../components/spinner/LoginSpinner';
 
 function RegisterPage() {
   const [name, setName] = useState('');
