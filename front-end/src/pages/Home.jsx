@@ -31,6 +31,18 @@ function Home() {
     cancelled: 0,
     completed: 0,
   });
+  const [materialCount, setMaterialCount] = useState({
+    brick: 0,
+    cement: 0,
+    lumber: 0,
+    steel: 0,
+  });
+  const [machineCount, setMachineCount] = useState({
+    crane: 0,
+    drill: 0,
+    forklift: 0,
+    ladder: 0,
+  });
   const [employeeList, setEmployeeList] = useState([]);
   const [taskList, setTaskList] = useState([]);
   const [materials, setMaterials] = useState();
@@ -57,9 +69,6 @@ function Home() {
             cancelled: prevState.cancelled++,
           }));
         }
-
-        // MaterialAPI.getMaterialsByProjectId(project.id);
-        // MachineryAPI.getMachineryByProjectId(project.id);
       });
     });
     EmployeeAPI.getAllEmployees().then((response) => {
@@ -73,6 +82,28 @@ function Home() {
       .catch((error) => {
         console.log(error);
       });
+
+    MaterialAPI.getAllMaterialsInProjects().then((response) => {
+      response.data.forEach((material) => {
+        setMaterialCount((prevState) => ({
+          brick: (prevState.brick += material.brick),
+          cement: (prevState.cement += material.cement),
+          lumber: (prevState.lumber += material.lumber),
+          steel: (prevState.steel += material.steel),
+        }));
+      });
+    });
+
+    MachineryAPI.getAllMachinesInProjects().then((response) => {
+      response.data.forEach((machine) => {
+        setMachineCount((prevState) => ({
+          crane: (prevState.crane += machine.crane),
+          drill: (prevState.drill += machine.drill),
+          forklift: (prevState.forklift += machine.forklift),
+          ladder: (prevState.ladder += machine.ladder),
+        }));
+      });
+    });
 
     MaterialAPI.getWarehouseMaterialsInventory().then((response) => {
       const materialsHolder = {
@@ -123,7 +154,6 @@ function Home() {
           icon: drillIcon,
         },
       };
-      console.log(machineHolder);
       setMachinery(machineHolder);
     });
 

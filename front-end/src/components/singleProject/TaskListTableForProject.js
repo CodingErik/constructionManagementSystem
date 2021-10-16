@@ -35,10 +35,10 @@ function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
         <table className='table table-hover m-auto'>
           <thead>
             <tr>
-              <th className='col-5'>Task Id</th>
-              <th className='col-7'>Name</th>
-              <th className='col-7'>Employee Assigned</th>
-              <th className='col-7'>Status</th>
+              <th className='col-3'>Task Id</th>
+              <th className='col-4'>Name</th>
+              <th className='col-4'>Employee Assigned</th>
+              <th className='col-4'>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +46,7 @@ function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
               <tr className='table-active' key={task.id}>
                 <th scope='row'>{task.id}</th>
                 <td>{task.name}</td>
+                <td>{task.employee.name}</td>
                 <td>{task.status}</td>
               </tr>
             ))}
