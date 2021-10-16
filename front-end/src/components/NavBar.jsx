@@ -3,9 +3,10 @@ import { Link, useHistory, NavLink } from 'react-router-dom';
 import decode from 'jwt-decode';
 
 export default function NavBar() {
-  const tokenAuthority = decode(
-    JSON.parse(localStorage.getItem('token'))
-  ).authorities;
+  const tokenAuthority = localStorage.getItem('token')
+    ? decode(JSON.parse(localStorage.getItem('token'))).authorities
+    : 'illegal';
+
   const history = useHistory();
 
   const handleLogout = () => {

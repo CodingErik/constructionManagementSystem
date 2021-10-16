@@ -13,7 +13,6 @@ import SingleProjectPage from './pages/SingleProjectPage';
 import SingleTaskPage from './pages/SingleTaskPage';
 import AdminSingleEmployeePage from './pages/AdminSingleEmployeeEditPage';
 import AdminAllEmployeeViewPage from './pages/AdminAllEmployeeViewPage';
-import Footer from './components/Footer';
 
 function App() {
   return (
@@ -66,7 +65,6 @@ function App() {
           </Switch>
         </div>
       </Router>
-      <Footer></Footer>
     </div>
   );
 }

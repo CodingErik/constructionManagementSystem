@@ -5,6 +5,7 @@ import projectAPI from '../api/ProjectAPI';
 import employeeAPI from '../api/EmployeeAPI';
 import './Tasks.css';
 import redirectIfTokenNull from '../components/RedirectHelper';
+import Spinner from '../components/Spinner';
 
 export default function Tasks() {
   redirectIfTokenNull();
@@ -13,6 +14,7 @@ export default function Tasks() {
   const [projectId, setProjectId] = useState();
   const [employeeId, setEmployeeId] = useState();
   const [name, setName] = useState();
+  const [isLoading, setIsloading] = useState(true);
 
   const projectNameRef = useRef();
   const employeeNameRef = useRef();
@@ -29,6 +31,8 @@ export default function Tasks() {
         setTasks(res.data);
       })
       .catch((error) => console.error(error));
+
+    setIsloading(false);
   }, [projectId, employeeId, name]);
 
   function setFilters(event) {
@@ -72,6 +76,10 @@ export default function Tasks() {
 
     taskNameRef.current.value = null;
     setName(taskNameRef.current.value);
+  }
+
+  if (isLoading) {
+    return <Spinner />;
   }
 
   return (

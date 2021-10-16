@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './home.css';
+import HomePageSpinner from './HomePageSpinner';
 
 let columnBooleans = {
   id: false,
@@ -14,9 +15,11 @@ let columnBooleans = {
 
 export default function BriefTasksDisplay({ originalTaskList }) {
   const [taskList, setTaskList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setTaskList([...originalTaskList]);
+    setIsLoading(false);
   }, [originalTaskList]);
 
   const handleTaskColumnHeaderClick = (
@@ -125,24 +128,28 @@ export default function BriefTasksDisplay({ originalTaskList }) {
               </th>
             </tr>
           </thead>
-          <tbody>
-            {taskList.map((task) => (
-              <tr className='table-active' key={task.id}>
-                <th scope='row'>{task.id}</th>
-                <td>{task.name}</td>
-                <td>{task.status}</td>
-                <td>{task.project ? task.project.name : task.projectId}</td>
-                <td>{task.deadline}</td>
-                <td>
-                  <Link to={{ pathname: `/SingleTaskPage/${task.id}` }}>
-                    <button type='button' className='btn btn-warning'>
-                      View
-                    </button>
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          {isLoading ? (
+            <HomePageSpinner />
+          ) : (
+            <tbody>
+              {taskList.map((task) => (
+                <tr className='table-active' key={task.id}>
+                  <th scope='row'>{task.id}</th>
+                  <td>{task.name}</td>
+                  <td>{task.status}</td>
+                  <td>{task.project ? task.project.name : task.projectId}</td>
+                  <td>{task.deadline}</td>
+                  <td>
+                    <Link to={{ pathname: `/SingleTaskPage/${task.id}` }}>
+                      <button type='button' className='btn btn-warning'>
+                        View
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )}
         </table>
       </div>
     </div>
