@@ -11,7 +11,7 @@ export default function Resources({ resources, title, denominator }) {
 
   return (
     <div>
-      <h3 className='mb-3'>{title}</h3>
+      <h4 className='mb-3'>{title}</h4>
 
       <div
         className='resourcesWrapper row mt-3'

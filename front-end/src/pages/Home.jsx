@@ -116,7 +116,7 @@ function Home() {
           name: "Drill",
           amount: response.data?.drill,
           icon: drillIcon,
-        }
+        },
       };
       console.log(machineHolder);
       setMachinery(machineHolder);
@@ -144,12 +144,21 @@ function Home() {
       <div className="row mb-3 mt-3">
         <div className="col col-xl-6 ml-1 mr-1">
           <div className="row mb-3">
+            <h2>Warehouse</h2>
             <div className="row mt-3" style={{ minHeight: "445px" }}>
               <div className="col col-xl-6">
-                <Resources resources={materials} title="Materials" denominator="/1000 lbs" />
+                <Resources
+                  resources={materials}
+                  title="Materials"
+                  denominator="/1000 lbs"
+                />
               </div>
               <div className="col col-xl-6">
-                <Resources resources={machinery} title="Machines" denominator="/30 units"/>
+                <Resources
+                  resources={machinery}
+                  title="Machines"
+                  denominator="/30 units"
+                />
               </div>
             </div>
           </div>
