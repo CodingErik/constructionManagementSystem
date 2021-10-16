@@ -7,7 +7,9 @@ import '../assets/Projects.css';
 import AddProjectModal from '../components/project/AddProjectModal';
 import decode from 'jwt-decode';
 import Spinner from '../components/Spinner';
-const authority = decode(JSON.parse(localStorage.getItem('token'))).authorities;
+const authority = localStorage.getItem('token')
+  ? decode(JSON.parse(localStorage.getItem('token'))).authorities
+  : 'illegal';
 
 export default function Projects() {
   redirectIfTokenNull();

@@ -13,7 +13,9 @@ function SingleProjectPage() {
   const [project, setProject] = useState({});
   const [user, setUser] = useState({});
   const [hasAuthority, setHasAuthority] = useState(false);
-  const token = decode(JSON.parse(localStorage.getItem('token')));
+  const token = localStorage.getItem('token')
+    ? decode(JSON.parse(localStorage.getItem('token')))
+    : 'illegal';
 
   useEffect(() => {
     async function fetchData() {

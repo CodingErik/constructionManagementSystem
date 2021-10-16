@@ -17,7 +17,7 @@ export default function MyProfile() {
 
   const username = localStorage.getItem('token')
     ? decode(JSON.parse(localStorage.getItem('token'))).sub
-    : null;
+    : 'illegal';
 
   useEffect(() => {
     EmployeeAPI.getEmployeeByUsername(username)

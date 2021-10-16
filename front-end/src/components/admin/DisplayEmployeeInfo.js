@@ -10,7 +10,7 @@ function DisplayEmployeeInfo() {
   const [employeeTasks, setEmployeeTasks] = useState([]);
   const tokenAuthority = localStorage.getItem('token')
     ? decode(JSON.parse(localStorage.getItem('token'))).authorities
-    : null;
+    : 'illegal';
   let history = useHistory();
 
   if (tokenAuthority !== 'admin') {
@@ -184,8 +184,14 @@ function DisplayEmployeeInfo() {
                   <div className='col-9'>{task.name}</div>
                 </div>
               </div>
-              <div className="col-2">
-                <button type="button" className="btn btn-danger" onClick={() => handleRemoveUserFromTask(task.id)}>Delete Task</button>
+              <div className='col-2'>
+                <button
+                  type='button'
+                  className='btn btn-danger'
+                  onClick={() => handleRemoveUserFromTask(task.id)}
+                >
+                  Delete Task
+                </button>
               </div>
               <div className='col-2'>
                 <Link to={{ pathname: `/SingleTaskPage/${task.id}` }}>
