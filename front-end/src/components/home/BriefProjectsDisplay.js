@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import HomePageSpinner from './HomePageSpinner';
 
 let columnBooleans = {
   projectId: false,
@@ -11,9 +12,12 @@ let columnBooleans = {
 
 function BriefProjectsDisplay({ originalProjectLists }) {
   const [projectList, setProjectList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setProjectList([...originalProjectLists]);
+
+    setIsLoading(false);
   }, [originalProjectLists]);
 
   const handleProjectColumnHeaderClick = (
@@ -61,6 +65,7 @@ function BriefProjectsDisplay({ originalProjectLists }) {
         className='table-responsive'
         style={{
           maxHeight: '400px',
+          minHeight: '400px',
           overflowY: 'scroll',
         }}
       >
@@ -119,24 +124,28 @@ function BriefProjectsDisplay({ originalProjectLists }) {
               </th>
             </tr>
           </thead>
-          <tbody>
-            {projectList.map((project) => (
-              <tr className='table-active' key={project.id}>
-                <th scope='row'>{project.id}</th>
-                <td>{project.name}</td>
-                <td>{project.status}</td>
-                <td>{project.startDate}</td>
-                <td>{project.deadline}</td>
-                <td>
-                  <Link to={{ pathname: `/SingleProjectPage/${project.id}` }}>
-                    <button type='button' className='btn btn-warning'>
-                      View
-                    </button>
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+          {isLoading ? (
+            <HomePageSpinner />
+          ) : (
+            <tbody>
+              {projectList.map((project) => (
+                <tr className='table-active' key={project.id}>
+                  <th scope='row'>{project.id}</th>
+                  <td>{project.name}</td>
+                  <td>{project.status}</td>
+                  <td>{project.startDate}</td>
+                  <td>{project.deadline}</td>
+                  <td>
+                    <Link to={{ pathname: `/SingleProjectPage/${project.id}` }}>
+                      <button type='button' className='btn btn-warning'>
+                        View
+                      </button>
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          )}
         </table>
       </div>
     </div>

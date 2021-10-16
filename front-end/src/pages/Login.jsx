@@ -2,18 +2,26 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { LoginAPI } from '../api';
+import LoginSpinner from '../components/LoginSpinner';
 import Message from '../components/Message';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
+  // const [isLoading, setIsLoading] = useState(false);
+
+  // useEffect(() => {}, [isLoading]);
+
   const history = useHistory();
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    // setIsLoading(true);
 
     const res = await LoginAPI.login(username, password);
+
+    // setIsLoading(false);
     if (res.status === 200) {
       setMessage(null);
 
@@ -30,6 +38,7 @@ export default function Login() {
   }
   return (
     <div class='container'>
+      {/* {isLoading ? <LoginSpinner /> : ''} */}
       <div class='row'>
         <div class='col-lg-10 col-xl-9 mx-auto'>
           <div class='card flex-row my-5 border-0 shadow rounded-3 overflow-hidden'>

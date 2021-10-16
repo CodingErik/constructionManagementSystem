@@ -2,17 +2,6 @@ import axios from 'axios';
 // const baseUrl = `http://localhost:8080/api/projects`;
 const baseUrl = `http://localhost:8979/api/projects`;
 
-const token = localStorage.getItem('token')
-  ? JSON.parse(localStorage.getItem('token'))
-  : null;
-
-const config = {
-  headers: {
-    'content-Type': 'application/json',
-    Authorization: `Bearer ${token}`,
-  },
-};
-
 const projectAPI = {
   getAllProjects: (roomType, name) => {
     return axios.get(`${baseUrl}`, {
@@ -39,7 +28,7 @@ const projectAPI = {
   },
   deleteProjectById: (projectId) => {
     return axios.delete(`${baseUrl}/${projectId}`);
-  }
+  },
 };
 
 export default projectAPI;

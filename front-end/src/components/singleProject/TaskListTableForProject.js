@@ -24,7 +24,7 @@ function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
   };
 
   return (
-    <div>
+    <div className='container'>
       <h3>Tasks</h3>
       <div
         className='table-responsive mt-3 mb-3'

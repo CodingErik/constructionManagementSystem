@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import HomePageSpinner from './HomePageSpinner';
 let columnBooleans = {
   employeeId: false,
   project: false,
@@ -9,28 +10,37 @@ let columnBooleans = {
 
 function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
   const [employeeList, setEmployeeList] = useState([]);
-  
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
-    setEmployeeList([...originalEmployeeList].map((employee) => {
-      if (employee.project === null) {
-        employee.project = { id: 0, name: "unassigned" };
+    setEmployeeList(
+      [...originalEmployeeList].map((employee) => {
+        if (employee.project === null) {
+          employee.project = { id: 0, name: 'unassigned' };
+          return employee;
+        }
         return employee;
-      };
-      return employee
-    }));
+      })
+    );
+
+    setIsLoading(false);
   }, [originalEmployeeList]);
 
-  const handleEmployeeColumnHeaderClick = (neededVariable, booleanVariable, methodTranslate) => {
+  const handleEmployeeColumnHeaderClick = (
+    neededVariable,
+    booleanVariable,
+    methodTranslate
+  ) => {
     const sort_by = (neededField, reverse, primer) => {
       const getField = (obj, path) =>
         path.split('.').reduce((value, el) => value[el], obj);
       const key = primer
         ? function (x) {
-          return primer(getField(x, neededField));
-        }
+            return primer(getField(x, neededField));
+          }
         : function (x) {
-          return getField(x, neededVariable);
-        };
+            return getField(x, neededVariable);
+          };
       reverse = !reverse ? 1 : -1;
 
       return function (a, b) {
@@ -54,7 +64,6 @@ function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
     );
   };
 
-
   return (
     <div className='row mt-3'>
       <h3 className='mb-3'>{title}</h3>
@@ -71,53 +80,79 @@ function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
             <tr>
               <th
                 className='col-2'
-                onClick={() => handleEmployeeColumnHeaderClick('id', "employeeId", parseInt)}
+                onClick={() =>
+                  handleEmployeeColumnHeaderClick('id', 'employeeId', parseInt)
+                }
               >
                 Employee Id
               </th>
               <th
                 className='col-2'
-                onClick={() => handleEmployeeColumnHeaderClick('name', "name", (a) => a.toUpperCase())}
+                onClick={() =>
+                  handleEmployeeColumnHeaderClick('name', 'name', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Name
               </th>
               <th
                 className='col-3'
-                onClick={() => handleEmployeeColumnHeaderClick('project.name', "project", (a) => a.toUpperCase())}
+                onClick={() =>
+                  handleEmployeeColumnHeaderClick(
+                    'project.name',
+                    'project',
+                    (a) => a.toUpperCase()
+                  )
+                }
               >
                 Project
               </th>
               <th
                 className='col-2'
-                onClick={() => handleEmployeeColumnHeaderClick('email', "email", (a) => a.toUpperCase())}
+                onClick={() =>
+                  handleEmployeeColumnHeaderClick('email', 'email', (a) =>
+                    a.toUpperCase()
+                  )
+                }
               >
                 Email
               </th>
               <th
                 className='col-2'
-                onClick={() => handleEmployeeColumnHeaderClick('phoneNumber', "phoneNumber", (a) => a.toUpperCase())}
+                onClick={() =>
+                  handleEmployeeColumnHeaderClick(
+                    'phoneNumber',
+                    'phoneNumber',
+                    (a) => a.toUpperCase()
+                  )
+                }
               >
                 Phone Number
               </th>
             </tr>
           </thead>
-          <tbody>
-            {employeeList
-              .filter(
-                (employee) =>
-                  employee.title?.toLowerCase() === filter.toLowerCase()
-              )
-              .map((filteredEmployee) => (
-                <tr className='table-active' key={filteredEmployee.id}>
-                  <th scope='row'>{filteredEmployee.id}</th>
-                  <td>{filteredEmployee.name}</td>
-                  <td>{filteredEmployee.project?.name || 'None'} </td>
-                  <td>{filteredEmployee.email}</td>
-                  <td>{filteredEmployee.phoneNumber || 'None'}</td>
-                  <td></td>
-                </tr>
-              ))}
-          </tbody>
+          {isLoading ? (
+            <HomePageSpinner />
+          ) : (
+            <tbody>
+              {employeeList
+                .filter(
+                  (employee) =>
+                    employee?.title.toLowerCase() === filter.toLowerCase()
+                )
+                .map((filteredEmployee) => (
+                  <tr className='table-active' key={filteredEmployee.id}>
+                    <th scope='row'>{filteredEmployee.id}</th>
+                    <td>{filteredEmployee.name}</td>
+                    <td>{filteredEmployee.project?.name || 'None'} </td>
+                    <td>{filteredEmployee.email}</td>
+                    <td>{filteredEmployee.phoneNumber || 'None'}</td>
+                    <td></td>
+                  </tr>
+                ))}
+            </tbody>
+          )}
         </table>
       </div>
     </div>

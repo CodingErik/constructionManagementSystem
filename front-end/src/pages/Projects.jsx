@@ -6,7 +6,10 @@ import { ProjectAPI } from '../api';
 import '../assets/Projects.css';
 import AddProjectModal from '../components/project/AddProjectModal';
 import decode from 'jwt-decode';
-const authority = localStorage.getItem("token")? decode(JSON.parse(localStorage.getItem('token'))).authorities : "illegal";
+import Spinner from '../components/Spinner';
+const authority = localStorage.getItem('token')
+  ? decode(JSON.parse(localStorage.getItem('token'))).authorities
+  : 'illegal';
 
 export default function Projects() {
   redirectIfTokenNull();
@@ -16,6 +19,7 @@ export default function Projects() {
   const [name, setName] = useState('');
   const [isPlumbing, setIsPlumbing] = useState('all');
   const [isElectric, setIsElectric] = useState('all');
+  const [isLoading, setIsLoading] = useState(true);
 
   const projectNameRef = useRef();
   const roomTypeRef = useRef();
@@ -63,6 +67,8 @@ export default function Projects() {
       .catch((error) => {
         console.error(error);
       });
+
+    setIsLoading(false);
   }, [roomType, name, isPlumbing, isElectric]);
 
   function setFilters(event) {
@@ -85,6 +91,10 @@ export default function Projects() {
     setStatusFilter('all');
     setIsElectric('all');
     setIsPlumbing('all');
+  }
+
+  if (isLoading) {
+    return <Spinner />;
   }
 
   return (
