@@ -6,6 +6,7 @@ import ProjectForm from "../components/singleProject/ProjectForm";
 import TaskListTableForProject from "../components/singleProject/TaskListTableForProject";
 import decode from "jwt-decode";
 import redirectIfTokenNull from "../components/RedirectHelper";
+import ResourcesForSingleProjectPage from "../components/resources/ResourcesForSingleProjectPage";
 
 function SingleProjectPage() {
   redirectIfTokenNull();
@@ -13,9 +14,9 @@ function SingleProjectPage() {
   const [project, setProject] = useState({});
   const [user, setUser] = useState({});
   const [hasAuthority, setHasAuthority] = useState(false);
-  const token = localStorage.getItem('token')
-    ? decode(JSON.parse(localStorage.getItem('token')))
-    : 'illegal';
+  const token = localStorage.getItem("token")
+    ? decode(JSON.parse(localStorage.getItem("token")))
+    : "illegal";
 
   useEffect(() => {
     async function fetchData() {
@@ -57,6 +58,9 @@ function SingleProjectPage() {
           projectId={projectId}
           projectName={project.name}
         ></TaskListTableForProject>
+      </div>
+      <div>
+        <ResourcesForSingleProjectPage></ResourcesForSingleProjectPage>
       </div>
     </div>
   );
