@@ -76,13 +76,7 @@ function SingleProjectPage() {
           ></TaskListTableForProject>
         </div>
       </div>
-      <div className="row">
-        <TaskListTableForProject
-          hasAuthority={hasAuthority}
-          projectId={projectId}
-          projectName={project.name}
-        ></TaskListTableForProject>
-      </div>
+
       <div>
         <ResourcesForSingleProjectPage
           projectId={projectId}
