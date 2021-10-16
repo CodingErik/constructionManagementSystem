@@ -158,6 +158,7 @@ function Home() {
                   resources={materials}
                   title='Materials'
                   denominator='/1000 lbs'
+                  denominatorValue = '1000'
                 />
               </div>
               <div className='col col-xl-6'>
@@ -165,6 +166,7 @@ function Home() {
                   resources={machinery}
                   title='Machines'
                   denominator='/30 units'
+                  denominatorValue = '30'
                 />
               </div>
             </div>
