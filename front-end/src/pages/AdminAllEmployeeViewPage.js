@@ -1,7 +1,7 @@
 import AllEmployeeTable from '../components/admin/AllEmployeeTable';
 import { useEffect, useState } from 'react';
 import { EmployeeAPI } from '../api';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/spinner/Spinner';
 
 function AdminAllEmployeeViewPage() {
   const [originalEmployeeList, setOriginalEmployeeList] = useState([]);

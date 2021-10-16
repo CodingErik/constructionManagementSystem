@@ -2,8 +2,8 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { LoginAPI } from '../api';
-import LoginSpinner from '../components/LoginSpinner';
 import Message from '../components/Message';
+import LoginSpinner from '../components/spinner/LoginSpinner';
 
 export default function Login() {
   const [username, setUsername] = useState('');

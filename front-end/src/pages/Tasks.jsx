@@ -5,7 +5,7 @@ import projectAPI from '../api/ProjectAPI';
 import employeeAPI from '../api/EmployeeAPI';
 import './Tasks.css';
 import redirectIfTokenNull from '../components/RedirectHelper';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/spinner/Spinner';
 
 export default function Tasks() {
   redirectIfTokenNull();

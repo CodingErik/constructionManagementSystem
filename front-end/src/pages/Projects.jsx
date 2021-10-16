@@ -6,7 +6,7 @@ import { ProjectAPI } from '../api';
 import '../assets/Projects.css';
 import AddProjectModal from '../components/project/AddProjectModal';
 import decode from 'jwt-decode';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/spinner/Spinner';
 const authority = localStorage.getItem('token')
   ? decode(JSON.parse(localStorage.getItem('token'))).authorities
   : 'illegal';
