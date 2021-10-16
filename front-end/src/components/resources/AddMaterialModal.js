@@ -5,11 +5,12 @@ import cementIcon from "../../assets/cement.png";
 import lumberIcon from "../../assets/lumber.png";
 
 
-function AddResourcesModal({
+function AddMaterialModal({
     modalId,
-    handleAddResourcesToProject,
+    handleAddMaterialsToProject,
     hasAuthority,
     projectId,
+    maxMaterialAmount
 }) {
 
     const brickRef = useRef();
@@ -26,7 +27,7 @@ function AddResourcesModal({
             lumber: lumberRef.current.value,
             steel: steelRef.current.value
         };
-        console.log(resourceObject);
+        handleAddMaterialsToProject(resourceObject);
     }
 
     return (
@@ -73,7 +74,13 @@ function AddResourcesModal({
                                                 ref={brickRef}
                                                 style={{ width: "30%" }}
                                                 defaultValue={0}
+                                                disabled={maxMaterialAmount.brick === 0 ? true : false}
+                                                min={0}
+                                                max={maxMaterialAmount.brick ? maxMaterialAmount.brick : 1000}
                                             />
+                                            <small >
+                                                Max Bricks: {maxMaterialAmount.brick}
+                                            </small>
                                         </div>
                                     </div>
                                     <div className="col-6">
@@ -90,7 +97,13 @@ function AddResourcesModal({
                                                 ref={cementRef}
                                                 style={{ width: "30%" }}
                                                 defaultValue={0}
+                                                disabled={maxMaterialAmount.cement === 0 ? true : false}
+                                                min={0}
+                                                max={maxMaterialAmount.cement ? maxMaterialAmount.cement : 1000}
                                             />
+                                            <small >
+                                                Max Cement: {maxMaterialAmount.cement}
+                                            </small>
                                         </div>
                                     </div>
                                     <div className="col-6">
@@ -107,7 +120,13 @@ function AddResourcesModal({
                                                 ref={lumberRef}
                                                 style={{ width: "30%" }}
                                                 defaultValue={0}
+                                                disabled={maxMaterialAmount.lumber === 0 ? true : false}
+                                                min={0}
+                                                max={maxMaterialAmount.lumber ? maxMaterialAmount.lumber : 1000}
                                             />
+                                            <small >
+                                                Max Lumber: {maxMaterialAmount.lumber}
+                                            </small>
                                         </div>
                                     </div>
                                     <div className="col-6">
@@ -124,7 +143,13 @@ function AddResourcesModal({
                                                 ref={steelRef}
                                                 style={{ width: "30%" }}
                                                 defaultValue={0}
+                                                disabled={maxMaterialAmount.steel === 0 ? true : false}
+                                                max={maxMaterialAmount.steel ? maxMaterialAmount.steel : 1000}
+                                                min={0}
                                             />
+                                            <small >
+                                                Max Steel: {maxMaterialAmount.steel}
+                                            </small>
                                         </div>
                                     </div>
                                 </div>
@@ -132,7 +157,7 @@ function AddResourcesModal({
                                 <button
                                     className='btn btn-info mt-3'
                                     type='submit'
-                                    disabled={!hasAuthority}
+                                    disabled={!hasAuthority || (maxMaterialAmount.brick === 0 && maxMaterialAmount.cement === 0 && maxMaterialAmount.lumber === 0 && maxMaterialAmount.steel === 0)}
                                 >
                                     Purchase Resources
                                 </button>
@@ -145,4 +170,4 @@ function AddResourcesModal({
     )
 }
 
-export default AddResourcesModal;
+export default AddMaterialModal;

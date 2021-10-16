@@ -11,8 +11,9 @@ import java.util.Objects;
 @Table(name = "machinery")
 public class Machinery {
 
-    @Id
+//    @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private int id;
     private int crane;
     private int forklift;
