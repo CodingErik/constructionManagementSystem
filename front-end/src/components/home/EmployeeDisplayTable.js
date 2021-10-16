@@ -139,7 +139,7 @@ function EmployeeDisplayTable({ originalEmployeeList, title, filter }) {
               {employeeList
                 .filter(
                   (employee) =>
-                    employee?.title.toLowerCase() === filter.toLowerCase()
+                    employee?.title?.toLowerCase() === filter?.toLowerCase()
                 )
                 .map((filteredEmployee) => (
                   <tr className='table-active' key={filteredEmployee.id}>

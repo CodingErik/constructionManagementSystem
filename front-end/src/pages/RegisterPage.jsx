@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { LoginAPI, EmployeeAPI } from '../api';
 import Message from '../components/Message';
+import LoginSpinner from '../components/LoginSpinner';
 
 function RegisterPage() {
   const [name, setName] = useState('');
@@ -12,6 +13,7 @@ function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);
   const [hasAdmin, setHasAdmin] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const history = useHistory();
 
@@ -21,6 +23,8 @@ function RegisterPage() {
         setHasAdmin(false);
       }
     });
+
+    setIsLoading(false);
   }, []);
 
   const submitHandler = async (e) => {
@@ -31,6 +35,7 @@ function RegisterPage() {
       setMessage("Password length can't be shorter than 6");
     } else {
       setMessage(null);
+      setIsLoading(true);
 
       const res = await LoginAPI.register(
         name,
@@ -40,6 +45,7 @@ function RegisterPage() {
         password
       );
 
+      setIsLoading(false);
       if (res.status === 201) {
         setMessage('Account created');
 
@@ -54,6 +60,7 @@ function RegisterPage() {
 
   return (
     <div>
+      {isLoading ? <LoginSpinner /> : ''}
       <div class='container'>
         <div class='row'>
           <div class='col-lg-10 col-xl-9 mx-auto'>
