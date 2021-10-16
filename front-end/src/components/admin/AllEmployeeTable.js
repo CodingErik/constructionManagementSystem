@@ -75,9 +75,9 @@ function AllEmployeeTable({ originalEmployeeList }) {
   }
 
   return (
-    <div className='container-fluid'>
+    <div className='container'>
       <h3>Employees Table</h3>
-      <div className='table-res'>
+      <div className='table-res  table-responsive'>
         <table className='table table-hover m-auto'>
           <thead>
             <tr>
