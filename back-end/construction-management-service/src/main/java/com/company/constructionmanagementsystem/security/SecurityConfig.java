@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/employees/findByTitle").permitAll()
                 .antMatchers(HttpMethod.POST, "/refresh_token").authenticated()
 
-                .antMatchers(HttpMethod.GET, "/api/machine").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/machines").authenticated()
 
                 .antMatchers("/api/employees").authenticated()
                 .antMatchers("/api/projects").authenticated()
