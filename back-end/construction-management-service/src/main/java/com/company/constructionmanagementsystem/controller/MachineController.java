@@ -48,6 +48,7 @@ public class MachineController {
     public Machine getMachineWarehouseInventory() {
         return machineWarehouseClient.getMachineryInventory();
     }
+
     /** test needed*/
     @GetMapping("/api/machines")
     @ResponseStatus(HttpStatus.OK)

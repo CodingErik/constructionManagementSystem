@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.ws.rs.HEAD;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Component
 @Service
@@ -34,6 +35,8 @@ public class EmployeeServiceLayer {
     }
 
     public EmployeeViewModel findEmployeeById(int id) {
+        if (!employeeRepository.findById(id).isPresent()) throw new NotFoundException("Employee Not Found.");
+
         Employee employee = employeeRepository.findById(id).get();
 
         return buildEmployeeViewModel(employee);
@@ -48,10 +51,23 @@ public class EmployeeServiceLayer {
         return buildEmployeeViewModel(employee);
     }
 
-    public EmployeeViewModel findEmployeeByName(String name) {
+    public List<EmployeeViewModel> findEmployeeByName(String name) {
+        if(employeeRepository.findByName(name).size() < 1) {
+            throw new NotFoundException("Employee name not found.");
+        }
+
         Employee employee = employeeRepository.findByName(name).get(0);
 
-        return buildEmployeeViewModel(employee);
+        List<Employee> employees = employeeRepository.findByName(name);
+
+        List<EmployeeViewModel> employeeList = new ArrayList<>();
+
+        for (Employee e: employees) {
+            employeeList.add(buildEmployeeViewModel(e));
+        }
+
+
+        return employeeList;
     }
 
     public EmployeeViewModel findEmployeeByUsername(String username) {
@@ -64,7 +80,11 @@ public class EmployeeServiceLayer {
     }
 
     public List<EmployeeViewModel> findEmployeesByTitle(String title) {
-        List<Employee> employeeList = employeeRepository.findByTitle(title);
+        if(employeeRepository.findByTitle(title).size() < 1) {
+            throw new NotFoundException("Title Not Found.");
+        }
+
+        List<Employee> employeeList = employeeRepository.findByTitle(title.toLowerCase(Locale.ROOT));
 
         List<EmployeeViewModel> evmList = new ArrayList<>();
 
@@ -88,6 +108,8 @@ public class EmployeeServiceLayer {
     }
 
     public List<EmployeeViewModel> findEmployeesByProjectId(Integer projectId) {
+
+
         List<Employee> employeeList = employeeRepository.findByProjectId(projectId);
 
         List<EmployeeViewModel> evmList = new ArrayList<>();

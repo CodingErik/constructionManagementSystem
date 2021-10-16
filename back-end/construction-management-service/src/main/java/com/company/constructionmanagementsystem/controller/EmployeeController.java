@@ -62,10 +62,10 @@ public class EmployeeController {
 
     @GetMapping("/api/employees/findByName/{name}")
     @ResponseStatus(value = HttpStatus.OK)
-    public EmployeeViewModel getEmployeeByName(@PathVariable String name) throws Exception {
-        EmployeeViewModel returnEmployee = employeeServiceLayer.findEmployeeByName(name);
+    public List<EmployeeViewModel> getEmployeeByName(@PathVariable String name) throws Exception {
+        List<EmployeeViewModel> returnEmployees = employeeServiceLayer.findEmployeeByName(name);
 
-        return returnEmployee;
+        return returnEmployees;
     }
 
     @GetMapping("/api/employees/findByUsername/{username}")
@@ -109,6 +109,14 @@ public class EmployeeController {
             employee.setProjectId(0);
         }
 
+        if (employee.getUsername() == null) {
+            throw new IllegalArgumentException("Employee username can't be empty.");
+        } else if(employee.getTitle() == null) {
+            throw new IllegalArgumentException("employee title can't be empty.");
+        } else if (employee.getEmail() == null) {
+            throw new IllegalArgumentException("employee email can't be empty.");
+        }
+
         employee.setUsername(employee.getUsername().toLowerCase(Locale.ROOT));
         employee.setName(employee.getName().toLowerCase(Locale.ROOT));
         employee.setTitle(employee.getTitle().toLowerCase(Locale.ROOT));
@@ -116,7 +124,6 @@ public class EmployeeController {
         employee.setYearsOfExperience(0);
 
         employee = repository.save(employee);
-        System.out.println(employee);
         return employee;
     }
 

@@ -2,6 +2,7 @@ package com.company.constructionmanagementsystem.controller;
 
 import com.company.constructionmanagementsystem.exceptions.NotFoundException;
 import com.company.constructionmanagementsystem.model.CustomErrorResponse;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import feign.Feign;
 import feign.FeignException;
 import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
@@ -75,6 +77,18 @@ public class ControllerExceptionHandler {
         error.setStatus((HttpStatus.NOT_FOUND.value()));
         error.setTimestamp(LocalDateTime.now());
         ResponseEntity<CustomErrorResponse> responseEntity = new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return responseEntity;
+    }
+
+
+    // return status code 422 if json format invalid EX: set int to String
+    @ExceptionHandler(value = {InvalidFormatException.class})
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ResponseEntity<CustomErrorResponse> invalidFormatException(InvalidFormatException e) {
+        CustomErrorResponse error = new CustomErrorResponse(HttpStatus.UNPROCESSABLE_ENTITY.toString(), e.getMessage());
+        error.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
+        error.setTimestamp(LocalDateTime.now());
+        ResponseEntity<CustomErrorResponse> responseEntity = new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY);
         return responseEntity;
     }
 

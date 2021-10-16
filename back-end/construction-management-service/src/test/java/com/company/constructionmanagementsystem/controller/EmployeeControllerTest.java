@@ -36,6 +36,7 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -258,9 +259,19 @@ public class EmployeeControllerTest {
         taskRepository.save(task5);
 
         EmployeeViewModel inputEmployee = buildEmployeeViewModel(employee3);
-        String outputJson = mapper.writeValueAsString(inputEmployee);
 
-        given(employeeServiceLayer.findEmployeeByName(inputEmployee.getName())).willReturn(inputEmployee);
+        List<EmployeeViewModel> inputEmployeeViewModelList = new ArrayList<>();
+
+        for(Employee employee : employeeInputList){
+            if(employee.getName() == inputEmployee.getName()){
+                EmployeeViewModel evm = buildEmployeeViewModel(employee);
+                inputEmployeeViewModelList.add(evm);
+            }
+        }
+
+        String outputJson = mapper.writeValueAsString(inputEmployeeViewModelList);
+
+        given(employeeServiceLayer.findEmployeeByName(inputEmployee.getName())).willReturn(inputEmployeeViewModelList);
 
         mockMvc.perform(get("/api/employees/findByName/"+inputEmployee.getName()))
                 .andDo(print())
@@ -498,5 +509,7 @@ public class EmployeeControllerTest {
 
         return evm;
     }
+
+
 
 }

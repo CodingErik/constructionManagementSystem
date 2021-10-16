@@ -21,6 +21,7 @@ import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
@@ -77,11 +78,11 @@ public class EmployeeServiceLayerTest {
         java.time.LocalDate startDate = java.time.LocalDate.now();
         MathContext mathContext = new MathContext(4);
 
-        employee1 = new Employee(1,1,"Architect","Amal",birth,new BigDecimal(430.33).round(mathContext),4,"amalj2426@gmail.com","314-378-4297","amalj",null,since);
-        employee2 = new Employee(2,1,"Worker","Hannah",birth,new BigDecimal(430.33).round(mathContext),2,"hannahb@gmail.com","422-987-2243","hannahb",null,since);
-        employee3 = new Employee(3,2,"Architect","Nargiza",birth,new BigDecimal(430.33).round(mathContext),8,"nargiza@gmail.com","224-493-4288","narg",null,since);
-        employee4 = new Employee(4,2,"Worker","Milana",birth,new BigDecimal(430.33).round(mathContext),1,"milana@gmail.com","734-902-2987","milan",null,since);
-        employee5 = new Employee(5,2,"Worker","Tamila",birth,new BigDecimal(430.33).round(mathContext),1,"tamila@gmail.com","417-487-4227","tamil",null,since);
+        employee1 = new Employee(1,1,"architect","Amal",birth,new BigDecimal(430.33).round(mathContext),4,"amalj2426@gmail.com","314-378-4297","amalj",null,since);
+        employee2 = new Employee(2,1,"worker","Hannah",birth,new BigDecimal(430.33).round(mathContext),2,"hannahb@gmail.com","422-987-2243","hannahb",null,since);
+        employee3 = new Employee(3,2,"architect","Nargiza",birth,new BigDecimal(430.33).round(mathContext),8,"nargiza@gmail.com","224-493-4288","narg",null,since);
+        employee4 = new Employee(4,2,"worker","Milana",birth,new BigDecimal(430.33).round(mathContext),1,"milana@gmail.com","734-902-2987","milan",null,since);
+        employee5 = new Employee(5,2,"worker","Tamila",birth,new BigDecimal(430.33).round(mathContext),1,"tamila@gmail.com","417-487-4227","tamil",null,since);
         employeeInputList = new ArrayList<>();
         employeeInputList.add(employee1);
         employeeInputList.add(employee2);
@@ -140,7 +141,7 @@ public class EmployeeServiceLayerTest {
 
         EmployeeViewModel evm = employeeServiceLayer.findEmployeeById(1);
 
-        assertEquals("Architect", evm.getTitle());
+        assertEquals("architect", evm.getTitle());
         assertEquals("Amal", evm.getName());
         assertEquals(birth, evm.getDateOfBirth());
         assertEquals("amalj2426@gmail.com", evm.getEmail());
@@ -171,7 +172,7 @@ public class EmployeeServiceLayerTest {
 
         EmployeeViewModel evm = employeeServiceLayer.findEmployeeByEmail("amalj2426@gmail.com");
 
-        assertEquals("Architect", evm.getTitle());
+        assertEquals("architect", evm.getTitle());
         assertEquals("Amal", evm.getName());
         assertEquals(birth, evm.getDateOfBirth());
         assertEquals("amalj2426@gmail.com", evm.getEmail());
@@ -200,17 +201,17 @@ public class EmployeeServiceLayerTest {
         when(projectRepository.findById(1)).thenReturn(java.util.Optional.ofNullable(project1));
         when(taskRepository.findAllTasksByEmployeeId(1)).thenReturn(thisEmployeeTaskList);
 
-        EmployeeViewModel evm = employeeServiceLayer.findEmployeeByName("Amal");
+        List<EmployeeViewModel> evmList = employeeServiceLayer.findEmployeeByName("Amal");
 
-        assertEquals("Architect", evm.getTitle());
-        assertEquals("Amal", evm.getName());
-        assertEquals(birth, evm.getDateOfBirth());
-        assertEquals("amalj2426@gmail.com", evm.getEmail());
-        assertEquals("314-378-4297", evm.getPhoneNumber());
-        assertEquals(since, evm.getUserSince());
-        assertEquals(4, evm.getYearsOfExperience());
-        assertEquals(project1, evm.getProject());
-        assertEquals(thisEmployeeTaskList, evm.getTaskList());
+        assertEquals("architect", evmList.get(0).getTitle());
+        assertEquals("Amal", evmList.get(0).getName());
+        assertEquals(birth, evmList.get(0).getDateOfBirth());
+        assertEquals("amalj2426@gmail.com", evmList.get(0).getEmail());
+        assertEquals("314-378-4297", evmList.get(0).getPhoneNumber());
+        assertEquals(since, evmList.get(0).getUserSince());
+        assertEquals(4, evmList.get(0).getYearsOfExperience());
+        assertEquals(project1, evmList.get(0).getProject());
+        assertEquals(thisEmployeeTaskList, evmList.get(0).getTaskList());
     }
 
     @Test
@@ -233,7 +234,7 @@ public class EmployeeServiceLayerTest {
 
         EmployeeViewModel evm = employeeServiceLayer.findEmployeeByUsername("amalj");
 
-        assertEquals("Architect", evm.getTitle());
+        assertEquals("architect", evm.getTitle());
         assertEquals("Amal", evm.getName());
         assertEquals(birth, evm.getDateOfBirth());
         assertEquals("amalj2426@gmail.com", evm.getEmail());
@@ -251,24 +252,24 @@ public class EmployeeServiceLayerTest {
         List<Employee> empListWorker = new ArrayList<>();
 
         for(Employee employee : employeeInputList){
-            if(employee.getTitle() == "Architect"){
+            if(employee.getTitle().toLowerCase(Locale.ROOT) == "architect"){
                 empListArchitect.add(employee);
             }
-            if(employee.getTitle() == "Worker"){
+            if(employee.getTitle().toLowerCase(Locale.ROOT) == "worker"){
                 empListWorker.add(employee);
             }
         }
 
-        when(employeeRepository.findByTitle("Architect")).thenReturn(empListArchitect);
-        when(employeeRepository.findByTitle("Worker")).thenReturn(empListWorker);
+        when(employeeRepository.findByTitle("architect")).thenReturn(empListArchitect);
+        when(employeeRepository.findByTitle("worker")).thenReturn(empListWorker);
 
-        List<EmployeeViewModel> evmListArchitect = employeeServiceLayer.findEmployeesByTitle("Architect");
-        List<EmployeeViewModel> evmListWorker = employeeServiceLayer.findEmployeesByTitle("Worker");
+        List<EmployeeViewModel> evmListArchitect = employeeServiceLayer.findEmployeesByTitle("architect");
+        List<EmployeeViewModel> evmListWorker = employeeServiceLayer.findEmployeesByTitle("worker");
 
         assertEquals(2, evmListArchitect.size());
         assertEquals(3,evmListWorker.size());
-        verify(employeeRepository, times(1)).findByTitle("Architect");
-        verify(employeeRepository, times(1)).findByTitle("Worker");
+        verify(employeeRepository, times(2)).findByTitle("architect");
+        verify(employeeRepository, times(2)).findByTitle("worker");
     }
 
     @Test
@@ -298,7 +299,7 @@ public class EmployeeServiceLayerTest {
     }
 
 
-//        private EmployeeViewModel buildEmployeeViewModel(Employee employee){
+    //        private EmployeeViewModel buildEmployeeViewModel(Employee employee){
 //
 //        List<Task> taskList = taskRepository.findAllTasksByEmployeeId(employee.getId());
 //        EmployeeViewModel evm = new EmployeeViewModel();
