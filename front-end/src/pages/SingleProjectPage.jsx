@@ -44,22 +44,22 @@ function SingleProjectPage() {
       <div className="row">
         <ProjectForm hasAuthority={hasAuthority} project={project} />
       </div>
-
       <div className="row">
-        <EmployeeListTableForProject
-          projectId={projectId}
-          hasAuthority={hasAuthority}
-        ></EmployeeListTableForProject>
+        <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <EmployeeListTableForProject
+            projectId={projectId}
+            hasAuthority={hasAuthority}
+          ></EmployeeListTableForProject>
+        </div>
+        <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <TaskListTableForProject
+            hasAuthority={hasAuthority}
+            projectId={projectId}
+            projectName={project.name}
+          ></TaskListTableForProject>
+        </div>
       </div>
-
       <div className="row">
-        <TaskListTableForProject
-          hasAuthority={hasAuthority}
-          projectId={projectId}
-          projectName={project.name}
-        ></TaskListTableForProject>
-      </div>
-      <div>
         <ResourcesForSingleProjectPage></ResourcesForSingleProjectPage>
       </div>
     </div>

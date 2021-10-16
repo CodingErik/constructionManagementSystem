@@ -5,6 +5,8 @@ function AddModal({
   modalId,
   title,
 }) {
+  console.log(allUnassignedEmployees);
+
   return (
     <div
       className='modal fade'
@@ -42,7 +44,7 @@ function AddModal({
                   {allUnassignedEmployees
                     .filter(
                       (employee) =>
-                        employee.title === title &&
+                        employee.title?.toLowerCase() === title &&
                         employee.projectId !== projectId
                     )
                     .map((filteredEmployee) => (
