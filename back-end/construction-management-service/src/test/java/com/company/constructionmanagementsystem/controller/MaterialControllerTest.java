@@ -108,7 +108,7 @@ public class MaterialControllerTest {
         String inputJson = mapper.writeValueAsString(material1);
 
         mockMvc.perform(
-                post("/api/materials/request")
+                post("/api/materials/project/request")
                         .content(inputJson)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
@@ -134,7 +134,7 @@ public class MaterialControllerTest {
 
         given(materialRepository.findByProjectId(project1.getId())).willReturn(java.util.Optional.ofNullable(outputMaterial));
 
-        mockMvc.perform(get("/api/materials/1"))
+        mockMvc.perform(get("/api/materials/project/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(outputJson));

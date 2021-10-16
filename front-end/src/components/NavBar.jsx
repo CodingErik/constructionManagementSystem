@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useHistory, NavLink } from 'react-router-dom';
 import decode from 'jwt-decode';
+import MainLogo from "../assets/helmet.png";
 
 export default function NavBar() {
   const tokenAuthority = localStorage.getItem('token')
@@ -27,6 +28,7 @@ export default function NavBar() {
         <Link className='navbar-brand' to='/'>
           CMS
         </Link>
+        <img src={MainLogo} width="30" height="30"/>
         <button
           className='navbar-toggler'
           type='button'

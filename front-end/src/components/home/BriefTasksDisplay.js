@@ -78,15 +78,15 @@ export default function BriefTasksDisplay({ originalTaskList }) {
           <thead>
             <tr>
               <th
-                className='col-2'
+                className='col-1'
                 onClick={() =>
                   handleTaskColumnHeaderClick('id', 'id', parseInt)
                 }
               >
-                TaskId
+                Id
               </th>
               <th
-                className='col-2'
+                className='col-3.5'
                 onClick={() =>
                   handleTaskColumnHeaderClick('name', 'name', (a) =>
                     a.toUpperCase()
@@ -113,7 +113,7 @@ export default function BriefTasksDisplay({ originalTaskList }) {
                   )
                 }
               >
-                Project Containing
+                Project
               </th>
 
               <th
@@ -136,7 +136,7 @@ export default function BriefTasksDisplay({ originalTaskList }) {
                 <tr className='table-active' key={task.id}>
                   <th scope='row'>{task.id}</th>
                   <td>{task.name}</td>
-                  <td>{task.status}</td>
+                  <td className={task.status} style={{fontWeight:"900"}}>{task.status}</td>
                   <td>{task.project ? task.project.name : task.projectId}</td>
                   <td>{task.deadline}</td>
                   <td>

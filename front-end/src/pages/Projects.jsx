@@ -328,11 +328,11 @@ export default function Projects() {
         <div className='otherFilters'>
           <div className='nameFilter filter'>
             <p className='textField'>Project Name</p>
-            <input ref={projectNameRef} className='textInput' />
+            <input ref={projectNameRef} className='textInput' placeholder="Name" />
           </div>
           <div className='roomFilter filter'>
             <p className='textField'>Room Type</p>
-            <input ref={roomTypeRef} className='textInput' />
+            <input ref={roomTypeRef} className='textInput' placeholder="Type" />
           </div>
           <button
             className='filterButton'
