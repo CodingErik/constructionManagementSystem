@@ -29,6 +29,7 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
       [...prevState].filter((emp) => emp.id !== employee.id)
     );
     setAllEmployeesInProject([...allEmployeesInProject, updatedEmployee]);
+    alert("Employee Has Been Added To Project");
   };
 
   return (

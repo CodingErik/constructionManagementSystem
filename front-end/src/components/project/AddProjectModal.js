@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-function AddProjectModal({ modalId, handleNewProjectSubmit, hasAuthority }) {
+function AddProjectModal({ modalId, handleNewProjectSubmit, hasAuthority}) {
   const nameRef = useRef();
   const startDateRef = useRef();
   const deadlineRef = useRef();
@@ -32,6 +32,7 @@ function AddProjectModal({ modalId, handleNewProjectSubmit, hasAuthority }) {
       isPlumbing: isPlumbingRef.current.checked,
       isElectric: isElectricRef.current.checked,
     };
+
     handleNewProjectSubmit(newProjectInfo);
     // console.log(newProjectInfo);
   };

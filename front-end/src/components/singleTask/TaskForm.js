@@ -49,29 +49,17 @@ function TaskForm({ task, hasAuthority, isAddTaskForm }) {
     event.preventDefault();
     let updatedTaskInformation = {};
 
-    if (isAddTaskForm) {
-      updatedTaskInformation = {
-        id: null,
-        name: nameRef.current.value,
-        status: taskState,
-        startDate: startDateRef.current.value,
-        deadline: deadlineRef.current.value,
-        projectId: projectState ? projectState : 0,
-        employeeId: employeeState,
-        description: descriptionRef.current.value,
-      };
-    } else {
-      updatedTaskInformation = {
-        id: task.id ? task.id : '',
-        name: nameRef.current.value,
-        status: taskState,
-        startDate: startDateRef.current.value,
-        deadline: deadlineRef.current.value,
-        projectId: projectState ? projectState : 1,
-        employeeId: employeeState,
-        description: descriptionRef.current.value,
-      };
-    }
+    updatedTaskInformation = {
+      id: task.id ? task.id : '',
+      name: nameRef.current.value,
+      status: taskState,
+      startDate: startDateRef.current.value,
+      deadline: deadlineRef.current.value,
+      projectId: projectState ? projectState : 1,
+      employeeId: employeeState,
+      description: descriptionRef.current.value,
+    };
+
     EmployeeAPI.getEmployeeById(employeeState).then((response) => {
       const updatedEmployeeInformation = {
         ...response.data,
@@ -80,6 +68,7 @@ function TaskForm({ task, hasAuthority, isAddTaskForm }) {
       EmployeeAPI.putEmployee(updatedEmployeeInformation);
     });
     TaskAPI.putTask(updatedTaskInformation);
+    alert("Task Updated");
   };
 
   return (
@@ -160,7 +149,7 @@ function TaskForm({ task, hasAuthority, isAddTaskForm }) {
             <select
               className='form-select ms-4'
               id='project'
-              disabled={isAddTaskForm ? false : true}
+              disabled={true}
               value={projectState}
               onChange={(event) => setProjectState(event.target.value)}
             >
@@ -185,7 +174,6 @@ function TaskForm({ task, hasAuthority, isAddTaskForm }) {
               value={employeeState}
               onChange={(event) => setEmployeeState(event.target.value)}
             >
-              <option value={0}>0. None</option>
               {availableEmployeesInProjectState.map((employee) => (
                 <option value={employee.id} key={employee.id}>
                   {employee.id}. {employee.name}
