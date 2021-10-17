@@ -3,6 +3,8 @@ package com.company.constructionmanagementsystem.controller;
 
 import com.company.constructionmanagementsystem.model.Machine;
 import com.company.constructionmanagementsystem.model.Project;
+import com.company.constructionmanagementsystem.repository.MachineRepository;
+import com.company.constructionmanagementsystem.repository.MaterialRepository;
 import com.company.constructionmanagementsystem.repository.ProjectRepository;
 import com.company.constructionmanagementsystem.service.ProjectServiceLayer;
 import com.company.constructionmanagementsystem.util.feign.MachineWarehouseClient;
@@ -13,6 +15,7 @@ import com.company.constructionmanagementsystem.viewmodel.ProjectViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -25,6 +28,11 @@ public class ProjectController {
 
     @Autowired
     ProjectRepository repo;
+
+    @Autowired
+    MachineRepository machineRepository;
+    @Autowired
+    MaterialRepository materialRepository;
 
     @Autowired
     ProjectServiceLayer projectServiceLayer;
@@ -49,8 +57,12 @@ public class ProjectController {
         /** materialWarehouseClient.updateMaterialAfterRetrieve(projectViewModel.material);
          * machineWarehouseClient.returnMachinery(machinery);
          * */
-
-        return repo.save(project);
+        Project savedProject = repo.save(project);
+        Machine machine = new Machine(savedProject.getId(), 0, 0, 0, 0);
+        machineRepository.save(machine);
+        Material material = new Material(savedProject.getId(), 0, 0, 0,0);
+        materialRepository.save(material);
+        return savedProject;
     }
 
 
@@ -149,6 +161,8 @@ public class ProjectController {
     @DeleteMapping("/api/projects/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteProject(@PathVariable Integer id){
+        machineRepository.deleteMachineByProjectId(id);
+        materialRepository.deleteMaterialByProjectId(id);
         projectServiceLayer.deleteProject(id);
     }
 

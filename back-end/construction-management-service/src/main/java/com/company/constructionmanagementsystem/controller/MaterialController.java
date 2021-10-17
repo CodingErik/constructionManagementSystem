@@ -59,23 +59,6 @@ public class MaterialController {
          * */
 
         return materialServiceLayer.requestMaterials(requestMaterials);
-//        try {
-//            materialWarehouseClient.updateMaterialAfterRetrieve(requestMaterials);
-//            Material currentProjectMaterials = repo.findByProjectId(requestMaterials.getProjectId()).get();
-//            Material finalProjectMaterials = new Material();
-//            finalProjectMaterials.setBrick(currentProjectMaterials.getBrick() + requestMaterials.getBrick());
-//            finalProjectMaterials.setCement(currentProjectMaterials.getCement() + requestMaterials.getCement());
-//            finalProjectMaterials.setLumber(currentProjectMaterials.getLumber() + requestMaterials.getLumber());
-//            finalProjectMaterials.setSteel(currentProjectMaterials.getSteel() + requestMaterials.getSteel());
-//            finalProjectMaterials.setProjectId(requestMaterials.getProjectId());
-//            finalProjectMaterials.setId(requestMaterials.getId());
-//
-//            repo.save(finalProjectMaterials);
-//            return "the following material was added to the project " + requestMaterials.toString();
-//        } catch (FeignException e) {
-//            System.out.println(e.getMessage());
-//            return e.getMessage();
-//        }
     }
 
     /** get project specific inventory y*/

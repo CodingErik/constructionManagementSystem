@@ -69,23 +69,6 @@ public class MachineController {
 
         return machineServiceLayer.requestMachinery(machine);
 
-//        try {
-//            machineWarehouseClient.rentMachinery(machine);
-//
-//            Machine currentProjectMachines = repo.findByProjectId(machine.getProjectId()).get();
-//            Machine updatedProjectMachines = new Machine();
-//            updatedProjectMachines.setProjectId(machine.getProjectId());
-//            updatedProjectMachines.setId(machine.getId());
-//            updatedProjectMachines.setCrane(currentProjectMachines.getCrane() + machine.getCrane());
-//            updatedProjectMachines.setDrill(currentProjectMachines.getDrill() + machine.getDrill());
-//            updatedProjectMachines.setForklift(currentProjectMachines.getForklift() + machine.getForklift());
-//            updatedProjectMachines.setLadder(currentProjectMachines.getLadder() + machine.getLadder());
-//            repo.save(updatedProjectMachines);
-//            return "the following material was added to the project " + machine.toString();
-//        } catch (FeignException e) {
-//            System.out.println(e.getMessage());
-//            return e.getMessage();
-//        }
     }
 
 
@@ -96,7 +79,16 @@ public class MachineController {
 
         try {
             machineWarehouseClient.returnMachinery(machine);
-            repo.deleteAll();
+//            repo.deleteAll();
+            Machine oldMachine = repo.getById(machine.getId());
+            Machine updatedMachine = new Machine();
+            updatedMachine.setId(machine.getId());
+            updatedMachine.setProjectId(machine.getProjectId());
+            updatedMachine.setCrane(oldMachine.getCrane()-machine.getCrane());
+            updatedMachine.setDrill(oldMachine.getDrill()-machine.getDrill());
+            updatedMachine.setForklift(oldMachine.getForklift()-machine.getForklift());
+            updatedMachine.setLadder(oldMachine.getLadder()-machine.getLadder());
+            repo.save(updatedMachine);
             return "thank you for using the machine microservice. ";
         } catch (FeignException e) {
             System.out.println(e.getMessage());
