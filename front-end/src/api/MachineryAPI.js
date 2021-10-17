@@ -13,11 +13,10 @@ const machineryAPI = {
     return axios.get(`${baseUrl}`);
   },
   requestMachineryForProject: (machineryRequest) => {
-    return axios.post(`${baseUrl}/project/request`, machineryRequest);
-    // ? /api/machines/project/request
+    return axios.put(`${baseUrl}/project/request`, machineryRequest);
   },
   returnMachineryForProject: (machineryReturn) => {
-    return axios.post(`${baseUrl}/project/return`, machineryReturn);
+    return axios.put(`${baseUrl}/project/return`, machineryReturn);
   },
 };
 
