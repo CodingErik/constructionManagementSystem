@@ -40,12 +40,6 @@ export default function Projects() {
     ProjectAPI.getAllProjects().then((res) => {
       setProjects([...res.data]);
     });
-    // EmployeeAPI.getEmployeeByUsername(username).then((response) => {
-    //   const updatedUser = {
-    //     ...response.data,
-    //     projectId:
-    //   }
-    // })
   };
 
   useEffect(() => {

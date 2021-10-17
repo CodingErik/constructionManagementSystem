@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { EmployeeAPI, TaskAPI } from '../../api';
 import AddTaskModal from './AddTaskModal';
 
-function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
+function TaskListTableForProject({ projectId, projectName, hasAuthority, allEmployees }) {
   const [taskList, setTaskList] = useState([]);
   const [availableEmployeesInProject, setAvailableEmployeesInProject] =
     useState([]);
@@ -11,10 +11,9 @@ function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
     TaskAPI.getTaskByProjectId(projectId).then((response) => {
       setTaskList(response.data);
     });
-    EmployeeAPI.getAllEmployeeByProjectId(projectId).then((response) => {
-      setAvailableEmployeesInProject(response.data);
-    });
-  }, []);
+    setAvailableEmployeesInProject([...allEmployees].filter((employee) => (parseInt(employee.project?.id) === parseInt(projectId))));
+  }, [allEmployees]);
+
 
   const handleAddTaskToProject = (newTask) => {
     TaskAPI.addTask(newTask);

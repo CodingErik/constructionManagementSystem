@@ -34,7 +34,6 @@ function AddProjectModal({ modalId, handleNewProjectSubmit, hasAuthority}) {
     };
 
     handleNewProjectSubmit(newProjectInfo);
-    // console.log(newProjectInfo);
   };
 
   return (
