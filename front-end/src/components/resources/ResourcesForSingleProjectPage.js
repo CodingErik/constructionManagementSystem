@@ -244,14 +244,14 @@ export default function ResourcesForSingleProjectPage({
       <div
         className='resourcesWrapper row mt-3'
         style={{
-          minHeight: '375px',
+          minHeight: '100px',
           minWidth: '275px',
         }}
       >
         {materials &&
           Object.entries(materials).map(([key, value]) => {
             return (
-              <div className='col-6' key={value.name}>
+              <div className='col-3' key={value.name}>
                 <div className='materialOrMachineryIcon'>
                   <p className='textElementMaterials'>{value.name}</p>
                   <img
@@ -285,14 +285,14 @@ export default function ResourcesForSingleProjectPage({
       <div
         className='resourcesWrapper row mt-3'
         style={{
-          minHeight: '375px',
+          minHeight: '100px',
           minWidth: '275px',
         }}
       >
         {machines &&
           Object.entries(machines).map(([key, value]) => {
             return (
-              <div className='col-6' key={value.name}>
+              <div className='col-3' key={value.name}>
                 <div className='materialOrMachineryIcon'>
                   <p className='textElementMaterials'>{value.name}</p>
                   <img
@@ -307,15 +307,6 @@ export default function ResourcesForSingleProjectPage({
             );
           })}
       </div>
-      <button
-        type='button'
-        className='btn btn-outline-warning'
-        data-bs-toggle='modal'
-        data-bs-target='#addMachinesModal'
-        disabled={!hasAuthority}
-      >
-        Add Machines
-      </button>
       <AddMachineModal
         maxMachineAmount={maxMachineAmount}
         modalId='addMachinesModal'
@@ -323,15 +314,30 @@ export default function ResourcesForSingleProjectPage({
         hasAuthority={hasAuthority}
         projectId={projectId}
       ></AddMachineModal>
-      <button
-        type='button'
-        className='btn btn-outline-warning'
-        data-bs-toggle='modal'
-        data-bs-target='#confirmReturnMachinesModal'
-        disabled={!hasAuthority}
-      >
-        Return Machines
-      </button>
+
+      <div style={{display:"flex", justifyContent:"center", marginBottom:"5%"}}>
+        <button
+          type='button'
+          className='btn btn-outline-warning'
+          data-bs-toggle='modal'
+          data-bs-target='#addMachinesModal'
+          disabled={!hasAuthority}
+          style={{marginRight:"5%"}}
+        >
+          Add Machines
+        </button>
+        <button
+          type='button'
+          className='btn btn-outline-warning'
+          data-bs-toggle='modal'
+          data-bs-target='#confirmReturnMachinesModal'
+          disabled={!hasAuthority}
+          style={{marginLeft:"5%"}}
+        >
+          Return Machines
+        </button>
+      </div>
+
       <ConfirmReturnMachinesModal
         handleReturnMachinesToProject={handleReturnMachinesToProject}
         hasAuthority={hasAuthority}
