@@ -88,11 +88,6 @@ public class ProjectControllerTest {
     @MockBean
     LoginDetailsService loginDetailsService;
 
-    @MockBean
-    MachineRepository machineRepository;
-
-    @MockBean
-    MaterialRepository materialRepository;
 
     @Autowired
     private MockMvc mockMvc;
