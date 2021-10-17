@@ -92,24 +92,24 @@ function RegisterPage() {
                       id='floatingInputName'
                       placeholder='myName'
                       required
-                      autofocus
+                      autoFocus
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                     />
-                    <label for='floatingInputName'>Employee Name</label>
+                    <label htmlFor='floatingInputName'>Employee Name</label>
                   </div>
                   <div className='form-floating mb-3'>
                     <select
                       onChange={(e) => setTitle(e.target.value)}
                       value={title}
-                      classNameName='form-select'
+                      className='form-select'
                       id='exampleSelect1'
                     >
                       <option>Architect</option>
                       <option>Employee</option>
                       {hasAdmin && <option>Admin</option>}
                     </select>
-                    <label for='floatingInputTitle'>Employee Title</label>
+                    <label htmlFor='floatingInputTitle'>Employee Title</label>
                   </div>
 
                   <div className='form-floating mb-3'>
@@ -122,7 +122,7 @@ function RegisterPage() {
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                     />
-                    <label for='floatingInputUsername'>Username</label>
+                    <label htmlFor='floatingInputUsername'>Username</label>
                   </div>
 
                   <div className='form-floating mb-3'>
@@ -135,7 +135,7 @@ function RegisterPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
-                    <label for='floatingInputEmail'>Email address</label>
+                    <label htmlFor='floatingInputEmail'>Email address</label>
                   </div>
 
                   <hr />
@@ -151,7 +151,7 @@ function RegisterPage() {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                     <label
-                      for='floatingPassword'
+                      htmlFor='floatingPassword'
                       style={{
                         zIndex: 100,
                       }}
@@ -159,7 +159,7 @@ function RegisterPage() {
                       Password
                     </label>
                     <button
-                      class='btn mt-0 '
+                      className='btn mt-0 '
                       type='button'
                       id='showConfirmPassword'
                       onClick={() => togglePasswordShow()}
@@ -179,7 +179,7 @@ function RegisterPage() {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                     <label
-                      for='floatingPasswordConfirm'
+                      htmlFor='floatingPasswordConfirm'
                       style={{
                         zIndex: 100,
                       }}
@@ -188,7 +188,7 @@ function RegisterPage() {
                     </label>
 
                     <button
-                      class='btn mt-0 '
+                      className='btn mt-0 '
                       type='button'
                       id='showConfirmPassword'
                       onClick={() => toggleConfirmPasswordShow()}

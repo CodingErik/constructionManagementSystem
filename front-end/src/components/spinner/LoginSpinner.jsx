@@ -3,7 +3,7 @@ import React from 'react';
 function LoginSpinner() {
   return (
     <div
-      class='d-flex justify-content-center '
+      className='d-flex justify-content-center '
       style={{
         zIndex: '100',
         height: '100vh',
@@ -19,14 +19,14 @@ function LoginSpinner() {
       }}
     >
       <div
-        class='spinner-border'
+        className='spinner-border'
         role='status'
         style={{
           width: '5rem',
           height: '5rem',
         }}
       >
-        <span class='sr-only'></span>
+        <span className='sr-only'></span>
       </div>
     </div>
   );
