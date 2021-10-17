@@ -3,9 +3,7 @@ package com.company.constructionmanagementsystem.controller;
 import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.model.Project;
 import com.company.constructionmanagementsystem.model.Task;
-import com.company.constructionmanagementsystem.repository.EmployeeRepository;
-import com.company.constructionmanagementsystem.repository.ProjectRepository;
-import com.company.constructionmanagementsystem.repository.TaskRepository;
+import com.company.constructionmanagementsystem.repository.*;
 import com.company.constructionmanagementsystem.security.JwtConverter;
 import com.company.constructionmanagementsystem.service.EmployeeServiceLayer;
 import com.company.constructionmanagementsystem.service.ProjectServiceLayer;
@@ -62,6 +60,12 @@ public class ProjectControllerTest {
 
     @MockBean
     TaskRepository taskRepository;
+
+    @MockBean
+    MachineRepository machineRepository;
+
+    @MockBean
+    MaterialRepository materialRepository;
 
     @MockBean
     ProjectServiceLayer projectServiceLayer;

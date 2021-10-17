@@ -7,7 +7,7 @@ const materialAPI = {
     return axios.get(`${baseUrl}/warehouse`)
   },
   refillWarehouseMaterialsInventory: () => {
-    return axios.put(`${baseUrl}/warehouse/refill`)
+    return axios.put(`http://localhost:8979/api/material/warehouse/refill`)
   },
   getMaterialsByProjectId: (projectId) => {
     return axios.get(`${baseUrl}/project/${projectId}`)
