@@ -27,6 +27,11 @@ public class ProjectRepositoryTest {
     @Autowired
     TaskRepository taskRepository;
 
+    @Autowired
+    MaterialRepository materialRepository;
+
+    @Autowired
+    MachineRepository machineRepository;
 
     @Before
     public void setUp() throws Exception {
@@ -36,6 +41,11 @@ public class ProjectRepositoryTest {
         projectRepository.deleteAll();
 
         taskRepository.deleteAll();
+
+        materialRepository.deleteAll();
+
+        machineRepository.deleteAll();
+
     }
 
     @Test

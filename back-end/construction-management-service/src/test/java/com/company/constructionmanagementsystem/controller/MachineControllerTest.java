@@ -1,9 +1,11 @@
 package com.company.constructionmanagementsystem.controller;
 
 import com.company.constructionmanagementsystem.controller.MachineController;
+import com.company.constructionmanagementsystem.exceptions.NotFoundException;
 import com.company.constructionmanagementsystem.model.Machine;
 import com.company.constructionmanagementsystem.repository.MachineRepository;
 import com.company.constructionmanagementsystem.security.JwtConverter;
+import com.company.constructionmanagementsystem.service.MachineServiceLayer;
 import com.company.constructionmanagementsystem.util.LoginDetailsService;
 import com.company.constructionmanagementsystem.util.feign.MachineWarehouseClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -47,12 +50,16 @@ public class MachineControllerTest {
     MachineWarehouseClient machineWarehouseClient;
 
     @MockBean
+    MachineServiceLayer machineServiceLayer;
+
+    @MockBean
     JwtConverter jwtConverter;
 
     @MockBean
     LoginDetailsService loginDetailsService;
 
     Machine machine;
+    List<Machine> machines;
     Machine rentMachine;
     Machine responseMachine;
     private ObjectMapper mapper = new ObjectMapper();
@@ -60,9 +67,10 @@ public class MachineControllerTest {
     @Before
     public void setUp() throws Exception {
 
-         machine = new Machine(1, 1, 1000, 1000, 1000, 1000);
-         rentMachine = new Machine(1, 1, 100, 100, 100, 100);
-         responseMachine = new Machine(1, 1, 900, 900, 900, 900);
+        machine = new Machine(1, 1, 1000, 1000, 1000, 1000);
+        machines = new ArrayList<>(Arrays.asList(machine));
+        rentMachine = new Machine(1, 1, 100, 100, 100, 100);
+        responseMachine = new Machine(1, 1, 900, 900, 900, 900);
     }
 
     @Test
@@ -81,8 +89,18 @@ public class MachineControllerTest {
     }
 
     @Test
+    public void getAllMachinesInProjects() throws Exception {
+        given(repo.save(machine)).willReturn(machine);
+        given(repo.findAll()).willReturn(machines);
+
+        mockMvc.perform(get("/api/machines"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
     @WithMockUser(roles = {"admin"})
-    public void getProjectSpecificMachineInventory() throws Exception{
+    public void getProjectSpecificMachineInventory() throws Exception {
 
         given(repo.findByProjectId(machine.getId())).willReturn(java.util.Optional.ofNullable(machine));
 
@@ -98,38 +116,49 @@ public class MachineControllerTest {
     @WithMockUser(roles = {"admin"})
     public void rentOutMachinery() throws Exception {
 
-        given(repo.save(machine)).willReturn(machine);
 
         String jsoninputMachine = mapper.writeValueAsString(rentMachine);
 
-        mockMvc.perform(post("/api/machines/project/request")
+        String returnMessage = "the following material was added to the project " + rentMachine.toString();
+
+        given(machineServiceLayer.requestMachinery(rentMachine)).willReturn(returnMessage);
+
+
+        mockMvc.perform(put("/api/machines/project/request")
                         .content(jsoninputMachine)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
-                .andExpect(status().isNoContent())
-                .andExpect(content().string("the following material was added to the project " + rentMachine.toString()));
+                .andExpect(status().isCreated())
+                .andExpect(content().string(returnMessage));
 
     }
 
     @Test
     @WithMockUser(roles = {"admin"})
-    public void returnMachinery() throws Exception{
-
-       doNothing().when(repo).deleteAll();
-
+    public void returnMachinery() throws Exception {
 
         String jsoninputMachine = mapper.writeValueAsString(rentMachine);
 
-        mockMvc.perform(post("/api/machines/project/return")
+        String returnMessage = "thank you for using the machine microservice. ";
+
+        given(machineServiceLayer.returnMachinery(rentMachine)).willReturn(returnMessage);
+
+        mockMvc.perform(put("/api/machines/project/return")
                         .content(jsoninputMachine)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
-                .andExpect(status().isNoContent())
+                .andExpect(status().isCreated())
                 .andExpect(content().string("thank you for using the machine microservice. "));
 
     }
 
+    @Test
+    public void shouldReturn404IfProjectHasNoMachinery() throws Exception{
+        mockMvc.perform(get("/api/machines/project/100"))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
 
 }

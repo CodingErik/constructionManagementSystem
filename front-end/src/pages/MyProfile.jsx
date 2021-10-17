@@ -24,7 +24,7 @@ export default function MyProfile() {
       .then(({ data }) => {
         setUserInfo(data);
         setUserProject({ ...data.project });
-        setUserTask([...data.taskList]);
+        setUserTask([...data?.taskList]);
       })
       .catch((error) => {
         console.error(error);
@@ -45,20 +45,23 @@ export default function MyProfile() {
     <div className='container'>
       <div className='mt-5'>
         <div className='row'>
-          <div className='col-12 col-lg-6'>
+          <div
+            className='col-12 col-lg-6 mt-5'
+            style={{
+              objectFit: 'cover',
+            }}
+          >
             <img
               src={'https://source.unsplash.com/random/450x450'}
               className='rounded-circle img-fluid'
               alt='profile'
-            
             ></img>
           </div>
-          <div className="col-12 col-lg-6">
-
-          <DisplayBasicInformation
-            userInfo={userInfo}
-            updateUserBasicInformation={updateUserBasicInformation}
-          />
+          <div className='col-12 col-lg-6'>
+            <DisplayBasicInformation
+              userInfo={userInfo}
+              updateUserBasicInformation={updateUserBasicInformation}
+            />
           </div>
         </div>
         <div className='row mt-5'>
@@ -72,7 +75,7 @@ export default function MyProfile() {
             )}
           </div>
           <div className=' col '>
-            {userTasks.length ? (
+            {userTasks?.name ? (
               <BriefTasksDisplay
                 originalTaskList={userTasks}
                 projectIsNotANumber={false}

@@ -1,0 +1,1758 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8979
+    description: Generated server url
+paths:
+  /api/tasks:
+    get:
+      tags:
+        - task-controller
+      operationId: getAllTasks
+      parameters:
+        - name: projectId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: employeeId
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+    put:
+      tags:
+        - task-controller
+      operationId: updateTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+    post:
+      tags:
+        - task-controller
+      operationId: addTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/resetPassword:
+    put:
+      tags:
+        - employee-controller
+      operationId: resetPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/projects:
+    get:
+      tags:
+        - project-controller
+      operationId: getAllProjects
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: roomType
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+    put:
+      tags:
+        - project-controller
+      operationId: putProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+    post:
+      tags:
+        - project-controller
+      operationId: addProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/material/warehouse/refill:
+    put:
+      tags:
+        - material-controller
+      operationId: updateMaterialRefill
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/machines/project/return:
+    put:
+      tags:
+        - machine-controller
+      operationId: returnMachinery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Machine'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                type: string
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/machines/project/request:
+    put:
+      tags:
+        - machine-controller
+      operationId: requestMachinery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Machine'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                type: string
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/employees:
+    get:
+      tags:
+        - employee-controller
+      operationId: getAllEmployees
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+    put:
+      tags:
+        - employee-controller
+      operationId: updateEmployee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /refresh_token:
+    post:
+      tags:
+        - auth-controller
+      operationId: refreshToken
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/materials/project/request:
+    post:
+      tags:
+        - material-controller
+      operationId: requestMaterials
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Material'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                type: string
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/employees/register:
+    post:
+      tags:
+        - employee-controller
+      operationId: addNewEmployee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Employee'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/employees/login:
+    post:
+      tags:
+        - auth-controller
+      operationId: authenticate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /construction:
+    get:
+      tags:
+        - employee-controller
+      operationId: helloCloud
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/tasks/id:
+    get:
+      tags:
+        - task-controller
+      operationId: getTaskById
+      parameters:
+        - name: taskId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TaskViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/projects/status/{status}:
+    get:
+      tags:
+        - project-controller
+      operationId: findByStatus
+      parameters:
+        - name: status
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/projects/roomType/{roomType}:
+    get:
+      tags:
+        - project-controller
+      operationId: findProjectsByRoomType
+      parameters:
+        - name: roomType
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/projects/roomType/{roomType}/name/{name}:
+    get:
+      tags:
+        - project-controller
+      operationId: findProjectByRoomTypeAndName
+      parameters:
+        - name: roomType
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/projects/name/{name}:
+    get:
+      tags:
+        - project-controller
+      operationId: findProjectByName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/projects/id/{id}:
+    get:
+      tags:
+        - project-controller
+      operationId: getProjectsById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ProjectViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/materials:
+    get:
+      tags:
+        - material-controller
+      operationId: getAllMaterialsInProjects
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Material'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/materials/warehouse:
+    get:
+      tags:
+        - material-controller
+      operationId: getWarehouseInventory
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Material'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/materials/project/{projectId}:
+    get:
+      tags:
+        - material-controller
+      operationId: getProjectMaterial
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Material'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/machines:
+    get:
+      tags:
+        - machine-controller
+      operationId: getAllMachinesInProjects
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Machine'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/machines/warehouse:
+    get:
+      tags:
+        - machine-controller
+      operationId: getMachineWarehouseInventory
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Machine'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/machines/project/{projectId}:
+    get:
+      tags:
+        - machine-controller
+      operationId: getProjectMachinery
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Machine'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/employees/{id}:
+    get:
+      tags:
+        - employee-controller
+      operationId: getEmployeeById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmployeeViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+    delete:
+      tags:
+        - employee-controller
+      operationId: deleteEmployee
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/employees/findByUsername/{username}:
+    get:
+      tags:
+        - employee-controller
+      operationId: getEmployeeByUsername
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmployeeViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/employees/findByTitle/{title}:
+    get:
+      tags:
+        - employee-controller
+      operationId: getEmployeesByTitle
+      parameters:
+        - name: title
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/employees/findByProjectId/{projectId}:
+    get:
+      tags:
+        - employee-controller
+      operationId: getEmployeesByProjectId
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/employees/findByName/{name}:
+    get:
+      tags:
+        - employee-controller
+      operationId: getEmployeeByName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmployeeViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/employees/findByEmail/{email}:
+    get:
+      tags:
+        - employee-controller
+      operationId: getEmployeeByEmail
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/EmployeeViewModel'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/tasks/{id}:
+    delete:
+      tags:
+        - task-controller
+      operationId: deleteTask
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+  /api/projects/{id}:
+    delete:
+      tags:
+        - project-controller
+      operationId: deleteProject
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '409':
+          description: Conflict
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/CustomErrorResponse'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/CustomErrorResponse'
+components:
+  schemas:
+    CustomErrorResponse:
+      type: object
+      properties:
+        errorMsg:
+          type: string
+        status:
+          type: integer
+          format: int32
+        errorCode:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    Task:
+      required:
+        - name
+        - projectId
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        projectId:
+          type: integer
+          format: int32
+        employeeId:
+          type: integer
+          format: int32
+        startDate:
+          type: string
+          format: date
+        deadline:
+          type: string
+          format: date
+        description:
+          type: string
+        status:
+          type: string
+    Project:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        deadline:
+          type: string
+          format: date
+        startDate:
+          type: string
+          format: date
+        roomType:
+          type: string
+        materialBudget:
+          type: number
+        laborBudget:
+          type: number
+        totalBudget:
+          type: number
+        status:
+          type: string
+        plumbing:
+          type: boolean
+        electric:
+          type: boolean
+    Machine:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        projectId:
+          type: integer
+          format: int32
+        crane:
+          type: integer
+          format: int32
+        forklift:
+          type: integer
+          format: int32
+        ladder:
+          type: integer
+          format: int32
+        drill:
+          type: integer
+          format: int32
+    Employee:
+      required:
+        - email
+        - name
+        - password
+        - title
+        - username
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        projectId:
+          type: integer
+          format: int32
+        name:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        title:
+          type: string
+        phoneNumber:
+          type: string
+        salary:
+          type: number
+        dateOfBirth:
+          type: string
+          format: date
+        userSince:
+          type: string
+          format: date
+        yearsOfExperience:
+          type: integer
+          format: int32
+    Material:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        projectId:
+          type: integer
+          format: int32
+        steel:
+          type: integer
+          format: int64
+        brick:
+          type: integer
+          format: int64
+        lumber:
+          type: integer
+          format: int64
+        cement:
+          type: integer
+          format: int64
+    TaskViewModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        project:
+          $ref: '#/components/schemas/Project'
+        employee:
+          $ref: '#/components/schemas/Employee'
+        name:
+          type: string
+        startDate:
+          type: string
+          format: date
+        deadline:
+          type: string
+          format: date
+        description:
+          type: string
+        status:
+          type: string
+    ProjectViewModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        deadline:
+          type: string
+          format: date
+        startDate:
+          type: string
+          format: date
+        roomType:
+          type: string
+        materialBudget:
+          type: number
+        laborBudget:
+          type: number
+        totalBudget:
+          type: number
+        status:
+          type: string
+        material:
+          $ref: '#/components/schemas/Material'
+        machine:
+          $ref: '#/components/schemas/Machine'
+        taskList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+        employeeList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Employee'
+        plumbing:
+          type: boolean
+        electric:
+          type: boolean
+    EmployeeViewModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        username:
+          type: string
+        password:
+          type: string
+        title:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        salary:
+          type: number
+        dateOfBirth:
+          type: string
+          format: date
+        userSince:
+          type: string
+          format: date
+        yearsOfExperience:
+          type: integer
+          format: int32
+        project:
+          $ref: '#/components/schemas/Project'
+        taskList:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'

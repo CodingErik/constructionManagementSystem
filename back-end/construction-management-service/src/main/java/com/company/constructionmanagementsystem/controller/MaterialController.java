@@ -5,6 +5,7 @@ import com.company.constructionmanagementsystem.exceptions.NotFoundException;
 import com.company.constructionmanagementsystem.model.Material;
 import com.company.constructionmanagementsystem.repository.MachineRepository;
 import com.company.constructionmanagementsystem.repository.MaterialRepository;
+import com.company.constructionmanagementsystem.service.MaterialServiceLayer;
 import com.company.constructionmanagementsystem.util.feign.MaterialWarehouseClient;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,25 +27,38 @@ public class MaterialController {
     @Autowired
     MaterialWarehouseClient materialWarehouseClient;
 
+    @Autowired
+    MaterialServiceLayer materialServiceLayer;
+
     /**
      * update project specific inventory
      * update warehouse inventory
      * */
+//    @PostMapping("/api/materials/project/request")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public String requestMaterials(@RequestBody Material materialForWarehouse, @RequestBody Material finalProjectMaterials) {
+//        /** adding stock to main service
+//         * calling the microservice to update the warehouse inventory
+//         * */
+//
+//        try {
+//            materialWarehouseClient.updateMaterialAfterRetrieve(materialForWarehouse);
+//            repo.save(finalProjectMaterials);
+//            return "the following material was added to the project " + materialForWarehouse.toString();
+//        } catch (FeignException e) {
+//            System.out.println(e.getMessage());
+//            return e.getMessage();
+//        }
+//    }
+
     @PostMapping("/api/materials/project/request")
     @ResponseStatus(HttpStatus.CREATED)
-    public String requestMaterials(@RequestBody Material material) {
+    public String requestMaterials(@RequestBody Material requestMaterials) {
         /** adding stock to main service
          * calling the microservice to update the warehouse inventory
          * */
 
-        try {
-            materialWarehouseClient.updateMaterialAfterRetrieve(material);
-            repo.save(material);
-            return "the following material was added to the project " + material.toString();
-        } catch (FeignException e) {
-            System.out.println(e.getMessage());
-            return e.getMessage();
-        }
+        return materialServiceLayer.requestMaterials(requestMaterials);
     }
 
     /** get project specific inventory y*/

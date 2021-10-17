@@ -1,6 +1,5 @@
 package com.company.constructionmanagementsystem.service;
 
-import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.model.Project;
 import com.company.constructionmanagementsystem.model.Task;
 import com.company.constructionmanagementsystem.repository.EmployeeRepository;
@@ -10,7 +9,6 @@ import com.company.constructionmanagementsystem.security.JwtConverter;
 import com.company.constructionmanagementsystem.util.LoginDetailsService;
 import com.company.constructionmanagementsystem.util.feign.MachineWarehouseClient;
 import com.company.constructionmanagementsystem.util.feign.MaterialWarehouseClient;
-import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
 import com.company.constructionmanagementsystem.viewmodel.ProjectViewModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
