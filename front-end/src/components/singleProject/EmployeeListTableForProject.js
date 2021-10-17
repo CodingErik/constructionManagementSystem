@@ -2,34 +2,29 @@ import AddModal from './AddEmployeeModal';
 import { EmployeeAPI } from '../../api';
 import { useState, useEffect } from 'react';
 
-function EmployeeListTableForProject({ projectId, hasAuthority }) {
+function EmployeeListTableForProject({ projectId, hasAuthority, allEmployees, updateAllEmployeeList }) {
   const [allEmployeesInProject, setAllEmployeesInProject] = useState([]);
   const [allUnassignedEmployees, setAllUnassignedEmployees] = useState([]);
 
   useEffect(() => {
-    EmployeeAPI.getAllEmployees().then((response) => {
-      setAllUnassignedEmployees(
-        [...response.data].filter((employee) => employee.project === null)
-      );
-      setAllEmployeesInProject(
-        [...response.data].filter(
-          (employee) => parseInt(employee.project?.id) === parseInt(projectId)
-        )
-      );
-    });
-  }, []);
+    setAllUnassignedEmployees(
+      [...allEmployees].filter((employee) => employee.project === null)
+    );
+    setAllEmployeesInProject(
+      [...allEmployees].filter(
+        (employee) => parseInt(employee.project?.id) === parseInt(projectId)
+      )
+    );
+  }, [allEmployees]);
 
-  const handleAddEmployeeToProject = (employee) => {
+  const handleAddEmployeeToProject = async (employee) => {
     const updatedEmployee = {
       ...employee,
       projectId: projectId,
     };
-    EmployeeAPI.putEmployee(updatedEmployee);
-    setAllUnassignedEmployees((prevState) =>
-      [...prevState].filter((emp) => emp.id !== employee.id)
-    );
-    setAllEmployeesInProject([...allEmployeesInProject, updatedEmployee]);
+    const update = await EmployeeAPI.putEmployee(updatedEmployee);
     alert("Employee Has Been Added To Project");
+    updateAllEmployeeList(updatedEmployee);
   };
 
   return (
@@ -65,7 +60,7 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
         </table>
       </div>
 
-      <h3 style={{marginTop:"10%"}}>Employees</h3>
+      <h3 style={{ marginTop: "10%" }}>Employees</h3>
       <div
         className='table-reponsive'
         style={{
@@ -101,7 +96,7 @@ function EmployeeListTableForProject({ projectId, hasAuthority }) {
             className='btn btn-outline-warning'
             data-bs-toggle='modal'
             data-bs-target='#addEmployeeModal'
-            style={{width:"100%", marginTop:"3%"}}
+            style={{ width: "100%", marginTop: "3%" }}
           >
             Add Employee
           </button>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../pages/Tasks.css";
-import {BsFillTrashFill} from "react-icons/bs";
+import { BsFillTrashFill } from "react-icons/bs";
 import { TaskAPI } from "../api";
 
-export default function TasksTable(props) {
+export default function TasksTable(props, { authority }) {
   const [tasks, setTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
 
@@ -15,8 +15,8 @@ export default function TasksTable(props) {
 
   const handleDeleteTaskById = (taskId) => {
     TaskAPI.deleteTask(taskId);
-    setTasks([...tasks].filter(task => task.id !== taskId));
-  }
+    setTasks([...tasks].filter((task) => task.id !== taskId));
+  };
 
   return (
     <div className="table-responsive mb-5">
@@ -62,13 +62,16 @@ export default function TasksTable(props) {
                     </Link>
                   </td>
                   <td>
-                    <button
-                      type="button"
-                      className="btn btn-danger"
-                      onClick={() => handleDeleteTaskById(task.id)}
-                    >
-                      <BsFillTrashFill></BsFillTrashFill>
-                    </button>
+                    {authority === "admin" && (
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={() => handleDeleteTaskById(task.id)}
+                        disabled={authority !== "admin"}
+                      >
+                        <BsFillTrashFill></BsFillTrashFill>
+                      </button>
+                    )}
                   </td>
                 </tr>
               );
@@ -97,6 +100,18 @@ export default function TasksTable(props) {
                         </button>
                       </Link>
                     </td>
+                    <td>
+                      {authority === "admin" && (
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          onClick={() => handleDeleteTaskById(task.id)}
+                          disabled={authority !== "admin"}
+                        >
+                          <BsFillTrashFill></BsFillTrashFill>
+                        </button>
+                      )}
+                    </td>
                   </tr>
                 )
               );
@@ -124,6 +139,18 @@ export default function TasksTable(props) {
                           View
                         </button>
                       </Link>
+                    </td>
+                    <td>
+                      {authority === "admin" && (
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          onClick={() => handleDeleteTaskById(task.id)}
+                          disabled={authority !== "admin"}
+                        >
+                          <BsFillTrashFill></BsFillTrashFill>
+                        </button>
+                      )}
                     </td>
                   </tr>
                 )

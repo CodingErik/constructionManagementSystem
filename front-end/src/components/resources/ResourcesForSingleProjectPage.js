@@ -265,23 +265,27 @@ export default function ResourcesForSingleProjectPage({
             );
           })}
       </div>
-      <button
-        type='button'
-        className='btn btn-outline-warning'
-        data-bs-toggle='modal'
-        data-bs-target='#addMaterialsModal'
-        disabled={!hasAuthority}
-        style={{width:"50%"}}
-      >
-        Add Materials
-      </button>
-      <AddMaterialModal
-        maxMaterialAmount={maxMaterialAmount}
-        modalId='addMaterialsModal'
-        handleAddMaterialsToProject={handleAddMaterialsToProject}
-        hasAuthority={hasAuthority}
-        projectId={projectId}
-      ></AddMaterialModal>
+      {hasAuthority && (
+        <div>
+          <button
+            type='button'
+            className='btn btn-outline-warning'
+            data-bs-toggle='modal'
+            data-bs-target='#addMaterialsModal'
+            disabled={!hasAuthority}
+            style={{ width: "50%" }}
+          >
+            Add Materials
+          </button>
+          <AddMaterialModal
+            maxMaterialAmount={maxMaterialAmount}
+            modalId='addMaterialsModal'
+            handleAddMaterialsToProject={handleAddMaterialsToProject}
+            hasAuthority={hasAuthority}
+            projectId={projectId}
+          ></AddMaterialModal>
+        </div>
+      )}
       <div
         className='resourcesWrapper row mt-3'
         style={{
@@ -314,35 +318,38 @@ export default function ResourcesForSingleProjectPage({
         hasAuthority={hasAuthority}
         projectId={projectId}
       ></AddMachineModal>
+      {hasAuthority && (
+        <div>
+          <div style={{ display: "flex", justifyContent: "center", marginBottom: "5%" }}>
+            <button
+              type='button'
+              className='btn btn-outline-warning'
+              data-bs-toggle='modal'
+              data-bs-target='#addMachinesModal'
+              disabled={!hasAuthority}
+              style={{ marginRight: "0.5%", width: "25%" }}
+            >
+              Add Machines
+            </button>
+            <button
+              type='button'
+              className='btn btn-outline-warning'
+              data-bs-toggle='modal'
+              data-bs-target='#confirmReturnMachinesModal'
+              disabled={!hasAuthority}
+              style={{ marginLeft: "0.5%", width: "25%" }}
+            >
+              Return Machines
+            </button>
+          </div>
 
-      <div style={{display:"flex", justifyContent:"center", marginBottom:"5%"}}>
-        <button
-          type='button'
-          className='btn btn-outline-warning'
-          data-bs-toggle='modal'
-          data-bs-target='#addMachinesModal'
-          disabled={!hasAuthority}
-          style={{marginRight:"0.5%", width:"25%"}}
-        >
-          Add Machines
-        </button>
-        <button
-          type='button'
-          className='btn btn-outline-warning'
-          data-bs-toggle='modal'
-          data-bs-target='#confirmReturnMachinesModal'
-          disabled={!hasAuthority}
-          style={{marginLeft:"0.5%", width:"25%"}}
-        >
-          Return Machines
-        </button>
-      </div>
-
-      <ConfirmReturnMachinesModal
-        handleReturnMachinesToProject={handleReturnMachinesToProject}
-        hasAuthority={hasAuthority}
-        modalId='confirmReturnMachinesModal'
-      ></ConfirmReturnMachinesModal>
+          <ConfirmReturnMachinesModal
+            handleReturnMachinesToProject={handleReturnMachinesToProject}
+            hasAuthority={hasAuthority}
+            modalId='confirmReturnMachinesModal'
+          ></ConfirmReturnMachinesModal>
+        </div>
+      )}
     </div>
   );
 }

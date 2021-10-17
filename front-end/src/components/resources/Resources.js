@@ -35,7 +35,7 @@ export default function Resources({
           resourcesObject &&
           Object.entries(resourcesObject).map(([key, value]) => {
             return (
-              <div className='col-6'>
+              <div className='col-6' key={value.name}>
                 <div className='materialOrMachineryIcon'>
                   <p className='textElementMaterials'>{value.name}</p>
                   <img
