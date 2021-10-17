@@ -4,10 +4,9 @@ import "../pages/Tasks.css";
 import { BsFillTrashFill } from "react-icons/bs";
 import { TaskAPI } from "../api";
 
-export default function TasksTable(props, { authority }) {
+export default function TasksTable(props) {
   const [tasks, setTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
-
   useEffect(() => {
     setTasks(props.tasks);
     setStatusFilter(props.statusFilter);
@@ -62,12 +61,12 @@ export default function TasksTable(props, { authority }) {
                     </Link>
                   </td>
                   <td>
-                    {authority === "admin" && (
+                    {props.authority === "admin" && (
                       <button
                         type="button"
                         className="btn btn-danger"
                         onClick={() => handleDeleteTaskById(task.id)}
-                        disabled={authority !== "admin"}
+                        disabled={props.authority !== "admin"}
                       >
                         <BsFillTrashFill></BsFillTrashFill>
                       </button>
@@ -101,12 +100,12 @@ export default function TasksTable(props, { authority }) {
                       </Link>
                     </td>
                     <td>
-                      {authority === "admin" && (
+                      {props.authority === "admin" && (
                         <button
                           type="button"
                           className="btn btn-danger"
                           onClick={() => handleDeleteTaskById(task.id)}
-                          disabled={authority !== "admin"}
+                          disabled={props.authority !== "admin"}
                         >
                           <BsFillTrashFill></BsFillTrashFill>
                         </button>
@@ -141,12 +140,12 @@ export default function TasksTable(props, { authority }) {
                       </Link>
                     </td>
                     <td>
-                      {authority === "admin" && (
+                      {props.authority === "admin" && (
                         <button
                           type="button"
                           className="btn btn-danger"
                           onClick={() => handleDeleteTaskById(task.id)}
-                          disabled={authority !== "admin"}
+                          disabled={props.authority !== "admin"}
                         >
                           <BsFillTrashFill></BsFillTrashFill>
                         </button>

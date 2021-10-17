@@ -10,14 +10,16 @@ import ResourcesForSingleProjectPage from "../components/resources/ResourcesForS
 
 function SingleProjectPage() {
   redirectIfTokenNull();
+  const token = localStorage.getItem("token")
+  ? decode(JSON.parse(localStorage.getItem("token")))
+  : "illegal";
+  
   const { projectId } = useParams();
   const [project, setProject] = useState({});
   const [user, setUser] = useState({});
   const [allEmployees, setAllEmployees] = useState([]);
   const [hasAuthority, setHasAuthority] = useState(false);
-  const token = localStorage.getItem("token")
-    ? decode(JSON.parse(localStorage.getItem("token")))
-    : "illegal";
+
 
   useEffect(() => {
     async function fetchData() {
