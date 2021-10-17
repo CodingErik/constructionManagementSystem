@@ -1,5 +1,4 @@
 import axios from "axios";
-// const baseUrl = `http://localhost:8080/api/tasks`;
 const baseUrl = `http://localhost:8979/api/tasks`;
 const taskAPI = {
     getAllTasks: (projectId, employeeId, name) => {

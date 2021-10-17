@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { LoginAPI, EmployeeAPI } from '../api';
 import Message from '../components/Message';
 import LoginSpinner from '../components/spinner/LoginSpinner';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { AiFillEye } from 'react-icons/ai';
 
 function RegisterPage() {
   const [name, setName] = useState('');
