@@ -34,6 +34,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -212,5 +213,21 @@ public class TaskControllerTest {
 
     }
 
+    @Test
+    public void shouldReturn422IfNoName() {
+        taskRepository.deleteAll();
+        LocalDate startDate = LocalDate.now();
+        LocalDate deadline = LocalDate.now();
+
+        Task task = new Task();
+        task.setProjectId(1);
+        task.setEmployeeId(1);
+        task.setStartDate(startDate);
+        task.setDeadline(deadline);
+        task.setDescription("This is a task.");
+        task.setStatus("In progress");
+
+        taskRepository.save(task);
+    }
 
 }

@@ -172,6 +172,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnEmployeeWithCorrectId() throws Exception {
         employeeRepository.deleteAll();
         projectRepository.deleteAll();
@@ -205,6 +206,7 @@ public class EmployeeControllerTest {
 
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnEmployeeWithCorrectEmail() throws Exception {
         employeeRepository.deleteAll();
         projectRepository.deleteAll();
@@ -238,6 +240,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnEmployeeWithCorrectName() throws Exception{
         employeeRepository.deleteAll();
         projectRepository.deleteAll();
@@ -280,6 +283,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnEmployeeWithCorrectUsername() throws Exception {
         employeeRepository.deleteAll();
         projectRepository.deleteAll();
@@ -312,6 +316,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnListOfEmployeesWithCorrectTitle() throws Exception {
         employeeRepository.deleteAll();
         projectRepository.deleteAll();
@@ -353,6 +358,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnListOfEmployeesWithCorrectProjectId() throws Exception {
         employeeRepository.deleteAll();
         projectRepository.deleteAll();
@@ -394,6 +400,7 @@ public class EmployeeControllerTest {
 
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnCorrectEmployeeWhenRegistering() throws Exception {
 
         java.time.LocalDate birth = java.time.LocalDate.of(1999,9 ,9);
@@ -460,12 +467,14 @@ public class EmployeeControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldDeleteEmployeeAndAllTasksWithIt() throws Exception {
 
         mockMvc.perform(delete("/api/employees/1")).andDo(print()).andExpect(status().isNoContent());
     }
   
-  
+
+    @Test
     @WithMockUser(roles = {"Admin"})
     public void shouldUpdatePassword() throws Exception {
         Map<String, String> inputBody = new HashMap<>();

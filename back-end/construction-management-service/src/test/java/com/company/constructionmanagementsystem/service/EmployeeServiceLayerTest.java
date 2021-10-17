@@ -7,14 +7,11 @@ import com.company.constructionmanagementsystem.repository.EmployeeRepository;
 import com.company.constructionmanagementsystem.repository.ProjectRepository;
 import com.company.constructionmanagementsystem.repository.TaskRepository;
 import com.company.constructionmanagementsystem.viewmodel.EmployeeViewModel;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -24,7 +21,6 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 public class EmployeeServiceLayerTest {

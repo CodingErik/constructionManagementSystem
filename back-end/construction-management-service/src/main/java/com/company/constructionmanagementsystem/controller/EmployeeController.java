@@ -9,8 +9,10 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
+import sun.util.resources.LocaleData;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -121,6 +123,7 @@ public class EmployeeController {
         employee.setName(employee.getName().toLowerCase(Locale.ROOT));
         employee.setTitle(employee.getTitle().toLowerCase(Locale.ROOT));
         employee.setEmail(employee.getEmail().toLowerCase(Locale.ROOT));
+        employee.setUserSince(LocalDate.now());
         employee.setYearsOfExperience(0);
 
         employee = repository.save(employee);

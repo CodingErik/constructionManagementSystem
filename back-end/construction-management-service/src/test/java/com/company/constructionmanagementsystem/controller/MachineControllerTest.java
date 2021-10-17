@@ -89,6 +89,7 @@ public class MachineControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void getAllMachinesInProjects() throws Exception {
         given(repo.save(machine)).willReturn(machine);
         given(repo.findAll()).willReturn(machines);
@@ -155,6 +156,7 @@ public class MachineControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturn404IfProjectHasNoMachinery() throws Exception{
         mockMvc.perform(get("/api/machines/project/100"))
                 .andDo(print())
