@@ -62,6 +62,12 @@ public class ProjectControllerTest {
     TaskRepository taskRepository;
 
     @MockBean
+    MachineRepository machineRepository;
+
+    @MockBean
+    MaterialRepository materialRepository;
+
+    @MockBean
     ProjectServiceLayer projectServiceLayer;
 
     @MockBean
