@@ -243,7 +243,7 @@ function AllEmployeeTable({ originalEmployeeList }) {
                     to={{ pathname: `/AdminSingleEmployeePage/${employee.id}` }}
                   >
                     <button type='button' className='btn btn-warning'>
-                      Edit
+                      View
                     </button>
                   </Link>
                 </td>

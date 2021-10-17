@@ -7,12 +7,14 @@ import redirectIfTokenNull from '../components/RedirectHelper';
 
 function SingleTaskPage() {
   redirectIfTokenNull();
+  const token = localStorage.getItem('token')
+  ? decode(JSON.parse(localStorage.getItem('token')))
+  : 'illegal';
+  
   const { taskId } = useParams();
   const [task, setTask] = useState({});
   const [hasAuthority, setHasAuthority] = useState(false);
-  const token = localStorage.getItem('token')
-    ? decode(JSON.parse(localStorage.getItem('token')))
-    : 'illegal';
+
 
   useEffect(() => {
     async function fetchData() {

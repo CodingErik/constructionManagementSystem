@@ -22,12 +22,12 @@ import {
 import redirectIfTokenNull from "../components/RedirectHelper";
 import Spinner from "../components/spinner/Spinner";
 import decode from "jwt-decode";
-const authority = localStorage.getItem("token")
-  ? decode(JSON.parse(localStorage.getItem("token"))).authorities
-  : "illegal";
 
 function Home() {
   redirectIfTokenNull();
+  const authority = localStorage.getItem("token")
+    ? decode(JSON.parse(localStorage.getItem("token"))).authorities
+    : "illegal";
   const [projectList, setProjectList] = useState([]);
   const [statusCount, setStatusCount] = useState({
     inProgress: 0,

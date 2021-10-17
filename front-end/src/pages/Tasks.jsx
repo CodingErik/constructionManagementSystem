@@ -7,12 +7,14 @@ import './Tasks.css';
 import redirectIfTokenNull from '../components/RedirectHelper';
 import Spinner from '../components/spinner/Spinner';
 import decode from "jwt-decode";
-const authority = localStorage.getItem("token")
-  ? decode(JSON.parse(localStorage.getItem("token"))).authorities
-  : "illegal";
+
 
 export default function Tasks() {
   redirectIfTokenNull();
+  const authority = localStorage.getItem("token")
+  ? decode(JSON.parse(localStorage.getItem("token"))).authorities
+  : "illegal";
+  
   const [tasks, setTasks] = useState([]);
   const [statusFilter, setStatusFilter] = useState('all');
   const [projectId, setProjectId] = useState();

@@ -7,15 +7,15 @@ import "../assets/Projects.css";
 import AddProjectModal from "../components/project/AddProjectModal";
 import decode from "jwt-decode";
 import Spinner from "../components/spinner/Spinner";
-const authority = localStorage.getItem("token")
-  ? decode(JSON.parse(localStorage.getItem("token"))).authorities
-  : "illegal";
-const username = localStorage.getItem("token")
-  ? decode(JSON.parse(localStorage.getItem("token"))).sub
-  : "illegal";
 
 export default function Projects() {
   redirectIfTokenNull();
+  const authority = localStorage.getItem("token")
+    ? decode(JSON.parse(localStorage.getItem("token"))).authorities
+    : "illegal";
+  const username = localStorage.getItem("token")
+    ? decode(JSON.parse(localStorage.getItem("token"))).sub
+    : "illegal";
   const [projects, setProjects] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
   const [roomType, setRoomType] = useState("");
@@ -121,14 +121,14 @@ export default function Projects() {
 
   return (
     <div className="container mt-3">
-      {((authority === "admin" || authority === "architect")) && (
+      {(authority === "admin" || authority === "architect") && (
         <div>
           <button
             type="button"
             className="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#addProject"
-            disabled = {userHasProject}
+            disabled={userHasProject}
           >
             Add Project
           </button>
@@ -376,7 +376,11 @@ export default function Projects() {
         </div>
       </div>
 
-      <ProjectsTable allProjects={projects} prevStatusFilter={statusFilter} authority={authority}/>
+      <ProjectsTable
+        allProjects={projects}
+        prevStatusFilter={statusFilter}
+        authority={authority}
+      />
     </div>
   );
 }
