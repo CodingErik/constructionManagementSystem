@@ -61,21 +61,21 @@ function RegisterPage() {
   return (
     <div>
       {isLoading ? <LoginSpinner /> : ''}
-      <div class='container'>
-        <div class='row'>
-          <div class='col-lg-10 col-xl-9 mx-auto'>
-            <div class='card flex-row my-5 border-0 shadow rounded-3 overflow-hidden'>
-              <div class='card-img-left d-none d-md-flex'></div>
-              <div class='card-body p-4 p-sm-5'>
-                <h5 class='card-title text-center mb-5 fw-light fs-5'>
+      <div className='container'>
+        <div className='row'>
+          <div className='col-lg-10 col-xl-9 mx-auto'>
+            <div className='card flex-row my-5 border-0 shadow rounded-3 overflow-hidden'>
+              <div className='card-img-left d-none d-md-flex'></div>
+              <div className='card-body p-4 p-sm-5'>
+                <h5 className='card-title text-center mb-5 fw-light fs-5'>
                   Register
                 </h5>
                 <form onSubmit={submitHandler}>
                   {message && <Message variant='danger'>{message}</Message>}
-                  <div class='form-floating mb-3'>
+                  <div className='form-floating mb-3'>
                     <input
                       type='text'
-                      class='form-control'
+                      className='form-control'
                       id='floatingInputName'
                       placeholder='myName'
                       required
@@ -85,11 +85,11 @@ function RegisterPage() {
                     />
                     <label for='floatingInputName'>Employee Name</label>
                   </div>
-                  <div class='form-floating mb-3'>
+                  <div className='form-floating mb-3'>
                     <select
                       onChange={(e) => setTitle(e.target.value)}
                       value={title}
-                      className='form-select'
+                      classNameName='form-select'
                       id='exampleSelect1'
                     >
                       <option>Architect</option>
@@ -99,10 +99,10 @@ function RegisterPage() {
                     <label for='floatingInputTitle'>Employee Title</label>
                   </div>
 
-                  <div class='form-floating mb-3'>
+                  <div className='form-floating mb-3'>
                     <input
                       type='text'
-                      class='form-control'
+                      className='form-control'
                       id='floatingInputUsername'
                       placeholder='myusername'
                       required
@@ -112,10 +112,10 @@ function RegisterPage() {
                     <label for='floatingInputUsername'>Username</label>
                   </div>
 
-                  <div class='form-floating mb-3'>
+                  <div className='form-floating mb-3'>
                     <input
                       type='email'
-                      class='form-control'
+                      className='form-control'
                       id='floatingInputEmail'
                       placeholder='name@example.com'
                       required
@@ -127,10 +127,10 @@ function RegisterPage() {
 
                   <hr />
 
-                  <div class='form-floating mb-3'>
+                  <div className='form-floating mb-3'>
                     <input
                       type='password'
-                      class='form-control'
+                      className='form-control'
                       id='floatingPassword'
                       placeholder='Password'
                       required
@@ -140,10 +140,10 @@ function RegisterPage() {
                     <label for='floatingPassword'>Password</label>
                   </div>
 
-                  <div class='form-floating mb-3'>
+                  <div className='form-floating mb-3'>
                     <input
                       type='password'
-                      class='form-control'
+                      className='form-control'
                       id='floatingPasswordConfirm'
                       placeholder='Confirm Password'
                       required
@@ -155,16 +155,16 @@ function RegisterPage() {
                     </label>
                   </div>
 
-                  <div class='d-grid mb-2'>
+                  <div className='d-grid mb-2'>
                     <button
-                      class='btn btn-lg btn-primary btn-login fw-bold text-uppercase'
+                      className='btn btn-lg btn-primary btn-login fw-bold text-uppercase'
                       type='submit'
                     >
                       Register
                     </button>
                   </div>
 
-                  <Link class='d-block text-center mt-2 small' to='/login'>
+                  <Link className='d-block text-center mt-2 small' to='/login'>
                     Have an account? Sign In
                   </Link>
                 </form>
