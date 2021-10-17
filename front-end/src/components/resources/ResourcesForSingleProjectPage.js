@@ -194,48 +194,6 @@ export default function ResourcesForSingleProjectPage({
     setMachines(updatedMachine);
     alert('Machines added');
   };
-  const handleAddMachinesToProject = (machinesInformation) => {
-    const updatedMachineInformation = {
-      crane: parseFloat(machinesInformation.crane),
-      drill: parseFloat(machinesInformation.drill),
-      forklift: parseFloat(machinesInformation.forklift),
-      ladder: parseFloat(machinesInformation.ladder),
-      id: machineId,
-      projectId: machinesInformation.projectId,
-    };
-
-    MachineryAPI.requestMachineryForProject(updatedMachineInformation);
-
-    const updatedMaxMachineAmount = {
-      crane: maxMachineAmount.crane - parseFloat(machinesInformation.crane),
-      drill: maxMachineAmount.drill - parseFloat(machinesInformation.drill),
-      forklift:
-        maxMachineAmount.forklift - parseInt(machinesInformation.forklift),
-      ladder: maxMachineAmount.ladder - parseFloat(machinesInformation.ladder),
-    };
-    setMaxMachineAmount(updatedMaxMachineAmount);
-    const updatedMachine = {
-      crane: {
-        ...machines.crane,
-        amount: machines.crane.amount + parseFloat(machinesInformation.crane),
-      },
-      drill: {
-        ...machines.drill,
-        amount: machines.drill.amount + parseFloat(machinesInformation.drill),
-      },
-      forklift: {
-        ...machines.forklift,
-        amount:
-          machines.forklift.amount + parseFloat(machinesInformation.forklift),
-      },
-      ladder: {
-        ...machines.ladder,
-        amount: machines.ladder.amount + parseFloat(machinesInformation.ladder),
-      },
-    };
-    setMachines(updatedMachine);
-    alert('Machines added');
-  };
 
   const handleAddMaterialsToProject = (materialInformation) => {
     const updatedMaterialsInformation = {
