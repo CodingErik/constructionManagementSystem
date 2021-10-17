@@ -31,6 +31,7 @@ function ConfirmReturnMachinesModal({
                                 className='btn btn-outline-warning'
                                 data-bs-dismiss='modal'
                                 disabled={!hasAuthority}
+                                aria-label='Close'
                                 onClick={() => handleReturnMachinesToProject(true)}>
                                 Yes
                             </button>
@@ -39,6 +40,7 @@ function ConfirmReturnMachinesModal({
                                 className='btn btn-outline-warning'
                                 data-bs-dismiss='modal'
                                 disabled={!hasAuthority}
+                                aria-label='Close'
                                 onClick={() => handleReturnMachinesToProject(false)}>
                                 No
                             </button>

@@ -275,6 +275,7 @@ function AddProjectModal({ modalId, handleNewProjectSubmit, hasAuthority}) {
                     className='btn btn-info mt-3'
                     type='submit'
                     disabled={!hasAuthority}
+                    data-bs-dismiss='modal'
                   >
                     Add Project
                   </button>

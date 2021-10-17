@@ -2,14 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsFillTrashFill } from "react-icons/bs";
 import { ProjectAPI } from "../api";
-export default function ProjectsTable(props) {
+
+export default function ProjectsTable({
+  allProjects,
+  prevStatusFilter,
+  authority,
+}) {
   const [projects, setProjects] = useState([]);
   const [statusFilter, setStatusFilter] = useState("all");
 
   useEffect(() => {
-    setProjects(props.projects);
-    setStatusFilter(props.statusFilter);
-  }, [props]);
+    setProjects(allProjects);
+    setStatusFilter(prevStatusFilter);
+  }, [allProjects, prevStatusFilter]);
 
   const handleDeleteProjectById = (projectId) => {
     ProjectAPI.deleteProjectById(projectId);
@@ -61,13 +66,16 @@ export default function ProjectsTable(props) {
                     </Link>
                   </td>
                   <td>
-                    <button
-                      type="button"
-                      className="btn btn-danger"
-                      onClick={() => handleDeleteProjectById(project.id)}
-                    >
-                      <BsFillTrashFill></BsFillTrashFill>
-                    </button>
+                    {authority === "admin" && (
+                      <button
+                        type="button"
+                        className="btn btn-danger"
+                        onClick={() => handleDeleteProjectById(project.id)}
+                        disabled={authority !== "admin"}
+                      >
+                        <BsFillTrashFill></BsFillTrashFill>
+                      </button>
+                    )}
                   </td>
                 </tr>
               );
@@ -101,13 +109,16 @@ export default function ProjectsTable(props) {
                       </Link>
                     </td>
                     <td>
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        onClick={() => handleDeleteProjectById(project.id)}
-                      >
-                        <BsFillTrashFill></BsFillTrashFill>
-                      </button>
+                      {authority === "admin" && (
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          onClick={() => handleDeleteProjectById(project.id)}
+                          disabled={authority !== "admin"}
+                        >
+                          <BsFillTrashFill></BsFillTrashFill>
+                        </button>
+                      )}
                     </td>
                   </tr>
                 )
@@ -142,13 +153,16 @@ export default function ProjectsTable(props) {
                       </Link>
                     </td>
                     <td>
-                      <button
-                        type="button"
-                        className="btn btn-danger"
-                        onClick={() => handleDeleteProjectById(project.id)}
-                      >
-                        <BsFillTrashFill></BsFillTrashFill>
-                      </button>
+                      {authority === "admin" && (
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          onClick={() => handleDeleteProjectById(project.id)}
+                          disabled={authority !== "admin"}
+                        >
+                          <BsFillTrashFill></BsFillTrashFill>
+                        </button>
+                      )}
                     </td>
                   </tr>
                 )

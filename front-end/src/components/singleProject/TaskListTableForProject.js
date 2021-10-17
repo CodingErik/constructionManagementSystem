@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { EmployeeAPI, TaskAPI } from '../../api';
+import { TaskAPI } from '../../api';
 import AddTaskModal from './AddTaskModal';
 
 function TaskListTableForProject({ projectId, projectName, hasAuthority, allEmployees }) {

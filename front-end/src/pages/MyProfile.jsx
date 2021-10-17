@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { EmployeeAPI } from '../api';
-// import BriefProjectsDisplay from '../components/home/BriefProjectsDisplay';
 import MyProfileProjectsDisplay from '../components/myProfile/MyProfileProjectsDisplay';
 import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
 import decode from 'jwt-decode';
