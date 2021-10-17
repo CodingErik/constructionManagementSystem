@@ -81,7 +81,7 @@ function SingleProjectPage() {
         </div>
       </div>
 
-      <div>
+      <div style={{marginTop:"5%"}}>
         <ResourcesForSingleProjectPage
           projectId={projectId}
           hasAuthority={hasAuthority}

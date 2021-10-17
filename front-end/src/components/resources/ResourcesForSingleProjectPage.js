@@ -167,8 +167,7 @@ export default function ResourcesForSingleProjectPage({
     const updatedMaxMachineAmount = {
       crane: maxMachineAmount.crane - parseFloat(machinesInformation.crane),
       drill: maxMachineAmount.drill - parseFloat(machinesInformation.drill),
-      forklift:
-        maxMachineAmount.forklift - parseInt(machinesInformation.forklift),
+      forklift: maxMachineAmount.forklift - parseInt(machinesInformation.forklift),
       ladder: maxMachineAmount.ladder - parseFloat(machinesInformation.ladder),
     };
     setMaxMachineAmount(updatedMaxMachineAmount);
@@ -272,6 +271,7 @@ export default function ResourcesForSingleProjectPage({
         data-bs-toggle='modal'
         data-bs-target='#addMaterialsModal'
         disabled={!hasAuthority}
+        style={{width:"50%"}}
       >
         Add Materials
       </button>
@@ -322,7 +322,7 @@ export default function ResourcesForSingleProjectPage({
           data-bs-toggle='modal'
           data-bs-target='#addMachinesModal'
           disabled={!hasAuthority}
-          style={{marginRight:"5%"}}
+          style={{marginRight:"0.5%", width:"25%"}}
         >
           Add Machines
         </button>
@@ -332,7 +332,7 @@ export default function ResourcesForSingleProjectPage({
           data-bs-toggle='modal'
           data-bs-target='#confirmReturnMachinesModal'
           disabled={!hasAuthority}
-          style={{marginLeft:"5%"}}
+          style={{marginLeft:"0.5%", width:"25%"}}
         >
           Return Machines
         </button>

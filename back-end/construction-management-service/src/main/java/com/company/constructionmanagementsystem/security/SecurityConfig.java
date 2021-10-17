@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/employees/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/employees/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/refresh_token").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/employees/findByTitle/**").permitAll()
                 .antMatchers("/api/**").authenticated()
                 .and()
                 .addFilter(new JwtRequestFilter(authenticationManager(), converter))
