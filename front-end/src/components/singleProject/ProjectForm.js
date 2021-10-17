@@ -34,6 +34,7 @@ function ProjectForm({ project, hasAuthority }) {
       electric: isElectricRef.current.checked,
     };
     ProjectAPI.putProject(updatedProjectInformation);
+    alert("Project Has Been Updated");
   };
 
   return (

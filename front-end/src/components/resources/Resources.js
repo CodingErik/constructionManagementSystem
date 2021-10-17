@@ -48,7 +48,7 @@ export default function Resources({
                     <div
                       className={innerInventoryBar}
                       style={{
-                        width: `${(value.amount * 97.6) / denominatorValue}px`,
+                        width: `${(value.amount * 98.1) / denominatorValue}px`,
                       }}
                     ></div>
                   </div>

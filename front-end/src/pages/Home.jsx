@@ -45,9 +45,11 @@ function Home() {
   });
   const [employeeList, setEmployeeList] = useState([]);
   const [taskList, setTaskList] = useState([]);
-  const [materials, setMaterials] = useState();
+  const [materials, setMaterials] = useState({});
   const [machinery, setMachinery] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState("invisible");
+
 
   useEffect(() => {
     ProjectAPI.getAllProjects().then((response) => {
@@ -164,6 +166,48 @@ function Home() {
     return <Spinner />;
   }
 
+  async function refillMaterials(event) {
+    event.preventDefault();
+
+    setIsVisible("visible");
+
+    setTimeout(() => {
+      setIsVisible("invisible");
+    },3000)
+
+    const refillMaterials = await MaterialAPI.refillWarehouseMaterialsInventory();
+
+    const updateMaterialWareHouse = await MaterialAPI.getWarehouseMaterialsInventory();
+
+    const materialsHolder = {
+      steel: {
+        name: 'Steel',
+        amount: updateMaterialWareHouse.data?.steel,
+        icon: steelIcon,
+      },
+      brick: {
+        name: 'Brick',
+        amount: updateMaterialWareHouse.data?.brick,
+        icon: brickIcon,
+      },
+      lumber: {
+        name: 'Lumber',
+        amount: updateMaterialWareHouse.data?.lumber,
+        icon: lumberIcon,
+      },
+      cement: {
+        name: 'Cement',
+        amount: updateMaterialWareHouse.data?.cement,
+        icon: cementIcon,
+      },
+    };  
+
+    console.log(updateMaterialWareHouse.data);
+
+    setMaterials(materialsHolder);
+
+  }
+
   return (
     <div
       className='container mt-3 home'
@@ -193,6 +237,16 @@ function Home() {
                   denominator='/1000 lbs'
                   denominatorValue='1000'
                 />
+
+                  <button
+                    type='button'
+                    className='btn btn-danger btn-block mt-1 mb-5'
+                    style={{ fontWeight: "800" }}
+                    onClick={refillMaterials}
+                  >
+                    Refill Materials (Admin Only!)
+                  </button>
+
               </div>
               <div className='col col-xl-6'>
                 <Resources
@@ -201,6 +255,9 @@ function Home() {
                   denominator='/30 units'
                   denominatorValue='30'
                 />
+                <div className={`messageTooltip ${isVisible}`}>
+                  Request fullfiled!
+                </div>
               </div>
             </div>
           </div>

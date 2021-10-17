@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { LoginAPI, EmployeeAPI } from '../api';
 import Message from '../components/Message';
 import LoginSpinner from '../components/spinner/LoginSpinner';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 function RegisterPage() {
   const [name, setName] = useState('');
@@ -13,6 +14,9 @@ function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);
   const [hasAdmin, setHasAdmin] = useState(true);
+  const [isPasswordShow, setIsPasswordShow] = useState('password');
+  const [isConfirmPasswordShow, setIsConfirmPasswordShow] =
+    useState('password');
   const [isLoading, setIsLoading] = useState(true);
 
   const history = useHistory();
@@ -25,7 +29,7 @@ function RegisterPage() {
     });
 
     setIsLoading(false);
-  }, []);
+  }, [isLoading, isPasswordShow, hasAdmin]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -57,6 +61,15 @@ function RegisterPage() {
       }
     }
   };
+
+  const togglePasswordShow = () =>
+    isPasswordShow === 'password'
+      ? setIsPasswordShow('text')
+      : setIsPasswordShow('password');
+  const toggleConfirmPasswordShow = () =>
+    isConfirmPasswordShow === 'password'
+      ? setIsConfirmPasswordShow('text')
+      : setIsConfirmPasswordShow('password');
 
   return (
     <div>
@@ -127,9 +140,9 @@ function RegisterPage() {
 
                   <hr />
 
-                  <div className='form-floating mb-3'>
+                  <div className='form-floating mb-3 input-group'>
                     <input
-                      type='password'
+                      type={isPasswordShow}
                       className='form-control'
                       id='floatingPassword'
                       placeholder='Password'
@@ -137,12 +150,27 @@ function RegisterPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
-                    <label for='floatingPassword'>Password</label>
+                    <label
+                      for='floatingPassword'
+                      style={{
+                        zIndex: 100,
+                      }}
+                    >
+                      Password
+                    </label>
+                    <button
+                      class='btn mt-0 '
+                      type='button'
+                      id='showConfirmPassword'
+                      onClick={() => togglePasswordShow()}
+                    >
+                      <AiFillEye size={35} />
+                    </button>
                   </div>
 
-                  <div className='form-floating mb-3'>
+                  <div className='form-floating mb-3 input-group'>
                     <input
-                      type='password'
+                      type={isConfirmPasswordShow}
                       className='form-control'
                       id='floatingPasswordConfirm'
                       placeholder='Confirm Password'
@@ -150,9 +178,23 @@ function RegisterPage() {
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
-                    <label for='floatingPasswordConfirm'>
+                    <label
+                      for='floatingPasswordConfirm'
+                      style={{
+                        zIndex: 100,
+                      }}
+                    >
                       Confirm Password
                     </label>
+
+                    <button
+                      class='btn mt-0 '
+                      type='button'
+                      id='showConfirmPassword'
+                      onClick={() => toggleConfirmPasswordShow()}
+                    >
+                      <AiFillEye size={35} />
+                    </button>
                   </div>
 
                   <div className='d-grid mb-2'>

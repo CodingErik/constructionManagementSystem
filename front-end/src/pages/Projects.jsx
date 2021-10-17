@@ -2,13 +2,16 @@ import React, { useEffect, useState, useRef } from 'react';
 import ProjectsTable from '../components/ProjectsTable';
 import redirectIfTokenNull from '../components/RedirectHelper';
 import API from '../api/ProjectAPI';
-import { ProjectAPI } from '../api';
+import { EmployeeAPI, ProjectAPI } from '../api';
 import '../assets/Projects.css';
 import AddProjectModal from '../components/project/AddProjectModal';
 import decode from 'jwt-decode';
 import Spinner from '../components/spinner/Spinner';
 const authority = localStorage.getItem('token')
   ? decode(JSON.parse(localStorage.getItem('token'))).authorities
+  : 'illegal';
+const username = localStorage.getItem('token')
+  ? decode(JSON.parse(localStorage.getItem('token'))).sub
   : 'illegal';
 
 export default function Projects() {
@@ -25,10 +28,24 @@ export default function Projects() {
   const roomTypeRef = useRef();
 
   const handleNewProjectSubmit = (newProjectInfo) => {
-    ProjectAPI.addProject(newProjectInfo);
+    ProjectAPI.addProject(newProjectInfo).then((response) => {
+      EmployeeAPI.getEmployeeByUsername(username).then((userResponse) => {
+        const updatedUser = {
+          ...userResponse.data,
+          projectId: response.data.id,
+        };
+        EmployeeAPI.putEmployee(updatedUser);
+      });
+    });
     ProjectAPI.getAllProjects().then((res) => {
       setProjects([...res.data]);
     });
+    // EmployeeAPI.getEmployeeByUsername(username).then((response) => {
+    //   const updatedUser = {
+    //     ...response.data,
+    //     projectId:
+    //   }
+    // })
   };
 
   useEffect(() => {
@@ -56,11 +73,11 @@ export default function Projects() {
           setProjects(res.data.filter((project) => project.plumbing));
         } else if (isElectric === false && isPlumbing === false) {
           setProjects(
-            res.data.filter((proejct) => !proejct.electric && !proejct.plumbing)
+            res.data.filter((project) => !project.electric && !project.plumbing)
           );
         } else {
           setProjects(
-            res.data.filter((proejct) => proejct.electric && proejct.plumbing)
+            res.data.filter((project) => project.electric && project.plumbing)
           );
         }
       })
@@ -328,11 +345,15 @@ export default function Projects() {
         <div className='otherFilters'>
           <div className='nameFilter filter'>
             <p className='textField'>Project Name</p>
-            <input ref={projectNameRef} className='textInput' placeholder="Name" />
+            <input
+              ref={projectNameRef}
+              className='textInput'
+              placeholder='Name'
+            />
           </div>
           <div className='roomFilter filter'>
             <p className='textField'>Room Type</p>
-            <input ref={roomTypeRef} className='textInput' placeholder="Type" />
+            <input ref={roomTypeRef} className='textInput' placeholder='Type' />
           </div>
           <button
             className='filterButton'
