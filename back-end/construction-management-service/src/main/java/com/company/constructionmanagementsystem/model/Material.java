@@ -30,6 +30,14 @@ public class Material {
         this.cement = cement;
     }
 
+    public Material(Integer projectId, long steel, long brick, long lumber, long cement) {
+        this.projectId = projectId;
+        this.steel = steel;
+        this.brick = brick;
+        this.lumber = lumber;
+        this.cement = cement;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -92,7 +92,16 @@ public class MachineController {
 
         try {
             machineWarehouseClient.returnMachinery(machine);
-            repo.deleteAll();
+//            repo.deleteAll();
+            Machine oldMachine = repo.getById(machine.getId());
+            Machine updatedMachine = new Machine();
+            updatedMachine.setId(machine.getId());
+            updatedMachine.setProjectId(machine.getProjectId());
+            updatedMachine.setCrane(oldMachine.getCrane()-machine.getCrane());
+            updatedMachine.setDrill(oldMachine.getDrill()-machine.getDrill());
+            updatedMachine.setForklift(oldMachine.getForklift()-machine.getForklift());
+            updatedMachine.setLadder(oldMachine.getLadder()-machine.getLadder());
+            repo.save(updatedMachine);
             return "thank you for using the machine microservice. ";
         } catch (FeignException e) {
             System.out.println(e.getMessage());

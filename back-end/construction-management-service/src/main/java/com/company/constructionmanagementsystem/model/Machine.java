@@ -30,6 +30,13 @@ public class Machine {
         this.drill = drill;
     }
 
+    public Machine(Integer projectId, int crane, int forklift, int ladder, int drill) {
+        this.projectId = projectId;
+        this.crane = crane;
+        this.forklift = forklift;
+        this.ladder = ladder;
+        this.drill = drill;
+    }
 
     public Integer getId() {
         return id;
