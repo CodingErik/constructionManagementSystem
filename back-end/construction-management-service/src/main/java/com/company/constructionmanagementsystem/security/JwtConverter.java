@@ -18,10 +18,9 @@ public class JwtConverter {
 
     private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final String ISSUER = "construction-management-service";
-    //    private final int EXPIRATION_HOURS = 24;
-//    private final int EXPIRATION_MINUTES = EXPIRATION_HOURS * 60;
-//private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
-    private final int EXPIRATION_MILLIS =  5 * 1000;
+    private final int EXPIRATION_HOURS = 24;
+    private final int EXPIRATION_MINUTES = EXPIRATION_HOURS * 60;
+    private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
 
     public String getTokenFromUser(User user) {
         String authorities = user.getAuthorities().stream()
