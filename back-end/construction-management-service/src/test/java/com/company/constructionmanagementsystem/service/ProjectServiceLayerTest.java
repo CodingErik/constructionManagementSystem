@@ -20,10 +20,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cloud.openfeign.FeignContext;
 import org.springframework.cloud.openfeign.FeignLoggerFactory;
 
-import static org.mockito.BDDMockito.given;
 
 import java.math.BigDecimal;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +30,6 @@ import static org.junit.Assert.*;
 import org.mockito.InjectMocks;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.client.ExpectedCount.times;
 
 
 public class ProjectServiceLayerTest {
