@@ -1,5 +1,4 @@
 import axios from 'axios';
-// const baseUrl = `http://localhost:8080/api/projects`;
 const baseUrl = `http://localhost:8979/api/projects`;
 
 const projectAPI = {
