@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { EmployeeAPI } from '../api';
-import BriefProjectsDisplay from '../components/home/BriefProjectsDisplay';
+// import BriefProjectsDisplay from '../components/home/BriefProjectsDisplay';
+import MyProfileProjectsDisplay from '../components/myProfile/MyProfileProjectsDisplay';
 import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
 import decode from 'jwt-decode';
 import redirectIfTokenNull from '../components/RedirectHelper';
@@ -11,7 +12,7 @@ export default function MyProfile() {
   redirectIfTokenNull();
 
   const [userInfo, setUserInfo] = useState({});
-  const [userProjects, setUserProject] = useState([]);
+  const [userProject, setUserProject] = useState({});
   const [userTasks, setUserTask] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,7 +24,7 @@ export default function MyProfile() {
     EmployeeAPI.getEmployeeByUsername(username)
       .then(({ data }) => {
         setUserInfo(data);
-        setUserProject({ ...data.project });
+        setUserProject({ ...data?.project });
         setUserTask([...data?.taskList]);
       })
       .catch((error) => {
@@ -66,13 +67,14 @@ export default function MyProfile() {
         </div>
         <div className='row mt-5'>
           <div className='col '>
-            {userProjects.id ? (
-              <BriefProjectsDisplay
-                originalProjectLists={userProjects}
-              ></BriefProjectsDisplay>
+            {/* {userProjects.id ? (
+              <MyProfileProjectsDisplay
+                project={userProjects}
+              ></MyProfileProjectsDisplay>
             ) : (
               <h2>No Available projects... </h2>
-            )}
+            )} */}
+            <MyProfileProjectsDisplay project={userProject}></MyProfileProjectsDisplay>
           </div>
           <div className=' col '>
             {userTasks?.name ? (

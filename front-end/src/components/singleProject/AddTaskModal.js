@@ -13,9 +13,7 @@ function AddTaskModal({
   const startDateRef = useRef(null);
   const deadlineRef = useRef(null);
   const descriptionRef = useRef(null);
-  const [employeeState, setEmployeeState] = useState(
-    availableEmployeesInProject[0]?.id
-  );
+  const [employeeState, setEmployeeState] = useState();
   const [taskState, setTaskState] = useState('in_progress');
   const [projectState, setProjectState] = useState(projectId);
 
@@ -32,9 +30,9 @@ function AddTaskModal({
       description: descriptionRef.current.value,
       status: taskState,
     };
-    console.log(newTask);
     if (availableEmployeesInProject.length > 0) {
       handleAddTaskToProject(newTask);
+      alert("Task Has Been Created");
     } else {
       alert('A Employee Must Exist In Project Before Task Can Be Created');
     }
@@ -196,6 +194,7 @@ function AddTaskModal({
                   className='btn btn-info mt-3'
                   type='submit'
                   disabled={!hasAuthority}
+                  data-bs-dismiss='modal'
                 >
                   Apply Changes
                 </button>
