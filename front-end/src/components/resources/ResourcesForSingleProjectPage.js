@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Resources.css';
 import AddMaterialModal from './AddMaterialModal';
 import AddMachineModal from './AddMachineModal';
+import ConfirmReturnMachinesModal from './ConfirmReturnMachinesModal';
 import { MaterialAPI, MachineryAPI } from '../../api';
 import brickIcon from "../../assets/brick.png";
 import cementIcon from "../../assets/cement.png";
@@ -39,7 +40,6 @@ export default function ResourcesForSingleProjectPage({ projectId, hasAuthority 
             const machineInfo = await MachineryAPI.getMachineryByProjectId(projectId);
             const materialWarehouseInfo = await MaterialAPI.getWarehouseMaterialsInventory();
             const machineWarehouseInfo = await MachineryAPI.getWarehouseMachineryInventory();
-
 
             const materialHolder = {
                 brick: {
@@ -109,6 +109,45 @@ export default function ResourcesForSingleProjectPage({ projectId, hasAuthority 
         }
         fetchData();
     }, []);
+
+    const handleReturnMachinesToProject = async (yesOrNo) => {
+        if(yesOrNo) {
+
+            const toReturnMachines = await MachineryAPI.getMachineryByProjectId(projectId);
+            await MachineryAPI.returnMachineryForProject(toReturnMachines.data);
+            setMachines({
+                crane: {
+                    name: "Crane",
+                    amount: 0,
+                    icon: craneIcon,
+                },
+                drill: {
+                    name: "Drill",
+                    amount: 0,
+                    icon: drillIcon,
+                },
+                forklift: {
+                    name: "Forklift",
+                    amount: 0,
+                    icon: forkliftIcon,
+                },
+                ladder: {
+                    name: "Ladder",
+                    amount: 0,
+                    icon: ladderIcon,
+                },
+            });
+            const updatedMaxMachineAmount = {
+                crane: maxMachineAmount.crane + parseFloat(toReturnMachines.crane),
+                drill: maxMachineAmount.drill + parseFloat(toReturnMachines.drill),
+                forklift: maxMachineAmount.forklift + parseInt(toReturnMachines.forklift),
+                ladder: maxMachineAmount.ladder + parseFloat(toReturnMachines.ladder)
+            };
+            setMaxMachineAmount(updatedMaxMachineAmount);
+            alert("Machines Returned")
+        } else {
+        }
+    }
 
     const handleAddMachinesToProject = (machinesInformation) => {
         const updatedMachineInformation = {
@@ -257,6 +296,15 @@ export default function ResourcesForSingleProjectPage({ projectId, hasAuthority 
                 Add Machines
             </button>
             <AddMachineModal maxMachineAmount={maxMachineAmount} modalId="addMachinesModal" handleAddMachinesToProject={handleAddMachinesToProject} hasAuthority={hasAuthority} projectId={projectId}></AddMachineModal>
+            <button
+                type='button'
+                className='btn btn-outline-warning'
+                data-bs-toggle='modal'
+                data-bs-target='#confirmReturnMachinesModal'
+                disabled={!hasAuthority}>
+                Return Machines
+            </button>
+            <ConfirmReturnMachinesModal handleReturnMachinesToProject={handleReturnMachinesToProject} hasAuthority={hasAuthority} modalId="confirmReturnMachinesModal"></ConfirmReturnMachinesModal>
         </div>
     );
 }

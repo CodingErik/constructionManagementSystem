@@ -13,6 +13,7 @@ export default function ProjectsTable(props) {
 
   const handleDeleteProjectById = (projectId) => {
     ProjectAPI.deleteProjectById(projectId);
+    console.log(projectId);
     setProjects([...projects].filter((project) => project.id !== projectId));
   };
 
