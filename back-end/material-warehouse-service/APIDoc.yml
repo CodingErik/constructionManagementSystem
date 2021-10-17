@@ -1,0 +1,114 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:7979
+    description: Generated server url
+paths:
+  /api/material:
+    get:
+      tags:
+        - material-controller
+      operationId: getWarehouseInventory
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Material'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+    put:
+      tags:
+        - material-controller
+      operationId: updateMaterialAfterRetrieve
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Material'
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+  /api/material/refill:
+    put:
+      tags:
+        - material-controller
+      operationId: updateMaterialRefill
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+  /material:
+    get:
+      tags:
+        - material-controller
+      operationId: helloCloud
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+components:
+  schemas:
+    CustomErrorResponse:
+      type: object
+      properties:
+        errorMsg:
+          type: string
+        status:
+          type: integer
+          format: int32
+        errorCode:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    Material:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        steel:
+          type: integer
+          format: int64
+        brick:
+          type: integer
+          format: int64
+        lumber:
+          type: integer
+          format: int64
+        cement:
+          type: integer
+          format: int64

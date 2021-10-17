@@ -1,0 +1,120 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:7980
+    description: Generated server url
+paths:
+  /api/machinery:
+    get:
+      tags:
+        - machine-controller
+      operationId: getMachineryInventory
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Machinery'
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+    put:
+      tags:
+        - machine-controller
+      operationId: updateMaterialAfterRetrieve
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Machinery'
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+  /api/machinery/return:
+    put:
+      tags:
+        - machine-controller
+      operationId: updateReturnMachinery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Machinery'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+  /machine:
+    get:
+      tags:
+        - machine-controller
+      operationId: helloCloud
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+        '422':
+          description: Unprocessable Entity
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CustomErrorResponse'
+components:
+  schemas:
+    CustomErrorResponse:
+      type: object
+      properties:
+        errorMsg:
+          type: string
+        status:
+          type: integer
+          format: int32
+        errorCode:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    Machinery:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        crane:
+          type: integer
+          format: int32
+        forklift:
+          type: integer
+          format: int32
+        ladder:
+          type: integer
+          format: int32
+        drill:
+          type: integer
+          format: int32
