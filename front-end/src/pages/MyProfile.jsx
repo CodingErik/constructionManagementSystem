@@ -47,8 +47,8 @@ export default function MyProfile() {
         <div className='row'>
           <div className='col-12 col-lg-6'>
             <img
-              src={'https://source.unsplash.com/random/250x250'}
-              className='rounded-circle'
+              src={'https://source.unsplash.com/random/450x450'}
+              className='rounded-circle img-fluid'
               alt='profile'
             
             ></img>
