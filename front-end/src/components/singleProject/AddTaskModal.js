@@ -41,7 +41,7 @@ function AddTaskModal({
   };
 
   return (
-    <div class='container'>
+    <div className='container'>
       <div
         className='modal fade'
         id={modalId}

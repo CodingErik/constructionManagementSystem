@@ -5,7 +5,6 @@ function AddModal({
   modalId,
   title,
 }) {
-  console.log(allUnassignedEmployees);
 
   return (
     <div

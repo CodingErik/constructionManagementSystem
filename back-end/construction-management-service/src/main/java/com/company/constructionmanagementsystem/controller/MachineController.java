@@ -67,7 +67,16 @@ public class MachineController {
 
         try {
             machineWarehouseClient.rentMachinery(machine);
-            repo.save(machine);
+
+            Machine currentProjectMachines = repo.findByProjectId(machine.getProjectId()).get();
+            Machine updatedProjectMachines = new Machine();
+            updatedProjectMachines.setProjectId(machine.getProjectId());
+            updatedProjectMachines.setId(machine.getId());
+            updatedProjectMachines.setCrane(currentProjectMachines.getCrane() + machine.getCrane());
+            updatedProjectMachines.setDrill(currentProjectMachines.getDrill() + machine.getDrill());
+            updatedProjectMachines.setForklift(currentProjectMachines.getForklift() + machine.getForklift());
+            updatedProjectMachines.setLadder(currentProjectMachines.getLadder() + machine.getLadder());
+            repo.save(updatedProjectMachines);
             return "the following material was added to the project " + machine.toString();
         } catch (FeignException e) {
             System.out.println(e.getMessage());
