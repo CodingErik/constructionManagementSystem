@@ -25,8 +25,6 @@ export default function Login() {
     if (res.status === 200) {
       setMessage(null);
 
-      alert('login');
-
       history.push('/Home');
     } else {
       setMessage(res.errorMsg);

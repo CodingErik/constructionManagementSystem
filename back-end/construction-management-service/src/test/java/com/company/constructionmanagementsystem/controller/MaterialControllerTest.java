@@ -123,6 +123,7 @@ public class MaterialControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnMaterialReferenceWithCorrectProjectId() throws Exception {
         projectRepository.deleteAll();
         materialRepository.deleteAll();
@@ -146,6 +147,7 @@ public class MaterialControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnAllMaterialsLeftInStock() throws Exception {
         Material outputMaterial = new Material(null,null,1000,1000,1000,1000);
 
@@ -163,6 +165,7 @@ public class MaterialControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldRefillMaterials() throws Exception {
         given(materialWarehouseClient.updateMaterialRefill()).willReturn("stock has been refilled");
     }

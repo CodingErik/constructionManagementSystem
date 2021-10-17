@@ -3,9 +3,7 @@ package com.company.constructionmanagementsystem.controller;
 import com.company.constructionmanagementsystem.model.Employee;
 import com.company.constructionmanagementsystem.model.Project;
 import com.company.constructionmanagementsystem.model.Task;
-import com.company.constructionmanagementsystem.repository.EmployeeRepository;
-import com.company.constructionmanagementsystem.repository.ProjectRepository;
-import com.company.constructionmanagementsystem.repository.TaskRepository;
+import com.company.constructionmanagementsystem.repository.*;
 import com.company.constructionmanagementsystem.security.JwtConverter;
 import com.company.constructionmanagementsystem.service.EmployeeServiceLayer;
 import com.company.constructionmanagementsystem.service.ProjectServiceLayer;
@@ -84,6 +82,11 @@ public class ProjectControllerTest {
     @MockBean
     LoginDetailsService loginDetailsService;
 
+    @MockBean
+    MachineRepository machineRepository;
+
+    @MockBean
+    MaterialRepository materialRepository;
 
     @Autowired
     private MockMvc mockMvc;
@@ -229,6 +232,7 @@ public class ProjectControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnProjectWithCorrectId() throws Exception {
         projectRepository.deleteAll();
         projectRepository.deleteAll();
@@ -263,6 +267,7 @@ public class ProjectControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnListOfProjectsWithCorrectStatus() throws Exception {
         projectRepository.deleteAll();
         projectRepository.deleteAll();
@@ -303,6 +308,7 @@ public class ProjectControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnListOfProjectsWithCorrectRoomType() throws Exception {
         projectRepository.deleteAll();
         projectRepository.deleteAll();
@@ -343,6 +349,7 @@ public class ProjectControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnListOfProjectsWithCorrectName() throws Exception {
         projectRepository.deleteAll();
         projectRepository.deleteAll();
@@ -383,6 +390,7 @@ public class ProjectControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldReturnListOfProjectsWithCorrectNameAndRoomType() throws Exception {
         projectRepository.deleteAll();
         projectRepository.deleteAll();
@@ -424,6 +432,7 @@ public class ProjectControllerTest {
 
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldDeleteProject() throws Exception {
         mockMvc.perform(delete("/api/projects/1")).andDo(print()).andExpect(status().isNoContent());
     }
