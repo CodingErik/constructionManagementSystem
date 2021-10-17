@@ -3,7 +3,7 @@ import React from 'react';
 function HomePageSpinner() {
   return (
     <div
-      class='d-flex justify-content-center '
+      className='d-flex justify-content-center '
       style={{
         minHeight: '300px',
         minWidth: '100%',
@@ -13,14 +13,14 @@ function HomePageSpinner() {
       }}
     >
       <div
-        class='spinner-border'
+        className='spinner-border'
         role='status'
         style={{
           width: '3rem',
           height: '3rem',
         }}
       >
-        <span class='sr-only'></span>
+        <span className='sr-only'></span>
       </div>
     </div>
   );

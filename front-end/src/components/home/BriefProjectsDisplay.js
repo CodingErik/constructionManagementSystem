@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import HomePageSpinner from './HomePageSpinner';
+import Spinner from '../spinner/Spinner';
 
 let columnBooleans = {
   projectId: false,
@@ -67,73 +68,76 @@ function BriefProjectsDisplay({ originalProjectLists }) {
           maxHeight: '400px',
           minHeight: '400px',
           overflowY: 'scroll',
-          
         }}
       >
-        <table className='table table-hover m-auto'>
-          <thead>
-            <tr>
-              <th
-                className='col-1'
-                onClick={() =>
-                  handleProjectColumnHeaderClick('id', 'projectId', parseInt)
-                }
-              >
-                Id
-              </th>
-              <th
-                className='col-3.5'
-                onClick={() =>
-                  handleProjectColumnHeaderClick('name', 'name', (a) =>
-                    a.toUpperCase()
-                  )
-                }
-              >
-                Name
-              </th>
-              <th
-                className='col-1'
-                onClick={() =>
-                  handleProjectColumnHeaderClick('status', 'status', (a) =>
-                    a.toUpperCase()
-                  )
-                }
-              >
-                Status
-              </th>
-              <th
-                className='col-2'
-                onClick={() =>
-                  handleProjectColumnHeaderClick(
-                    'startDate',
-                    'startDate',
-                    (a) => a.toUpperCase()
-                  )
-                }
-              >
-                Start Date
-              </th>
-              <th
-                className='col-2'
-                onClick={() =>
-                  handleProjectColumnHeaderClick('deadline', 'deadline', (a) =>
-                    a.toUpperCase()
-                  )
-                }
-              >
-                Deadline
-              </th>
-            </tr>
-          </thead>
-          {isLoading ? (
-            <HomePageSpinner />
-          ) : (
+        {isLoading ? (
+          <HomePageSpinner />
+        ) : (
+          <table className='table table-hover m-auto'>
+            <thead>
+              <tr>
+                <th
+                  className='col-1'
+                  onClick={() =>
+                    handleProjectColumnHeaderClick('id', 'projectId', parseInt)
+                  }
+                >
+                  Id
+                </th>
+                <th
+                  className='col-3.5'
+                  onClick={() =>
+                    handleProjectColumnHeaderClick('name', 'name', (a) =>
+                      a.toUpperCase()
+                    )
+                  }
+                >
+                  Name
+                </th>
+                <th
+                  className='col-1'
+                  onClick={() =>
+                    handleProjectColumnHeaderClick('status', 'status', (a) =>
+                      a.toUpperCase()
+                    )
+                  }
+                >
+                  Status
+                </th>
+                <th
+                  className='col-2'
+                  onClick={() =>
+                    handleProjectColumnHeaderClick(
+                      'startDate',
+                      'startDate',
+                      (a) => a.toUpperCase()
+                    )
+                  }
+                >
+                  Start Date
+                </th>
+                <th
+                  className='col-2'
+                  onClick={() =>
+                    handleProjectColumnHeaderClick(
+                      'deadline',
+                      'deadline',
+                      (a) => a.toUpperCase()
+                    )
+                  }
+                >
+                  Deadline
+                </th>
+              </tr>
+            </thead>
             <tbody>
               {projectList.map((project) => (
                 <tr className='table-active' key={project.id}>
                   <th scope='row'>{project.id}</th>
                   <td>{project.name}</td>
-                  <td className={project.status} style={{fontWeight:"900"}}>{project.status}</td>
+                  <td className={project.status} style={{ fontWeight: '900' }}>
+                    {project.status}
+                  </td>
                   <td>{project.startDate}</td>
                   <td>{project.deadline}</td>
                   <td>
@@ -146,8 +150,8 @@ function BriefProjectsDisplay({ originalProjectLists }) {
                 </tr>
               ))}
             </tbody>
-          )}
-        </table>
+          </table>
+        )}
       </div>
     </div>
   );
