@@ -53,7 +53,7 @@ export default function MyProfile() {
           >
             <img
               src={'https://source.unsplash.com/random/450x450'}
-              className='rounded-circle'
+              className='rounded-circle img-fluid'
               alt='profile'
             ></img>
           </div>
