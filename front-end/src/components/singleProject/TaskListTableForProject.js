@@ -6,6 +6,7 @@ function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
   const [taskList, setTaskList] = useState([]);
   const [availableEmployeesInProject, setAvailableEmployeesInProject] =
     useState([]);
+
   useEffect(() => {
     TaskAPI.getTaskByProjectId(projectId).then((response) => {
       setTaskList(response.data);
@@ -18,8 +19,7 @@ function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
   const handleAddTaskToProject = (newTask) => {
     TaskAPI.addTask(newTask);
     TaskAPI.getTaskByProjectId(projectId).then((response) => {
-      console.log(response.data);
-      // setTaskList(response.data)
+      setTaskList(response.data)
     });
   };
 
@@ -30,7 +30,7 @@ function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
         className='table-responsive mb-3'
         style={{
           width: '100%',
-          marginTop:"5.2%"
+          marginTop: "5.2%"
         }}
       >
         <table className='table table-hover m-auto'>
@@ -60,7 +60,7 @@ function TaskListTableForProject({ projectId, projectName, hasAuthority }) {
             data-bs-toggle='modal'
             data-bs-target='#addTaskModal'
             disabled={!hasAuthority}
-            style={{width:"100%", marginTop:"3%"}}
+            style={{ width: "100%", marginTop: "3%" }}
           >
             Add Task
           </button>
