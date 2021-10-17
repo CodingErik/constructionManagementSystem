@@ -119,18 +119,18 @@ public class MachineControllerTest {
 
         String jsoninputMachine = mapper.writeValueAsString(rentMachine);
 
-        String returnJson = "the following material was added to the project " + rentMachine.toString();
+        String returnMessage = "the following material was added to the project " + rentMachine.toString();
 
-        given(machineServiceLayer.requestMachinery(rentMachine)).willReturn(returnJson);
+        given(machineServiceLayer.requestMachinery(rentMachine)).willReturn(returnMessage);
 
 
-        mockMvc.perform(post("/api/machines/project/request")
+        mockMvc.perform(put("/api/machines/project/request")
                         .content(jsoninputMachine)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(content().string(returnJson));
+                .andExpect(content().string(returnMessage));
 
     }
 
@@ -138,17 +138,18 @@ public class MachineControllerTest {
     @WithMockUser(roles = {"admin"})
     public void returnMachinery() throws Exception {
 
-        doNothing().when(repo).deleteAll();
-
-
         String jsoninputMachine = mapper.writeValueAsString(rentMachine);
 
-        mockMvc.perform(post("/api/machines/project/return")
+        String returnMessage = "thank you for using the machine microservice. ";
+
+        given(machineServiceLayer.returnMachinery(rentMachine)).willReturn(returnMessage);
+
+        mockMvc.perform(put("/api/machines/project/return")
                         .content(jsoninputMachine)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
-                .andExpect(status().isNoContent())
+                .andExpect(status().isCreated())
                 .andExpect(content().string("thank you for using the machine microservice. "));
 
     }

@@ -60,7 +60,7 @@ public class MachineController {
     }
 
     /** to rent out, and update the warehouse inventoty*/
-    @PostMapping("/api/machines/project/request")
+    @PutMapping("/api/machines/project/request")
     @ResponseStatus(HttpStatus.CREATED) /** was no content*/
     public String requestMachinery(@RequestBody Machine machine) {
         /** adding stock to main service
@@ -73,34 +73,13 @@ public class MachineController {
 
 
     /** to return machines to Machinery warehouse inventoty*/
-    @PostMapping("/api/machines/project/return")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/api/machines/project/return")
+    @ResponseStatus(HttpStatus.CREATED)
     public String returnMachinery(@RequestBody Machine machine) {
 
-        try {
-            machineWarehouseClient.returnMachinery(machine);
-//            repo.deleteAll();
-            Machine oldMachine = repo.getById(machine.getId());
-            Machine updatedMachine = new Machine();
-            updatedMachine.setId(machine.getId());
-            updatedMachine.setProjectId(machine.getProjectId());
-            updatedMachine.setCrane(oldMachine.getCrane()-machine.getCrane());
-            updatedMachine.setDrill(oldMachine.getDrill()-machine.getDrill());
-            updatedMachine.setForklift(oldMachine.getForklift()-machine.getForklift());
-            updatedMachine.setLadder(oldMachine.getLadder()-machine.getLadder());
-            repo.save(updatedMachine);
-            return "thank you for using the machine microservice. ";
-        } catch (FeignException e) {
-            System.out.println(e.getMessage());
-            return e.getMessage();
-        }
+
+        return machineServiceLayer.returnMachinery(machine);
     }
 
 
 }
-
-
-//    @PutMapping("/rentMachinery")
-//    public void rentMachinery(@RequestBody Machine machinery) throws Exception {
-//        machineWarehouseClient.rentMachinery(machinery);
-//    }
