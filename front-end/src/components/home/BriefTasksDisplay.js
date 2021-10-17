@@ -74,69 +74,74 @@ export default function BriefTasksDisplay({ originalTaskList }) {
           overflow: 'scroll',
         }}
       >
-        <table className='table table-hover m-auto'>
-          <thead>
-            <tr>
-              <th
-                className='col-1'
-                onClick={() =>
-                  handleTaskColumnHeaderClick('id', 'id', parseInt)
-                }
-              >
-                Id
-              </th>
-              <th
-                className='col-3.5'
-                onClick={() =>
-                  handleTaskColumnHeaderClick('name', 'name', (a) =>
-                    a.toUpperCase()
-                  )
-                }
-              >
-                Name
-              </th>
-              <th
-                className='col-2'
-                onClick={() =>
-                  handleTaskColumnHeaderClick('status', 'status', (a) =>
-                    a.toUpperCase()
-                  )
-                }
-              >
-                Status
-              </th>
-              <th
-                className='col-2'
-                onClick={() =>
-                  handleTaskColumnHeaderClick('project.name', 'project', (a) =>
-                    a.toUpperCase()
-                  )
-                }
-              >
-                Project
-              </th>
+        {isLoading ? (
+          <HomePageSpinner />
+        ) : (
+          <table className='table table-hover m-auto'>
+            <thead>
+              <tr>
+                <th
+                  className='col-1'
+                  onClick={() =>
+                    handleTaskColumnHeaderClick('id', 'id', parseInt)
+                  }
+                >
+                  Id
+                </th>
+                <th
+                  className='col-3.5'
+                  onClick={() =>
+                    handleTaskColumnHeaderClick('name', 'name', (a) =>
+                      a.toUpperCase()
+                    )
+                  }
+                >
+                  Name
+                </th>
+                <th
+                  className='col-2'
+                  onClick={() =>
+                    handleTaskColumnHeaderClick('status', 'status', (a) =>
+                      a.toUpperCase()
+                    )
+                  }
+                >
+                  Status
+                </th>
+                <th
+                  className='col-2'
+                  onClick={() =>
+                    handleTaskColumnHeaderClick(
+                      'project.name',
+                      'project',
+                      (a) => a.toUpperCase()
+                    )
+                  }
+                >
+                  Project
+                </th>
 
-              <th
-                className='col-2'
-                onClick={() =>
-                  handleTaskColumnHeaderClick('deadline', 'deadline', (a) =>
-                    a.toUpperCase()
-                  )
-                }
-              >
-                Deadline
-              </th>
-            </tr>
-          </thead>
-          {isLoading ? (
-            <HomePageSpinner />
-          ) : (
+                <th
+                  className='col-2'
+                  onClick={() =>
+                    handleTaskColumnHeaderClick('deadline', 'deadline', (a) =>
+                      a.toUpperCase()
+                    )
+                  }
+                >
+                  Deadline
+                </th>
+              </tr>
+            </thead>
+
             <tbody>
               {taskList.map((task) => (
                 <tr className='table-active' key={task.id}>
                   <th scope='row'>{task.id}</th>
                   <td>{task.name}</td>
-                  <td className={task.status} style={{fontWeight:"900"}}>{task.status}</td>
+                  <td className={task.status} style={{ fontWeight: '900' }}>
+                    {task.status}
+                  </td>
                   <td>{task.project ? task.project.name : task.projectId}</td>
                   <td>{task.deadline}</td>
                   <td>
@@ -149,8 +154,8 @@ export default function BriefTasksDisplay({ originalTaskList }) {
                 </tr>
               ))}
             </tbody>
-          )}
-        </table>
+          </table>
+        )}
       </div>
     </div>
   );

@@ -3,7 +3,11 @@ import './UserPersonalInformationFormModal.css';
 import { useRef } from 'react';
 import { EmployeeAPI, LoginAPI } from '../../api';
 
-function UserPersonalInformationModal({ userInfo, modalId , updateUserBasicInformation}) {
+function UserPersonalInformationModal({
+  userInfo,
+  modalId,
+  updateUserBasicInformation,
+}) {
   const userNameRef = useRef(null);
   const userEmailRef = useRef(null);
   const userPhoneRef = useRef(null);
@@ -22,7 +26,7 @@ function UserPersonalInformationModal({ userInfo, modalId , updateUserBasicInfor
       phoneNumber: userPhoneRef.current.value,
       dateOfBirth: userDateOfBirthRef.current.value,
       yearsOfExperience: userYearsOfExperienceRef.current.value,
-      projectId: userInfo.project ? userInfo.project.id : 0,    
+      projectId: userInfo.project ? userInfo.project.id : 0,
     };
     updateUserBasicInformation(updatedInformation);
   };
