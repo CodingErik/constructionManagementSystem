@@ -24,7 +24,7 @@ export default function MyProfile() {
       .then(({ data }) => {
         setUserInfo(data);
         setUserProject({ ...data.project });
-        setUserTask([...data.taskList]);
+        setUserTask([...data?.taskList]);
       })
       .catch((error) => {
         console.error(error);
@@ -75,7 +75,7 @@ export default function MyProfile() {
             )}
           </div>
           <div className=' col '>
-            {userTasks.length ? (
+            {userTasks?.name ? (
               <BriefTasksDisplay
                 originalTaskList={userTasks}
                 projectIsNotANumber={false}
