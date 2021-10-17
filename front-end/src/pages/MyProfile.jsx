@@ -67,14 +67,13 @@ export default function MyProfile() {
         </div>
         <div className='row mt-5'>
           <div className='col '>
-            {/* {userProjects.id ? (
+            {userProject?.name ? (
               <MyProfileProjectsDisplay
-                project={userProjects}
+                project={userProject}
               ></MyProfileProjectsDisplay>
             ) : (
               <h2>No Available projects... </h2>
-            )} */}
-            <MyProfileProjectsDisplay project={userProject}></MyProfileProjectsDisplay>
+            )}
           </div>
           <div className=' col '>
             {userTasks?.name ? (

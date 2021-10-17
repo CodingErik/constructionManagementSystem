@@ -4,14 +4,16 @@ import { Link, useHistory, Redirect } from 'react-router-dom';
 import { LoginAPI } from '../api';
 import Message from '../components/Message';
 import LoginSpinner from '../components/spinner/LoginSpinner';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState(null);
+  const [isPasswordShow, setIsPasswordShow] = useState('password');
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {}, [isLoading]);
+  useEffect(() => {}, [isLoading, isPasswordShow]);
 
   const history = useHistory();
 
@@ -34,6 +36,12 @@ export default function Login() {
   if (localStorage.getItem('token')) {
     return <Redirect to='/Home' />;
   }
+
+  const togglePasswordShow = () =>
+    isPasswordShow === 'password'
+      ? setIsPasswordShow('text')
+      : setIsPasswordShow('password');
+
   return (
     <div class='container'>
       {isLoading ? <LoginSpinner /> : ''}
@@ -62,17 +70,32 @@ export default function Login() {
 
                 <hr />
 
-                <div class='form-floating mb-3'>
+                <div class='form-floating mb-3 input-group'>
                   <input
-                    type='password'
-                    class='form-control'
+                    type={isPasswordShow}
+                    class='form-control m-auto'
                     id='floatingPassword'
                     placeholder='Password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                  <label for='floatingPassword'>Password</label>
+                  <label
+                    for='floatingPassword'
+                    style={{
+                      zIndex: 100,
+                    }}
+                  >
+                    Password
+                  </label>
+                  <button
+                    class='btn mt-0 '
+                    type='button'
+                    id='showConfirmPassword'
+                    onClick={() => togglePasswordShow()}
+                  >
+                    <AiFillEye size={35} />
+                  </button>
                 </div>
 
                 <div class='d-grid mb-2'>
