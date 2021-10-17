@@ -63,9 +63,9 @@ export default function Login() {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
-                    autofocus
+                    autoFocus
                   />
-                  <label for='floatingInputUsername'>Username</label>
+                  <label htmlFor='floatingInputUsername'>Username</label>
                 </div>
 
                 <hr />
@@ -81,7 +81,7 @@ export default function Login() {
                     required
                   />
                   <label
-                    for='floatingPassword'
+                    htmlFor='floatingPassword'
                     style={{
                       zIndex: 100,
                     }}
@@ -89,7 +89,7 @@ export default function Login() {
                     Password
                   </label>
                   <button
-                    class='btn mt-0 '
+                    className='btn mt-0 '
                     type='button'
                     id='showConfirmPassword'
                     onClick={() => togglePasswordShow()}

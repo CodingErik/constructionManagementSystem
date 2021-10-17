@@ -1,4 +1,4 @@
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { AiFillEye } from 'react-icons/ai';
 import { useEffect, useRef, useState } from 'react';
 import { EmployeeAPI } from '../../api';
 

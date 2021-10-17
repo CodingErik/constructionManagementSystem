@@ -28,7 +28,7 @@ export default function NavBar() {
         <Link className='navbar-brand' to='/'>
           CMS
         </Link>
-        <img src={MainLogo} width="30" height="30"/>
+        <img src={MainLogo} width="30" height="30" alt="CMS logo"/>
         <button
           className='navbar-toggler'
           type='button'
