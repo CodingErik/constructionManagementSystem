@@ -15,4 +15,5 @@ import java.util.Optional;
 public interface MaterialRepository extends JpaRepository<Material, Integer> {
     Optional<Material> findByProjectId(Integer id);
     void deleteMaterialByProjectId (Integer projectId);
+
 }

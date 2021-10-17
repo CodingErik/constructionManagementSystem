@@ -5,6 +5,7 @@ import com.company.constructionmanagementsystem.exceptions.NotFoundException;
 import com.company.constructionmanagementsystem.model.Machine;
 import com.company.constructionmanagementsystem.repository.MachineRepository;
 import com.company.constructionmanagementsystem.security.JwtConverter;
+import com.company.constructionmanagementsystem.service.MachineServiceLayer;
 import com.company.constructionmanagementsystem.util.LoginDetailsService;
 import com.company.constructionmanagementsystem.util.feign.MachineWarehouseClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,6 +48,9 @@ public class MachineControllerTest {
 
     @MockBean
     MachineWarehouseClient machineWarehouseClient;
+
+    @MockBean
+    MachineServiceLayer machineServiceLayer;
 
     @MockBean
     JwtConverter jwtConverter;
@@ -112,17 +116,21 @@ public class MachineControllerTest {
     @WithMockUser(roles = {"admin"})
     public void rentOutMachinery() throws Exception {
 
-        given(repo.save(machine)).willReturn(machine);
 
         String jsoninputMachine = mapper.writeValueAsString(rentMachine);
+
+        String returnJson = "the following material was added to the project " + rentMachine.toString();
+
+        given(machineServiceLayer.requestMachinery(rentMachine)).willReturn(returnJson);
+
 
         mockMvc.perform(post("/api/machines/project/request")
                         .content(jsoninputMachine)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
-                .andExpect(status().isNoContent())
-                .andExpect(content().string("the following material was added to the project " + rentMachine.toString()));
+                .andExpect(status().isCreated())
+                .andExpect(content().string(returnJson));
 
     }
 
