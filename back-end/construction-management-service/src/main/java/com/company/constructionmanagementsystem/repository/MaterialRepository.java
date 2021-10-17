@@ -11,5 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface MaterialRepository extends JpaRepository<Material, Integer> {
-    Optional<Material> findByProjectId(Integer id);
+    Optional<Material> findByProjectId(Integer id); // task pass
 }

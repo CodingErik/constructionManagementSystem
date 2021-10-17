@@ -5,6 +5,7 @@ import com.company.constructionmanagementsystem.model.Project;
 import com.company.constructionmanagementsystem.repository.MaterialRepository;
 import com.company.constructionmanagementsystem.repository.ProjectRepository;
 import com.company.constructionmanagementsystem.security.JwtConverter;
+import com.company.constructionmanagementsystem.service.MaterialServiceLayer;
 import com.company.constructionmanagementsystem.util.LoginDetailsService;
 import com.company.constructionmanagementsystem.util.feign.MachineWarehouseClient;
 import com.company.constructionmanagementsystem.util.feign.MaterialWarehouseClient;
@@ -20,6 +21,7 @@ import org.springframework.cloud.autoconfigure.RefreshAutoConfiguration;
 import org.springframework.cloud.openfeign.FeignContext;
 import org.springframework.cloud.openfeign.FeignLoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -45,6 +47,9 @@ public class MaterialControllerTest {
 
     @MockBean
     ProjectRepository projectRepository;
+
+    @MockBean
+    MaterialServiceLayer materialServiceLayer;
 
     @MockBean
     FeignContext feignContext;
@@ -98,23 +103,23 @@ public class MaterialControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = {"admin"})
     public void shouldCreateANewMaterialReference() throws Exception {
-        projectRepository.deleteAll();
-        materialRepository.deleteAll();
 
-        projectRepository.save(project1);
-        projectRepository.save(project2);
+        String jsonInputMaterial = mapper.writeValueAsString(material1);
 
-        String inputJson = mapper.writeValueAsString(material1);
+        String returnJson = "the following material was added to the project " + material1.toString();
+
+        given(materialServiceLayer.requestMaterials(material1)).willReturn(returnJson);
 
         mockMvc.perform(
                 post("/api/materials/project/request")
-                        .content(inputJson)
+                        .content(jsonInputMaterial)
                         .contentType(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(content().string("the following material was added to the project " + material1.toString()));
+                .andExpect(content().string(returnJson));
     }
 
     @Test
@@ -144,9 +149,12 @@ public class MaterialControllerTest {
     public void shouldReturnAllMaterialsLeftInStock() throws Exception {
         Material outputMaterial = new Material(null,null,1000,1000,1000,1000);
 
-        String outputJson = mapper.writeValueAsString(outputMaterial);
+        List<Material> outputMaterials = new ArrayList<>();
+        outputMaterials.add(outputMaterial);
 
-        given(materialWarehouseClient.getWarehouseInventory()).willReturn(outputMaterial);
+        String outputJson = mapper.writeValueAsString(outputMaterials);
+
+        given(materialRepository.findAll()).willReturn(outputMaterials);
 
         mockMvc.perform(get("/api/materials"))
                 .andDo(print())

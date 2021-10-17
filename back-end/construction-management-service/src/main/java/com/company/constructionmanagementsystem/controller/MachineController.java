@@ -5,6 +5,7 @@ import com.company.constructionmanagementsystem.model.Machine;
 import com.company.constructionmanagementsystem.model.Material;
 import com.company.constructionmanagementsystem.repository.MachineRepository;
 import com.company.constructionmanagementsystem.repository.MaterialRepository;
+import com.company.constructionmanagementsystem.service.MachineServiceLayer;
 import com.company.constructionmanagementsystem.util.feign.MachineWarehouseClient;
 import com.company.constructionmanagementsystem.util.feign.MaterialWarehouseClient;
 import feign.FeignException;
@@ -28,7 +29,8 @@ public class MachineController {
     @Autowired
     MachineWarehouseClient machineWarehouseClient;
 
-
+    @Autowired
+    MachineServiceLayer machineServiceLayer;
 
     /** get project specific inventory y*/
     @GetMapping("/api/machines/project/{projectId}")
@@ -59,29 +61,31 @@ public class MachineController {
 
     /** to rent out, and update the warehouse inventoty*/
     @PostMapping("/api/machines/project/request")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.CREATED) /** was no content*/
     public String requestMachinery(@RequestBody Machine machine) {
         /** adding stock to main service
          * calling the microservice to update the warehouse inventory
          * */
 
-        try {
-            machineWarehouseClient.rentMachinery(machine);
+        return machineServiceLayer.requestMachinery(machine);
 
-            Machine currentProjectMachines = repo.findByProjectId(machine.getProjectId()).get();
-            Machine updatedProjectMachines = new Machine();
-            updatedProjectMachines.setProjectId(machine.getProjectId());
-            updatedProjectMachines.setId(machine.getId());
-            updatedProjectMachines.setCrane(currentProjectMachines.getCrane() + machine.getCrane());
-            updatedProjectMachines.setDrill(currentProjectMachines.getDrill() + machine.getDrill());
-            updatedProjectMachines.setForklift(currentProjectMachines.getForklift() + machine.getForklift());
-            updatedProjectMachines.setLadder(currentProjectMachines.getLadder() + machine.getLadder());
-            repo.save(updatedProjectMachines);
-            return "the following material was added to the project " + machine.toString();
-        } catch (FeignException e) {
-            System.out.println(e.getMessage());
-            return e.getMessage();
-        }
+//        try {
+//            machineWarehouseClient.rentMachinery(machine);
+//
+//            Machine currentProjectMachines = repo.findByProjectId(machine.getProjectId()).get();
+//            Machine updatedProjectMachines = new Machine();
+//            updatedProjectMachines.setProjectId(machine.getProjectId());
+//            updatedProjectMachines.setId(machine.getId());
+//            updatedProjectMachines.setCrane(currentProjectMachines.getCrane() + machine.getCrane());
+//            updatedProjectMachines.setDrill(currentProjectMachines.getDrill() + machine.getDrill());
+//            updatedProjectMachines.setForklift(currentProjectMachines.getForklift() + machine.getForklift());
+//            updatedProjectMachines.setLadder(currentProjectMachines.getLadder() + machine.getLadder());
+//            repo.save(updatedProjectMachines);
+//            return "the following material was added to the project " + machine.toString();
+//        } catch (FeignException e) {
+//            System.out.println(e.getMessage());
+//            return e.getMessage();
+//        }
     }
 
 

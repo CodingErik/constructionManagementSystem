@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface MachineRepository extends JpaRepository<Machine, Integer> {
-    Optional<Machine> findByProjectId(Integer id);
+    Optional<Machine> findByProjectId(Integer id); // Test pass
 }
