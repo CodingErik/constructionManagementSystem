@@ -1,27 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import BriefProjectsDisplay from '../components/home/BriefProjectsDisplay';
-import BriefTasksDisplay from '../components/home/BriefTasksDisplay';
-import ProjectPieChart from '../components/home/ProjectPieChart';
-import EmployeeListTable from '../components/home/EmployeeListTable';
-import Resources from '../components/resources/Resources';
-import steelIcon from '../assets/steel.png';
-import brickIcon from '../assets/brick.png';
-import lumberIcon from '../assets/lumber.png';
-import cementIcon from '../assets/cement.png';
-import craneIcon from '../assets/crane.png';
-import forkliftIcon from '../assets/forklift.png';
-import ladderIcon from '../assets/ladder.png';
-import drillIcon from '../assets/drill.png';
-
+import React, { useEffect, useState } from "react";
+import BriefProjectsDisplay from "../components/home/BriefProjectsDisplay";
+import BriefTasksDisplay from "../components/home/BriefTasksDisplay";
+import ProjectPieChart from "../components/home/ProjectPieChart";
+import EmployeeListTable from "../components/home/EmployeeListTable";
+import Resources from "../components/resources/Resources";
+import steelIcon from "../assets/steel.png";
+import brickIcon from "../assets/brick.png";
+import lumberIcon from "../assets/lumber.png";
+import cementIcon from "../assets/cement.png";
+import craneIcon from "../assets/crane.png";
+import forkliftIcon from "../assets/forklift.png";
+import ladderIcon from "../assets/ladder.png";
+import drillIcon from "../assets/drill.png";
 import {
   ProjectAPI,
   EmployeeAPI,
   TaskAPI,
   MaterialAPI,
   MachineryAPI,
-} from '../api/index';
-import redirectIfTokenNull from '../components/RedirectHelper';
-import Spinner from '../components/spinner/Spinner';
+} from "../api/index";
+import redirectIfTokenNull from "../components/RedirectHelper";
+import Spinner from "../components/spinner/Spinner";
+import decode from "jwt-decode";
+const authority = localStorage.getItem("token")
+  ? decode(JSON.parse(localStorage.getItem("token"))).authorities
+  : "illegal";
 
 function Home() {
   redirectIfTokenNull();
@@ -31,18 +34,7 @@ function Home() {
     cancelled: 0,
     completed: 0,
   });
-  const [materialCount, setMaterialCount] = useState({
-    brick: 0,
-    cement: 0,
-    lumber: 0,
-    steel: 0,
-  });
-  const [machineCount, setMachineCount] = useState({
-    crane: 0,
-    drill: 0,
-    forklift: 0,
-    ladder: 0,
-  });
+
   const [employeeList, setEmployeeList] = useState([]);
   const [taskList, setTaskList] = useState([]);
   const [materials, setMaterials] = useState({});
@@ -50,22 +42,21 @@ function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [isVisible, setIsVisible] = useState("invisible");
 
-
   useEffect(() => {
     ProjectAPI.getAllProjects().then((response) => {
       setProjectList([...response.data]);
       response.data.forEach((project) => {
-        if (project.status === 'in_progress') {
+        if (project.status === "in_progress") {
           setStatusCount((prevState) => ({
             ...prevState,
             inProgress: prevState.inProgress++,
           }));
-        } else if (project.status === 'completed') {
+        } else if (project.status === "completed") {
           setStatusCount((prevState) => ({
             ...prevState,
             completed: prevState.completed++,
           }));
-        } else if (project.status === 'cancelled') {
+        } else if (project.status === "cancelled") {
           setStatusCount((prevState) => ({
             ...prevState,
             cancelled: prevState.cancelled++,
@@ -85,47 +76,25 @@ function Home() {
         console.log(error);
       });
 
-    // MaterialAPI.getAllMaterialsInProjects().then((response) => {
-    //   response.data.forEach((material) => {
-    //     setMaterialCount((prevState) => ({
-    //       brick: (prevState.brick += material.brick),
-    //       cement: (prevState.cement += material.cement),
-    //       lumber: (prevState.lumber += material.lumber),
-    //       steel: (prevState.steel += material.steel),
-    //     }));
-    //   });
-    // });
-
-    // MachineryAPI.getAllMachinesInProjects().then((response) => {
-    //   response.data.forEach((machine) => {
-    //     setMachineCount((prevState) => ({
-    //       crane: (prevState.crane += machine.crane),
-    //       drill: (prevState.drill += machine.drill),
-    //       forklift: (prevState.forklift += machine.forklift),
-    //       ladder: (prevState.ladder += machine.ladder),
-    //     }));
-    //   });
-    // });
-
     MaterialAPI.getWarehouseMaterialsInventory().then((response) => {
       const materialsHolder = {
         steel: {
-          name: 'Steel',
+          name: "Steel",
           amount: response.data?.steel,
           icon: steelIcon,
         },
         brick: {
-          name: 'Brick',
+          name: "Brick",
           amount: response.data?.brick,
           icon: brickIcon,
         },
         lumber: {
-          name: 'Lumber',
+          name: "Lumber",
           amount: response.data?.lumber,
           icon: lumberIcon,
         },
         cement: {
-          name: 'Cement',
+          name: "Cement",
           amount: response.data?.cement,
           icon: cementIcon,
         },
@@ -136,22 +105,22 @@ function Home() {
     MachineryAPI.getWarehouseMachineryInventory().then((response) => {
       const machineHolder = {
         crane: {
-          name: 'Crane',
+          name: "Crane",
           amount: response.data?.crane,
           icon: craneIcon,
         },
         forklift: {
-          name: 'Forklift',
+          name: "Forklift",
           amount: response.data?.forklift,
           icon: forkliftIcon,
         },
         ladder: {
-          name: 'Ladder',
+          name: "Ladder",
           amount: response.data?.ladder,
           icon: ladderIcon,
         },
         drill: {
-          name: 'Drill',
+          name: "Drill",
           amount: response.data?.drill,
           icon: drillIcon,
         },
@@ -173,87 +142,86 @@ function Home() {
 
     setTimeout(() => {
       setIsVisible("invisible");
-    },3000)
+    }, 3000);
 
-    const refillMaterials = await MaterialAPI.refillWarehouseMaterialsInventory();
-
-    const updateMaterialWareHouse = await MaterialAPI.getWarehouseMaterialsInventory();
+    const refillMaterials =
+      await MaterialAPI.refillWarehouseMaterialsInventory();
+    const updateMaterialWareHouse =
+      await MaterialAPI.getWarehouseMaterialsInventory();
 
     const materialsHolder = {
       steel: {
-        name: 'Steel',
+        name: "Steel",
         amount: updateMaterialWareHouse.data?.steel,
         icon: steelIcon,
       },
       brick: {
-        name: 'Brick',
+        name: "Brick",
         amount: updateMaterialWareHouse.data?.brick,
         icon: brickIcon,
       },
       lumber: {
-        name: 'Lumber',
+        name: "Lumber",
         amount: updateMaterialWareHouse.data?.lumber,
         icon: lumberIcon,
       },
       cement: {
-        name: 'Cement',
+        name: "Cement",
         amount: updateMaterialWareHouse.data?.cement,
         icon: cementIcon,
       },
-    };  
-
-    console.log(updateMaterialWareHouse.data);
+    };
 
     setMaterials(materialsHolder);
-
   }
 
   return (
     <div
-      className='container mt-3 home'
+      className="container mt-3 home"
       style={{
-        overflowX: 'hidden',
+        overflowX: "hidden",
       }}
     >
-      <div className='row mb-3 mt-3'>
-        <div className='col col-xl-6 ml-1 mr-1'>
+      <div className="row mb-3 mt-3">
+        <div className="col col-xl-6 ml-1 mr-1">
           <BriefProjectsDisplay
             originalProjectLists={projectList}
           ></BriefProjectsDisplay>
         </div>
-        <div className='col col-xl-6 ml-1 mr-1'>
+        <div className="col col-xl-6 ml-1 mr-1">
           <ProjectPieChart statusCount={statusCount}></ProjectPieChart>
         </div>
       </div>
 
-      <div className='row mb-3 mt-3'>
-        <div className='col col-xl-6 ml-1 mr-1'>
-          <div className='row mb-3'>
-            <div className='row mt-3' style={{ minHeight: '445px' }}>
-              <div className='col col-xl-6'>
+      <div className="row mb-3 mt-3">
+        <div className="col col-xl-6 ml-1 mr-1">
+          <div className="row mb-3">
+            <div className="row mt-3" style={{ minHeight: "445px" }}>
+              <div className="col col-xl-6">
                 <Resources
                   resources={materials}
-                  title='Materials'
-                  denominator='/1000 lbs'
-                  denominatorValue='1000'
+                  title="Materials"
+                  denominator="/1000 lbs"
+                  denominatorValue="1000"
                 />
-
+                {authority === "admin" && (
                   <button
-                    type='button'
-                    className='btn btn-danger btn-block mt-1 mb-5'
+                    type="button"
+                    className="btn btn-danger btn-block mt-1 mb-5"
                     style={{ fontWeight: "800" }}
                     onClick={refillMaterials}
+                    disabled={authority !== "admin"}
                   >
                     Refill Materials (Admin Only!)
                   </button>
-
+                )}
               </div>
-              <div className='col col-xl-6'>
+              <div className="col col-xl-6">
                 <Resources
                   resources={machinery}
-                  title='Machines'
-                  denominator='/30 units'
-                  denominatorValue='30'
+                  title="Machines"
+                  denominator="/30 units"
+                  denominatorValue="30"
                 />
                 <div className={`messageTooltip ${isVisible}`}>
                   Request fullfiled!
@@ -262,14 +230,14 @@ function Home() {
             </div>
           </div>
 
-          <div className='row mt-4'>
+          <div className="row mt-4">
             <BriefTasksDisplay
               originalTaskList={taskList}
               projectIsNotANumber={true}
             ></BriefTasksDisplay>
           </div>
         </div>
-        <div className='col col-xl-6 ml-1 mr-1'>
+        <div className="col col-xl-6 ml-1 mr-1">
           <EmployeeListTable employeeList={employeeList} />
         </div>
       </div>

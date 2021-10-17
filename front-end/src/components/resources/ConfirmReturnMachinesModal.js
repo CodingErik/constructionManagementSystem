@@ -4,7 +4,7 @@ function ConfirmReturnMachinesModal({
   hasAuthority,
 }) {
   return (
-    <div className='container'>
+    <div class='container'>
       <div
         className='modal fade'
         id={modalId}
@@ -29,6 +29,7 @@ function ConfirmReturnMachinesModal({
                 className='btn btn-outline-warning'
                 data-bs-dismiss='modal'
                 disabled={!hasAuthority}
+                aria-label='Close'
                 onClick={() => handleReturnMachinesToProject(true)}
               >
                 Yes
@@ -38,6 +39,7 @@ function ConfirmReturnMachinesModal({
                 className='btn btn-outline-warning'
                 data-bs-dismiss='modal'
                 disabled={!hasAuthority}
+                aria-label='Close'
                 onClick={() => handleReturnMachinesToProject(false)}
               >
                 No

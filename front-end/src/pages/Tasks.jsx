@@ -6,6 +6,10 @@ import employeeAPI from '../api/EmployeeAPI';
 import './Tasks.css';
 import redirectIfTokenNull from '../components/RedirectHelper';
 import Spinner from '../components/spinner/Spinner';
+import decode from "jwt-decode";
+const authority = localStorage.getItem("token")
+  ? decode(JSON.parse(localStorage.getItem("token"))).authorities
+  : "illegal";
 
 export default function Tasks() {
   redirectIfTokenNull();
@@ -185,7 +189,7 @@ export default function Tasks() {
 
       <div className='row'>
         <div className='col'>
-          <TasksTable tasks={tasks} statusFilter={statusFilter} />
+          <TasksTable tasks={tasks} statusFilter={statusFilter} authority={authority}/>
         </div>
       </div>
     </div>
