@@ -36,31 +36,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         http.authorizeRequests()
-                .antMatchers("/authenticate").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/employees/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/employees/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/employees/findByTitle").permitAll()
                 .antMatchers(HttpMethod.POST, "/refresh_token").authenticated()
-
-                .antMatchers(HttpMethod.GET, "/api/machines").authenticated()
-
-                .antMatchers("/api/employees").authenticated()
-                .antMatchers("/api/projects").authenticated()
-                .antMatchers("/api/tasks").authenticated()
-                .antMatchers("/api/tasks/all").authenticated()
-                .antMatchers("/api/").authenticated()
+                .antMatchers("/api/**").authenticated()
                 .and()
                 .addFilter(new JwtRequestFilter(authenticationManager(), converter))
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//                .and()
-//                .formLogin()
-//                .loginPage("/login")
-//                .defaultSuccessUrl("/home")
-//                .and()
-//                .logout()
-//                .logoutUrl("/logout");
-
     }
 
     //Set up here to match with employee username and password
