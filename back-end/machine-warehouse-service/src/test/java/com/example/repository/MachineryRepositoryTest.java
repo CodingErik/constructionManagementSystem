@@ -1,4 +1,4 @@
-package com.example.repositoty;
+package com.example.repository;
 
 import com.example.model.Machinery;
 import org.junit.Before;
@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Transient;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
