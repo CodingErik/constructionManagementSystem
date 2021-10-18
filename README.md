@@ -15,11 +15,11 @@
 
 ## High-level architecture
 
-![SystemDesign](./SystemDesign.png)
+![SystemDesign](./SubmissionMaterials/SystemDesign.png)
 
 ## Database Diagram
 
-![DBDiagram](./DBDiagram.png)
+![DBDiagram](./SubmissionMaterials/DBDiagram.png)
 
 ## Technology Used
 
