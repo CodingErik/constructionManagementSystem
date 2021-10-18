@@ -28,6 +28,7 @@ function UserPersonalInformationModal({
       yearsOfExperience: userYearsOfExperienceRef.current.value,
       projectId: userInfo.project ? userInfo.project.id : 0,
     };
+    alert("Personal Information Has Been Updated");
     updateUserBasicInformation(updatedInformation);
   };
 

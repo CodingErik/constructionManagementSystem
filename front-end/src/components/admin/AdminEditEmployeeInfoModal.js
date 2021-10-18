@@ -61,7 +61,6 @@ function AdminEditEmployeeInfoModal({
       yearsOfExperience: employeeYearsOfExperienceRef.current.value,
       projectId: employeeInfo.project ? employeeInfo.project.id : 0,
     };
-    console.log(updatedInfo);
     handleBasicInformationUpdateSubmit(updatedInfo);
   };
 
