@@ -1,7 +1,7 @@
 package com.example.controller;
 
 import com.example.model.Machinery;
-import com.example.repositoty.MachineryRepository;
+import com.example.repository.MachineryRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
