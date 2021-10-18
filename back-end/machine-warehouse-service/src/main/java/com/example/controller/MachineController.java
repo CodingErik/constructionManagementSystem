@@ -1,7 +1,7 @@
 package com.example.controller;
 
 import com.example.model.Machinery;
-import com.example.repositoty.MachineryRepository;
+import com.example.repository.MachineryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;

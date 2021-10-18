@@ -21,7 +21,6 @@ function DisplayEmployeeInfo() {
     EmployeeAPI.getEmployeeById(employeeId).then((response) => {
       setEmployeeInfo(response.data);
       setEmployeeTasks([...response.data.taskList]);
-      console.log(response.data);
     });
   }, []);
 
@@ -34,6 +33,7 @@ function DisplayEmployeeInfo() {
   const handleBasicInformationUpdateSubmit = (updatedBasicInfo) => {
     EmployeeAPI.putEmployee(updatedBasicInfo);
     setEmployeeInfo(updatedBasicInfo);
+    alert("User Personal Information Has Been Updated")
   };
 
   return (
