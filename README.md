@@ -15,11 +15,11 @@
 
 ## High-level architecture
 
-![SystemDesign](./SystemDesign.png)
+![SystemDesign](./SubmissionMaterials/SystemDesign.png)
 
 ## Database Diagram
 
-![DBDiagram](./DBDiagram.png)
+![DBDiagram](./SubmissionMaterials/DBDiagram.png)
 
 ## Technology Used
 
@@ -43,11 +43,11 @@
 
 ## UI Mockup
 
-![UIHome](./UIHome.png)
-![UIProfile](./UIProfile.png)
-![UIProjects](./UIProjects.png)
-![UITasks](./UITasks.png)
-![UIAdmin](./UIAdmin.png)
+![UIHome](./SubmissionMaterials/UIHome.png) 
+![UIProfile](./SubmissionMaterials/UIProfile.png)
+![UIProjects](./SubmissionMaterials/UIProjects.png)
+![UITasks](./SubmissionMaterials/UITasks.png)
+![UIAdmin](./SubmissionMaterials/UIAdmin.png)
 
 
 ## Contributing
