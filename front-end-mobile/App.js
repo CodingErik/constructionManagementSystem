@@ -12,9 +12,9 @@ export default function App() {
     // NetworkInfo.getIPAddress().then(ipAddress => {
     //   console.log(ipAddress);
     // });
-    axios.get(`http://:8979/api/tasks/id?taskId=1`).then(data => {
-      console.log(data, 'hello'); 
-    }); 
+    // axios.get(`http://192.168.1.251:8979/api/tasks/id?taskId=1`).then(data => {
+    //   console.log(data, 'hello'); 
+    // }); 
 
 
     // fetch('https://randomuser.me/api/').then(data => {
