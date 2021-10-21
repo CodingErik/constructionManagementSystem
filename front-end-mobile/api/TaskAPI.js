@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = `http://localhost:8979/api/tasks`;
+import {LOCAL_IP} from '@env';
+const baseUrl = `http://${LOCAL_IP}:8979/api/tasks`;
 const taskAPI = {
     getAllTasks: (projectId, employeeId, name) => {
         return axios.get(`${baseUrl}`,{params:{projectId:projectId, employeeId:employeeId, name:name}});

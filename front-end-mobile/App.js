@@ -6,10 +6,10 @@ import {LOCAL_IP} from '@env';
 
 export default function App() {
 
-  // EmployeeAPI.getAllEmployees().then((response) => {
-  //   console.log(response);
-  // })
-  console.log(LOCAL_IP);
+  EmployeeAPI.getAllEmployees().then((response) => {
+    console.log(response);
+  })
+  // console.log(LOCAL_IP);
   
   return (
     <View style={styles.container}>
