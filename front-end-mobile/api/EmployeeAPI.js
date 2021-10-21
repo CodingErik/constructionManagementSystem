@@ -22,7 +22,7 @@ const employeeAPI = {
     return axios.get(`${baseUrl}/findByTitle/${title}`);
   },
   updatePassword: async (id, newPassword) => {
-    const res = await axios.put(`http://localhost:8979/api/resetPassword`, {
+    const res = await axios.put(`http://${LOCAL_IP}:8979/api/resetPassword`, {
       id: id,
       password: newPassword,
     });
