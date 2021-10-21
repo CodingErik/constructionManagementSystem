@@ -1,6 +1,6 @@
 import axios from 'axios';
-const localhost = '192.168.0.24';
-const baseUrl = `http://${localhost}/api/employees`;
+
+const baseUrl = `http://192.168.1.129:8979/api/employees`;
 
 const employeeAPI = {
   getAllEmployees: () => {
