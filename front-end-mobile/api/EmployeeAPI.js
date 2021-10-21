@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseUrl = `http://192.168.1.129:8979/api/employees`;
+const baseUrl = `http://:8979/api/employees`;
 
 const employeeAPI = {
   getAllEmployees: () => {
