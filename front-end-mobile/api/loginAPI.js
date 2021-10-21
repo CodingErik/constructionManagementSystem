@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const baseUrl = `http://localhost:8979`;
+import {LOCAL_IP} from '@env';
+const baseUrl = `http://${LOCAL_IP}:8979`;
 
 const API = {
   // @login

@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const baseUrl = `http://192.168.1.129:8979/api/employees`;
+import {LOCAL_IP} from '@env';
+const baseUrl = `http://${LOCAL_IP}:8979/api/employees`;
 
 const employeeAPI = {
   getAllEmployees: () => {

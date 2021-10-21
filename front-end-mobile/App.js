@@ -2,12 +2,14 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { EmployeeAPI } from "./api";
+import {LOCAL_IP} from '@env';
 
 export default function App() {
 
   EmployeeAPI.getAllEmployees().then((response) => {
     console.log(response);
   })
+  // console.log(LOCAL_IP);
   
   return (
     <View style={styles.container}>

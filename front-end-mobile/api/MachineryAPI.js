@@ -1,6 +1,6 @@
 import axios from 'axios';
-
-const baseUrl = `http://localhost:8979/api/machines`;
+import {LOCAL_IP} from '@env';
+const baseUrl = `http://${LOCAL_IP}:8979/api/machines`;
 
 const machineryAPI = {
   getWarehouseMachineryInventory: () => {
