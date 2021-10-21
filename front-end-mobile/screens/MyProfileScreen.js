@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from "react";
 
 
-function MyProfile() {
+function MyProfileScreen() {
     return (
         <View>
             <Text>My Profile</Text>
@@ -10,4 +10,4 @@ function MyProfile() {
     )
 }
 
-export default MyProfile
+export default MyProfileScreen
