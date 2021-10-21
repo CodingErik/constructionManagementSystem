@@ -27,20 +27,36 @@ export default function Projects() {
   const projectNameRef = useRef();
   const roomTypeRef = useRef();
 
-  const handleNewProjectSubmit = (newProjectInfo) => {
-    ProjectAPI.addProject(newProjectInfo).then((response) => {
-      EmployeeAPI.getEmployeeByUsername(username).then((userResponse) => {
-        const updatedUser = {
-          ...userResponse.data,
-          projectId: response.data.id,
-        };
-        EmployeeAPI.putEmployee(updatedUser);
-      });
-    });
-    ProjectAPI.getAllProjects().then((res) => {
-      setProjects([...res.data]);
-    });
+  // const handleNewProjectSubmit = (newProjectInfo) => {
+  //   ProjectAPI.addProject(newProjectInfo).then((response) => {
+  //     EmployeeAPI.getEmployeeByUsername(username).then((userResponse) => {
+  //       const updatedUser = {
+  //         ...userResponse.data,
+  //         projectId: response.data.id,
+  //       };
+  //       EmployeeAPI.putEmployee(updatedUser);
+  //     });
+  //   });
+  //   ProjectAPI.getAllProjects().then((res) => {
+  //     setProjects([...res.data]);
+  //   });
+  //   alert("Project Has Been Added");
+  //   setUserHasProject(true);
+  // };
+
+  const handleNewProjectSubmit = async (newProjectInfo) => {
+    const addProjectInfo = await ProjectAPI.addProject(newProjectInfo);
+    const updatedEmployeeInfo = await EmployeeAPI.getEmployeeByUsername(
+      username
+    );
+    const updatedUser = {
+      ...updatedEmployeeInfo.data,
+      projectId: addProjectInfo.data.id,
+    };
+    await EmployeeAPI.putEmployee(updatedUser);
+    const allUpdatedProjects = await ProjectAPI.getAllProjects();
     alert("Project Has Been Added");
+    setProjects([...allUpdatedProjects.data]);
     setUserHasProject(true);
   };
 
