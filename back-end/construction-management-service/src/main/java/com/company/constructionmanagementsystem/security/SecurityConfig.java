@@ -14,6 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -40,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/employees/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/refresh_token").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/employees/findByTitle/**").permitAll()
-                .antMatchers("/api/**").authenticated()
+//                .antMatchers("/api/**").authenticated()
                 .and()
                 .addFilter(new JwtRequestFilter(authenticationManager(), converter))
                 .sessionManagement()
