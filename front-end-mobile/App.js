@@ -1,13 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { EmployeeAPI } from "./api";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export default function App() {
 
-  EmployeeAPI.getAllEmployees().then((response) => {
-    console.log(response);
-  })
+  
   
   return (
     <View style={styles.container}>
