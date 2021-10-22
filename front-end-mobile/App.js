@@ -22,13 +22,14 @@ export default function App() {
       <NavigationContainer>
         <Tab.Navigator
           screenOptions={{
-            tabBarStyle: { position: 'absolute', backgroundColor: 'white' },
+            tabBarStyle: { position: 'absolute', backgroundColor: 'white', paddingBottom: 50, paddingTop: 30 },
           }}
         >
           <Tab.Screen
             tabBarIcon={faHome}
             name="Home"
             component={HomeScreen}
+            tabB
             options={{
               tabBarLabel: '',
               tabBarIcon: ({ color }) => (
